@@ -6,11 +6,28 @@ This runbook documents the bootstrap backup and restore flow until `pgBackRest` 
 
 ## Database backups
 
-Short-term bootstrap recommendation:
+The platform now includes a `pgbackrest` utility container and repository volume in the base compose.
 
-- run logical database dumps before risky changes
-- store dumps outside the git checkout
-- promote to `pgBackRest` as the next platform step
+Bootstrap commands:
+
+```bash
+docker compose -f compose.yaml -f compose.dev.yaml exec pgbackrest /scripts/stanza-create.sh
+docker compose -f compose.yaml -f compose.dev.yaml exec pgbackrest /scripts/check-db.sh
+docker compose -f compose.yaml -f compose.dev.yaml exec pgbackrest /scripts/backup-db.sh
+```
+
+Current local status:
+
+- `stanza-create` passes
+- `check` passes
+- full local backup passes
+- PostgreSQL is using `archive_mode=on` with `pgbackrest archive-push`
+
+Remaining follow-up:
+
+- production retention hardening
+- offsite copy
+- scheduled restore drill automation
 
 ## Filestore backups
 
@@ -40,7 +57,7 @@ This script prints the operator checklist for restoring a recent production copy
 
 Upgrade this bootstrap runbook with:
 
-- `pgBackRest` commands and retention policy
+- production retention policy refinement
 - offsite `S3-compatible` copy
 - scheduled restore drills
 - staging neutralization checklist

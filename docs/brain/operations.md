@@ -1,7 +1,9 @@
 # Operations
 
 ## What runs in Docker
-- PostgreSQL 16
+- PostgreSQL 16 with `archive_mode` enabled for `pgBackRest`
+- Redis
+- pgBackRest utility container
 - Odoo 19.0
 - Nginx
 - Optional `pgAdmin`
@@ -29,6 +31,10 @@
 - `docker compose -f compose.yaml -f compose.dev.yaml -f compose.admin.yaml up -d`
 - `docker compose -f compose.yaml -f compose.dev.yaml logs -f odoo nginx`
 - `docker compose -f compose.yaml -f compose.dev.yaml -f compose.admin.yaml logs -f obsidian`
+- `docker compose -f compose.yaml -f compose.dev.yaml exec redis redis-cli ping`
+- `docker compose -f compose.yaml -f compose.dev.yaml exec pgbackrest /scripts/stanza-create.sh`
+- `docker compose -f compose.yaml -f compose.dev.yaml exec pgbackrest /scripts/check-db.sh`
+- `docker compose -f compose.yaml -f compose.dev.yaml exec pgbackrest /scripts/backup-db.sh`
 
 ## Notes
 - `docker-compose.yml` remains a legacy local compatibility entrypoint.

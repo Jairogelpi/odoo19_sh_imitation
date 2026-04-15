@@ -18,6 +18,9 @@ Track the current state of the Odoo self-hosted platform while keeping the techn
 - Nginx reverse proxy scaffold added.
 - Staging and production Odoo config files added.
 - Bootstrap backup and restore scripts added.
+- Redis service added to the platform base.
+- pgBackRest service, config, and utility scripts added.
+- PostgreSQL custom image added so `pgBackRest` can run archive commands from the database container.
 - GitHub Actions workflow skeleton added.
 - Obsidian integrated as an optional admin/knowledge service instead of part of the production-safe base compose.
 
@@ -31,6 +34,9 @@ Track the current state of the Odoo self-hosted platform while keeping the techn
 - `Invoke-WebRequest http://localhost:3000` -> `401` expected because Obsidian is access-controlled
 - `docker compose -f compose.yaml -f compose.staging.yaml config`
 - `docker compose -f compose.yaml -f compose.prod.yaml config`
+- `docker compose -f compose.yaml -f compose.dev.yaml exec redis redis-cli ping` -> `PONG`
+- `docker compose -f compose.yaml -f compose.dev.yaml exec pgbackrest /scripts/check-db.sh` -> success
+- `docker compose -f compose.yaml -f compose.dev.yaml exec pgbackrest /scripts/backup-db.sh` -> full backup completed
 
 ## Why Obsidian is in the admin layer
 - It is useful for local documentation and knowledge capture.
@@ -38,10 +44,10 @@ Track the current state of the Odoo self-hosted platform while keeping the techn
 - Keeping it in `compose.admin.yaml` preserves a cleaner platform base.
 
 ## Next recommended implementation slice
-- Add Redis to the platform.
-- Add `pgBackRest` service and config.
 - Add restore and neutralization automation for staging.
 - Upgrade the CI workflow from validation-only to GHCR plus SSH deployment.
+- Add offsite backup replication.
+- Add environment-specific secrets management beyond `.env.example`.
 
 ## Links
 - [Platform](platform.md)

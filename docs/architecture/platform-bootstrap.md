@@ -9,9 +9,12 @@ This repository is the versioned starting point for the Odoo 19 self-hosted plat
 - `compose.dev.yaml` for local development
 - `compose.admin.yaml` for optional admin and knowledge tooling
 - custom Odoo image scaffold
+- custom PostgreSQL image scaffold with `pgBackRest` archive support
 - Nginx reverse proxy template scaffold
 - staging and production compose overrides
+- Redis service
 - bootstrap backup/restore scripts
+- working local `pgBackRest` flow
 - CI workflow skeleton
 
 ## Runtime data policy
@@ -49,7 +52,6 @@ docker compose up -d
 ## Not implemented yet
 
 - Redis
-- pgBackRest
 - full GHCR deploy pipeline
 - staging neutralization automation
 - offsite backups

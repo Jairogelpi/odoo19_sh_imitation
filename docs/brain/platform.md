@@ -4,7 +4,9 @@
 The platform now has a core runtime plus an optional knowledge/admin layer.
 
 Core runtime:
-- PostgreSQL 16
+- PostgreSQL 16 with `pgBackRest` archive support
+- Redis
+- pgBackRest utility container
 - Odoo 19.0
 - Nginx reverse proxy
 
@@ -35,6 +37,7 @@ This is the layer that keeps the stack repeatable. If the platform note changes,
 ## Notes
 - `compose.yaml` is the base platform and should stay production-safe.
 - `compose.admin.yaml` is where optional admin and knowledge services belong.
+- Local backup flow is now testable with `pgBackRest` from the base stack.
 - The Obsidian container is a browser-accessible desktop app, not the Windows desktop binary.
 - The vault root is the `docs/` directory, mounted into the container as `ObsidianVault`.
 - If you change ports or service names, update this note, the home note, and the bootstrap status note together.

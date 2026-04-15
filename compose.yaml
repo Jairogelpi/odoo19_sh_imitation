@@ -1,18 +1,67 @@
 services:
   db:
-    image: postgres:16
+    build:
+      context: .
+      dockerfile: postgres_image/Dockerfile
     restart: unless-stopped
     environment:
       POSTGRES_DB: ${POSTGRES_DB:-postgres}
       POSTGRES_USER: ${POSTGRES_USER:-odoo}
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-change_me}
+    command:
+      - postgres
+      - -c
+      - archive_mode=on
+      - -c
+      - archive_command=pgbackrest --stanza=odoo archive-push %p
+      - -c
+      - archive_timeout=60
+      - -c
+      - wal_level=replica
     volumes:
       - postgres-data:/var/lib/postgresql/data
+      - postgres-run:/var/run/postgresql
+      - ./pgbackrest/pgbackrest.conf:/etc/pgbackrest/pgbackrest.conf:ro
+      - pgbackrest-repo:/var/lib/pgbackrest
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-odoo} -d ${POSTGRES_DB:-postgres}"]
       interval: 10s
       timeout: 5s
       retries: 10
+    networks:
+      - odoo_net
+
+  redis:
+    image: redis:7-alpine
+    restart: unless-stopped
+    command: ["redis-server", "--appendonly", "yes"]
+    volumes:
+      - redis-data:/data
+    networks:
+      - odoo_net
+
+  pgbackrest:
+    build:
+      context: .
+      dockerfile: pgbackrest/Dockerfile
+    user: "postgres"
+    restart: unless-stopped
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      PGBACKREST_STANZA: ${PGBACKREST_STANZA:-odoo}
+      PGHOST: /var/run/postgresql
+      PGPORT: 5432
+      PGUSER: ${POSTGRES_USER:-odoo}
+      PGPASSWORD: ${POSTGRES_PASSWORD:-change_me}
+    volumes:
+      - ./pgbackrest/pgbackrest.conf:/etc/pgbackrest/pgbackrest.conf:ro
+      - ./pgbackrest/scripts:/scripts:ro
+      - postgres-data:/var/lib/postgresql/data:ro
+      - postgres-run:/var/run/postgresql
+      - pgbackrest-repo:/var/lib/pgbackrest
+    command: ["sleep", "infinity"]
     networks:
       - odoo_net
 
@@ -50,7 +99,10 @@ services:
       - odoo_net
 
 volumes:
+  pgbackrest-repo:
   postgres-data:
+  postgres-run:
+  redis-data:
   odoo-web-data:
 
 networks:
