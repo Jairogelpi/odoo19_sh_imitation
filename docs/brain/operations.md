@@ -17,6 +17,7 @@
 - [compose.prod.yaml](../../compose.prod.yaml)
 - [docker-compose.yml](../../docker-compose.yml)
 - [.env.example](../../.env.example)
+- [Local health check script](../../ops/health/check-local-stack.ps1)
 - [Backup and restore runbook](../runbooks/backup-and-restore.md)
 
 ## Service ports
@@ -35,6 +36,7 @@
 - `docker compose -f compose.yaml -f compose.dev.yaml exec pgbackrest /scripts/stanza-create.sh`
 - `docker compose -f compose.yaml -f compose.dev.yaml exec pgbackrest /scripts/check-db.sh`
 - `docker compose -f compose.yaml -f compose.dev.yaml exec pgbackrest /scripts/backup-db.sh`
+- `powershell -ExecutionPolicy Bypass -File .\ops\health\check-local-stack.ps1`
 
 ## Notes
 - `docker-compose.yml` remains a legacy local compatibility entrypoint.

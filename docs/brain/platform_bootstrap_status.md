@@ -37,6 +37,7 @@ Track the current state of the Odoo self-hosted platform while keeping the techn
 - `docker compose -f compose.yaml -f compose.dev.yaml exec redis redis-cli ping` -> `PONG`
 - `docker compose -f compose.yaml -f compose.dev.yaml exec pgbackrest /scripts/check-db.sh` -> success
 - `docker compose -f compose.yaml -f compose.dev.yaml exec pgbackrest /scripts/backup-db.sh` -> full backup completed
+- `powershell -ExecutionPolicy Bypass -File .\ops\health\check-local-stack.ps1` -> local stack verification script added
 
 ## Why Obsidian is in the admin layer
 - It is useful for local documentation and knowledge capture.
