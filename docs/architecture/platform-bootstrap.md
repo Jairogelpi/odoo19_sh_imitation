@@ -17,6 +17,21 @@ This repository is the versioned starting point for the Odoo 19 self-hosted plat
 - working local `pgBackRest` flow
 - CI workflow skeleton
 
+## Current service inventory
+
+Core base stack:
+
+- `db`: PostgreSQL 16 with `archive_mode` enabled for `pgBackRest`
+- `redis`: local platform cache/queue primitive
+- `pgbackrest`: backup/check utility container
+- `odoo`: custom image scaffold based on `odoo:19.0`
+- `nginx`: reverse proxy entrypoint for the app
+
+Optional admin and knowledge stack:
+
+- `pgadmin`: browser admin UI for PostgreSQL
+- `obsidian`: browser-accessible knowledge workspace over the `docs/` vault
+
 ## Runtime data policy
 
 Do not store live runtime data inside the git checkout.
@@ -49,9 +64,15 @@ Legacy compatibility stack:
 docker compose up -d
 ```
 
+Health verification:
+
+```bash
+powershell -ExecutionPolicy Bypass -File .\ops\health\check-local-stack.ps1
+```
+
 ## Not implemented yet
 
-- Redis
 - full GHCR deploy pipeline
 - staging neutralization automation
 - offsite backups
+- production secrets management

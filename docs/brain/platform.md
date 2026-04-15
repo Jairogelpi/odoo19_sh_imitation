@@ -26,7 +26,9 @@ This is the layer that keeps the stack repeatable. If the platform note changes,
 - [docker-compose.yml](../../docker-compose.yml)
 - [.env.example](../../.env.example)
 - [Platform bootstrap doc](../architecture/platform-bootstrap.md)
+- [Service map](../architecture/service-map.md)
 - [Bootstrap status](platform_bootstrap_status.md)
+- [Services](services.md)
 
 ## Service endpoints
 - Odoo direct dev port: `http://localhost:8069`
@@ -38,6 +40,7 @@ This is the layer that keeps the stack repeatable. If the platform note changes,
 - `compose.yaml` is the base platform and should stay production-safe.
 - `compose.admin.yaml` is where optional admin and knowledge services belong.
 - Local backup flow is now testable with `pgBackRest` from the base stack.
+- The service ownership and boundaries live in the service map and should be updated whenever the stack changes.
 - The Obsidian container is a browser-accessible desktop app, not the Windows desktop binary.
 - The vault root is the `docs/` directory, mounted into the container as `ObsidianVault`.
 - If you change ports or service names, update this note, the home note, and the bootstrap status note together.

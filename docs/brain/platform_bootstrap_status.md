@@ -52,6 +52,12 @@ Track the current state of the Odoo self-hosted platform while keeping the techn
 
 ## Links
 - [Platform](platform.md)
+- [Services](services.md)
+- [Delivery](delivery.md)
 - [Operations](operations.md)
 - [Platform bootstrap doc](../architecture/platform-bootstrap.md)
+- [Service map](../architecture/service-map.md)
+- [Local development runbook](../runbooks/local-development.md)
+- [Environments and promotions](../runbooks/environments-and-promotions.md)
+- [CI/CD scaffold](../runbooks/ci-cd-scaffold.md)
 - [Backup and restore runbook](../runbooks/backup-and-restore.md)

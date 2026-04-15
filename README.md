@@ -11,6 +11,16 @@ Professional self-hosted Odoo 19 platform scaffold inspired by the operational s
 - Bootstrap backup and restore scripts
 - GitHub Actions validation workflow scaffold
 
+## Documentation map
+
+- Platform bootstrap: [docs/architecture/platform-bootstrap.md](docs/architecture/platform-bootstrap.md)
+- Service map: [docs/architecture/service-map.md](docs/architecture/service-map.md)
+- Local development runbook: [docs/runbooks/local-development.md](docs/runbooks/local-development.md)
+- Environments and promotions: [docs/runbooks/environments-and-promotions.md](docs/runbooks/environments-and-promotions.md)
+- Backup and restore: [docs/runbooks/backup-and-restore.md](docs/runbooks/backup-and-restore.md)
+- CI/CD scaffold: [docs/runbooks/ci-cd-scaffold.md](docs/runbooks/ci-cd-scaffold.md)
+- Obsidian brain: [docs/00_Odoo_Brain.md](docs/00_Odoo_Brain.md)
+
 ## Main entrypoints
 
 - Architecture spec: [docs/superpowers/specs/2026-04-15-odoo-self-hosted-platform-design.md](docs/superpowers/specs/2026-04-15-odoo-self-hosted-platform-design.md)
@@ -44,6 +54,26 @@ powershell -ExecutionPolicy Bypass -File .\ops\health\check-local-stack.ps1
 - Odoo through Nginx: `http://localhost:8088/web/login`
 - pgAdmin: `http://localhost:8080`
 - Obsidian: `http://localhost:3000`
+
+## Core health commands
+
+Redis:
+
+```powershell
+docker compose -f compose.yaml -f compose.dev.yaml exec -T redis redis-cli ping
+```
+
+pgBackRest check:
+
+```powershell
+docker compose -f compose.yaml -f compose.dev.yaml exec -T pgbackrest /scripts/check-db.sh
+```
+
+pgBackRest full backup:
+
+```powershell
+docker compose -f compose.yaml -f compose.dev.yaml exec -T pgbackrest /scripts/backup-db.sh
+```
 
 ## Notes
 

@@ -5,6 +5,8 @@ This vault organizes the Odoo 19 documentation as an Obsidian-style knowledge gr
 ## Entry points
 - [Platform](brain/platform.md)
 - [Platform Bootstrap Status](brain/platform_bootstrap_status.md)
+- [Services](brain/services.md)
+- [Delivery](brain/delivery.md)
 - [Base](brain/base.md)
 - [CRM](brain/crm.md)
 - [Schema Atlas](brain/schema.md)
@@ -15,11 +17,15 @@ This vault organizes the Odoo 19 documentation as an Obsidian-style knowledge gr
 graph TD
   Home[Odoo Brain] --> Platform[Platform]
   Home --> Bootstrap[Platform Bootstrap Status]
+  Home --> Services[Services]
+  Home --> Delivery[Delivery]
   Home --> Base[Base]
   Home --> CRM[CRM]
   Home --> Schema[Schema Atlas]
   Home --> Ops[Operations]
   Platform --> Bootstrap
+  Platform --> Services
+  Bootstrap --> Delivery
   Bootstrap --> Ops
   Base --> BaseDoc[base_module.md]
   Base --> Compare[base_vs_crm.md]
@@ -41,6 +47,10 @@ graph TD
 ## Quick links
 - [Odoo schema README](odoo19_schema/README.md)
 - [Platform bootstrap doc](architecture/platform-bootstrap.md)
+- [Service map](architecture/service-map.md)
+- [Local development runbook](runbooks/local-development.md)
+- [Environments and promotions](runbooks/environments-and-promotions.md)
+- [CI/CD scaffold](runbooks/ci-cd-scaffold.md)
 - [Backup and restore runbook](runbooks/backup-and-restore.md)
 - [Base module doc](odoo19_schema/base_module.md)
 - [CRM module doc](odoo19_schema/crm_module.md)
