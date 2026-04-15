@@ -19,6 +19,7 @@
 - [.env.example](../../.env.example)
 - [Local development runbook](../runbooks/local-development.md)
 - [Environments and promotions](../runbooks/environments-and-promotions.md)
+- [Secrets and configuration](../runbooks/secrets-and-config.md)
 - [Local health check script](../../ops/health/check-local-stack.ps1)
 - [Backup and restore runbook](../runbooks/backup-and-restore.md)
 

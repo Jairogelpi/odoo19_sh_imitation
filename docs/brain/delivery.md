@@ -7,6 +7,7 @@ This note tracks how code is expected to move from local work to production.
 ## Main references
 
 - [Environments and promotions](../runbooks/environments-and-promotions.md)
+- [Secrets and configuration](../runbooks/secrets-and-config.md)
 - [CI/CD scaffold](../runbooks/ci-cd-scaffold.md)
 - [Platform bootstrap status](platform_bootstrap_status.md)
 

@@ -50,6 +50,7 @@ graph TD
 - [Service map](architecture/service-map.md)
 - [Local development runbook](runbooks/local-development.md)
 - [Environments and promotions](runbooks/environments-and-promotions.md)
+- [Secrets and configuration](runbooks/secrets-and-config.md)
 - [CI/CD scaffold](runbooks/ci-cd-scaffold.md)
 - [Backup and restore runbook](runbooks/backup-and-restore.md)
 - [Base module doc](odoo19_schema/base_module.md)

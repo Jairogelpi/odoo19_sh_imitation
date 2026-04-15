@@ -17,6 +17,7 @@ Professional self-hosted Odoo 19 platform scaffold inspired by the operational s
 - Service map: [docs/architecture/service-map.md](docs/architecture/service-map.md)
 - Local development runbook: [docs/runbooks/local-development.md](docs/runbooks/local-development.md)
 - Environments and promotions: [docs/runbooks/environments-and-promotions.md](docs/runbooks/environments-and-promotions.md)
+- Secrets and configuration: [docs/runbooks/secrets-and-config.md](docs/runbooks/secrets-and-config.md)
 - Backup and restore: [docs/runbooks/backup-and-restore.md](docs/runbooks/backup-and-restore.md)
 - CI/CD scaffold: [docs/runbooks/ci-cd-scaffold.md](docs/runbooks/ci-cd-scaffold.md)
 - Obsidian brain: [docs/00_Odoo_Brain.md](docs/00_Odoo_Brain.md)

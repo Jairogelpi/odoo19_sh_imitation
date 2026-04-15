@@ -13,6 +13,7 @@ Track the current state of the Odoo self-hosted platform while keeping the techn
 ## Implemented so far
 - Repository sanitized for GitHub push.
 - Secrets replaced with safe examples in tracked files.
+- Per-environment `.env` example files added for `dev`, `staging`, and `prod`.
 - Runtime data ignored through `.gitignore` and `.dockerignore`.
 - Custom Odoo image scaffold added.
 - Nginx reverse proxy scaffold added.
@@ -48,7 +49,7 @@ Track the current state of the Odoo self-hosted platform while keeping the techn
 - Add restore and neutralization automation for staging.
 - Upgrade the CI workflow from validation-only to GHCR plus SSH deployment.
 - Add offsite backup replication.
-- Add environment-specific secrets management beyond `.env.example`.
+- Move from example-only secrets to managed environment secrets.
 
 ## Links
 - [Platform](platform.md)
@@ -59,5 +60,6 @@ Track the current state of the Odoo self-hosted platform while keeping the techn
 - [Service map](../architecture/service-map.md)
 - [Local development runbook](../runbooks/local-development.md)
 - [Environments and promotions](../runbooks/environments-and-promotions.md)
+- [Secrets and configuration](../runbooks/secrets-and-config.md)
 - [CI/CD scaffold](../runbooks/ci-cd-scaffold.md)
 - [Backup and restore runbook](../runbooks/backup-and-restore.md)
