@@ -13,6 +13,9 @@ Core runtime:
 Staging support layer:
 - Mailpit as the post-restore SMTP sink
 
+Operational backup layer:
+- Offsite replication scripts that export snapshots and upload them with ephemeral `rclone`
+
 Optional admin and knowledge layer:
 - pgAdmin
 - Obsidian as the local knowledge workspace
@@ -45,6 +48,7 @@ This is the layer that keeps the stack repeatable. If the platform note changes,
 - Local backup flow is now testable with `pgBackRest` from the base stack.
 - The custom `db`, `pgbackrest`, and `odoo` services can run from local builds or CI-published GHCR images.
 - The staging layer now includes `mailpit` so restored copies cannot send real mail by default.
+- Production offsite replication currently happens through wrapper scripts rather than a long-running backup service.
 - The service ownership and boundaries live in the service map and should be updated whenever the stack changes.
 - The Obsidian container is a browser-accessible desktop app, not the Windows desktop binary.
 - The vault root is the `docs/` directory, mounted into the container as `ObsidianVault`.

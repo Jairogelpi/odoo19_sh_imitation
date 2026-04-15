@@ -26,3 +26,4 @@ This note tracks how code is expected to move from local work to production.
 - deploys use immutable GHCR image tags based on the commit SHA
 - documentation now reflects the implemented branch-to-environment model
 - staging restore is now part of the delivery story because preproduction should be rebuilt as a neutralized production copy when needed
+- production delivery now also includes offsite replication of backup artifacts as an operational follow-up step

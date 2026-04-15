@@ -58,9 +58,10 @@ Recommended path:
 - production-like edge exposure
 - no optional admin/knowledge services in the critical path
 - strict secrets and backup discipline
+- offsite backup replication should be part of normal production operations
 
 ## Remaining gaps
 
 - first-time server bootstrap automation
-- offsite backup promotion and restore drills
+- automated restore drills from offsite copies
 - data anonymization beyond operational neutralization

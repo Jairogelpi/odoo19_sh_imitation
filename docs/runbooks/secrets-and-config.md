@@ -59,6 +59,19 @@ This should point to the real untracked staging env file on the target host.
 - `PGBACKREST_IMAGE`
 - `ODOO_IMAGE`
 
+### Offsite backups
+
+- `OFFSITE_LOCAL_ARCHIVE_DIR`
+- `OFFSITE_S3_BUCKET`
+- `OFFSITE_S3_PATH_PREFIX`
+- `OFFSITE_S3_ENDPOINT`
+- `OFFSITE_S3_REGION`
+- `OFFSITE_S3_ACCESS_KEY_ID`
+- `OFFSITE_S3_SECRET_ACCESS_KEY`
+- `OFFSITE_S3_PROVIDER`
+- `OFFSITE_S3_FORCE_PATH_STYLE`
+- `OFFSITE_RCLONE_IMAGE`
+
 ### Staging restore and neutralization
 
 - `STAGING_WEB_BASE_URL`
@@ -90,6 +103,15 @@ These are not stored in the repository and should live in the GitHub Environment
 - `DEPLOY_HEALTHCHECK_URL`
 - `GHCR_PULL_USERNAME`
 - `GHCR_PULL_TOKEN`
+
+## Wrapper-only shell variables
+
+These are not intended to live inside the tracked env file templates:
+
+- `STAGING_ENV_FILE`
+- `OFFSITE_ENV_FILE`
+
+They point to the real untracked environment file paths used by the operational wrapper scripts on a host.
 
 ## Environment intent
 

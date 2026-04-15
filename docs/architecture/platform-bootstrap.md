@@ -17,6 +17,7 @@ This repository is the versioned starting point for the Odoo 19 self-hosted plat
 - working local `pgBackRest` flow
 - GHCR publish and SSH deploy workflow
 - automated staging restore neutralization with `Mailpit`
+- offsite backup replication scripts using ephemeral `rclone`
 
 ## Current service inventory
 
@@ -77,7 +78,7 @@ powershell -ExecutionPolicy Bypass -File .\ops\health\check-local-stack.ps1
 
 ## Not implemented yet
 
-- offsite backups
 - first-time server bootstrap automation
 - live deploy validation against a real remote target
 - deeper data anonymization for restored staging copies
+- scheduled restore drills from offsite backup sets

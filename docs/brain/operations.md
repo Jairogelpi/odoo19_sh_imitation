@@ -26,8 +26,13 @@
 - [Remote deploy script](../../ops/deploy/remote-deploy.sh)
 - [Backup and restore runbook](../runbooks/backup-and-restore.md)
 - [Staging neutralization runbook](../runbooks/staging-neutralization.md)
+- [Offsite backups runbook](../runbooks/offsite-backups.md)
 - [Staging restore wrapper](../../ops/restore/restore-to-staging.sh)
 - [Staging neutralization SQL](../../ops/restore/staging-neutralize.sql)
+- [Offsite backup wrapper](../../backup/scripts/run-offsite-backup.sh)
+- [pgBackRest export script](../../backup/scripts/export-pgbackrest-repo.sh)
+- [Filestore export script](../../backup/scripts/export-odoo-filestore.sh)
+- [rclone sync script](../../backup/scripts/offsite-sync-rclone.sh)
 
 ## Service ports
 - Odoo direct dev: `8069`
@@ -49,6 +54,7 @@
 - `powershell -ExecutionPolicy Bypass -File .\ops\health\check-local-stack.ps1`
 - `bash ops/deploy/remote-deploy.sh`
 - `STAGING_ENV_FILE=/srv/odoo/env/staging.env bash ops/restore/restore-to-staging.sh <db_dump> <filestore_archive> <target_db>`
+- `OFFSITE_ENV_FILE=/srv/odoo/env/prod.env bash backup/scripts/run-offsite-backup.sh`
 
 ## Notes
 - `docker-compose.yml` remains a legacy local compatibility entrypoint.
@@ -58,3 +64,4 @@
 - If you change the vault layout, update the home note, this operations note, and the bootstrap status note together.
 - Production-shaped deploys now pull immutable GHCR images instead of relying on local builds on the server.
 - Restoring staging now includes automatic neutralization before the environment should be reopened.
+- Offsite replication now runs as an operational wrapper and does not require a permanent Docker service.

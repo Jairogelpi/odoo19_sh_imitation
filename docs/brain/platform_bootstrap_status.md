@@ -25,6 +25,7 @@ Track the current state of the Odoo self-hosted platform while keeping the techn
 - GitHub Actions workflow upgraded to validate compose, publish custom images to GHCR, and deploy over SSH.
 - Staging restore wrapper upgraded to automate database restore, filestore restore, and post-restore neutralization.
 - Staging now includes `Mailpit` as a safe SMTP sink during neutralized operation.
+- Offsite backup scripts added to export production backup artifacts and replicate them to S3-compatible storage.
 - Obsidian integrated as an optional admin/knowledge service instead of part of the production-safe base compose.
 
 ## Verification evidence already run
@@ -46,6 +47,12 @@ Track the current state of the Odoo self-hosted platform while keeping the techn
 - `docker run --rm -v "${PWD}:/work" odoo19-odoo:test bash -n /work/ops/restore/restore-to-staging.sh` -> restore wrapper syntax passes
 - `docker run --rm -v "${PWD}:/work" odoo19-odoo:test bash -n /work/backup/scripts/backup-filestore.sh` -> filestore backup script syntax passes
 - staging compose now includes `mailpit` and restore/neutralization scripts are present, pending validation with a real backup set
+- `docker run --rm -v "${PWD}:/work" odoo19-odoo:test bash -n /work/backup/scripts/export-pgbackrest-repo.sh` -> pgBackRest export script syntax passes
+- `docker run --rm -v "${PWD}:/work" odoo19-odoo:test bash -n /work/backup/scripts/export-odoo-filestore.sh` -> filestore export script syntax passes
+- `docker run --rm -v "${PWD}:/work" odoo19-odoo:test bash -n /work/backup/scripts/offsite-sync-rclone.sh` -> offsite sync script syntax passes
+- `docker run --rm -v "${PWD}:/work" odoo19-odoo:test bash -n /work/backup/scripts/run-offsite-backup.sh` -> offsite wrapper syntax passes
+- `docker run --rm rclone/rclone:latest version` -> rclone container is available
+- offsite backup scripts are present, pending end-to-end upload validation with real offsite credentials
 
 ## Why Obsidian is in the admin layer
 - It is useful for local documentation and knowledge capture.
@@ -53,10 +60,10 @@ Track the current state of the Odoo self-hosted platform while keeping the techn
 - Keeping it in `compose.admin.yaml` preserves a cleaner platform base.
 
 ## Next recommended implementation slice
-- Add offsite backup replication.
 - Automate first-time server bootstrap.
 - Exercise the live deploy path against real `dev`, `staging`, and `prod` targets.
 - Add deeper data anonymization for restored staging data.
+- Add scheduled restore drills from offsite backup sets.
 
 ## Links
 - [Platform](platform.md)
@@ -72,3 +79,5 @@ Track the current state of the Odoo self-hosted platform while keeping the techn
 - [Deployment over SSH](../runbooks/deployment-over-ssh.md)
 - [Backup and restore runbook](../runbooks/backup-and-restore.md)
 - [Staging neutralization runbook](../runbooks/staging-neutralization.md)
+- [Offsite backups runbook](../runbooks/offsite-backups.md)
+- [Offsite backups runbook](../runbooks/offsite-backups.md)

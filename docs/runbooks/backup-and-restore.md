@@ -22,11 +22,11 @@ Current local status:
 - `check` passes
 - full local backup passes
 - PostgreSQL is using `archive_mode=on` with `pgbackrest archive-push`
+- offsite replication scripts now exist for production backup artifacts
 
 Remaining follow-up:
 
 - production retention hardening
-- offsite copy
 - scheduled restore drill automation
 
 ## Filestore backups
@@ -85,6 +85,19 @@ Current limitation:
 Upgrade this bootstrap runbook with:
 
 - production retention policy refinement
-- offsite `S3-compatible` copy
+- scheduled production offsite runs
 - scheduled restore drills
 - automated restore drill scheduling
+
+## Offsite replication
+
+Use:
+
+```bash
+OFFSITE_ENV_FILE=/srv/odoo/env/prod.env \
+bash backup/scripts/run-offsite-backup.sh
+```
+
+Details live in:
+
+- `docs/runbooks/offsite-backups.md`
