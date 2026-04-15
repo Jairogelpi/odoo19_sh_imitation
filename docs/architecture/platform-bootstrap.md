@@ -7,9 +7,12 @@ This repository is the versioned starting point for the Odoo 19 self-hosted plat
 - safe GitHub-ready repository
 - shared `compose.yaml`
 - `compose.dev.yaml` for local development
-- `compose.admin.yaml` for optional admin tooling
+- `compose.admin.yaml` for optional admin and knowledge tooling
 - custom Odoo image scaffold
 - Nginx reverse proxy template scaffold
+- staging and production compose overrides
+- bootstrap backup/restore scripts
+- CI workflow skeleton
 
 ## Runtime data policy
 
@@ -31,17 +34,22 @@ Development stack:
 docker compose -f compose.yaml -f compose.dev.yaml up -d
 ```
 
-Optional admin stack:
+Optional admin and knowledge stack:
 
 ```bash
 docker compose -f compose.yaml -f compose.dev.yaml -f compose.admin.yaml up -d
 ```
 
+Legacy compatibility stack:
+
+```bash
+docker compose up -d
+```
+
 ## Not implemented yet
 
-- staging overrides
-- production overrides
 - Redis
 - pgBackRest
-- GitHub Actions deployment
-- restore scripts
+- full GHCR deploy pipeline
+- staging neutralization automation
+- offsite backups

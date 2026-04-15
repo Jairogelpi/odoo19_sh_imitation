@@ -10,6 +10,7 @@
 - [erd_edges.csv](erd_edges.csv)
 
 ## Module Docs
+- [00_Odoo_Brain.md](../00_Odoo_Brain.md)
 - [base_module.md](base_module.md)
 - [crm_module.md](crm_module.md)
 - [base_vs_crm.md](base_vs_crm.md)

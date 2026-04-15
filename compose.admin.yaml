@@ -15,5 +15,25 @@ services:
     networks:
       - odoo_net
 
+  obsidian:
+    image: lscr.io/linuxserver/obsidian:latest
+    restart: unless-stopped
+    environment:
+      PUID: ${PUID:-1000}
+      PGID: ${PGID:-1000}
+      TZ: ${TZ:-Etc/UTC}
+      CUSTOM_USER: ${OBSIDIAN_CUSTOM_USER:-obsidian}
+      PASSWORD: ${OBSIDIAN_PASSWORD:-change_me}
+    ports:
+      - "3000:3000"
+      - "3001:3001"
+    volumes:
+      - obsidian-config:/config
+      - ./docs:/config/ObsidianVault
+    shm_size: "1gb"
+    networks:
+      - odoo_net
+
 volumes:
   pgadmin-data:
+  obsidian-config:
