@@ -1,0 +1,12 @@
+.git
+.worktrees
+worktrees
+postgres
+pgadmin
+backups
+logs
+tmp
+__pycache__
+.DS_Store
+.idea
+.vscode
