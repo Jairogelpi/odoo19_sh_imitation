@@ -1,0 +1,59 @@
+name: Platform CI
+
+on:
+  push:
+    branches:
+      - main
+      - staging
+      - develop
+  pull_request:
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Validate development compose config
+        run: docker compose -f compose.yaml -f compose.dev.yaml config
+
+      - name: Build Odoo image
+        run: docker build -f odoo/Dockerfile .
+
+  deploy:
+    if: github.event_name == 'push'
+    runs-on: ubuntu-latest
+    needs: validate
+
+    strategy:
+      matrix:
+        include:
+          - branch: develop
+            environment: dev
+          - branch: staging
+            environment: staging
+          - branch: main
+            environment: prod
+
+    steps:
+      - name: Skip unrelated branch
+        if: github.ref_name != matrix.branch
+        run: echo "No deploy for this branch"
+
+      - name: Checkout
+        if: github.ref_name == matrix.branch
+        uses: actions/checkout@v4
+
+      - name: Log target environment
+        if: github.ref_name == matrix.branch
+        run: echo "Deploy target: ${{ matrix.environment }}"
+
+      - name: TODO deploy over SSH
+        if: github.ref_name == matrix.branch
+        run: |
+          echo "Pending implementation:"
+          echo "- build and push image to GHCR"
+          echo "- copy env file or use server-side secrets"
+          echo "- run docker compose pull && docker compose up -d on target host"

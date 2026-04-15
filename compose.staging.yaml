@@ -1,0 +1,11 @@
+services:
+  odoo:
+    ports: []
+    volumes:
+      - ./config/odoo.staging.conf:/etc/odoo/odoo.conf:ro
+
+  nginx:
+    ports:
+      - "80:80"
+      - "443:443"
+
