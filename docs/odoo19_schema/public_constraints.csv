@@ -1,0 +1,1208 @@
+schemaname,tablename,conname,contype,definition
+public,activity_attachment_rel,activity_attachment_rel_activity_id_fkey,f,FOREIGN KEY (activity_id) REFERENCES mail_activity(id) ON DELETE CASCADE
+public,activity_attachment_rel,activity_attachment_rel_attachment_id_fkey,f,FOREIGN KEY (attachment_id) REFERENCES ir_attachment(id) ON DELETE CASCADE
+public,activity_attachment_rel,activity_attachment_rel_pkey,p,"PRIMARY KEY (activity_id, attachment_id)"
+public,auth_passkey_key,auth_passkey_key_create_uid_fkey,f,FOREIGN KEY (create_uid) REFERENCES res_users(id) ON DELETE SET NULL
+public,auth_passkey_key,auth_passkey_key_pkey,p,PRIMARY KEY (id)
+public,auth_passkey_key,auth_passkey_key_unique_identifier,u,UNIQUE (credential_identifier)
+public,auth_passkey_key,auth_passkey_key_write_uid_fkey,f,FOREIGN KEY (write_uid) REFERENCES res_users(id) ON DELETE SET NULL
+public,auth_passkey_key_create,auth_passkey_key_create_create_uid_fkey,f,FOREIGN KEY (create_uid) REFERENCES res_users(id) ON DELETE SET NULL
+public,auth_passkey_key_create,auth_passkey_key_create_pkey,p,PRIMARY KEY (id)
+public,auth_passkey_key_create,auth_passkey_key_create_write_uid_fkey,f,FOREIGN KEY (write_uid) REFERENCES res_users(id) ON DELETE SET NULL
+public,auth_totp_device,auth_totp_device_index_check,c,CHECK ((char_length((index)::text) = 8))
+public,auth_totp_device,auth_totp_device_pkey,p,PRIMARY KEY (id)
+public,auth_totp_device,auth_totp_device_user_id_fkey,f,FOREIGN KEY (user_id) REFERENCES res_users(id) ON DELETE CASCADE
+public,auth_totp_rate_limit_log,auth_totp_rate_limit_log_create_uid_fkey,f,FOREIGN KEY (create_uid) REFERENCES res_users(id) ON DELETE SET NULL
+public,auth_totp_rate_limit_log,auth_totp_rate_limit_log_pkey,p,PRIMARY KEY (id)
+public,auth_totp_rate_limit_log,auth_totp_rate_limit_log_user_id_fkey,f,FOREIGN KEY (user_id) REFERENCES res_users(id) ON DELETE CASCADE
+public,auth_totp_rate_limit_log,auth_totp_rate_limit_log_write_uid_fkey,f,FOREIGN KEY (write_uid) REFERENCES res_users(id) ON DELETE SET NULL
+public,auth_totp_wizard,auth_totp_wizard_create_uid_fkey,f,FOREIGN KEY (create_uid) REFERENCES res_users(id) ON DELETE SET NULL
+public,auth_totp_wizard,auth_totp_wizard_pkey,p,PRIMARY KEY (id)
+public,auth_totp_wizard,auth_totp_wizard_user_id_fkey,f,FOREIGN KEY (user_id) REFERENCES res_users(id) ON DELETE CASCADE
+public,auth_totp_wizard,auth_totp_wizard_write_uid_fkey,f,FOREIGN KEY (write_uid) REFERENCES res_users(id) ON DELETE SET NULL
+public,base_document_layout,base_document_layout_company_id_fkey,f,FOREIGN KEY (company_id) REFERENCES res_company(id) ON DELETE CASCADE
+public,base_document_layout,base_document_layout_create_uid_fkey,f,FOREIGN KEY (create_uid) REFERENCES res_users(id) ON DELETE SET NULL
+public,base_document_layout,base_document_layout_pkey,p,PRIMARY KEY (id)
+public,base_document_layout,base_document_layout_report_layout_id_fkey,f,FOREIGN KEY (report_layout_id) REFERENCES report_layout(id) ON DELETE SET NULL
+public,base_document_layout,base_document_layout_write_uid_fkey,f,FOREIGN KEY (write_uid) REFERENCES res_users(id) ON DELETE SET NULL
+public,base_enable_profiling_wizard,base_enable_profiling_wizard_create_uid_fkey,f,FOREIGN KEY (create_uid) REFERENCES res_users(id) ON DELETE SET NULL
+public,base_enable_profiling_wizard,base_enable_profiling_wizard_pkey,p,PRIMARY KEY (id)
+public,base_enable_profiling_wizard,base_enable_profiling_wizard_write_uid_fkey,f,FOREIGN KEY (write_uid) REFERENCES res_users(id) ON DELETE SET NULL
+public,base_import_import,base_import_import_create_uid_fkey,f,FOREIGN KEY (create_uid) REFERENCES res_users(id) ON DELETE SET NULL
+public,base_import_import,base_import_import_pkey,p,PRIMARY KEY (id)
+public,base_import_import,base_import_import_write_uid_fkey,f,FOREIGN KEY (write_uid) REFERENCES res_users(id) ON DELETE SET NULL
+public,base_import_mapping,base_import_mapping_create_uid_fkey,f,FOREIGN KEY (create_uid) REFERENCES res_users(id) ON DELETE SET NULL
+public,base_import_mapping,base_import_mapping_pkey,p,PRIMARY KEY (id)
+public,base_import_mapping,base_import_mapping_write_uid_fkey,f,FOREIGN KEY (write_uid) REFERENCES res_users(id) ON DELETE SET NULL
+public,base_import_module,base_import_module_create_uid_fkey,f,FOREIGN KEY (create_uid) REFERENCES res_users(id) ON DELETE SET NULL
+public,base_import_module,base_import_module_pkey,p,PRIMARY KEY (id)
+public,base_import_module,base_import_module_write_uid_fkey,f,FOREIGN KEY (write_uid) REFERENCES res_users(id) ON DELETE SET NULL
+public,base_language_export,base_language_export_create_uid_fkey,f,FOREIGN KEY (create_uid) REFERENCES res_users(id) ON DELETE SET NULL
+public,base_language_export,base_language_export_model_id_fkey,f,FOREIGN KEY (model_id) REFERENCES ir_model(id) ON DELETE SET NULL
+public,base_language_export,base_language_export_pkey,p,PRIMARY KEY (id)
+public,base_language_export,base_language_export_write_uid_fkey,f,FOREIGN KEY (write_uid) REFERENCES res_users(id) ON DELETE SET NULL
+public,base_language_import,base_language_import_create_uid_fkey,f,FOREIGN KEY (create_uid) REFERENCES res_users(id) ON DELETE SET NULL
+public,base_language_import,base_language_import_pkey,p,PRIMARY KEY (id)
+public,base_language_import,base_language_import_write_uid_fkey,f,FOREIGN KEY (write_uid) REFERENCES res_users(id) ON DELETE SET NULL
+public,base_language_install,base_language_install_create_uid_fkey,f,FOREIGN KEY (create_uid) REFERENCES res_users(id) ON DELETE SET NULL
+public,base_language_install,base_language_install_pkey,p,PRIMARY KEY (id)
+public,base_language_install,base_language_install_write_uid_fkey,f,FOREIGN KEY (write_uid) REFERENCES res_users(id) ON DELETE SET NULL
+public,base_module_install_request,base_module_install_request_create_uid_fkey,f,FOREIGN KEY (create_uid) REFERENCES res_users(id) ON DELETE SET NULL
+public,base_module_install_request,base_module_install_request_module_id_fkey,f,FOREIGN KEY (module_id) REFERENCES ir_module_module(id) ON DELETE CASCADE
+public,base_module_install_request,base_module_install_request_pkey,p,PRIMARY KEY (id)
+public,base_module_install_request,base_module_install_request_user_id_fkey,f,FOREIGN KEY (user_id) REFERENCES res_users(id) ON DELETE CASCADE
+public,base_module_install_request,base_module_install_request_write_uid_fkey,f,FOREIGN KEY (write_uid) REFERENCES res_users(id) ON DELETE SET NULL
+public,base_module_install_review,base_module_install_review_create_uid_fkey,f,FOREIGN KEY (create_uid) REFERENCES res_users(id) ON DELETE SET NULL
+public,base_module_install_review,base_module_install_review_module_id_fkey,f,FOREIGN KEY (module_id) REFERENCES ir_module_module(id) ON DELETE CASCADE
+public,base_module_install_review,base_module_install_review_pkey,p,PRIMARY KEY (id)
+public,base_module_install_review,base_module_install_review_write_uid_fkey,f,FOREIGN KEY (write_uid) REFERENCES res_users(id) ON DELETE SET NULL
+public,base_module_uninstall,base_module_uninstall_create_uid_fkey,f,FOREIGN KEY (create_uid) REFERENCES res_users(id) ON DELETE SET NULL
+public,base_module_uninstall,base_module_uninstall_pkey,p,PRIMARY KEY (id)
+public,base_module_uninstall,base_module_uninstall_write_uid_fkey,f,FOREIGN KEY (write_uid) REFERENCES res_users(id) ON DELETE SET NULL
+public,base_module_uninstall_ir_module_module_rel,base_module_uninstall_ir_module_m_base_module_uninstall_id_fkey,f,FOREIGN KEY (base_module_uninstall_id) REFERENCES base_module_uninstall(id) ON DELETE CASCADE
+public,base_module_uninstall_ir_module_module_rel,base_module_uninstall_ir_module_module_ir_module_module_id_fkey,f,FOREIGN KEY (ir_module_module_id) REFERENCES ir_module_module(id) ON DELETE CASCADE
+public,base_module_uninstall_ir_module_module_rel,base_module_uninstall_ir_module_module_rel_pkey,p,"PRIMARY KEY (base_module_uninstall_id, ir_module_module_id)"
+public,base_module_update,base_module_update_create_uid_fkey,f,FOREIGN KEY (create_uid) REFERENCES res_users(id) ON DELETE SET NULL
+public,base_module_update,base_module_update_pkey,p,PRIMARY KEY (id)
+public,base_module_update,base_module_update_write_uid_fkey,f,FOREIGN KEY (write_uid) REFERENCES res_users(id) ON DELETE SET NULL
+public,base_module_upgrade,base_module_upgrade_create_uid_fkey,f,FOREIGN KEY (create_uid) REFERENCES res_users(id) ON DELETE SET NULL
+public,base_module_upgrade,base_module_upgrade_pkey,p,PRIMARY KEY (id)
+public,base_module_upgrade,base_module_upgrade_write_uid_fkey,f,FOREIGN KEY (write_uid) REFERENCES res_users(id) ON DELETE SET NULL
+public,base_partner_merge_automatic_wizard,base_partner_merge_automatic_wizard_create_uid_fkey,f,FOREIGN KEY (create_uid) REFERENCES res_users(id) ON DELETE SET NULL
+public,base_partner_merge_automatic_wizard,base_partner_merge_automatic_wizard_current_line_id_fkey,f,FOREIGN KEY (current_line_id) REFERENCES base_partner_merge_line(id) ON DELETE SET NULL
+public,base_partner_merge_automatic_wizard,base_partner_merge_automatic_wizard_dst_partner_id_fkey,f,FOREIGN KEY (dst_partner_id) REFERENCES res_partner(id) ON DELETE SET NULL
+public,base_partner_merge_automatic_wizard,base_partner_merge_automatic_wizard_pkey,p,PRIMARY KEY (id)
+public,base_partner_merge_automatic_wizard,base_partner_merge_automatic_wizard_write_uid_fkey,f,FOREIGN KEY (write_uid) REFERENCES res_users(id) ON DELETE SET NULL
+public,base_partner_merge_automatic_wizard_res_partner_rel,base_partner_merge_automatic__base_partner_merge_automatic_fkey,f,FOREIGN KEY (base_partner_merge_automatic_wizard_id) REFERENCES base_partner_merge_automatic_wizard(id) ON DELETE CASCADE
+public,base_partner_merge_automatic_wizard_res_partner_rel,base_partner_merge_automatic_wizard_res_par_res_partner_id_fkey,f,FOREIGN KEY (res_partner_id) REFERENCES res_partner(id) ON DELETE CASCADE
+public,base_partner_merge_automatic_wizard_res_partner_rel,base_partner_merge_automatic_wizard_res_partner_rel_pkey,p,"PRIMARY KEY (base_partner_merge_automatic_wizard_id, res_partner_id)"
+public,base_partner_merge_line,base_partner_merge_line_create_uid_fkey,f,FOREIGN KEY (create_uid) REFERENCES res_users(id) ON DELETE SET NULL
+public,base_partner_merge_line,base_partner_merge_line_pkey,p,PRIMARY KEY (id)
+public,base_partner_merge_line,base_partner_merge_line_wizard_id_fkey,f,FOREIGN KEY (wizard_id) REFERENCES base_partner_merge_automatic_wizard(id) ON DELETE SET NULL
+public,base_partner_merge_line,base_partner_merge_line_write_uid_fkey,f,FOREIGN KEY (write_uid) REFERENCES res_users(id) ON DELETE SET NULL
+public,bus_bus,bus_bus_create_uid_fkey,f,FOREIGN KEY (create_uid) REFERENCES res_users(id) ON DELETE SET NULL
+public,bus_bus,bus_bus_pkey,p,PRIMARY KEY (id)
+public,bus_bus,bus_bus_write_uid_fkey,f,FOREIGN KEY (write_uid) REFERENCES res_users(id) ON DELETE SET NULL
+public,calendar_alarm,calendar_alarm_create_uid_fkey,f,FOREIGN KEY (create_uid) REFERENCES res_users(id) ON DELETE SET NULL
+public,calendar_alarm,calendar_alarm_mail_template_id_fkey,f,FOREIGN KEY (mail_template_id) REFERENCES mail_template(id) ON DELETE SET NULL
+public,calendar_alarm,calendar_alarm_pkey,p,PRIMARY KEY (id)
+public,calendar_alarm,calendar_alarm_sms_template_id_fkey,f,FOREIGN KEY (sms_template_id) REFERENCES sms_template(id) ON DELETE SET NULL
+public,calendar_alarm,calendar_alarm_write_uid_fkey,f,FOREIGN KEY (write_uid) REFERENCES res_users(id) ON DELETE SET NULL
+public,calendar_alarm_calendar_event_rel,calendar_alarm_calendar_event_rel_calendar_alarm_id_fkey,f,FOREIGN KEY (calendar_alarm_id) REFERENCES calendar_alarm(id) ON DELETE RESTRICT
+public,calendar_alarm_calendar_event_rel,calendar_alarm_calendar_event_rel_calendar_event_id_fkey,f,FOREIGN KEY (calendar_event_id) REFERENCES calendar_event(id) ON DELETE CASCADE
+public,calendar_alarm_calendar_event_rel,calendar_alarm_calendar_event_rel_pkey,p,"PRIMARY KEY (calendar_event_id, calendar_alarm_id)"
+public,calendar_attendee,calendar_attendee_create_uid_fkey,f,FOREIGN KEY (create_uid) REFERENCES res_users(id) ON DELETE SET NULL
+public,calendar_attendee,calendar_attendee_event_id_fkey,f,FOREIGN KEY (event_id) REFERENCES calendar_event(id) ON DELETE CASCADE
+public,calendar_attendee,calendar_attendee_partner_id_fkey,f,FOREIGN KEY (partner_id) REFERENCES res_partner(id) ON DELETE CASCADE
+public,calendar_attendee,calendar_attendee_pkey,p,PRIMARY KEY (id)
+public,calendar_attendee,calendar_attendee_write_uid_fkey,f,FOREIGN KEY (write_uid) REFERENCES res_users(id) ON DELETE SET NULL
+public,calendar_event,calendar_event_create_uid_fkey,f,FOREIGN KEY (create_uid) REFERENCES res_users(id) ON DELETE SET NULL
+public,calendar_event,calendar_event_opportunity_id_fkey,f,FOREIGN KEY (opportunity_id) REFERENCES crm_lead(id) ON DELETE SET NULL
+public,calendar_event,calendar_event_pkey,p,PRIMARY KEY (id)
+public,calendar_event,calendar_event_recurrence_id_fkey,f,FOREIGN KEY (recurrence_id) REFERENCES calendar_recurrence(id) ON DELETE SET NULL
+public,calendar_event,calendar_event_res_model_id_fkey,f,FOREIGN KEY (res_model_id) REFERENCES ir_model(id) ON DELETE CASCADE
+public,calendar_event,calendar_event_user_id_fkey,f,FOREIGN KEY (user_id) REFERENCES res_users(id) ON DELETE SET NULL
+public,calendar_event,calendar_event_videocall_channel_id_fkey,f,FOREIGN KEY (videocall_channel_id) REFERENCES discuss_channel(id) ON DELETE SET NULL
+public,calendar_event,calendar_event_write_uid_fkey,f,FOREIGN KEY (write_uid) REFERENCES res_users(id) ON DELETE SET NULL
+public,calendar_event_res_partner_rel,calendar_event_res_partner_rel_calendar_event_id_fkey,f,FOREIGN KEY (calendar_event_id) REFERENCES calendar_event(id) ON DELETE CASCADE
+public,calendar_event_res_partner_rel,calendar_event_res_partner_rel_pkey,p,"PRIMARY KEY (res_partner_id, calendar_event_id)"
+public,calendar_event_res_partner_rel,calendar_event_res_partner_rel_res_partner_id_fkey,f,FOREIGN KEY (res_partner_id) REFERENCES res_partner(id) ON DELETE CASCADE
+public,calendar_event_type,calendar_event_type_create_uid_fkey,f,FOREIGN KEY (create_uid) REFERENCES res_users(id) ON DELETE SET NULL
+public,calendar_event_type,calendar_event_type_name_uniq,u,UNIQUE (name)
+public,calendar_event_type,calendar_event_type_pkey,p,PRIMARY KEY (id)
+public,calendar_event_type,calendar_event_type_write_uid_fkey,f,FOREIGN KEY (write_uid) REFERENCES res_users(id) ON DELETE SET NULL
+public,calendar_filters,calendar_filters_create_uid_fkey,f,FOREIGN KEY (create_uid) REFERENCES res_users(id) ON DELETE SET NULL
+public,calendar_filters,calendar_filters_partner_id_fkey,f,FOREIGN KEY (partner_id) REFERENCES res_partner(id) ON DELETE RESTRICT
+public,calendar_filters,calendar_filters_pkey,p,PRIMARY KEY (id)
+public,calendar_filters,calendar_filters_user_id_fkey,f,FOREIGN KEY (user_id) REFERENCES res_users(id) ON DELETE CASCADE
+public,calendar_filters,calendar_filters_user_id_partner_id_unique,u,"UNIQUE (user_id, partner_id)"
+public,calendar_filters,calendar_filters_write_uid_fkey,f,FOREIGN KEY (write_uid) REFERENCES res_users(id) ON DELETE SET NULL
+public,calendar_popover_delete_wizard,calendar_popover_delete_wizard_calendar_event_id_fkey,f,FOREIGN KEY (calendar_event_id) REFERENCES calendar_event(id) ON DELETE SET NULL
+public,calendar_popover_delete_wizard,calendar_popover_delete_wizard_create_uid_fkey,f,FOREIGN KEY (create_uid) REFERENCES res_users(id) ON DELETE SET NULL
+public,calendar_popover_delete_wizard,calendar_popover_delete_wizard_pkey,p,PRIMARY KEY (id)
+public,calendar_popover_delete_wizard,calendar_popover_delete_wizard_template_id_fkey,f,FOREIGN KEY (template_id) REFERENCES mail_template(id) ON DELETE SET NULL
+public,calendar_popover_delete_wizard,calendar_popover_delete_wizard_write_uid_fkey,f,FOREIGN KEY (write_uid) REFERENCES res_users(id) ON DELETE SET NULL
+public,calendar_provider_config,calendar_provider_config_create_uid_fkey,f,FOREIGN KEY (create_uid) REFERENCES res_users(id) ON DELETE SET NULL
+public,calendar_provider_config,calendar_provider_config_pkey,p,PRIMARY KEY (id)
+public,calendar_provider_config,calendar_provider_config_write_uid_fkey,f,FOREIGN KEY (write_uid) REFERENCES res_users(id) ON DELETE SET NULL
+public,calendar_recurrence,calendar_recurrence_base_event_id_fkey,f,FOREIGN KEY (base_event_id) REFERENCES calendar_event(id) ON DELETE SET NULL
+public,calendar_recurrence,calendar_recurrence_create_uid_fkey,f,FOREIGN KEY (create_uid) REFERENCES res_users(id) ON DELETE SET NULL
+public,calendar_recurrence,calendar_recurrence_month_day,c,"CHECK ((((rrule_type)::text <> 'monthly'::text) OR ((month_by)::text <> 'day'::text) OR ((day >= 1) AND (day <= 31)) OR (((weekday)::text = ANY ((ARRAY['MON'::character varying, 'TUE'::character varying, 'WED'::character varying, 'THU'::character varying, 'FRI'::character varying, 'SAT'::character varying, 'SUN'::character varying])::text[])) AND ((byday)::text = ANY ((ARRAY['1'::character varying, '2'::character varying, '3'::character varying, '4'::character varying, '-1'::character varying])::text[])))))"
+public,calendar_recurrence,calendar_recurrence_pkey,p,PRIMARY KEY (id)
+public,calendar_recurrence,calendar_recurrence_trigger_id_fkey,f,FOREIGN KEY (trigger_id) REFERENCES ir_cron_trigger(id) ON DELETE SET NULL
+public,calendar_recurrence,calendar_recurrence_write_uid_fkey,f,FOREIGN KEY (write_uid) REFERENCES res_users(id) ON DELETE SET NULL
+public,change_password_own,change_password_own_create_uid_fkey,f,FOREIGN KEY (create_uid) REFERENCES res_users(id) ON DELETE SET NULL
+public,change_password_own,change_password_own_pkey,p,PRIMARY KEY (id)
+public,change_password_own,change_password_own_write_uid_fkey,f,FOREIGN KEY (write_uid) REFERENCES res_users(id) ON DELETE SET NULL
+public,change_password_user,change_password_user_create_uid_fkey,f,FOREIGN KEY (create_uid) REFERENCES res_users(id) ON DELETE SET NULL
+public,change_password_user,change_password_user_pkey,p,PRIMARY KEY (id)
+public,change_password_user,change_password_user_user_id_fkey,f,FOREIGN KEY (user_id) REFERENCES res_users(id) ON DELETE CASCADE
+public,change_password_user,change_password_user_wizard_id_fkey,f,FOREIGN KEY (wizard_id) REFERENCES change_password_wizard(id) ON DELETE CASCADE
+public,change_password_user,change_password_user_write_uid_fkey,f,FOREIGN KEY (write_uid) REFERENCES res_users(id) ON DELETE SET NULL
+public,change_password_wizard,change_password_wizard_create_uid_fkey,f,FOREIGN KEY (create_uid) REFERENCES res_users(id) ON DELETE SET NULL
+public,change_password_wizard,change_password_wizard_pkey,p,PRIMARY KEY (id)
+public,change_password_wizard,change_password_wizard_write_uid_fkey,f,FOREIGN KEY (write_uid) REFERENCES res_users(id) ON DELETE SET NULL
+public,crm_convert_lead_mass_lead_rel,crm_convert_lead_mass_lead_re_crm_lead2opportunity_partner_fkey,f,FOREIGN KEY (crm_lead2opportunity_partner_mass_id) REFERENCES crm_lead2opportunity_partner_mass(id) ON DELETE CASCADE
+public,crm_convert_lead_mass_lead_rel,crm_convert_lead_mass_lead_rel_crm_lead_id_fkey,f,FOREIGN KEY (crm_lead_id) REFERENCES crm_lead(id) ON DELETE CASCADE
+public,crm_convert_lead_mass_lead_rel,crm_convert_lead_mass_lead_rel_pkey,p,"PRIMARY KEY (crm_lead2opportunity_partner_mass_id, crm_lead_id)"
+public,crm_iap_lead_helpers,crm_iap_lead_helpers_create_uid_fkey,f,FOREIGN KEY (create_uid) REFERENCES res_users(id) ON DELETE SET NULL
+public,crm_iap_lead_helpers,crm_iap_lead_helpers_pkey,p,PRIMARY KEY (id)
+public,crm_iap_lead_helpers,crm_iap_lead_helpers_write_uid_fkey,f,FOREIGN KEY (write_uid) REFERENCES res_users(id) ON DELETE SET NULL
+public,crm_iap_lead_industry,crm_iap_lead_industry_create_uid_fkey,f,FOREIGN KEY (create_uid) REFERENCES res_users(id) ON DELETE SET NULL
+public,crm_iap_lead_industry,crm_iap_lead_industry_name_uniq,u,UNIQUE (name)
+public,crm_iap_lead_industry,crm_iap_lead_industry_pkey,p,PRIMARY KEY (id)
+public,crm_iap_lead_industry,crm_iap_lead_industry_write_uid_fkey,f,FOREIGN KEY (write_uid) REFERENCES res_users(id) ON DELETE SET NULL
+public,crm_iap_lead_industry_crm_iap_lead_mining_request_rel,crm_iap_lead_industry_crm_iap_crm_iap_lead_mining_request__fkey,f,FOREIGN KEY (crm_iap_lead_mining_request_id) REFERENCES crm_iap_lead_mining_request(id) ON DELETE CASCADE
+public,crm_iap_lead_industry_crm_iap_lead_mining_request_rel,crm_iap_lead_industry_crm_iap_lea_crm_iap_lead_industry_id_fkey,f,FOREIGN KEY (crm_iap_lead_industry_id) REFERENCES crm_iap_lead_industry(id) ON DELETE CASCADE
+public,crm_iap_lead_industry_crm_iap_lead_mining_request_rel,crm_iap_lead_industry_crm_iap_lead_mining_request_rel_pkey,p,"PRIMARY KEY (crm_iap_lead_mining_request_id, crm_iap_lead_industry_id)"
+public,crm_iap_lead_mining_request,crm_iap_lead_mining_request_create_uid_fkey,f,FOREIGN KEY (create_uid) REFERENCES res_users(id) ON DELETE SET NULL
+public,crm_iap_lead_mining_request,crm_iap_lead_mining_request_pkey,p,PRIMARY KEY (id)
+public,crm_iap_lead_mining_request,crm_iap_lead_mining_request_preferred_role_id_fkey,f,FOREIGN KEY (preferred_role_id) REFERENCES crm_iap_lead_role(id) ON DELETE SET NULL
+public,crm_iap_lead_mining_request,crm_iap_lead_mining_request_seniority_id_fkey,f,FOREIGN KEY (seniority_id) REFERENCES crm_iap_lead_seniority(id) ON DELETE SET NULL
+public,crm_iap_lead_mining_request,crm_iap_lead_mining_request_team_id_fkey,f,FOREIGN KEY (team_id) REFERENCES crm_team(id) ON DELETE SET NULL
+public,crm_iap_lead_mining_request,crm_iap_lead_mining_request_user_id_fkey,f,FOREIGN KEY (user_id) REFERENCES res_users(id) ON DELETE SET NULL
+public,crm_iap_lead_mining_request,crm_iap_lead_mining_request_write_uid_fkey,f,FOREIGN KEY (write_uid) REFERENCES res_users(id) ON DELETE SET NULL
+public,crm_iap_lead_mining_request_crm_iap_lead_role_rel,crm_iap_lead_mining_request__crm_iap_lead_mining_request__fkey2,f,FOREIGN KEY (crm_iap_lead_mining_request_id) REFERENCES crm_iap_lead_mining_request(id) ON DELETE CASCADE
+public,crm_iap_lead_mining_request_crm_iap_lead_role_rel,crm_iap_lead_mining_request_crm_iap_l_crm_iap_lead_role_id_fkey,f,FOREIGN KEY (crm_iap_lead_role_id) REFERENCES crm_iap_lead_role(id) ON DELETE CASCADE
+public,crm_iap_lead_mining_request_crm_iap_lead_role_rel,crm_iap_lead_mining_request_crm_iap_lead_role_rel_pkey,p,"PRIMARY KEY (crm_iap_lead_mining_request_id, crm_iap_lead_role_id)"
+public,crm_iap_lead_mining_request_crm_tag_rel,crm_iap_lead_mining_request_c_crm_iap_lead_mining_request__fkey,f,FOREIGN KEY (crm_iap_lead_mining_request_id) REFERENCES crm_iap_lead_mining_request(id) ON DELETE CASCADE
+public,crm_iap_lead_mining_request_crm_tag_rel,crm_iap_lead_mining_request_crm_tag_rel_crm_tag_id_fkey,f,FOREIGN KEY (crm_tag_id) REFERENCES crm_tag(id) ON DELETE CASCADE
+public,crm_iap_lead_mining_request_crm_tag_rel,crm_iap_lead_mining_request_crm_tag_rel_pkey,p,"PRIMARY KEY (crm_iap_lead_mining_request_id, crm_tag_id)"
+public,crm_iap_lead_mining_request_res_country_rel,crm_iap_lead_mining_request_r_crm_iap_lead_mining_request__fkey,f,FOREIGN KEY (crm_iap_lead_mining_request_id) REFERENCES crm_iap_lead_mining_request(id) ON DELETE CASCADE
+public,crm_iap_lead_mining_request_res_country_rel,crm_iap_lead_mining_request_res_country_rel_pkey,p,"PRIMARY KEY (crm_iap_lead_mining_request_id, res_country_id)"
+public,crm_iap_lead_mining_request_res_country_rel,crm_iap_lead_mining_request_res_country_rel_res_country_id_fkey,f,FOREIGN KEY (res_country_id) REFERENCES res_country(id) ON DELETE CASCADE
+public,crm_iap_lead_mining_request_res_country_state_rel,crm_iap_lead_mining_request__crm_iap_lead_mining_request__fkey1,f,FOREIGN KEY (crm_iap_lead_mining_request_id) REFERENCES crm_iap_lead_mining_request(id) ON DELETE CASCADE
+public,crm_iap_lead_mining_request_res_country_state_rel,crm_iap_lead_mining_request_res_count_res_country_state_id_fkey,f,FOREIGN KEY (res_country_state_id) REFERENCES res_country_state(id) ON DELETE CASCADE
+public,crm_iap_lead_mining_request_res_country_state_rel,crm_iap_lead_mining_request_res_country_state_rel_pkey,p,"PRIMARY KEY (crm_iap_lead_mining_request_id, res_country_state_id)"
+public,crm_iap_lead_role,crm_iap_lead_role_create_uid_fkey,f,FOREIGN KEY (create_uid) REFERENCES res_users(id) ON DELETE SET NULL
+public,crm_iap_lead_role,crm_iap_lead_role_name_uniq,u,UNIQUE (name)
+public,crm_iap_lead_role,crm_iap_lead_role_pkey,p,PRIMARY KEY (id)
+public,crm_iap_lead_role,crm_iap_lead_role_write_uid_fkey,f,FOREIGN KEY (write_uid) REFERENCES res_users(id) ON DELETE SET NULL
+public,crm_iap_lead_seniority,crm_iap_lead_seniority_create_uid_fkey,f,FOREIGN KEY (create_uid) REFERENCES res_users(id) ON DELETE SET NULL
+public,crm_iap_lead_seniority,crm_iap_lead_seniority_name_uniq,u,UNIQUE (name)
+public,crm_iap_lead_seniority,crm_iap_lead_seniority_pkey,p,PRIMARY KEY (id)
+public,crm_iap_lead_seniority,crm_iap_lead_seniority_write_uid_fkey,f,FOREIGN KEY (write_uid) REFERENCES res_users(id) ON DELETE SET NULL
+public,crm_lead,crm_lead_campaign_id_fkey,f,FOREIGN KEY (campaign_id) REFERENCES utm_campaign(id) ON DELETE SET NULL
+public,crm_lead,crm_lead_check_probability,c,CHECK (((probability >= (0)::double precision) AND (probability <= (100)::double precision)))
+public,crm_lead,crm_lead_company_id_fkey,f,FOREIGN KEY (company_id) REFERENCES res_company(id) ON DELETE SET NULL
+public,crm_lead,crm_lead_country_id_fkey,f,FOREIGN KEY (country_id) REFERENCES res_country(id) ON DELETE SET NULL
+public,crm_lead,crm_lead_create_uid_fkey,f,FOREIGN KEY (create_uid) REFERENCES res_users(id) ON DELETE SET NULL
+public,crm_lead,crm_lead_lang_id_fkey,f,FOREIGN KEY (lang_id) REFERENCES res_lang(id) ON DELETE SET NULL
+public,crm_lead,crm_lead_lead_mining_request_id_fkey,f,FOREIGN KEY (lead_mining_request_id) REFERENCES crm_iap_lead_mining_request(id) ON DELETE SET NULL
+public,crm_lead,crm_lead_lost_reason_id_fkey,f,FOREIGN KEY (lost_reason_id) REFERENCES crm_lost_reason(id) ON DELETE RESTRICT
+public,crm_lead,crm_lead_medium_id_fkey,f,FOREIGN KEY (medium_id) REFERENCES utm_medium(id) ON DELETE SET NULL
+public,crm_lead,crm_lead_partner_id_fkey,f,FOREIGN KEY (partner_id) REFERENCES res_partner(id) ON DELETE SET NULL
+public,crm_lead,crm_lead_pkey,p,PRIMARY KEY (id)
+public,crm_lead,crm_lead_recurring_plan_fkey,f,FOREIGN KEY (recurring_plan) REFERENCES crm_recurring_plan(id) ON DELETE SET NULL
+public,crm_lead,crm_lead_source_id_fkey,f,FOREIGN KEY (source_id) REFERENCES utm_source(id) ON DELETE SET NULL
+public,crm_lead,crm_lead_stage_id_fkey,f,FOREIGN KEY (stage_id) REFERENCES crm_stage(id) ON DELETE RESTRICT
+public,crm_lead,crm_lead_state_id_fkey,f,FOREIGN KEY (state_id) REFERENCES res_country_state(id) ON DELETE SET NULL
+public,crm_lead,crm_lead_team_id_fkey,f,FOREIGN KEY (team_id) REFERENCES crm_team(id) ON DELETE SET NULL
+public,crm_lead,crm_lead_user_id_fkey,f,FOREIGN KEY (user_id) REFERENCES res_users(id) ON DELETE SET NULL
+public,crm_lead,crm_lead_write_uid_fkey,f,FOREIGN KEY (write_uid) REFERENCES res_users(id) ON DELETE SET NULL
+public,crm_lead2opportunity_partner,crm_lead2opportunity_partner_commercial_partner_id_fkey,f,FOREIGN KEY (commercial_partner_id) REFERENCES res_partner(id) ON DELETE SET NULL
+public,crm_lead2opportunity_partner,crm_lead2opportunity_partner_create_uid_fkey,f,FOREIGN KEY (create_uid) REFERENCES res_users(id) ON DELETE SET NULL
+public,crm_lead2opportunity_partner,crm_lead2opportunity_partner_lead_id_fkey,f,FOREIGN KEY (lead_id) REFERENCES crm_lead(id) ON DELETE CASCADE
+public,crm_lead2opportunity_partner,crm_lead2opportunity_partner_partner_id_fkey,f,FOREIGN KEY (partner_id) REFERENCES res_partner(id) ON DELETE SET NULL
+public,crm_lead2opportunity_partner,crm_lead2opportunity_partner_pkey,p,PRIMARY KEY (id)
+public,crm_lead2opportunity_partner,crm_lead2opportunity_partner_team_id_fkey,f,FOREIGN KEY (team_id) REFERENCES crm_team(id) ON DELETE SET NULL
+public,crm_lead2opportunity_partner,crm_lead2opportunity_partner_user_id_fkey,f,FOREIGN KEY (user_id) REFERENCES res_users(id) ON DELETE SET NULL
+public,crm_lead2opportunity_partner,crm_lead2opportunity_partner_write_uid_fkey,f,FOREIGN KEY (write_uid) REFERENCES res_users(id) ON DELETE SET NULL
+public,crm_lead2opportunity_partner_mass,crm_lead2opportunity_partner_mass_commercial_partner_id_fkey,f,FOREIGN KEY (commercial_partner_id) REFERENCES res_partner(id) ON DELETE SET NULL
+public,crm_lead2opportunity_partner_mass,crm_lead2opportunity_partner_mass_create_uid_fkey,f,FOREIGN KEY (create_uid) REFERENCES res_users(id) ON DELETE SET NULL
+public,crm_lead2opportunity_partner_mass,crm_lead2opportunity_partner_mass_lead_id_fkey,f,FOREIGN KEY (lead_id) REFERENCES crm_lead(id) ON DELETE SET NULL
+public,crm_lead2opportunity_partner_mass,crm_lead2opportunity_partner_mass_partner_id_fkey,f,FOREIGN KEY (partner_id) REFERENCES res_partner(id) ON DELETE SET NULL
+public,crm_lead2opportunity_partner_mass,crm_lead2opportunity_partner_mass_pkey,p,PRIMARY KEY (id)
+public,crm_lead2opportunity_partner_mass,crm_lead2opportunity_partner_mass_team_id_fkey,f,FOREIGN KEY (team_id) REFERENCES crm_team(id) ON DELETE SET NULL
+public,crm_lead2opportunity_partner_mass,crm_lead2opportunity_partner_mass_user_id_fkey,f,FOREIGN KEY (user_id) REFERENCES res_users(id) ON DELETE SET NULL
+public,crm_lead2opportunity_partner_mass,crm_lead2opportunity_partner_mass_write_uid_fkey,f,FOREIGN KEY (write_uid) REFERENCES res_users(id) ON DELETE SET NULL
+public,crm_lead2opportunity_partner_mass_res_users_rel,crm_lead2opportunity_partner__crm_lead2opportunity_partner_fkey,f,FOREIGN KEY (crm_lead2opportunity_partner_mass_id) REFERENCES crm_lead2opportunity_partner_mass(id) ON DELETE CASCADE
+public,crm_lead2opportunity_partner_mass_res_users_rel,crm_lead2opportunity_partner_mass_res_users_r_res_users_id_fkey,f,FOREIGN KEY (res_users_id) REFERENCES res_users(id) ON DELETE CASCADE
+public,crm_lead2opportunity_partner_mass_res_users_rel,crm_lead2opportunity_partner_mass_res_users_rel_pkey,p,"PRIMARY KEY (crm_lead2opportunity_partner_mass_id, res_users_id)"
+public,crm_lead_crm_lead2opportunity_partner_mass_rel,crm_lead_crm_lead2opportunit_crm_lead2opportunity_partner_fkey1,f,FOREIGN KEY (crm_lead2opportunity_partner_mass_id) REFERENCES crm_lead2opportunity_partner_mass(id) ON DELETE CASCADE
+public,crm_lead_crm_lead2opportunity_partner_mass_rel,crm_lead_crm_lead2opportunity_partner_mass_rel_crm_lead_id_fkey,f,FOREIGN KEY (crm_lead_id) REFERENCES crm_lead(id) ON DELETE CASCADE
+public,crm_lead_crm_lead2opportunity_partner_mass_rel,crm_lead_crm_lead2opportunity_partner_mass_rel_pkey,p,"PRIMARY KEY (crm_lead2opportunity_partner_mass_id, crm_lead_id)"
+public,crm_lead_crm_lead2opportunity_partner_rel,crm_lead_crm_lead2opportunity_crm_lead2opportunity_partner_fkey,f,FOREIGN KEY (crm_lead2opportunity_partner_id) REFERENCES crm_lead2opportunity_partner(id) ON DELETE CASCADE
+public,crm_lead_crm_lead2opportunity_partner_rel,crm_lead_crm_lead2opportunity_partner_rel_crm_lead_id_fkey,f,FOREIGN KEY (crm_lead_id) REFERENCES crm_lead(id) ON DELETE CASCADE
+public,crm_lead_crm_lead2opportunity_partner_rel,crm_lead_crm_lead2opportunity_partner_rel_pkey,p,"PRIMARY KEY (crm_lead2opportunity_partner_id, crm_lead_id)"
+public,crm_lead_crm_lead_lost_rel,crm_lead_crm_lead_lost_rel_crm_lead_id_fkey,f,FOREIGN KEY (crm_lead_id) REFERENCES crm_lead(id) ON DELETE CASCADE
+public,crm_lead_crm_lead_lost_rel,crm_lead_crm_lead_lost_rel_crm_lead_lost_id_fkey,f,FOREIGN KEY (crm_lead_lost_id) REFERENCES crm_lead_lost(id) ON DELETE CASCADE
+public,crm_lead_crm_lead_lost_rel,crm_lead_crm_lead_lost_rel_pkey,p,"PRIMARY KEY (crm_lead_lost_id, crm_lead_id)"
+public,crm_lead_lost,crm_lead_lost_create_uid_fkey,f,FOREIGN KEY (create_uid) REFERENCES res_users(id) ON DELETE SET NULL
+public,crm_lead_lost,crm_lead_lost_lost_reason_id_fkey,f,FOREIGN KEY (lost_reason_id) REFERENCES crm_lost_reason(id) ON DELETE SET NULL
+public,crm_lead_lost,crm_lead_lost_pkey,p,PRIMARY KEY (id)
+public,crm_lead_lost,crm_lead_lost_write_uid_fkey,f,FOREIGN KEY (write_uid) REFERENCES res_users(id) ON DELETE SET NULL
+public,crm_lead_pls_update,crm_lead_pls_update_create_uid_fkey,f,FOREIGN KEY (create_uid) REFERENCES res_users(id) ON DELETE SET NULL
+public,crm_lead_pls_update,crm_lead_pls_update_pkey,p,PRIMARY KEY (id)
+public,crm_lead_pls_update,crm_lead_pls_update_write_uid_fkey,f,FOREIGN KEY (write_uid) REFERENCES res_users(id) ON DELETE SET NULL
+public,crm_lead_pls_update_crm_lead_scoring_frequency_field_rel,crm_lead_pls_update_crm_lead__crm_lead_scoring_frequency_f_fkey,f,FOREIGN KEY (crm_lead_scoring_frequency_field_id) REFERENCES crm_lead_scoring_frequency_field(id) ON DELETE CASCADE
+public,crm_lead_pls_update_crm_lead_scoring_frequency_field_rel,crm_lead_pls_update_crm_lead_scorin_crm_lead_pls_update_id_fkey,f,FOREIGN KEY (crm_lead_pls_update_id) REFERENCES crm_lead_pls_update(id) ON DELETE CASCADE
+public,crm_lead_pls_update_crm_lead_scoring_frequency_field_rel,crm_lead_pls_update_crm_lead_scoring_frequency_field_rel_pkey,p,"PRIMARY KEY (crm_lead_pls_update_id, crm_lead_scoring_frequency_field_id)"
+public,crm_lead_scoring_frequency,crm_lead_scoring_frequency_create_uid_fkey,f,FOREIGN KEY (create_uid) REFERENCES res_users(id) ON DELETE SET NULL
+public,crm_lead_scoring_frequency,crm_lead_scoring_frequency_pkey,p,PRIMARY KEY (id)
+public,crm_lead_scoring_frequency,crm_lead_scoring_frequency_team_id_fkey,f,FOREIGN KEY (team_id) REFERENCES crm_team(id) ON DELETE CASCADE
+public,crm_lead_scoring_frequency,crm_lead_scoring_frequency_write_uid_fkey,f,FOREIGN KEY (write_uid) REFERENCES res_users(id) ON DELETE SET NULL
+public,crm_lead_scoring_frequency_field,crm_lead_scoring_frequency_field_create_uid_fkey,f,FOREIGN KEY (create_uid) REFERENCES res_users(id) ON DELETE SET NULL
+public,crm_lead_scoring_frequency_field,crm_lead_scoring_frequency_field_field_id_fkey,f,FOREIGN KEY (field_id) REFERENCES ir_model_fields(id) ON DELETE CASCADE
+public,crm_lead_scoring_frequency_field,crm_lead_scoring_frequency_field_pkey,p,PRIMARY KEY (id)
+public,crm_lead_scoring_frequency_field,crm_lead_scoring_frequency_field_write_uid_fkey,f,FOREIGN KEY (write_uid) REFERENCES res_users(id) ON DELETE SET NULL
+public,crm_lost_reason,crm_lost_reason_create_uid_fkey,f,FOREIGN KEY (create_uid) REFERENCES res_users(id) ON DELETE SET NULL
+public,crm_lost_reason,crm_lost_reason_pkey,p,PRIMARY KEY (id)
+public,crm_lost_reason,crm_lost_reason_write_uid_fkey,f,FOREIGN KEY (write_uid) REFERENCES res_users(id) ON DELETE SET NULL
+public,crm_merge_opportunity,crm_merge_opportunity_create_uid_fkey,f,FOREIGN KEY (create_uid) REFERENCES res_users(id) ON DELETE SET NULL
+public,crm_merge_opportunity,crm_merge_opportunity_pkey,p,PRIMARY KEY (id)
+public,crm_merge_opportunity,crm_merge_opportunity_team_id_fkey,f,FOREIGN KEY (team_id) REFERENCES crm_team(id) ON DELETE SET NULL
+public,crm_merge_opportunity,crm_merge_opportunity_user_id_fkey,f,FOREIGN KEY (user_id) REFERENCES res_users(id) ON DELETE SET NULL
+public,crm_merge_opportunity,crm_merge_opportunity_write_uid_fkey,f,FOREIGN KEY (write_uid) REFERENCES res_users(id) ON DELETE SET NULL
+public,crm_recurring_plan,crm_recurring_plan_check_number_of_months,c,CHECK ((number_of_months >= 0))
+public,crm_recurring_plan,crm_recurring_plan_create_uid_fkey,f,FOREIGN KEY (create_uid) REFERENCES res_users(id) ON DELETE SET NULL
+public,crm_recurring_plan,crm_recurring_plan_pkey,p,PRIMARY KEY (id)
+public,crm_recurring_plan,crm_recurring_plan_write_uid_fkey,f,FOREIGN KEY (write_uid) REFERENCES res_users(id) ON DELETE SET NULL
+public,crm_stage,crm_stage_create_uid_fkey,f,FOREIGN KEY (create_uid) REFERENCES res_users(id) ON DELETE SET NULL
+public,crm_stage,crm_stage_pkey,p,PRIMARY KEY (id)
+public,crm_stage,crm_stage_write_uid_fkey,f,FOREIGN KEY (write_uid) REFERENCES res_users(id) ON DELETE SET NULL
+public,crm_stage_crm_team_rel,crm_stage_crm_team_rel_crm_stage_id_fkey,f,FOREIGN KEY (crm_stage_id) REFERENCES crm_stage(id) ON DELETE CASCADE
+public,crm_stage_crm_team_rel,crm_stage_crm_team_rel_crm_team_id_fkey,f,FOREIGN KEY (crm_team_id) REFERENCES crm_team(id) ON DELETE RESTRICT
+public,crm_stage_crm_team_rel,crm_stage_crm_team_rel_pkey,p,"PRIMARY KEY (crm_stage_id, crm_team_id)"
+public,crm_tag,crm_tag_create_uid_fkey,f,FOREIGN KEY (create_uid) REFERENCES res_users(id) ON DELETE SET NULL
+public,crm_tag,crm_tag_name_uniq,u,UNIQUE (name)
+public,crm_tag,crm_tag_pkey,p,PRIMARY KEY (id)
+public,crm_tag,crm_tag_write_uid_fkey,f,FOREIGN KEY (write_uid) REFERENCES res_users(id) ON DELETE SET NULL
+public,crm_tag_rel,crm_tag_rel_lead_id_fkey,f,FOREIGN KEY (lead_id) REFERENCES crm_lead(id) ON DELETE CASCADE
+public,crm_tag_rel,crm_tag_rel_pkey,p,"PRIMARY KEY (lead_id, tag_id)"
+public,crm_tag_rel,crm_tag_rel_tag_id_fkey,f,FOREIGN KEY (tag_id) REFERENCES crm_tag(id) ON DELETE CASCADE
+public,crm_team,crm_team_alias_id_fkey,f,FOREIGN KEY (alias_id) REFERENCES mail_alias(id) ON DELETE RESTRICT
+public,crm_team,crm_team_company_id_fkey,f,FOREIGN KEY (company_id) REFERENCES res_company(id) ON DELETE SET NULL
+public,crm_team,crm_team_create_uid_fkey,f,FOREIGN KEY (create_uid) REFERENCES res_users(id) ON DELETE SET NULL
+public,crm_team,crm_team_pkey,p,PRIMARY KEY (id)
+public,crm_team,crm_team_user_id_fkey,f,FOREIGN KEY (user_id) REFERENCES res_users(id) ON DELETE SET NULL
+public,crm_team,crm_team_write_uid_fkey,f,FOREIGN KEY (write_uid) REFERENCES res_users(id) ON DELETE SET NULL
+public,crm_team_member,crm_team_member_create_uid_fkey,f,FOREIGN KEY (create_uid) REFERENCES res_users(id) ON DELETE SET NULL
+public,crm_team_member,crm_team_member_crm_team_id_fkey,f,FOREIGN KEY (crm_team_id) REFERENCES crm_team(id) ON DELETE CASCADE
+public,crm_team_member,crm_team_member_pkey,p,PRIMARY KEY (id)
+public,crm_team_member,crm_team_member_user_id_fkey,f,FOREIGN KEY (user_id) REFERENCES res_users(id) ON DELETE CASCADE
+public,crm_team_member,crm_team_member_write_uid_fkey,f,FOREIGN KEY (write_uid) REFERENCES res_users(id) ON DELETE SET NULL
+public,decimal_precision,decimal_precision_create_uid_fkey,f,FOREIGN KEY (create_uid) REFERENCES res_users(id) ON DELETE SET NULL
+public,decimal_precision,decimal_precision_name_uniq,u,UNIQUE (name)
+public,decimal_precision,decimal_precision_pkey,p,PRIMARY KEY (id)
+public,decimal_precision,decimal_precision_write_uid_fkey,f,FOREIGN KEY (write_uid) REFERENCES res_users(id) ON DELETE SET NULL
+public,digest_digest,digest_digest_company_id_fkey,f,FOREIGN KEY (company_id) REFERENCES res_company(id) ON DELETE SET NULL
+public,digest_digest,digest_digest_create_uid_fkey,f,FOREIGN KEY (create_uid) REFERENCES res_users(id) ON DELETE SET NULL
+public,digest_digest,digest_digest_pkey,p,PRIMARY KEY (id)
+public,digest_digest,digest_digest_write_uid_fkey,f,FOREIGN KEY (write_uid) REFERENCES res_users(id) ON DELETE SET NULL
+public,digest_digest_res_users_rel,digest_digest_res_users_rel_digest_digest_id_fkey,f,FOREIGN KEY (digest_digest_id) REFERENCES digest_digest(id) ON DELETE CASCADE
+public,digest_digest_res_users_rel,digest_digest_res_users_rel_pkey,p,"PRIMARY KEY (digest_digest_id, res_users_id)"
+public,digest_digest_res_users_rel,digest_digest_res_users_rel_res_users_id_fkey,f,FOREIGN KEY (res_users_id) REFERENCES res_users(id) ON DELETE CASCADE
+public,digest_tip,digest_tip_create_uid_fkey,f,FOREIGN KEY (create_uid) REFERENCES res_users(id) ON DELETE SET NULL
+public,digest_tip,digest_tip_group_id_fkey,f,FOREIGN KEY (group_id) REFERENCES res_groups(id) ON DELETE SET NULL
+public,digest_tip,digest_tip_pkey,p,PRIMARY KEY (id)
+public,digest_tip,digest_tip_write_uid_fkey,f,FOREIGN KEY (write_uid) REFERENCES res_users(id) ON DELETE SET NULL
+public,digest_tip_res_users_rel,digest_tip_res_users_rel_digest_tip_id_fkey,f,FOREIGN KEY (digest_tip_id) REFERENCES digest_tip(id) ON DELETE CASCADE
+public,digest_tip_res_users_rel,digest_tip_res_users_rel_pkey,p,"PRIMARY KEY (digest_tip_id, res_users_id)"
+public,digest_tip_res_users_rel,digest_tip_res_users_rel_res_users_id_fkey,f,FOREIGN KEY (res_users_id) REFERENCES res_users(id) ON DELETE CASCADE
+public,discuss_call_history,discuss_call_history_channel_id_fkey,f,FOREIGN KEY (channel_id) REFERENCES discuss_channel(id) ON DELETE CASCADE
+public,discuss_call_history,discuss_call_history_channel_id_not_null_constraint,c,CHECK ((channel_id IS NOT NULL))
+public,discuss_call_history,discuss_call_history_create_uid_fkey,f,FOREIGN KEY (create_uid) REFERENCES res_users(id) ON DELETE SET NULL
+public,discuss_call_history,discuss_call_history_message_id_unique_constraint,u,UNIQUE (start_call_message_id)
+public,discuss_call_history,discuss_call_history_pkey,p,PRIMARY KEY (id)
+public,discuss_call_history,discuss_call_history_start_call_message_id_fkey,f,FOREIGN KEY (start_call_message_id) REFERENCES mail_message(id) ON DELETE SET NULL
+public,discuss_call_history,discuss_call_history_start_dt_is_not_null_constraint,c,CHECK ((start_dt IS NOT NULL))
+public,discuss_call_history,discuss_call_history_write_uid_fkey,f,FOREIGN KEY (write_uid) REFERENCES res_users(id) ON DELETE SET NULL
+public,discuss_channel,discuss_channel_create_uid_fkey,f,FOREIGN KEY (create_uid) REFERENCES res_users(id) ON DELETE SET NULL
+public,discuss_channel,discuss_channel_from_message_id_fkey,f,FOREIGN KEY (from_message_id) REFERENCES mail_message(id) ON DELETE SET NULL
+public,discuss_channel,discuss_channel_from_message_id_unique,u,UNIQUE (from_message_id)
+public,discuss_channel,discuss_channel_group_public_id_check,c,CHECK ((((channel_type)::text = 'channel'::text) OR (group_public_id IS NULL)))
+public,discuss_channel,discuss_channel_group_public_id_fkey,f,FOREIGN KEY (group_public_id) REFERENCES res_groups(id) ON DELETE SET NULL
+public,discuss_channel,discuss_channel_parent_channel_id_fkey,f,FOREIGN KEY (parent_channel_id) REFERENCES discuss_channel(id) ON DELETE CASCADE
+public,discuss_channel,discuss_channel_pkey,p,PRIMARY KEY (id)
+public,discuss_channel,discuss_channel_uuid_unique,u,UNIQUE (uuid)
+public,discuss_channel,discuss_channel_write_uid_fkey,f,FOREIGN KEY (write_uid) REFERENCES res_users(id) ON DELETE SET NULL
+public,discuss_channel_member,discuss_channel_member_channel_id_fkey,f,FOREIGN KEY (channel_id) REFERENCES discuss_channel(id) ON DELETE CASCADE
+public,discuss_channel_member,discuss_channel_member_create_uid_fkey,f,FOREIGN KEY (create_uid) REFERENCES res_users(id) ON DELETE SET NULL
+public,discuss_channel_member,discuss_channel_member_fetched_message_id_fkey,f,FOREIGN KEY (fetched_message_id) REFERENCES mail_message(id) ON DELETE SET NULL
+public,discuss_channel_member,discuss_channel_member_guest_id_fkey,f,FOREIGN KEY (guest_id) REFERENCES mail_guest(id) ON DELETE CASCADE
+public,discuss_channel_member,discuss_channel_member_partner_id_fkey,f,FOREIGN KEY (partner_id) REFERENCES res_partner(id) ON DELETE CASCADE
+public,discuss_channel_member,discuss_channel_member_partner_or_guest_exists,c,CHECK ((((partner_id IS NOT NULL) AND (guest_id IS NULL)) OR ((partner_id IS NULL) AND (guest_id IS NOT NULL))))
+public,discuss_channel_member,discuss_channel_member_pkey,p,PRIMARY KEY (id)
+public,discuss_channel_member,discuss_channel_member_rtc_inviting_session_id_fkey,f,FOREIGN KEY (rtc_inviting_session_id) REFERENCES discuss_channel_rtc_session(id) ON DELETE SET NULL
+public,discuss_channel_member,discuss_channel_member_seen_message_id_fkey,f,FOREIGN KEY (seen_message_id) REFERENCES mail_message(id) ON DELETE SET NULL
+public,discuss_channel_member,discuss_channel_member_write_uid_fkey,f,FOREIGN KEY (write_uid) REFERENCES res_users(id) ON DELETE SET NULL
+public,discuss_channel_res_groups_rel,discuss_channel_res_groups_rel_discuss_channel_id_fkey,f,FOREIGN KEY (discuss_channel_id) REFERENCES discuss_channel(id) ON DELETE CASCADE
+public,discuss_channel_res_groups_rel,discuss_channel_res_groups_rel_pkey,p,"PRIMARY KEY (discuss_channel_id, res_groups_id)"
+public,discuss_channel_res_groups_rel,discuss_channel_res_groups_rel_res_groups_id_fkey,f,FOREIGN KEY (res_groups_id) REFERENCES res_groups(id) ON DELETE CASCADE
+public,discuss_channel_rtc_session,discuss_channel_rtc_session_channel_id_fkey,f,FOREIGN KEY (channel_id) REFERENCES discuss_channel(id) ON DELETE SET NULL
+public,discuss_channel_rtc_session,discuss_channel_rtc_session_channel_member_id_fkey,f,FOREIGN KEY (channel_member_id) REFERENCES discuss_channel_member(id) ON DELETE CASCADE
+public,discuss_channel_rtc_session,discuss_channel_rtc_session_channel_member_unique,u,UNIQUE (channel_member_id)
+public,discuss_channel_rtc_session,discuss_channel_rtc_session_create_uid_fkey,f,FOREIGN KEY (create_uid) REFERENCES res_users(id) ON DELETE SET NULL
+public,discuss_channel_rtc_session,discuss_channel_rtc_session_partner_id_fkey,f,FOREIGN KEY (partner_id) REFERENCES res_partner(id) ON DELETE SET NULL
+public,discuss_channel_rtc_session,discuss_channel_rtc_session_pkey,p,PRIMARY KEY (id)
+public,discuss_channel_rtc_session,discuss_channel_rtc_session_write_uid_fkey,f,FOREIGN KEY (write_uid) REFERENCES res_users(id) ON DELETE SET NULL
+public,discuss_gif_favorite,discuss_gif_favorite_create_uid_fkey,f,FOREIGN KEY (create_uid) REFERENCES res_users(id) ON DELETE SET NULL
+public,discuss_gif_favorite,discuss_gif_favorite_pkey,p,PRIMARY KEY (id)
+public,discuss_gif_favorite,discuss_gif_favorite_user_gif_favorite,u,"UNIQUE (create_uid, tenor_gif_id)"
+public,discuss_gif_favorite,discuss_gif_favorite_write_uid_fkey,f,FOREIGN KEY (write_uid) REFERENCES res_users(id) ON DELETE SET NULL
+public,discuss_voice_metadata,discuss_voice_metadata_attachment_id_fkey,f,FOREIGN KEY (attachment_id) REFERENCES ir_attachment(id) ON DELETE CASCADE
+public,discuss_voice_metadata,discuss_voice_metadata_create_uid_fkey,f,FOREIGN KEY (create_uid) REFERENCES res_users(id) ON DELETE SET NULL
+public,discuss_voice_metadata,discuss_voice_metadata_pkey,p,PRIMARY KEY (id)
+public,discuss_voice_metadata,discuss_voice_metadata_write_uid_fkey,f,FOREIGN KEY (write_uid) REFERENCES res_users(id) ON DELETE SET NULL
+public,email_template_attachment_rel,email_template_attachment_rel_attachment_id_fkey,f,FOREIGN KEY (attachment_id) REFERENCES ir_attachment(id) ON DELETE CASCADE
+public,email_template_attachment_rel,email_template_attachment_rel_email_template_id_fkey,f,FOREIGN KEY (email_template_id) REFERENCES mail_template(id) ON DELETE CASCADE
+public,email_template_attachment_rel,email_template_attachment_rel_pkey,p,"PRIMARY KEY (email_template_id, attachment_id)"
+public,fetchmail_server,fetchmail_server_create_uid_fkey,f,FOREIGN KEY (create_uid) REFERENCES res_users(id) ON DELETE SET NULL
+public,fetchmail_server,fetchmail_server_object_id_fkey,f,FOREIGN KEY (object_id) REFERENCES ir_model(id) ON DELETE SET NULL
+public,fetchmail_server,fetchmail_server_pkey,p,PRIMARY KEY (id)
+public,fetchmail_server,fetchmail_server_write_uid_fkey,f,FOREIGN KEY (write_uid) REFERENCES res_users(id) ON DELETE SET NULL
+public,html_editor_converter_test,html_editor_converter_test_create_uid_fkey,f,FOREIGN KEY (create_uid) REFERENCES res_users(id) ON DELETE SET NULL
+public,html_editor_converter_test,html_editor_converter_test_many2one_fkey,f,FOREIGN KEY (many2one) REFERENCES html_editor_converter_test_sub(id) ON DELETE SET NULL
+public,html_editor_converter_test,html_editor_converter_test_pkey,p,PRIMARY KEY (id)
+public,html_editor_converter_test,html_editor_converter_test_write_uid_fkey,f,FOREIGN KEY (write_uid) REFERENCES res_users(id) ON DELETE SET NULL
+public,html_editor_converter_test_sub,html_editor_converter_test_sub_create_uid_fkey,f,FOREIGN KEY (create_uid) REFERENCES res_users(id) ON DELETE SET NULL
+public,html_editor_converter_test_sub,html_editor_converter_test_sub_pkey,p,PRIMARY KEY (id)
+public,html_editor_converter_test_sub,html_editor_converter_test_sub_write_uid_fkey,f,FOREIGN KEY (write_uid) REFERENCES res_users(id) ON DELETE SET NULL
+public,iap_account,iap_account_create_uid_fkey,f,FOREIGN KEY (create_uid) REFERENCES res_users(id) ON DELETE SET NULL
+public,iap_account,iap_account_pkey,p,PRIMARY KEY (id)
+public,iap_account,iap_account_service_id_fkey,f,FOREIGN KEY (service_id) REFERENCES iap_service(id) ON DELETE RESTRICT
+public,iap_account,iap_account_write_uid_fkey,f,FOREIGN KEY (write_uid) REFERENCES res_users(id) ON DELETE SET NULL
+public,iap_account_res_company_rel,iap_account_res_company_rel_iap_account_id_fkey,f,FOREIGN KEY (iap_account_id) REFERENCES iap_account(id) ON DELETE CASCADE
+public,iap_account_res_company_rel,iap_account_res_company_rel_pkey,p,"PRIMARY KEY (iap_account_id, res_company_id)"
+public,iap_account_res_company_rel,iap_account_res_company_rel_res_company_id_fkey,f,FOREIGN KEY (res_company_id) REFERENCES res_company(id) ON DELETE CASCADE
+public,iap_account_res_users_rel,iap_account_res_users_rel_iap_account_id_fkey,f,FOREIGN KEY (iap_account_id) REFERENCES iap_account(id) ON DELETE CASCADE
+public,iap_account_res_users_rel,iap_account_res_users_rel_pkey,p,"PRIMARY KEY (iap_account_id, res_users_id)"
+public,iap_account_res_users_rel,iap_account_res_users_rel_res_users_id_fkey,f,FOREIGN KEY (res_users_id) REFERENCES res_users(id) ON DELETE CASCADE
+public,iap_service,iap_service_create_uid_fkey,f,FOREIGN KEY (create_uid) REFERENCES res_users(id) ON DELETE SET NULL
+public,iap_service,iap_service_pkey,p,PRIMARY KEY (id)
+public,iap_service,iap_service_unique_technical_name,u,UNIQUE (technical_name)
+public,iap_service,iap_service_write_uid_fkey,f,FOREIGN KEY (write_uid) REFERENCES res_users(id) ON DELETE SET NULL
+public,ir_act_client,ir_act_client_binding_model_id_fkey,f,FOREIGN KEY (binding_model_id) REFERENCES ir_model(id) ON DELETE CASCADE
+public,ir_act_client,ir_act_client_create_uid_fkey,f,FOREIGN KEY (create_uid) REFERENCES res_users(id) ON DELETE SET NULL
+public,ir_act_client,ir_act_client_path_unique,u,UNIQUE (path)
+public,ir_act_client,ir_act_client_pkey,p,PRIMARY KEY (id)
+public,ir_act_client,ir_act_client_write_uid_fkey,f,FOREIGN KEY (write_uid) REFERENCES res_users(id) ON DELETE SET NULL
+public,ir_act_report_xml,ir_act_report_xml_binding_model_id_fkey,f,FOREIGN KEY (binding_model_id) REFERENCES ir_model(id) ON DELETE CASCADE
+public,ir_act_report_xml,ir_act_report_xml_create_uid_fkey,f,FOREIGN KEY (create_uid) REFERENCES res_users(id) ON DELETE SET NULL
+public,ir_act_report_xml,ir_act_report_xml_paperformat_id_fkey,f,FOREIGN KEY (paperformat_id) REFERENCES report_paperformat(id) ON DELETE SET NULL
+public,ir_act_report_xml,ir_act_report_xml_path_unique,u,UNIQUE (path)
+public,ir_act_report_xml,ir_act_report_xml_pkey,p,PRIMARY KEY (id)
+public,ir_act_report_xml,ir_act_report_xml_write_uid_fkey,f,FOREIGN KEY (write_uid) REFERENCES res_users(id) ON DELETE SET NULL
+public,ir_act_server,ir_act_server_activity_type_id_fkey,f,FOREIGN KEY (activity_type_id) REFERENCES mail_activity_type(id) ON DELETE RESTRICT
+public,ir_act_server,ir_act_server_activity_user_id_fkey,f,FOREIGN KEY (activity_user_id) REFERENCES res_users(id) ON DELETE SET NULL
+public,ir_act_server,ir_act_server_binding_model_id_fkey,f,FOREIGN KEY (binding_model_id) REFERENCES ir_model(id) ON DELETE CASCADE
+public,ir_act_server,ir_act_server_create_uid_fkey,f,FOREIGN KEY (create_uid) REFERENCES res_users(id) ON DELETE SET NULL
+public,ir_act_server,ir_act_server_crud_model_id_fkey,f,FOREIGN KEY (crud_model_id) REFERENCES ir_model(id) ON DELETE SET NULL
+public,ir_act_server,ir_act_server_link_field_id_fkey,f,FOREIGN KEY (link_field_id) REFERENCES ir_model_fields(id) ON DELETE SET NULL
+public,ir_act_server,ir_act_server_model_id_fkey,f,FOREIGN KEY (model_id) REFERENCES ir_model(id) ON DELETE CASCADE
+public,ir_act_server,ir_act_server_parent_id_fkey,f,FOREIGN KEY (parent_id) REFERENCES ir_act_server(id) ON DELETE CASCADE
+public,ir_act_server,ir_act_server_path_unique,u,UNIQUE (path)
+public,ir_act_server,ir_act_server_pkey,p,PRIMARY KEY (id)
+public,ir_act_server,ir_act_server_selection_value_fkey,f,FOREIGN KEY (selection_value) REFERENCES ir_model_fields_selection(id) ON DELETE CASCADE
+public,ir_act_server,ir_act_server_sequence_id_fkey,f,FOREIGN KEY (sequence_id) REFERENCES ir_sequence(id) ON DELETE SET NULL
+public,ir_act_server,ir_act_server_sms_template_id_fkey,f,FOREIGN KEY (sms_template_id) REFERENCES sms_template(id) ON DELETE SET NULL
+public,ir_act_server,ir_act_server_template_id_fkey,f,FOREIGN KEY (template_id) REFERENCES mail_template(id) ON DELETE SET NULL
+public,ir_act_server,ir_act_server_update_field_id_fkey,f,FOREIGN KEY (update_field_id) REFERENCES ir_model_fields(id) ON DELETE CASCADE
+public,ir_act_server,ir_act_server_update_related_model_id_fkey,f,FOREIGN KEY (update_related_model_id) REFERENCES ir_model(id) ON DELETE SET NULL
+public,ir_act_server,ir_act_server_write_uid_fkey,f,FOREIGN KEY (write_uid) REFERENCES res_users(id) ON DELETE SET NULL
+public,ir_act_server_group_rel,ir_act_server_group_rel_act_id_fkey,f,FOREIGN KEY (act_id) REFERENCES ir_act_server(id) ON DELETE CASCADE
+public,ir_act_server_group_rel,ir_act_server_group_rel_gid_fkey,f,FOREIGN KEY (gid) REFERENCES res_groups(id) ON DELETE CASCADE
+public,ir_act_server_group_rel,ir_act_server_group_rel_pkey,p,"PRIMARY KEY (act_id, gid)"
+public,ir_act_server_res_partner_rel,ir_act_server_res_partner_rel_ir_act_server_id_fkey,f,FOREIGN KEY (ir_act_server_id) REFERENCES ir_act_server(id) ON DELETE CASCADE
+public,ir_act_server_res_partner_rel,ir_act_server_res_partner_rel_pkey,p,"PRIMARY KEY (ir_act_server_id, res_partner_id)"
+public,ir_act_server_res_partner_rel,ir_act_server_res_partner_rel_res_partner_id_fkey,f,FOREIGN KEY (res_partner_id) REFERENCES res_partner(id) ON DELETE CASCADE
+public,ir_act_server_webhook_field_rel,ir_act_server_webhook_field_rel_field_id_fkey,f,FOREIGN KEY (field_id) REFERENCES ir_model_fields(id) ON DELETE CASCADE
+public,ir_act_server_webhook_field_rel,ir_act_server_webhook_field_rel_pkey,p,"PRIMARY KEY (server_id, field_id)"
+public,ir_act_server_webhook_field_rel,ir_act_server_webhook_field_rel_server_id_fkey,f,FOREIGN KEY (server_id) REFERENCES ir_act_server(id) ON DELETE CASCADE
+public,ir_act_url,ir_act_url_binding_model_id_fkey,f,FOREIGN KEY (binding_model_id) REFERENCES ir_model(id) ON DELETE CASCADE
+public,ir_act_url,ir_act_url_create_uid_fkey,f,FOREIGN KEY (create_uid) REFERENCES res_users(id) ON DELETE SET NULL
+public,ir_act_url,ir_act_url_path_unique,u,UNIQUE (path)
+public,ir_act_url,ir_act_url_pkey,p,PRIMARY KEY (id)
+public,ir_act_url,ir_act_url_write_uid_fkey,f,FOREIGN KEY (write_uid) REFERENCES res_users(id) ON DELETE SET NULL
+public,ir_act_window,ir_act_window_binding_model_id_fkey,f,FOREIGN KEY (binding_model_id) REFERENCES ir_model(id) ON DELETE CASCADE
+public,ir_act_window,ir_act_window_create_uid_fkey,f,FOREIGN KEY (create_uid) REFERENCES res_users(id) ON DELETE SET NULL
+public,ir_act_window,ir_act_window_path_unique,u,UNIQUE (path)
+public,ir_act_window,ir_act_window_pkey,p,PRIMARY KEY (id)
+public,ir_act_window,ir_act_window_search_view_id_fkey,f,FOREIGN KEY (search_view_id) REFERENCES ir_ui_view(id) ON DELETE SET NULL
+public,ir_act_window,ir_act_window_view_id_fkey,f,FOREIGN KEY (view_id) REFERENCES ir_ui_view(id) ON DELETE SET NULL
+public,ir_act_window,ir_act_window_write_uid_fkey,f,FOREIGN KEY (write_uid) REFERENCES res_users(id) ON DELETE SET NULL
+public,ir_act_window_group_rel,ir_act_window_group_rel_act_id_fkey,f,FOREIGN KEY (act_id) REFERENCES ir_act_window(id) ON DELETE CASCADE
+public,ir_act_window_group_rel,ir_act_window_group_rel_gid_fkey,f,FOREIGN KEY (gid) REFERENCES res_groups(id) ON DELETE CASCADE
+public,ir_act_window_group_rel,ir_act_window_group_rel_pkey,p,"PRIMARY KEY (act_id, gid)"
+public,ir_act_window_view,ir_act_window_view_act_window_id_fkey,f,FOREIGN KEY (act_window_id) REFERENCES ir_act_window(id) ON DELETE CASCADE
+public,ir_act_window_view,ir_act_window_view_create_uid_fkey,f,FOREIGN KEY (create_uid) REFERENCES res_users(id) ON DELETE SET NULL
+public,ir_act_window_view,ir_act_window_view_pkey,p,PRIMARY KEY (id)
+public,ir_act_window_view,ir_act_window_view_view_id_fkey,f,FOREIGN KEY (view_id) REFERENCES ir_ui_view(id) ON DELETE SET NULL
+public,ir_act_window_view,ir_act_window_view_write_uid_fkey,f,FOREIGN KEY (write_uid) REFERENCES res_users(id) ON DELETE SET NULL
+public,ir_actions,ir_actions_binding_model_id_fkey,f,FOREIGN KEY (binding_model_id) REFERENCES ir_model(id) ON DELETE CASCADE
+public,ir_actions,ir_actions_create_uid_fkey,f,FOREIGN KEY (create_uid) REFERENCES res_users(id) ON DELETE SET NULL
+public,ir_actions,ir_actions_path_unique,u,UNIQUE (path)
+public,ir_actions,ir_actions_pkey,p,PRIMARY KEY (id)
+public,ir_actions,ir_actions_write_uid_fkey,f,FOREIGN KEY (write_uid) REFERENCES res_users(id) ON DELETE SET NULL
+public,ir_actions_server_history,ir_actions_server_history_action_id_fkey,f,FOREIGN KEY (action_id) REFERENCES ir_act_server(id) ON DELETE CASCADE
+public,ir_actions_server_history,ir_actions_server_history_create_uid_fkey,f,FOREIGN KEY (create_uid) REFERENCES res_users(id) ON DELETE SET NULL
+public,ir_actions_server_history,ir_actions_server_history_pkey,p,PRIMARY KEY (id)
+public,ir_actions_server_history,ir_actions_server_history_write_uid_fkey,f,FOREIGN KEY (write_uid) REFERENCES res_users(id) ON DELETE SET NULL
+public,ir_actions_todo,ir_actions_todo_create_uid_fkey,f,FOREIGN KEY (create_uid) REFERENCES res_users(id) ON DELETE SET NULL
+public,ir_actions_todo,ir_actions_todo_pkey,p,PRIMARY KEY (id)
+public,ir_actions_todo,ir_actions_todo_write_uid_fkey,f,FOREIGN KEY (write_uid) REFERENCES res_users(id) ON DELETE SET NULL
+public,ir_asset,ir_asset_create_uid_fkey,f,FOREIGN KEY (create_uid) REFERENCES res_users(id) ON DELETE SET NULL
+public,ir_asset,ir_asset_pkey,p,PRIMARY KEY (id)
+public,ir_asset,ir_asset_write_uid_fkey,f,FOREIGN KEY (write_uid) REFERENCES res_users(id) ON DELETE SET NULL
+public,ir_attachment,ir_attachment_company_id_fkey,f,FOREIGN KEY (company_id) REFERENCES res_company(id) ON DELETE SET NULL
+public,ir_attachment,ir_attachment_create_uid_fkey,f,FOREIGN KEY (create_uid) REFERENCES res_users(id) ON DELETE SET NULL
+public,ir_attachment,ir_attachment_original_id_fkey,f,FOREIGN KEY (original_id) REFERENCES ir_attachment(id) ON DELETE SET NULL
+public,ir_attachment,ir_attachment_pkey,p,PRIMARY KEY (id)
+public,ir_attachment,ir_attachment_write_uid_fkey,f,FOREIGN KEY (write_uid) REFERENCES res_users(id) ON DELETE SET NULL
+public,ir_config_parameter,ir_config_parameter_create_uid_fkey,f,FOREIGN KEY (create_uid) REFERENCES res_users(id) ON DELETE SET NULL
+public,ir_config_parameter,ir_config_parameter_key_uniq,u,UNIQUE (key)
+public,ir_config_parameter,ir_config_parameter_pkey,p,PRIMARY KEY (id)
+public,ir_config_parameter,ir_config_parameter_write_uid_fkey,f,FOREIGN KEY (write_uid) REFERENCES res_users(id) ON DELETE SET NULL
+public,ir_cron,ir_cron_check_strictly_positive_interval,c,CHECK ((interval_number > 0))
+public,ir_cron,ir_cron_create_uid_fkey,f,FOREIGN KEY (create_uid) REFERENCES res_users(id) ON DELETE SET NULL
+public,ir_cron,ir_cron_ir_actions_server_id_fkey,f,FOREIGN KEY (ir_actions_server_id) REFERENCES ir_act_server(id) ON DELETE RESTRICT
+public,ir_cron,ir_cron_pkey,p,PRIMARY KEY (id)
+public,ir_cron,ir_cron_user_id_fkey,f,FOREIGN KEY (user_id) REFERENCES res_users(id) ON DELETE RESTRICT
+public,ir_cron,ir_cron_write_uid_fkey,f,FOREIGN KEY (write_uid) REFERENCES res_users(id) ON DELETE SET NULL
+public,ir_cron_progress,ir_cron_progress_create_uid_fkey,f,FOREIGN KEY (create_uid) REFERENCES res_users(id) ON DELETE SET NULL
+public,ir_cron_progress,ir_cron_progress_cron_id_fkey,f,FOREIGN KEY (cron_id) REFERENCES ir_cron(id) ON DELETE CASCADE
+public,ir_cron_progress,ir_cron_progress_pkey,p,PRIMARY KEY (id)
+public,ir_cron_progress,ir_cron_progress_write_uid_fkey,f,FOREIGN KEY (write_uid) REFERENCES res_users(id) ON DELETE SET NULL
+public,ir_cron_trigger,ir_cron_trigger_create_uid_fkey,f,FOREIGN KEY (create_uid) REFERENCES res_users(id) ON DELETE SET NULL
+public,ir_cron_trigger,ir_cron_trigger_cron_id_fkey,f,FOREIGN KEY (cron_id) REFERENCES ir_cron(id) ON DELETE CASCADE
+public,ir_cron_trigger,ir_cron_trigger_pkey,p,PRIMARY KEY (id)
+public,ir_cron_trigger,ir_cron_trigger_write_uid_fkey,f,FOREIGN KEY (write_uid) REFERENCES res_users(id) ON DELETE SET NULL
+public,ir_default,ir_default_company_id_fkey,f,FOREIGN KEY (company_id) REFERENCES res_company(id) ON DELETE CASCADE
+public,ir_default,ir_default_create_uid_fkey,f,FOREIGN KEY (create_uid) REFERENCES res_users(id) ON DELETE SET NULL
+public,ir_default,ir_default_field_id_fkey,f,FOREIGN KEY (field_id) REFERENCES ir_model_fields(id) ON DELETE CASCADE
+public,ir_default,ir_default_pkey,p,PRIMARY KEY (id)
+public,ir_default,ir_default_user_id_fkey,f,FOREIGN KEY (user_id) REFERENCES res_users(id) ON DELETE CASCADE
+public,ir_default,ir_default_write_uid_fkey,f,FOREIGN KEY (write_uid) REFERENCES res_users(id) ON DELETE SET NULL
+public,ir_demo,ir_demo_create_uid_fkey,f,FOREIGN KEY (create_uid) REFERENCES res_users(id) ON DELETE SET NULL
+public,ir_demo,ir_demo_pkey,p,PRIMARY KEY (id)
+public,ir_demo,ir_demo_write_uid_fkey,f,FOREIGN KEY (write_uid) REFERENCES res_users(id) ON DELETE SET NULL
+public,ir_demo_failure,ir_demo_failure_create_uid_fkey,f,FOREIGN KEY (create_uid) REFERENCES res_users(id) ON DELETE SET NULL
+public,ir_demo_failure,ir_demo_failure_module_id_fkey,f,FOREIGN KEY (module_id) REFERENCES ir_module_module(id) ON DELETE CASCADE
+public,ir_demo_failure,ir_demo_failure_pkey,p,PRIMARY KEY (id)
+public,ir_demo_failure,ir_demo_failure_wizard_id_fkey,f,FOREIGN KEY (wizard_id) REFERENCES ir_demo_failure_wizard(id) ON DELETE SET NULL
+public,ir_demo_failure,ir_demo_failure_write_uid_fkey,f,FOREIGN KEY (write_uid) REFERENCES res_users(id) ON DELETE SET NULL
+public,ir_demo_failure_wizard,ir_demo_failure_wizard_create_uid_fkey,f,FOREIGN KEY (create_uid) REFERENCES res_users(id) ON DELETE SET NULL
+public,ir_demo_failure_wizard,ir_demo_failure_wizard_pkey,p,PRIMARY KEY (id)
+public,ir_demo_failure_wizard,ir_demo_failure_wizard_write_uid_fkey,f,FOREIGN KEY (write_uid) REFERENCES res_users(id) ON DELETE SET NULL
+public,ir_embedded_actions,ir_embedded_actions_check_only_one_action_defined,c,CHECK ((((action_id IS NOT NULL) AND (python_method IS NULL)) OR ((action_id IS NULL) AND (python_method IS NOT NULL))))
+public,ir_embedded_actions,ir_embedded_actions_check_python_method_requires_name,c,CHECK ((NOT ((python_method IS NOT NULL) AND (name IS NULL))))
+public,ir_embedded_actions,ir_embedded_actions_create_uid_fkey,f,FOREIGN KEY (create_uid) REFERENCES res_users(id) ON DELETE SET NULL
+public,ir_embedded_actions,ir_embedded_actions_parent_action_id_fkey,f,FOREIGN KEY (parent_action_id) REFERENCES ir_act_window(id) ON DELETE CASCADE
+public,ir_embedded_actions,ir_embedded_actions_pkey,p,PRIMARY KEY (id)
+public,ir_embedded_actions,ir_embedded_actions_user_id_fkey,f,FOREIGN KEY (user_id) REFERENCES res_users(id) ON DELETE CASCADE
+public,ir_embedded_actions,ir_embedded_actions_write_uid_fkey,f,FOREIGN KEY (write_uid) REFERENCES res_users(id) ON DELETE SET NULL
+public,ir_embedded_actions_res_groups_rel,ir_embedded_actions_res_groups_rel_ir_embedded_actions_id_fkey,f,FOREIGN KEY (ir_embedded_actions_id) REFERENCES ir_embedded_actions(id) ON DELETE CASCADE
+public,ir_embedded_actions_res_groups_rel,ir_embedded_actions_res_groups_rel_pkey,p,"PRIMARY KEY (ir_embedded_actions_id, res_groups_id)"
+public,ir_embedded_actions_res_groups_rel,ir_embedded_actions_res_groups_rel_res_groups_id_fkey,f,FOREIGN KEY (res_groups_id) REFERENCES res_groups(id) ON DELETE CASCADE
+public,ir_exports,ir_exports_create_uid_fkey,f,FOREIGN KEY (create_uid) REFERENCES res_users(id) ON DELETE SET NULL
+public,ir_exports,ir_exports_pkey,p,PRIMARY KEY (id)
+public,ir_exports,ir_exports_write_uid_fkey,f,FOREIGN KEY (write_uid) REFERENCES res_users(id) ON DELETE SET NULL
+public,ir_exports_line,ir_exports_line_create_uid_fkey,f,FOREIGN KEY (create_uid) REFERENCES res_users(id) ON DELETE SET NULL
+public,ir_exports_line,ir_exports_line_export_id_fkey,f,FOREIGN KEY (export_id) REFERENCES ir_exports(id) ON DELETE CASCADE
+public,ir_exports_line,ir_exports_line_pkey,p,PRIMARY KEY (id)
+public,ir_exports_line,ir_exports_line_write_uid_fkey,f,FOREIGN KEY (write_uid) REFERENCES res_users(id) ON DELETE SET NULL
+public,ir_filters,ir_filters_check_res_id_only_when_embedded_action,c,CHECK ((NOT ((embedded_parent_res_id IS NOT NULL) AND (embedded_action_id IS NULL))))
+public,ir_filters,ir_filters_check_sort_json,c,CHECK (((sort IS NULL) OR (jsonb_typeof((sort)::jsonb) = 'array'::text)))
+public,ir_filters,ir_filters_create_uid_fkey,f,FOREIGN KEY (create_uid) REFERENCES res_users(id) ON DELETE SET NULL
+public,ir_filters,ir_filters_embedded_action_id_fkey,f,FOREIGN KEY (embedded_action_id) REFERENCES ir_embedded_actions(id) ON DELETE CASCADE
+public,ir_filters,ir_filters_pkey,p,PRIMARY KEY (id)
+public,ir_filters,ir_filters_write_uid_fkey,f,FOREIGN KEY (write_uid) REFERENCES res_users(id) ON DELETE SET NULL
+public,ir_filters_res_users_rel,ir_filters_res_users_rel_ir_filters_id_fkey,f,FOREIGN KEY (ir_filters_id) REFERENCES ir_filters(id) ON DELETE CASCADE
+public,ir_filters_res_users_rel,ir_filters_res_users_rel_pkey,p,"PRIMARY KEY (ir_filters_id, res_users_id)"
+public,ir_filters_res_users_rel,ir_filters_res_users_rel_res_users_id_fkey,f,FOREIGN KEY (res_users_id) REFERENCES res_users(id) ON DELETE CASCADE
+public,ir_logging,ir_logging_pkey,p,PRIMARY KEY (id)
+public,ir_mail_server,ir_mail_server_certificate_requires_tls,c,CHECK ((((smtp_encryption)::text <> 'none'::text) OR ((smtp_authentication)::text <> 'certificate'::text)))
+public,ir_mail_server,ir_mail_server_create_uid_fkey,f,FOREIGN KEY (create_uid) REFERENCES res_users(id) ON DELETE SET NULL
+public,ir_mail_server,ir_mail_server_owner_user_id_fkey,f,FOREIGN KEY (owner_user_id) REFERENCES res_users(id) ON DELETE SET NULL
+public,ir_mail_server,ir_mail_server_pkey,p,PRIMARY KEY (id)
+public,ir_mail_server,ir_mail_server_unique_owner_user_id,u,UNIQUE (owner_user_id)
+public,ir_mail_server,ir_mail_server_write_uid_fkey,f,FOREIGN KEY (write_uid) REFERENCES res_users(id) ON DELETE SET NULL
+public,ir_model,ir_model_create_uid_fkey,f,FOREIGN KEY (create_uid) REFERENCES res_users(id) ON DELETE SET NULL
+public,ir_model,ir_model_obj_name_uniq,u,UNIQUE (model)
+public,ir_model,ir_model_pkey,p,PRIMARY KEY (id)
+public,ir_model,ir_model_write_uid_fkey,f,FOREIGN KEY (write_uid) REFERENCES res_users(id) ON DELETE SET NULL
+public,ir_model_access,ir_model_access_create_uid_fkey,f,FOREIGN KEY (create_uid) REFERENCES res_users(id) ON DELETE SET NULL
+public,ir_model_access,ir_model_access_group_id_fkey,f,FOREIGN KEY (group_id) REFERENCES res_groups(id) ON DELETE RESTRICT
+public,ir_model_access,ir_model_access_model_id_fkey,f,FOREIGN KEY (model_id) REFERENCES ir_model(id) ON DELETE CASCADE
+public,ir_model_access,ir_model_access_pkey,p,PRIMARY KEY (id)
+public,ir_model_access,ir_model_access_write_uid_fkey,f,FOREIGN KEY (write_uid) REFERENCES res_users(id) ON DELETE SET NULL
+public,ir_model_constraint,ir_model_constraint_create_uid_fkey,f,FOREIGN KEY (create_uid) REFERENCES res_users(id) ON DELETE SET NULL
+public,ir_model_constraint,ir_model_constraint_model_fkey,f,FOREIGN KEY (model) REFERENCES ir_model(id) ON DELETE CASCADE
+public,ir_model_constraint,ir_model_constraint_module_fkey,f,FOREIGN KEY (module) REFERENCES ir_module_module(id) ON DELETE CASCADE
+public,ir_model_constraint,ir_model_constraint_module_name_uniq,u,"UNIQUE (name, module)"
+public,ir_model_constraint,ir_model_constraint_pkey,p,PRIMARY KEY (id)
+public,ir_model_constraint,ir_model_constraint_write_uid_fkey,f,FOREIGN KEY (write_uid) REFERENCES res_users(id) ON DELETE SET NULL
+public,ir_model_data,ir_model_data_create_uid_fkey,f,FOREIGN KEY (create_uid) REFERENCES res_users(id) ON DELETE SET NULL
+public,ir_model_data,ir_model_data_name_nospaces,c,CHECK (((name)::text !~~ '% %'::text))
+public,ir_model_data,ir_model_data_pkey,p,PRIMARY KEY (id)
+public,ir_model_data,ir_model_data_write_uid_fkey,f,FOREIGN KEY (write_uid) REFERENCES res_users(id) ON DELETE SET NULL
+public,ir_model_fields,ir_model_fields_create_uid_fkey,f,FOREIGN KEY (create_uid) REFERENCES res_users(id) ON DELETE SET NULL
+public,ir_model_fields,ir_model_fields_model_id_fkey,f,FOREIGN KEY (model_id) REFERENCES ir_model(id) ON DELETE CASCADE
+public,ir_model_fields,ir_model_fields_name_manual_field,c,CHECK ((((state)::text <> 'manual'::text) OR ((name)::text ~~ 'x\_%'::text)))
+public,ir_model_fields,ir_model_fields_name_unique,u,"UNIQUE (model, name)"
+public,ir_model_fields,ir_model_fields_pkey,p,PRIMARY KEY (id)
+public,ir_model_fields,ir_model_fields_related_field_id_fkey,f,FOREIGN KEY (related_field_id) REFERENCES ir_model_fields(id) ON DELETE CASCADE
+public,ir_model_fields,ir_model_fields_relation_field_id_fkey,f,FOREIGN KEY (relation_field_id) REFERENCES ir_model_fields(id) ON DELETE CASCADE
+public,ir_model_fields,ir_model_fields_size_gt_zero,c,CHECK ((size >= 0))
+public,ir_model_fields,ir_model_fields_write_uid_fkey,f,FOREIGN KEY (write_uid) REFERENCES res_users(id) ON DELETE SET NULL
+public,ir_model_fields_group_rel,ir_model_fields_group_rel_field_id_fkey,f,FOREIGN KEY (field_id) REFERENCES ir_model_fields(id) ON DELETE CASCADE
+public,ir_model_fields_group_rel,ir_model_fields_group_rel_group_id_fkey,f,FOREIGN KEY (group_id) REFERENCES res_groups(id) ON DELETE CASCADE
+public,ir_model_fields_group_rel,ir_model_fields_group_rel_pkey,p,"PRIMARY KEY (field_id, group_id)"
+public,ir_model_fields_selection,ir_model_fields_selection_create_uid_fkey,f,FOREIGN KEY (create_uid) REFERENCES res_users(id) ON DELETE SET NULL
+public,ir_model_fields_selection,ir_model_fields_selection_field_id_fkey,f,FOREIGN KEY (field_id) REFERENCES ir_model_fields(id) ON DELETE CASCADE
+public,ir_model_fields_selection,ir_model_fields_selection_pkey,p,PRIMARY KEY (id)
+public,ir_model_fields_selection,ir_model_fields_selection_selection_field_uniq,u,"UNIQUE (field_id, value)"
+public,ir_model_fields_selection,ir_model_fields_selection_write_uid_fkey,f,FOREIGN KEY (write_uid) REFERENCES res_users(id) ON DELETE SET NULL
+public,ir_model_inherit,ir_model_inherit_model_id_fkey,f,FOREIGN KEY (model_id) REFERENCES ir_model(id) ON DELETE CASCADE
+public,ir_model_inherit,ir_model_inherit_parent_field_id_fkey,f,FOREIGN KEY (parent_field_id) REFERENCES ir_model_fields(id) ON DELETE CASCADE
+public,ir_model_inherit,ir_model_inherit_parent_id_fkey,f,FOREIGN KEY (parent_id) REFERENCES ir_model(id) ON DELETE CASCADE
+public,ir_model_inherit,ir_model_inherit_pkey,p,PRIMARY KEY (id)
+public,ir_model_inherit,ir_model_inherit_uniq,u,"UNIQUE (model_id, parent_id)"
+public,ir_model_relation,ir_model_relation_create_uid_fkey,f,FOREIGN KEY (create_uid) REFERENCES res_users(id) ON DELETE SET NULL
+public,ir_model_relation,ir_model_relation_model_fkey,f,FOREIGN KEY (model) REFERENCES ir_model(id) ON DELETE CASCADE
+public,ir_model_relation,ir_model_relation_module_fkey,f,FOREIGN KEY (module) REFERENCES ir_module_module(id) ON DELETE CASCADE
+public,ir_model_relation,ir_model_relation_pkey,p,PRIMARY KEY (id)
+public,ir_model_relation,ir_model_relation_write_uid_fkey,f,FOREIGN KEY (write_uid) REFERENCES res_users(id) ON DELETE SET NULL
+public,ir_module_category,ir_module_category_create_uid_fkey,f,FOREIGN KEY (create_uid) REFERENCES res_users(id) ON DELETE SET NULL
+public,ir_module_category,ir_module_category_parent_id_fkey,f,FOREIGN KEY (parent_id) REFERENCES ir_module_category(id) ON DELETE SET NULL
+public,ir_module_category,ir_module_category_pkey,p,PRIMARY KEY (id)
+public,ir_module_category,ir_module_category_write_uid_fkey,f,FOREIGN KEY (write_uid) REFERENCES res_users(id) ON DELETE SET NULL
+public,ir_module_module,ir_module_module_category_id_fkey,f,FOREIGN KEY (category_id) REFERENCES ir_module_category(id) ON DELETE SET NULL
+public,ir_module_module,ir_module_module_create_uid_fkey,f,FOREIGN KEY (create_uid) REFERENCES res_users(id) ON DELETE SET NULL
+public,ir_module_module,ir_module_module_name_uniq,u,UNIQUE (name)
+public,ir_module_module,ir_module_module_pkey,p,PRIMARY KEY (id)
+public,ir_module_module,ir_module_module_write_uid_fkey,f,FOREIGN KEY (write_uid) REFERENCES res_users(id) ON DELETE SET NULL
+public,ir_module_module_dependency,ir_module_module_dependency_module_id_fkey,f,FOREIGN KEY (module_id) REFERENCES ir_module_module(id) ON DELETE CASCADE
+public,ir_module_module_dependency,ir_module_module_dependency_pkey,p,PRIMARY KEY (id)
+public,ir_module_module_exclusion,ir_module_module_exclusion_create_uid_fkey,f,FOREIGN KEY (create_uid) REFERENCES res_users(id) ON DELETE SET NULL
+public,ir_module_module_exclusion,ir_module_module_exclusion_module_id_fkey,f,FOREIGN KEY (module_id) REFERENCES ir_module_module(id) ON DELETE CASCADE
+public,ir_module_module_exclusion,ir_module_module_exclusion_pkey,p,PRIMARY KEY (id)
+public,ir_module_module_exclusion,ir_module_module_exclusion_write_uid_fkey,f,FOREIGN KEY (write_uid) REFERENCES res_users(id) ON DELETE SET NULL
+public,ir_profile,ir_profile_pkey,p,PRIMARY KEY (id)
+public,ir_rule,ir_rule_create_uid_fkey,f,FOREIGN KEY (create_uid) REFERENCES res_users(id) ON DELETE SET NULL
+public,ir_rule,ir_rule_model_id_fkey,f,FOREIGN KEY (model_id) REFERENCES ir_model(id) ON DELETE CASCADE
+public,ir_rule,ir_rule_no_access_rights,c,CHECK (((perm_read <> false) OR (perm_write <> false) OR (perm_create <> false) OR (perm_unlink <> false)))
+public,ir_rule,ir_rule_pkey,p,PRIMARY KEY (id)
+public,ir_rule,ir_rule_write_uid_fkey,f,FOREIGN KEY (write_uid) REFERENCES res_users(id) ON DELETE SET NULL
+public,ir_sequence,ir_sequence_company_id_fkey,f,FOREIGN KEY (company_id) REFERENCES res_company(id) ON DELETE SET NULL
+public,ir_sequence,ir_sequence_create_uid_fkey,f,FOREIGN KEY (create_uid) REFERENCES res_users(id) ON DELETE SET NULL
+public,ir_sequence,ir_sequence_pkey,p,PRIMARY KEY (id)
+public,ir_sequence,ir_sequence_write_uid_fkey,f,FOREIGN KEY (write_uid) REFERENCES res_users(id) ON DELETE SET NULL
+public,ir_sequence_date_range,ir_sequence_date_range_create_uid_fkey,f,FOREIGN KEY (create_uid) REFERENCES res_users(id) ON DELETE SET NULL
+public,ir_sequence_date_range,ir_sequence_date_range_pkey,p,PRIMARY KEY (id)
+public,ir_sequence_date_range,ir_sequence_date_range_sequence_id_fkey,f,FOREIGN KEY (sequence_id) REFERENCES ir_sequence(id) ON DELETE CASCADE
+public,ir_sequence_date_range,ir_sequence_date_range_unique_range_per_sequence,u,"UNIQUE (sequence_id, date_from, date_to)"
+public,ir_sequence_date_range,ir_sequence_date_range_write_uid_fkey,f,FOREIGN KEY (write_uid) REFERENCES res_users(id) ON DELETE SET NULL
+public,ir_ui_menu,ir_ui_menu_create_uid_fkey,f,FOREIGN KEY (create_uid) REFERENCES res_users(id) ON DELETE SET NULL
+public,ir_ui_menu,ir_ui_menu_parent_id_fkey,f,FOREIGN KEY (parent_id) REFERENCES ir_ui_menu(id) ON DELETE RESTRICT
+public,ir_ui_menu,ir_ui_menu_pkey,p,PRIMARY KEY (id)
+public,ir_ui_menu,ir_ui_menu_write_uid_fkey,f,FOREIGN KEY (write_uid) REFERENCES res_users(id) ON DELETE SET NULL
+public,ir_ui_menu_group_rel,ir_ui_menu_group_rel_gid_fkey,f,FOREIGN KEY (gid) REFERENCES res_groups(id) ON DELETE CASCADE
+public,ir_ui_menu_group_rel,ir_ui_menu_group_rel_menu_id_fkey,f,FOREIGN KEY (menu_id) REFERENCES ir_ui_menu(id) ON DELETE CASCADE
+public,ir_ui_menu_group_rel,ir_ui_menu_group_rel_pkey,p,"PRIMARY KEY (menu_id, gid)"
+public,ir_ui_view,ir_ui_view_create_uid_fkey,f,FOREIGN KEY (create_uid) REFERENCES res_users(id) ON DELETE SET NULL
+public,ir_ui_view,ir_ui_view_inherit_id_fkey,f,FOREIGN KEY (inherit_id) REFERENCES ir_ui_view(id) ON DELETE RESTRICT
+public,ir_ui_view,ir_ui_view_inheritance_mode,c,CHECK ((((mode)::text <> 'extension'::text) OR (inherit_id IS NOT NULL)))
+public,ir_ui_view,ir_ui_view_pkey,p,PRIMARY KEY (id)
+public,ir_ui_view,ir_ui_view_qweb_required_key,c,CHECK ((((type)::text <> 'qweb'::text) OR (key IS NOT NULL)))
+public,ir_ui_view,ir_ui_view_write_uid_fkey,f,FOREIGN KEY (write_uid) REFERENCES res_users(id) ON DELETE SET NULL
+public,ir_ui_view_custom,ir_ui_view_custom_create_uid_fkey,f,FOREIGN KEY (create_uid) REFERENCES res_users(id) ON DELETE SET NULL
+public,ir_ui_view_custom,ir_ui_view_custom_pkey,p,PRIMARY KEY (id)
+public,ir_ui_view_custom,ir_ui_view_custom_ref_id_fkey,f,FOREIGN KEY (ref_id) REFERENCES ir_ui_view(id) ON DELETE CASCADE
+public,ir_ui_view_custom,ir_ui_view_custom_user_id_fkey,f,FOREIGN KEY (user_id) REFERENCES res_users(id) ON DELETE CASCADE
+public,ir_ui_view_custom,ir_ui_view_custom_write_uid_fkey,f,FOREIGN KEY (write_uid) REFERENCES res_users(id) ON DELETE SET NULL
+public,ir_ui_view_group_rel,ir_ui_view_group_rel_group_id_fkey,f,FOREIGN KEY (group_id) REFERENCES res_groups(id) ON DELETE CASCADE
+public,ir_ui_view_group_rel,ir_ui_view_group_rel_pkey,p,"PRIMARY KEY (view_id, group_id)"
+public,ir_ui_view_group_rel,ir_ui_view_group_rel_view_id_fkey,f,FOREIGN KEY (view_id) REFERENCES ir_ui_view(id) ON DELETE CASCADE
+public,mail_activity,mail_activity_activity_type_id_fkey,f,FOREIGN KEY (activity_type_id) REFERENCES mail_activity_type(id) ON DELETE RESTRICT
+public,mail_activity,mail_activity_calendar_event_id_fkey,f,FOREIGN KEY (calendar_event_id) REFERENCES calendar_event(id) ON DELETE CASCADE
+public,mail_activity,mail_activity_check_res_id_is_set_if_model,c,"CHECK (((((COALESCE(res_model, ''::character varying))::text <> ''::text) AND ((res_id IS NOT NULL) AND (res_id <> 0))) OR (((COALESCE(res_model, ''::character varying))::text = ''::text) AND ((res_id IS NULL) OR (res_id = 0)))))"
+public,mail_activity,mail_activity_check_user_id_is_set_if_model,c,"CHECK ((((COALESCE(res_model, ''::character varying))::text <> ''::text) OR (user_id IS NOT NULL)))"
+public,mail_activity,mail_activity_create_uid_fkey,f,FOREIGN KEY (create_uid) REFERENCES res_users(id) ON DELETE SET NULL
+public,mail_activity,mail_activity_pkey,p,PRIMARY KEY (id)
+public,mail_activity,mail_activity_previous_activity_type_id_fkey,f,FOREIGN KEY (previous_activity_type_id) REFERENCES mail_activity_type(id) ON DELETE SET NULL
+public,mail_activity,mail_activity_recommended_activity_type_id_fkey,f,FOREIGN KEY (recommended_activity_type_id) REFERENCES mail_activity_type(id) ON DELETE SET NULL
+public,mail_activity,mail_activity_res_model_id_fkey,f,FOREIGN KEY (res_model_id) REFERENCES ir_model(id) ON DELETE CASCADE
+public,mail_activity,mail_activity_user_id_fkey,f,FOREIGN KEY (user_id) REFERENCES res_users(id) ON DELETE CASCADE
+public,mail_activity,mail_activity_write_uid_fkey,f,FOREIGN KEY (write_uid) REFERENCES res_users(id) ON DELETE SET NULL
+public,mail_activity_plan,mail_activity_plan_company_id_fkey,f,FOREIGN KEY (company_id) REFERENCES res_company(id) ON DELETE SET NULL
+public,mail_activity_plan,mail_activity_plan_create_uid_fkey,f,FOREIGN KEY (create_uid) REFERENCES res_users(id) ON DELETE SET NULL
+public,mail_activity_plan,mail_activity_plan_pkey,p,PRIMARY KEY (id)
+public,mail_activity_plan,mail_activity_plan_res_model_id_fkey,f,FOREIGN KEY (res_model_id) REFERENCES ir_model(id) ON DELETE CASCADE
+public,mail_activity_plan,mail_activity_plan_write_uid_fkey,f,FOREIGN KEY (write_uid) REFERENCES res_users(id) ON DELETE SET NULL
+public,mail_activity_plan_mail_activity_schedule_rel,mail_activity_plan_mail_activity_mail_activity_schedule_id_fkey,f,FOREIGN KEY (mail_activity_schedule_id) REFERENCES mail_activity_schedule(id) ON DELETE CASCADE
+public,mail_activity_plan_mail_activity_schedule_rel,mail_activity_plan_mail_activity_sch_mail_activity_plan_id_fkey,f,FOREIGN KEY (mail_activity_plan_id) REFERENCES mail_activity_plan(id) ON DELETE CASCADE
+public,mail_activity_plan_mail_activity_schedule_rel,mail_activity_plan_mail_activity_schedule_rel_pkey,p,"PRIMARY KEY (mail_activity_schedule_id, mail_activity_plan_id)"
+public,mail_activity_plan_template,mail_activity_plan_template_activity_type_id_fkey,f,FOREIGN KEY (activity_type_id) REFERENCES mail_activity_type(id) ON DELETE RESTRICT
+public,mail_activity_plan_template,mail_activity_plan_template_create_uid_fkey,f,FOREIGN KEY (create_uid) REFERENCES res_users(id) ON DELETE SET NULL
+public,mail_activity_plan_template,mail_activity_plan_template_pkey,p,PRIMARY KEY (id)
+public,mail_activity_plan_template,mail_activity_plan_template_plan_id_fkey,f,FOREIGN KEY (plan_id) REFERENCES mail_activity_plan(id) ON DELETE CASCADE
+public,mail_activity_plan_template,mail_activity_plan_template_responsible_id_fkey,f,FOREIGN KEY (responsible_id) REFERENCES res_users(id) ON DELETE SET NULL
+public,mail_activity_plan_template,mail_activity_plan_template_write_uid_fkey,f,FOREIGN KEY (write_uid) REFERENCES res_users(id) ON DELETE SET NULL
+public,mail_activity_plan_template_mail_activity_type_rel,mail_activity_plan_template_m_mail_activity_plan_template__fkey,f,FOREIGN KEY (mail_activity_plan_template_id) REFERENCES mail_activity_plan_template(id) ON DELETE CASCADE
+public,mail_activity_plan_template_mail_activity_type_rel,mail_activity_plan_template_mail_act_mail_activity_type_id_fkey,f,FOREIGN KEY (mail_activity_type_id) REFERENCES mail_activity_type(id) ON DELETE CASCADE
+public,mail_activity_plan_template_mail_activity_type_rel,mail_activity_plan_template_mail_activity_type_rel_pkey,p,"PRIMARY KEY (mail_activity_plan_template_id, mail_activity_type_id)"
+public,mail_activity_rel,mail_activity_rel_activity_id_fkey,f,FOREIGN KEY (activity_id) REFERENCES mail_activity_type(id) ON DELETE CASCADE
+public,mail_activity_rel,mail_activity_rel_pkey,p,"PRIMARY KEY (activity_id, recommended_id)"
+public,mail_activity_rel,mail_activity_rel_recommended_id_fkey,f,FOREIGN KEY (recommended_id) REFERENCES mail_activity_type(id) ON DELETE CASCADE
+public,mail_activity_schedule,mail_activity_schedule_activity_type_id_fkey,f,FOREIGN KEY (activity_type_id) REFERENCES mail_activity_type(id) ON DELETE SET NULL
+public,mail_activity_schedule,mail_activity_schedule_activity_user_id_fkey,f,FOREIGN KEY (activity_user_id) REFERENCES res_users(id) ON DELETE SET NULL
+public,mail_activity_schedule,mail_activity_schedule_create_uid_fkey,f,FOREIGN KEY (create_uid) REFERENCES res_users(id) ON DELETE SET NULL
+public,mail_activity_schedule,mail_activity_schedule_pkey,p,PRIMARY KEY (id)
+public,mail_activity_schedule,mail_activity_schedule_plan_id_fkey,f,FOREIGN KEY (plan_id) REFERENCES mail_activity_plan(id) ON DELETE SET NULL
+public,mail_activity_schedule,mail_activity_schedule_plan_on_demand_user_id_fkey,f,FOREIGN KEY (plan_on_demand_user_id) REFERENCES res_users(id) ON DELETE SET NULL
+public,mail_activity_schedule,mail_activity_schedule_res_model_id_fkey,f,FOREIGN KEY (res_model_id) REFERENCES ir_model(id) ON DELETE CASCADE
+public,mail_activity_schedule,mail_activity_schedule_write_uid_fkey,f,FOREIGN KEY (write_uid) REFERENCES res_users(id) ON DELETE SET NULL
+public,mail_activity_schedule_line,mail_activity_schedule_line_activity_schedule_id_fkey,f,FOREIGN KEY (activity_schedule_id) REFERENCES mail_activity_schedule(id) ON DELETE CASCADE
+public,mail_activity_schedule_line,mail_activity_schedule_line_create_uid_fkey,f,FOREIGN KEY (create_uid) REFERENCES res_users(id) ON DELETE SET NULL
+public,mail_activity_schedule_line,mail_activity_schedule_line_pkey,p,PRIMARY KEY (id)
+public,mail_activity_schedule_line,mail_activity_schedule_line_responsible_user_id_fkey,f,FOREIGN KEY (responsible_user_id) REFERENCES res_users(id) ON DELETE SET NULL
+public,mail_activity_schedule_line,mail_activity_schedule_line_write_uid_fkey,f,FOREIGN KEY (write_uid) REFERENCES res_users(id) ON DELETE SET NULL
+public,mail_activity_type,mail_activity_type_create_uid_fkey,f,FOREIGN KEY (create_uid) REFERENCES res_users(id) ON DELETE SET NULL
+public,mail_activity_type,mail_activity_type_default_user_id_fkey,f,FOREIGN KEY (default_user_id) REFERENCES res_users(id) ON DELETE SET NULL
+public,mail_activity_type,mail_activity_type_pkey,p,PRIMARY KEY (id)
+public,mail_activity_type,mail_activity_type_triggered_next_type_id_fkey,f,FOREIGN KEY (triggered_next_type_id) REFERENCES mail_activity_type(id) ON DELETE RESTRICT
+public,mail_activity_type,mail_activity_type_write_uid_fkey,f,FOREIGN KEY (write_uid) REFERENCES res_users(id) ON DELETE SET NULL
+public,mail_activity_type_mail_template_rel,mail_activity_type_mail_template_rel_mail_activity_type_id_fkey,f,FOREIGN KEY (mail_activity_type_id) REFERENCES mail_activity_type(id) ON DELETE CASCADE
+public,mail_activity_type_mail_template_rel,mail_activity_type_mail_template_rel_mail_template_id_fkey,f,FOREIGN KEY (mail_template_id) REFERENCES mail_template(id) ON DELETE CASCADE
+public,mail_activity_type_mail_template_rel,mail_activity_type_mail_template_rel_pkey,p,"PRIMARY KEY (mail_activity_type_id, mail_template_id)"
+public,mail_alias,mail_alias_alias_domain_id_fkey,f,FOREIGN KEY (alias_domain_id) REFERENCES mail_alias_domain(id) ON DELETE RESTRICT
+public,mail_alias,mail_alias_alias_model_id_fkey,f,FOREIGN KEY (alias_model_id) REFERENCES ir_model(id) ON DELETE CASCADE
+public,mail_alias,mail_alias_alias_parent_model_id_fkey,f,FOREIGN KEY (alias_parent_model_id) REFERENCES ir_model(id) ON DELETE SET NULL
+public,mail_alias,mail_alias_create_uid_fkey,f,FOREIGN KEY (create_uid) REFERENCES res_users(id) ON DELETE SET NULL
+public,mail_alias,mail_alias_pkey,p,PRIMARY KEY (id)
+public,mail_alias,mail_alias_write_uid_fkey,f,FOREIGN KEY (write_uid) REFERENCES res_users(id) ON DELETE SET NULL
+public,mail_alias_domain,mail_alias_domain_bounce_email_uniques,u,"UNIQUE (bounce_alias, name)"
+public,mail_alias_domain,mail_alias_domain_catchall_email_uniques,u,"UNIQUE (catchall_alias, name)"
+public,mail_alias_domain,mail_alias_domain_create_uid_fkey,f,FOREIGN KEY (create_uid) REFERENCES res_users(id) ON DELETE SET NULL
+public,mail_alias_domain,mail_alias_domain_pkey,p,PRIMARY KEY (id)
+public,mail_alias_domain,mail_alias_domain_write_uid_fkey,f,FOREIGN KEY (write_uid) REFERENCES res_users(id) ON DELETE SET NULL
+public,mail_blacklist,mail_blacklist_create_uid_fkey,f,FOREIGN KEY (create_uid) REFERENCES res_users(id) ON DELETE SET NULL
+public,mail_blacklist,mail_blacklist_pkey,p,PRIMARY KEY (id)
+public,mail_blacklist,mail_blacklist_unique_email,u,UNIQUE (email)
+public,mail_blacklist,mail_blacklist_write_uid_fkey,f,FOREIGN KEY (write_uid) REFERENCES res_users(id) ON DELETE SET NULL
+public,mail_blacklist_remove,mail_blacklist_remove_create_uid_fkey,f,FOREIGN KEY (create_uid) REFERENCES res_users(id) ON DELETE SET NULL
+public,mail_blacklist_remove,mail_blacklist_remove_pkey,p,PRIMARY KEY (id)
+public,mail_blacklist_remove,mail_blacklist_remove_write_uid_fkey,f,FOREIGN KEY (write_uid) REFERENCES res_users(id) ON DELETE SET NULL
+public,mail_canned_response,mail_canned_response_create_uid_fkey,f,FOREIGN KEY (create_uid) REFERENCES res_users(id) ON DELETE SET NULL
+public,mail_canned_response,mail_canned_response_pkey,p,PRIMARY KEY (id)
+public,mail_canned_response,mail_canned_response_write_uid_fkey,f,FOREIGN KEY (write_uid) REFERENCES res_users(id) ON DELETE SET NULL
+public,mail_canned_response_res_groups_rel,mail_canned_response_res_groups_re_mail_canned_response_id_fkey,f,FOREIGN KEY (mail_canned_response_id) REFERENCES mail_canned_response(id) ON DELETE CASCADE
+public,mail_canned_response_res_groups_rel,mail_canned_response_res_groups_rel_pkey,p,"PRIMARY KEY (mail_canned_response_id, res_groups_id)"
+public,mail_canned_response_res_groups_rel,mail_canned_response_res_groups_rel_res_groups_id_fkey,f,FOREIGN KEY (res_groups_id) REFERENCES res_groups(id) ON DELETE CASCADE
+public,mail_compose_message,mail_compose_message_author_id_fkey,f,FOREIGN KEY (author_id) REFERENCES res_partner(id) ON DELETE SET NULL
+public,mail_compose_message,mail_compose_message_create_uid_fkey,f,FOREIGN KEY (create_uid) REFERENCES res_users(id) ON DELETE SET NULL
+public,mail_compose_message,mail_compose_message_mail_activity_type_id_fkey,f,FOREIGN KEY (mail_activity_type_id) REFERENCES mail_activity_type(id) ON DELETE SET NULL
+public,mail_compose_message,mail_compose_message_mail_server_id_fkey,f,FOREIGN KEY (mail_server_id) REFERENCES ir_mail_server(id) ON DELETE SET NULL
+public,mail_compose_message,mail_compose_message_parent_id_fkey,f,FOREIGN KEY (parent_id) REFERENCES mail_message(id) ON DELETE SET NULL
+public,mail_compose_message,mail_compose_message_pkey,p,PRIMARY KEY (id)
+public,mail_compose_message,mail_compose_message_record_alias_domain_id_fkey,f,FOREIGN KEY (record_alias_domain_id) REFERENCES mail_alias_domain(id) ON DELETE SET NULL
+public,mail_compose_message,mail_compose_message_record_company_id_fkey,f,FOREIGN KEY (record_company_id) REFERENCES res_company(id) ON DELETE SET NULL
+public,mail_compose_message,mail_compose_message_res_domain_user_id_fkey,f,FOREIGN KEY (res_domain_user_id) REFERENCES res_users(id) ON DELETE SET NULL
+public,mail_compose_message,mail_compose_message_subtype_id_fkey,f,FOREIGN KEY (subtype_id) REFERENCES mail_message_subtype(id) ON DELETE SET NULL
+public,mail_compose_message,mail_compose_message_template_id_fkey,f,FOREIGN KEY (template_id) REFERENCES mail_template(id) ON DELETE SET NULL
+public,mail_compose_message,mail_compose_message_write_uid_fkey,f,FOREIGN KEY (write_uid) REFERENCES res_users(id) ON DELETE SET NULL
+public,mail_compose_message_ir_attachments_rel,mail_compose_message_ir_attachments_rel_attachment_id_fkey,f,FOREIGN KEY (attachment_id) REFERENCES ir_attachment(id) ON DELETE CASCADE
+public,mail_compose_message_ir_attachments_rel,mail_compose_message_ir_attachments_rel_pkey,p,"PRIMARY KEY (wizard_id, attachment_id)"
+public,mail_compose_message_ir_attachments_rel,mail_compose_message_ir_attachments_rel_wizard_id_fkey,f,FOREIGN KEY (wizard_id) REFERENCES mail_compose_message(id) ON DELETE CASCADE
+public,mail_compose_message_res_partner_rel,mail_compose_message_res_partner_rel_partner_id_fkey,f,FOREIGN KEY (partner_id) REFERENCES res_partner(id) ON DELETE CASCADE
+public,mail_compose_message_res_partner_rel,mail_compose_message_res_partner_rel_pkey,p,"PRIMARY KEY (wizard_id, partner_id)"
+public,mail_compose_message_res_partner_rel,mail_compose_message_res_partner_rel_wizard_id_fkey,f,FOREIGN KEY (wizard_id) REFERENCES mail_compose_message(id) ON DELETE CASCADE
+public,mail_followers,mail_followers_mail_followers_res_partner_res_model_id_uniq,u,"UNIQUE (res_model, res_id, partner_id)"
+public,mail_followers,mail_followers_partner_id_fkey,f,FOREIGN KEY (partner_id) REFERENCES res_partner(id) ON DELETE CASCADE
+public,mail_followers,mail_followers_pkey,p,PRIMARY KEY (id)
+public,mail_followers_edit,mail_followers_edit_create_uid_fkey,f,FOREIGN KEY (create_uid) REFERENCES res_users(id) ON DELETE SET NULL
+public,mail_followers_edit,mail_followers_edit_pkey,p,PRIMARY KEY (id)
+public,mail_followers_edit,mail_followers_edit_write_uid_fkey,f,FOREIGN KEY (write_uid) REFERENCES res_users(id) ON DELETE SET NULL
+public,mail_followers_edit_res_partner_rel,mail_followers_edit_res_partner_rel_mail_followers_edit_id_fkey,f,FOREIGN KEY (mail_followers_edit_id) REFERENCES mail_followers_edit(id) ON DELETE CASCADE
+public,mail_followers_edit_res_partner_rel,mail_followers_edit_res_partner_rel_pkey,p,"PRIMARY KEY (mail_followers_edit_id, res_partner_id)"
+public,mail_followers_edit_res_partner_rel,mail_followers_edit_res_partner_rel_res_partner_id_fkey,f,FOREIGN KEY (res_partner_id) REFERENCES res_partner(id) ON DELETE CASCADE
+public,mail_followers_mail_message_subtype_rel,mail_followers_mail_message_subtyp_mail_message_subtype_id_fkey,f,FOREIGN KEY (mail_message_subtype_id) REFERENCES mail_message_subtype(id) ON DELETE CASCADE
+public,mail_followers_mail_message_subtype_rel,mail_followers_mail_message_subtype_rel_mail_followers_id_fkey,f,FOREIGN KEY (mail_followers_id) REFERENCES mail_followers(id) ON DELETE CASCADE
+public,mail_followers_mail_message_subtype_rel,mail_followers_mail_message_subtype_rel_pkey,p,"PRIMARY KEY (mail_followers_id, mail_message_subtype_id)"
+public,mail_gateway_allowed,mail_gateway_allowed_create_uid_fkey,f,FOREIGN KEY (create_uid) REFERENCES res_users(id) ON DELETE SET NULL
+public,mail_gateway_allowed,mail_gateway_allowed_pkey,p,PRIMARY KEY (id)
+public,mail_gateway_allowed,mail_gateway_allowed_write_uid_fkey,f,FOREIGN KEY (write_uid) REFERENCES res_users(id) ON DELETE SET NULL
+public,mail_guest,mail_guest_country_id_fkey,f,FOREIGN KEY (country_id) REFERENCES res_country(id) ON DELETE SET NULL
+public,mail_guest,mail_guest_create_uid_fkey,f,FOREIGN KEY (create_uid) REFERENCES res_users(id) ON DELETE SET NULL
+public,mail_guest,mail_guest_pkey,p,PRIMARY KEY (id)
+public,mail_guest,mail_guest_write_uid_fkey,f,FOREIGN KEY (write_uid) REFERENCES res_users(id) ON DELETE SET NULL
+public,mail_ice_server,mail_ice_server_create_uid_fkey,f,FOREIGN KEY (create_uid) REFERENCES res_users(id) ON DELETE SET NULL
+public,mail_ice_server,mail_ice_server_pkey,p,PRIMARY KEY (id)
+public,mail_ice_server,mail_ice_server_write_uid_fkey,f,FOREIGN KEY (write_uid) REFERENCES res_users(id) ON DELETE SET NULL
+public,mail_link_preview,mail_link_preview_create_uid_fkey,f,FOREIGN KEY (create_uid) REFERENCES res_users(id) ON DELETE SET NULL
+public,mail_link_preview,mail_link_preview_pkey,p,PRIMARY KEY (id)
+public,mail_link_preview,mail_link_preview_write_uid_fkey,f,FOREIGN KEY (write_uid) REFERENCES res_users(id) ON DELETE SET NULL
+public,mail_mail,mail_mail_create_uid_fkey,f,FOREIGN KEY (create_uid) REFERENCES res_users(id) ON DELETE SET NULL
+public,mail_mail,mail_mail_fetchmail_server_id_fkey,f,FOREIGN KEY (fetchmail_server_id) REFERENCES fetchmail_server(id) ON DELETE SET NULL
+public,mail_mail,mail_mail_mail_message_id_fkey,f,FOREIGN KEY (mail_message_id) REFERENCES mail_message(id) ON DELETE CASCADE
+public,mail_mail,mail_mail_pkey,p,PRIMARY KEY (id)
+public,mail_mail,mail_mail_write_uid_fkey,f,FOREIGN KEY (write_uid) REFERENCES res_users(id) ON DELETE SET NULL
+public,mail_mail_res_partner_rel,mail_mail_res_partner_rel_mail_mail_id_fkey,f,FOREIGN KEY (mail_mail_id) REFERENCES mail_mail(id) ON DELETE CASCADE
+public,mail_mail_res_partner_rel,mail_mail_res_partner_rel_pkey,p,"PRIMARY KEY (mail_mail_id, res_partner_id)"
+public,mail_mail_res_partner_rel,mail_mail_res_partner_rel_res_partner_id_fkey,f,FOREIGN KEY (res_partner_id) REFERENCES res_partner(id) ON DELETE CASCADE
+public,mail_message,mail_message_author_guest_id_fkey,f,FOREIGN KEY (author_guest_id) REFERENCES mail_guest(id) ON DELETE SET NULL
+public,mail_message,mail_message_author_id_fkey,f,FOREIGN KEY (author_id) REFERENCES res_partner(id) ON DELETE SET NULL
+public,mail_message,mail_message_create_uid_fkey,f,FOREIGN KEY (create_uid) REFERENCES res_users(id) ON DELETE SET NULL
+public,mail_message,mail_message_mail_activity_type_id_fkey,f,FOREIGN KEY (mail_activity_type_id) REFERENCES mail_activity_type(id) ON DELETE SET NULL
+public,mail_message,mail_message_mail_server_id_fkey,f,FOREIGN KEY (mail_server_id) REFERENCES ir_mail_server(id) ON DELETE SET NULL
+public,mail_message,mail_message_parent_id_fkey,f,FOREIGN KEY (parent_id) REFERENCES mail_message(id) ON DELETE SET NULL
+public,mail_message,mail_message_pkey,p,PRIMARY KEY (id)
+public,mail_message,mail_message_record_alias_domain_id_fkey,f,FOREIGN KEY (record_alias_domain_id) REFERENCES mail_alias_domain(id) ON DELETE SET NULL
+public,mail_message,mail_message_record_company_id_fkey,f,FOREIGN KEY (record_company_id) REFERENCES res_company(id) ON DELETE SET NULL
+public,mail_message,mail_message_subtype_id_fkey,f,FOREIGN KEY (subtype_id) REFERENCES mail_message_subtype(id) ON DELETE SET NULL
+public,mail_message,mail_message_write_uid_fkey,f,FOREIGN KEY (write_uid) REFERENCES res_users(id) ON DELETE SET NULL
+public,mail_message_link_preview,mail_message_link_preview_create_uid_fkey,f,FOREIGN KEY (create_uid) REFERENCES res_users(id) ON DELETE SET NULL
+public,mail_message_link_preview,mail_message_link_preview_link_preview_id_fkey,f,FOREIGN KEY (link_preview_id) REFERENCES mail_link_preview(id) ON DELETE CASCADE
+public,mail_message_link_preview,mail_message_link_preview_message_id_fkey,f,FOREIGN KEY (message_id) REFERENCES mail_message(id) ON DELETE CASCADE
+public,mail_message_link_preview,mail_message_link_preview_pkey,p,PRIMARY KEY (id)
+public,mail_message_link_preview,mail_message_link_preview_write_uid_fkey,f,FOREIGN KEY (write_uid) REFERENCES res_users(id) ON DELETE SET NULL
+public,mail_message_reaction,mail_message_reaction_guest_id_fkey,f,FOREIGN KEY (guest_id) REFERENCES mail_guest(id) ON DELETE CASCADE
+public,mail_message_reaction,mail_message_reaction_message_id_fkey,f,FOREIGN KEY (message_id) REFERENCES mail_message(id) ON DELETE CASCADE
+public,mail_message_reaction,mail_message_reaction_partner_id_fkey,f,FOREIGN KEY (partner_id) REFERENCES res_partner(id) ON DELETE CASCADE
+public,mail_message_reaction,mail_message_reaction_partner_or_guest_exists,c,CHECK ((((partner_id IS NOT NULL) AND (guest_id IS NULL)) OR ((partner_id IS NULL) AND (guest_id IS NOT NULL))))
+public,mail_message_reaction,mail_message_reaction_pkey,p,PRIMARY KEY (id)
+public,mail_message_res_partner_rel,mail_message_res_partner_rel_mail_message_id_fkey,f,FOREIGN KEY (mail_message_id) REFERENCES mail_message(id) ON DELETE CASCADE
+public,mail_message_res_partner_rel,mail_message_res_partner_rel_pkey,p,"PRIMARY KEY (mail_message_id, res_partner_id)"
+public,mail_message_res_partner_rel,mail_message_res_partner_rel_res_partner_id_fkey,f,FOREIGN KEY (res_partner_id) REFERENCES res_partner(id) ON DELETE CASCADE
+public,mail_message_res_partner_starred_rel,mail_message_res_partner_starred_rel_mail_message_id_fkey,f,FOREIGN KEY (mail_message_id) REFERENCES mail_message(id) ON DELETE CASCADE
+public,mail_message_res_partner_starred_rel,mail_message_res_partner_starred_rel_pkey,p,"PRIMARY KEY (mail_message_id, res_partner_id)"
+public,mail_message_res_partner_starred_rel,mail_message_res_partner_starred_rel_res_partner_id_fkey,f,FOREIGN KEY (res_partner_id) REFERENCES res_partner(id) ON DELETE CASCADE
+public,mail_message_schedule,mail_message_schedule_create_uid_fkey,f,FOREIGN KEY (create_uid) REFERENCES res_users(id) ON DELETE SET NULL
+public,mail_message_schedule,mail_message_schedule_mail_message_id_fkey,f,FOREIGN KEY (mail_message_id) REFERENCES mail_message(id) ON DELETE CASCADE
+public,mail_message_schedule,mail_message_schedule_pkey,p,PRIMARY KEY (id)
+public,mail_message_schedule,mail_message_schedule_write_uid_fkey,f,FOREIGN KEY (write_uid) REFERENCES res_users(id) ON DELETE SET NULL
+public,mail_message_subtype,mail_message_subtype_create_uid_fkey,f,FOREIGN KEY (create_uid) REFERENCES res_users(id) ON DELETE SET NULL
+public,mail_message_subtype,mail_message_subtype_parent_id_fkey,f,FOREIGN KEY (parent_id) REFERENCES mail_message_subtype(id) ON DELETE SET NULL
+public,mail_message_subtype,mail_message_subtype_pkey,p,PRIMARY KEY (id)
+public,mail_message_subtype,mail_message_subtype_write_uid_fkey,f,FOREIGN KEY (write_uid) REFERENCES res_users(id) ON DELETE SET NULL
+public,mail_message_translation,mail_message_translation_create_uid_fkey,f,FOREIGN KEY (create_uid) REFERENCES res_users(id) ON DELETE SET NULL
+public,mail_message_translation,mail_message_translation_message_id_fkey,f,FOREIGN KEY (message_id) REFERENCES mail_message(id) ON DELETE CASCADE
+public,mail_message_translation,mail_message_translation_pkey,p,PRIMARY KEY (id)
+public,mail_message_translation,mail_message_translation_write_uid_fkey,f,FOREIGN KEY (write_uid) REFERENCES res_users(id) ON DELETE SET NULL
+public,mail_notification,mail_notification_author_id_fkey,f,FOREIGN KEY (author_id) REFERENCES res_partner(id) ON DELETE SET NULL
+public,mail_notification,mail_notification_letter_id_fkey,f,FOREIGN KEY (letter_id) REFERENCES snailmail_letter(id) ON DELETE CASCADE
+public,mail_notification,mail_notification_mail_mail_id_fkey,f,FOREIGN KEY (mail_mail_id) REFERENCES mail_mail(id) ON DELETE SET NULL
+public,mail_notification,mail_notification_mail_message_id_fkey,f,FOREIGN KEY (mail_message_id) REFERENCES mail_message(id) ON DELETE CASCADE
+public,mail_notification,mail_notification_notification_partner_or_email_required,c,"CHECK ((((notification_type)::text <> 'email'::text) OR (failure_type IS NOT NULL) OR (res_partner_id IS NOT NULL) OR ((COALESCE(mail_email_address, ''::character varying))::text <> ''::text)))"
+public,mail_notification,mail_notification_notification_partner_required,c,CHECK ((((notification_type)::text <> 'inbox'::text) OR (res_partner_id IS NOT NULL)))
+public,mail_notification,mail_notification_pkey,p,PRIMARY KEY (id)
+public,mail_notification,mail_notification_res_partner_id_fkey,f,FOREIGN KEY (res_partner_id) REFERENCES res_partner(id) ON DELETE CASCADE
+public,mail_presence,mail_presence_guest_id_fkey,f,FOREIGN KEY (guest_id) REFERENCES mail_guest(id) ON DELETE CASCADE
+public,mail_presence,mail_presence_partner_or_guest_exists,c,CHECK ((((user_id IS NOT NULL) AND (guest_id IS NULL)) OR ((user_id IS NULL) AND (guest_id IS NOT NULL))))
+public,mail_presence,mail_presence_pkey,p,PRIMARY KEY (id)
+public,mail_presence,mail_presence_user_id_fkey,f,FOREIGN KEY (user_id) REFERENCES res_users(id) ON DELETE CASCADE
+public,mail_push,mail_push_create_uid_fkey,f,FOREIGN KEY (create_uid) REFERENCES res_users(id) ON DELETE SET NULL
+public,mail_push,mail_push_mail_push_device_id_fkey,f,FOREIGN KEY (mail_push_device_id) REFERENCES mail_push_device(id) ON DELETE CASCADE
+public,mail_push,mail_push_pkey,p,PRIMARY KEY (id)
+public,mail_push,mail_push_write_uid_fkey,f,FOREIGN KEY (write_uid) REFERENCES res_users(id) ON DELETE SET NULL
+public,mail_push_device,mail_push_device_create_uid_fkey,f,FOREIGN KEY (create_uid) REFERENCES res_users(id) ON DELETE SET NULL
+public,mail_push_device,mail_push_device_endpoint_unique,u,UNIQUE (endpoint)
+public,mail_push_device,mail_push_device_partner_id_fkey,f,FOREIGN KEY (partner_id) REFERENCES res_partner(id) ON DELETE RESTRICT
+public,mail_push_device,mail_push_device_pkey,p,PRIMARY KEY (id)
+public,mail_push_device,mail_push_device_write_uid_fkey,f,FOREIGN KEY (write_uid) REFERENCES res_users(id) ON DELETE SET NULL
+public,mail_scheduled_message,mail_scheduled_message_author_id_fkey,f,FOREIGN KEY (author_id) REFERENCES res_partner(id) ON DELETE RESTRICT
+public,mail_scheduled_message,mail_scheduled_message_create_uid_fkey,f,FOREIGN KEY (create_uid) REFERENCES res_users(id) ON DELETE SET NULL
+public,mail_scheduled_message,mail_scheduled_message_pkey,p,PRIMARY KEY (id)
+public,mail_scheduled_message,mail_scheduled_message_write_uid_fkey,f,FOREIGN KEY (write_uid) REFERENCES res_users(id) ON DELETE SET NULL
+public,mail_scheduled_message_res_partner_rel,mail_scheduled_message_res_partn_mail_scheduled_message_id_fkey,f,FOREIGN KEY (mail_scheduled_message_id) REFERENCES mail_scheduled_message(id) ON DELETE CASCADE
+public,mail_scheduled_message_res_partner_rel,mail_scheduled_message_res_partner_rel_pkey,p,"PRIMARY KEY (mail_scheduled_message_id, res_partner_id)"
+public,mail_scheduled_message_res_partner_rel,mail_scheduled_message_res_partner_rel_res_partner_id_fkey,f,FOREIGN KEY (res_partner_id) REFERENCES res_partner(id) ON DELETE CASCADE
+public,mail_template,mail_template_create_uid_fkey,f,FOREIGN KEY (create_uid) REFERENCES res_users(id) ON DELETE SET NULL
+public,mail_template,mail_template_mail_server_id_fkey,f,FOREIGN KEY (mail_server_id) REFERENCES ir_mail_server(id) ON DELETE SET NULL
+public,mail_template,mail_template_model_id_fkey,f,FOREIGN KEY (model_id) REFERENCES ir_model(id) ON DELETE CASCADE
+public,mail_template,mail_template_pkey,p,PRIMARY KEY (id)
+public,mail_template,mail_template_ref_ir_act_window_fkey,f,FOREIGN KEY (ref_ir_act_window) REFERENCES ir_act_window(id) ON DELETE SET NULL
+public,mail_template,mail_template_user_id_fkey,f,FOREIGN KEY (user_id) REFERENCES res_users(id) ON DELETE SET NULL
+public,mail_template,mail_template_write_uid_fkey,f,FOREIGN KEY (write_uid) REFERENCES res_users(id) ON DELETE SET NULL
+public,mail_template_ir_actions_report_rel,mail_template_ir_actions_report_rel_ir_actions_report_id_fkey,f,FOREIGN KEY (ir_actions_report_id) REFERENCES ir_act_report_xml(id) ON DELETE CASCADE
+public,mail_template_ir_actions_report_rel,mail_template_ir_actions_report_rel_mail_template_id_fkey,f,FOREIGN KEY (mail_template_id) REFERENCES mail_template(id) ON DELETE CASCADE
+public,mail_template_ir_actions_report_rel,mail_template_ir_actions_report_rel_pkey,p,"PRIMARY KEY (mail_template_id, ir_actions_report_id)"
+public,mail_template_mail_template_reset_rel,mail_template_mail_template_reset_r_mail_template_reset_id_fkey,f,FOREIGN KEY (mail_template_reset_id) REFERENCES mail_template_reset(id) ON DELETE CASCADE
+public,mail_template_mail_template_reset_rel,mail_template_mail_template_reset_rel_mail_template_id_fkey,f,FOREIGN KEY (mail_template_id) REFERENCES mail_template(id) ON DELETE CASCADE
+public,mail_template_mail_template_reset_rel,mail_template_mail_template_reset_rel_pkey,p,"PRIMARY KEY (mail_template_reset_id, mail_template_id)"
+public,mail_template_preview,mail_template_preview_create_uid_fkey,f,FOREIGN KEY (create_uid) REFERENCES res_users(id) ON DELETE SET NULL
+public,mail_template_preview,mail_template_preview_mail_template_id_fkey,f,FOREIGN KEY (mail_template_id) REFERENCES mail_template(id) ON DELETE CASCADE
+public,mail_template_preview,mail_template_preview_pkey,p,PRIMARY KEY (id)
+public,mail_template_preview,mail_template_preview_write_uid_fkey,f,FOREIGN KEY (write_uid) REFERENCES res_users(id) ON DELETE SET NULL
+public,mail_template_reset,mail_template_reset_create_uid_fkey,f,FOREIGN KEY (create_uid) REFERENCES res_users(id) ON DELETE SET NULL
+public,mail_template_reset,mail_template_reset_pkey,p,PRIMARY KEY (id)
+public,mail_template_reset,mail_template_reset_write_uid_fkey,f,FOREIGN KEY (write_uid) REFERENCES res_users(id) ON DELETE SET NULL
+public,mail_tracking_value,mail_tracking_value_create_uid_fkey,f,FOREIGN KEY (create_uid) REFERENCES res_users(id) ON DELETE SET NULL
+public,mail_tracking_value,mail_tracking_value_currency_id_fkey,f,FOREIGN KEY (currency_id) REFERENCES res_currency(id) ON DELETE SET NULL
+public,mail_tracking_value,mail_tracking_value_field_id_fkey,f,FOREIGN KEY (field_id) REFERENCES ir_model_fields(id) ON DELETE SET NULL
+public,mail_tracking_value,mail_tracking_value_mail_message_id_fkey,f,FOREIGN KEY (mail_message_id) REFERENCES mail_message(id) ON DELETE CASCADE
+public,mail_tracking_value,mail_tracking_value_pkey,p,PRIMARY KEY (id)
+public,mail_tracking_value,mail_tracking_value_write_uid_fkey,f,FOREIGN KEY (write_uid) REFERENCES res_users(id) ON DELETE SET NULL
+public,meeting_category_rel,meeting_category_rel_event_id_fkey,f,FOREIGN KEY (event_id) REFERENCES calendar_event(id) ON DELETE CASCADE
+public,meeting_category_rel,meeting_category_rel_pkey,p,"PRIMARY KEY (event_id, type_id)"
+public,meeting_category_rel,meeting_category_rel_type_id_fkey,f,FOREIGN KEY (type_id) REFERENCES calendar_event_type(id) ON DELETE CASCADE
+public,merge_opportunity_rel,merge_opportunity_rel_merge_id_fkey,f,FOREIGN KEY (merge_id) REFERENCES crm_merge_opportunity(id) ON DELETE CASCADE
+public,merge_opportunity_rel,merge_opportunity_rel_opportunity_id_fkey,f,FOREIGN KEY (opportunity_id) REFERENCES crm_lead(id) ON DELETE CASCADE
+public,merge_opportunity_rel,merge_opportunity_rel_pkey,p,"PRIMARY KEY (merge_id, opportunity_id)"
+public,message_attachment_rel,message_attachment_rel_attachment_id_fkey,f,FOREIGN KEY (attachment_id) REFERENCES ir_attachment(id) ON DELETE CASCADE
+public,message_attachment_rel,message_attachment_rel_message_id_fkey,f,FOREIGN KEY (message_id) REFERENCES mail_message(id) ON DELETE CASCADE
+public,message_attachment_rel,message_attachment_rel_pkey,p,"PRIMARY KEY (message_id, attachment_id)"
+public,module_country,module_country_country_id_fkey,f,FOREIGN KEY (country_id) REFERENCES res_country(id) ON DELETE CASCADE
+public,module_country,module_country_module_id_fkey,f,FOREIGN KEY (module_id) REFERENCES ir_module_module(id) ON DELETE CASCADE
+public,module_country,module_country_pkey,p,"PRIMARY KEY (module_id, country_id)"
+public,orm_signaling_assets,orm_signaling_assets_pkey,p,PRIMARY KEY (id)
+public,orm_signaling_default,orm_signaling_default_pkey,p,PRIMARY KEY (id)
+public,orm_signaling_groups,orm_signaling_groups_pkey,p,PRIMARY KEY (id)
+public,orm_signaling_registry,orm_signaling_registry_pkey,p,PRIMARY KEY (id)
+public,orm_signaling_routing,orm_signaling_routing_pkey,p,PRIMARY KEY (id)
+public,orm_signaling_stable,orm_signaling_stable_pkey,p,PRIMARY KEY (id)
+public,orm_signaling_templates,orm_signaling_templates_pkey,p,PRIMARY KEY (id)
+public,phone_blacklist,phone_blacklist_create_uid_fkey,f,FOREIGN KEY (create_uid) REFERENCES res_users(id) ON DELETE SET NULL
+public,phone_blacklist,phone_blacklist_pkey,p,PRIMARY KEY (id)
+public,phone_blacklist,phone_blacklist_unique_number,u,UNIQUE (number)
+public,phone_blacklist,phone_blacklist_write_uid_fkey,f,FOREIGN KEY (write_uid) REFERENCES res_users(id) ON DELETE SET NULL
+public,phone_blacklist_remove,phone_blacklist_remove_create_uid_fkey,f,FOREIGN KEY (create_uid) REFERENCES res_users(id) ON DELETE SET NULL
+public,phone_blacklist_remove,phone_blacklist_remove_pkey,p,PRIMARY KEY (id)
+public,phone_blacklist_remove,phone_blacklist_remove_write_uid_fkey,f,FOREIGN KEY (write_uid) REFERENCES res_users(id) ON DELETE SET NULL
+public,portal_share,portal_share_create_uid_fkey,f,FOREIGN KEY (create_uid) REFERENCES res_users(id) ON DELETE SET NULL
+public,portal_share,portal_share_pkey,p,PRIMARY KEY (id)
+public,portal_share,portal_share_write_uid_fkey,f,FOREIGN KEY (write_uid) REFERENCES res_users(id) ON DELETE SET NULL
+public,portal_share_res_partner_rel,portal_share_res_partner_rel_pkey,p,"PRIMARY KEY (portal_share_id, res_partner_id)"
+public,portal_share_res_partner_rel,portal_share_res_partner_rel_portal_share_id_fkey,f,FOREIGN KEY (portal_share_id) REFERENCES portal_share(id) ON DELETE CASCADE
+public,portal_share_res_partner_rel,portal_share_res_partner_rel_res_partner_id_fkey,f,FOREIGN KEY (res_partner_id) REFERENCES res_partner(id) ON DELETE CASCADE
+public,portal_wizard,portal_wizard_create_uid_fkey,f,FOREIGN KEY (create_uid) REFERENCES res_users(id) ON DELETE SET NULL
+public,portal_wizard,portal_wizard_pkey,p,PRIMARY KEY (id)
+public,portal_wizard,portal_wizard_write_uid_fkey,f,FOREIGN KEY (write_uid) REFERENCES res_users(id) ON DELETE SET NULL
+public,portal_wizard_res_partner_rel,portal_wizard_res_partner_rel_pkey,p,"PRIMARY KEY (portal_wizard_id, res_partner_id)"
+public,portal_wizard_res_partner_rel,portal_wizard_res_partner_rel_portal_wizard_id_fkey,f,FOREIGN KEY (portal_wizard_id) REFERENCES portal_wizard(id) ON DELETE CASCADE
+public,portal_wizard_res_partner_rel,portal_wizard_res_partner_rel_res_partner_id_fkey,f,FOREIGN KEY (res_partner_id) REFERENCES res_partner(id) ON DELETE CASCADE
+public,portal_wizard_user,portal_wizard_user_create_uid_fkey,f,FOREIGN KEY (create_uid) REFERENCES res_users(id) ON DELETE SET NULL
+public,portal_wizard_user,portal_wizard_user_partner_id_fkey,f,FOREIGN KEY (partner_id) REFERENCES res_partner(id) ON DELETE CASCADE
+public,portal_wizard_user,portal_wizard_user_pkey,p,PRIMARY KEY (id)
+public,portal_wizard_user,portal_wizard_user_wizard_id_fkey,f,FOREIGN KEY (wizard_id) REFERENCES portal_wizard(id) ON DELETE CASCADE
+public,portal_wizard_user,portal_wizard_user_write_uid_fkey,f,FOREIGN KEY (write_uid) REFERENCES res_users(id) ON DELETE SET NULL
+public,privacy_log,privacy_log_create_uid_fkey,f,FOREIGN KEY (create_uid) REFERENCES res_users(id) ON DELETE SET NULL
+public,privacy_log,privacy_log_pkey,p,PRIMARY KEY (id)
+public,privacy_log,privacy_log_user_id_fkey,f,FOREIGN KEY (user_id) REFERENCES res_users(id) ON DELETE RESTRICT
+public,privacy_log,privacy_log_write_uid_fkey,f,FOREIGN KEY (write_uid) REFERENCES res_users(id) ON DELETE SET NULL
+public,privacy_lookup_wizard,privacy_lookup_wizard_create_uid_fkey,f,FOREIGN KEY (create_uid) REFERENCES res_users(id) ON DELETE SET NULL
+public,privacy_lookup_wizard,privacy_lookup_wizard_log_id_fkey,f,FOREIGN KEY (log_id) REFERENCES privacy_log(id) ON DELETE SET NULL
+public,privacy_lookup_wizard,privacy_lookup_wizard_pkey,p,PRIMARY KEY (id)
+public,privacy_lookup_wizard,privacy_lookup_wizard_write_uid_fkey,f,FOREIGN KEY (write_uid) REFERENCES res_users(id) ON DELETE SET NULL
+public,privacy_lookup_wizard_line,privacy_lookup_wizard_line_create_uid_fkey,f,FOREIGN KEY (create_uid) REFERENCES res_users(id) ON DELETE SET NULL
+public,privacy_lookup_wizard_line,privacy_lookup_wizard_line_pkey,p,PRIMARY KEY (id)
+public,privacy_lookup_wizard_line,privacy_lookup_wizard_line_res_model_id_fkey,f,FOREIGN KEY (res_model_id) REFERENCES ir_model(id) ON DELETE CASCADE
+public,privacy_lookup_wizard_line,privacy_lookup_wizard_line_wizard_id_fkey,f,FOREIGN KEY (wizard_id) REFERENCES privacy_lookup_wizard(id) ON DELETE SET NULL
+public,privacy_lookup_wizard_line,privacy_lookup_wizard_line_write_uid_fkey,f,FOREIGN KEY (write_uid) REFERENCES res_users(id) ON DELETE SET NULL
+public,properties_base_definition,properties_base_definition_create_uid_fkey,f,FOREIGN KEY (create_uid) REFERENCES res_users(id) ON DELETE SET NULL
+public,properties_base_definition,properties_base_definition_pkey,p,PRIMARY KEY (id)
+public,properties_base_definition,properties_base_definition_properties_field_id_fkey,f,FOREIGN KEY (properties_field_id) REFERENCES ir_model_fields(id) ON DELETE CASCADE
+public,properties_base_definition,properties_base_definition_unique_properties_field_id,u,UNIQUE (properties_field_id)
+public,properties_base_definition,properties_base_definition_write_uid_fkey,f,FOREIGN KEY (write_uid) REFERENCES res_users(id) ON DELETE SET NULL
+public,rel_modules_langexport,rel_modules_langexport_module_id_fkey,f,FOREIGN KEY (module_id) REFERENCES ir_module_module(id) ON DELETE CASCADE
+public,rel_modules_langexport,rel_modules_langexport_pkey,p,"PRIMARY KEY (wiz_id, module_id)"
+public,rel_modules_langexport,rel_modules_langexport_wiz_id_fkey,f,FOREIGN KEY (wiz_id) REFERENCES base_language_export(id) ON DELETE CASCADE
+public,report_layout,report_layout_create_uid_fkey,f,FOREIGN KEY (create_uid) REFERENCES res_users(id) ON DELETE SET NULL
+public,report_layout,report_layout_pkey,p,PRIMARY KEY (id)
+public,report_layout,report_layout_view_id_fkey,f,FOREIGN KEY (view_id) REFERENCES ir_ui_view(id) ON DELETE RESTRICT
+public,report_layout,report_layout_write_uid_fkey,f,FOREIGN KEY (write_uid) REFERENCES res_users(id) ON DELETE SET NULL
+public,report_paperformat,report_paperformat_create_uid_fkey,f,FOREIGN KEY (create_uid) REFERENCES res_users(id) ON DELETE SET NULL
+public,report_paperformat,report_paperformat_pkey,p,PRIMARY KEY (id)
+public,report_paperformat,report_paperformat_write_uid_fkey,f,FOREIGN KEY (write_uid) REFERENCES res_users(id) ON DELETE SET NULL
+public,res_bank,res_bank_country_fkey,f,FOREIGN KEY (country) REFERENCES res_country(id) ON DELETE SET NULL
+public,res_bank,res_bank_create_uid_fkey,f,FOREIGN KEY (create_uid) REFERENCES res_users(id) ON DELETE SET NULL
+public,res_bank,res_bank_pkey,p,PRIMARY KEY (id)
+public,res_bank,res_bank_state_fkey,f,FOREIGN KEY (state) REFERENCES res_country_state(id) ON DELETE SET NULL
+public,res_bank,res_bank_write_uid_fkey,f,FOREIGN KEY (write_uid) REFERENCES res_users(id) ON DELETE SET NULL
+public,res_company,res_company_alias_domain_id_fkey,f,FOREIGN KEY (alias_domain_id) REFERENCES mail_alias_domain(id) ON DELETE SET NULL
+public,res_company,res_company_create_uid_fkey,f,FOREIGN KEY (create_uid) REFERENCES res_users(id) ON DELETE SET NULL
+public,res_company,res_company_currency_id_fkey,f,FOREIGN KEY (currency_id) REFERENCES res_currency(id) ON DELETE RESTRICT
+public,res_company,res_company_external_report_layout_id_fkey,f,FOREIGN KEY (external_report_layout_id) REFERENCES ir_ui_view(id) ON DELETE SET NULL
+public,res_company,res_company_name_uniq,u,UNIQUE (name)
+public,res_company,res_company_paperformat_id_fkey,f,FOREIGN KEY (paperformat_id) REFERENCES report_paperformat(id) ON DELETE SET NULL
+public,res_company,res_company_parent_id_fkey,f,FOREIGN KEY (parent_id) REFERENCES res_company(id) ON DELETE RESTRICT
+public,res_company,res_company_partner_id_fkey,f,FOREIGN KEY (partner_id) REFERENCES res_partner(id) ON DELETE RESTRICT
+public,res_company,res_company_pkey,p,PRIMARY KEY (id)
+public,res_company,res_company_resource_calendar_id_fkey,f,FOREIGN KEY (resource_calendar_id) REFERENCES resource_calendar(id) ON DELETE RESTRICT
+public,res_company,res_company_write_uid_fkey,f,FOREIGN KEY (write_uid) REFERENCES res_users(id) ON DELETE SET NULL
+public,res_company_users_rel,res_company_users_rel_cid_fkey,f,FOREIGN KEY (cid) REFERENCES res_company(id) ON DELETE CASCADE
+public,res_company_users_rel,res_company_users_rel_pkey,p,"PRIMARY KEY (cid, user_id)"
+public,res_company_users_rel,res_company_users_rel_user_id_fkey,f,FOREIGN KEY (user_id) REFERENCES res_users(id) ON DELETE CASCADE
+public,res_config,res_config_create_uid_fkey,f,FOREIGN KEY (create_uid) REFERENCES res_users(id) ON DELETE SET NULL
+public,res_config,res_config_pkey,p,PRIMARY KEY (id)
+public,res_config,res_config_write_uid_fkey,f,FOREIGN KEY (write_uid) REFERENCES res_users(id) ON DELETE SET NULL
+public,res_config_settings,res_config_settings_auth_signup_template_user_id_fkey,f,FOREIGN KEY (auth_signup_template_user_id) REFERENCES res_users(id) ON DELETE SET NULL
+public,res_config_settings,res_config_settings_company_id_fkey,f,FOREIGN KEY (company_id) REFERENCES res_company(id) ON DELETE CASCADE
+public,res_config_settings,res_config_settings_create_uid_fkey,f,FOREIGN KEY (create_uid) REFERENCES res_users(id) ON DELETE SET NULL
+public,res_config_settings,res_config_settings_digest_id_fkey,f,FOREIGN KEY (digest_id) REFERENCES digest_digest(id) ON DELETE SET NULL
+public,res_config_settings,res_config_settings_pkey,p,PRIMARY KEY (id)
+public,res_config_settings,res_config_settings_write_uid_fkey,f,FOREIGN KEY (write_uid) REFERENCES res_users(id) ON DELETE SET NULL
+public,res_country,res_country_address_view_id_fkey,f,FOREIGN KEY (address_view_id) REFERENCES ir_ui_view(id) ON DELETE SET NULL
+public,res_country,res_country_code_uniq,u,UNIQUE (code)
+public,res_country,res_country_create_uid_fkey,f,FOREIGN KEY (create_uid) REFERENCES res_users(id) ON DELETE SET NULL
+public,res_country,res_country_currency_id_fkey,f,FOREIGN KEY (currency_id) REFERENCES res_currency(id) ON DELETE SET NULL
+public,res_country,res_country_name_uniq,u,UNIQUE (name)
+public,res_country,res_country_pkey,p,PRIMARY KEY (id)
+public,res_country,res_country_write_uid_fkey,f,FOREIGN KEY (write_uid) REFERENCES res_users(id) ON DELETE SET NULL
+public,res_country_group,res_country_group_check_code_uniq,u,UNIQUE (code)
+public,res_country_group,res_country_group_create_uid_fkey,f,FOREIGN KEY (create_uid) REFERENCES res_users(id) ON DELETE SET NULL
+public,res_country_group,res_country_group_pkey,p,PRIMARY KEY (id)
+public,res_country_group,res_country_group_write_uid_fkey,f,FOREIGN KEY (write_uid) REFERENCES res_users(id) ON DELETE SET NULL
+public,res_country_res_country_group_rel,res_country_res_country_group_rel_pkey,p,"PRIMARY KEY (res_country_id, res_country_group_id)"
+public,res_country_res_country_group_rel,res_country_res_country_group_rel_res_country_group_id_fkey,f,FOREIGN KEY (res_country_group_id) REFERENCES res_country_group(id) ON DELETE CASCADE
+public,res_country_res_country_group_rel,res_country_res_country_group_rel_res_country_id_fkey,f,FOREIGN KEY (res_country_id) REFERENCES res_country(id) ON DELETE CASCADE
+public,res_country_state,res_country_state_country_id_fkey,f,FOREIGN KEY (country_id) REFERENCES res_country(id) ON DELETE RESTRICT
+public,res_country_state,res_country_state_create_uid_fkey,f,FOREIGN KEY (create_uid) REFERENCES res_users(id) ON DELETE SET NULL
+public,res_country_state,res_country_state_name_code_uniq,u,"UNIQUE (country_id, code)"
+public,res_country_state,res_country_state_pkey,p,PRIMARY KEY (id)
+public,res_country_state,res_country_state_write_uid_fkey,f,FOREIGN KEY (write_uid) REFERENCES res_users(id) ON DELETE SET NULL
+public,res_currency,res_currency_create_uid_fkey,f,FOREIGN KEY (create_uid) REFERENCES res_users(id) ON DELETE SET NULL
+public,res_currency,res_currency_pkey,p,PRIMARY KEY (id)
+public,res_currency,res_currency_rounding_gt_zero,c,CHECK ((rounding > (0)::numeric))
+public,res_currency,res_currency_unique_name,u,UNIQUE (name)
+public,res_currency,res_currency_write_uid_fkey,f,FOREIGN KEY (write_uid) REFERENCES res_users(id) ON DELETE SET NULL
+public,res_currency_rate,res_currency_rate_company_id_fkey,f,FOREIGN KEY (company_id) REFERENCES res_company(id) ON DELETE SET NULL
+public,res_currency_rate,res_currency_rate_create_uid_fkey,f,FOREIGN KEY (create_uid) REFERENCES res_users(id) ON DELETE SET NULL
+public,res_currency_rate,res_currency_rate_currency_id_fkey,f,FOREIGN KEY (currency_id) REFERENCES res_currency(id) ON DELETE CASCADE
+public,res_currency_rate,res_currency_rate_currency_rate_check,c,CHECK ((rate > (0)::numeric))
+public,res_currency_rate,res_currency_rate_pkey,p,PRIMARY KEY (id)
+public,res_currency_rate,res_currency_rate_unique_name_per_day,u,"UNIQUE (name, currency_id, company_id)"
+public,res_currency_rate,res_currency_rate_write_uid_fkey,f,FOREIGN KEY (write_uid) REFERENCES res_users(id) ON DELETE SET NULL
+public,res_device_log,res_device_log_create_uid_fkey,f,FOREIGN KEY (create_uid) REFERENCES res_users(id) ON DELETE SET NULL
+public,res_device_log,res_device_log_pkey,p,PRIMARY KEY (id)
+public,res_device_log,res_device_log_user_id_fkey,f,FOREIGN KEY (user_id) REFERENCES res_users(id) ON DELETE SET NULL
+public,res_device_log,res_device_log_write_uid_fkey,f,FOREIGN KEY (write_uid) REFERENCES res_users(id) ON DELETE SET NULL
+public,res_groups,res_groups_check_api_key_duration,c,CHECK ((api_key_duration >= (0)::double precision))
+public,res_groups,res_groups_create_uid_fkey,f,FOREIGN KEY (create_uid) REFERENCES res_users(id) ON DELETE SET NULL
+public,res_groups,res_groups_name_uniq,u,"UNIQUE (privilege_id, name)"
+public,res_groups,res_groups_pkey,p,PRIMARY KEY (id)
+public,res_groups,res_groups_privilege_id_fkey,f,FOREIGN KEY (privilege_id) REFERENCES res_groups_privilege(id) ON DELETE SET NULL
+public,res_groups,res_groups_write_uid_fkey,f,FOREIGN KEY (write_uid) REFERENCES res_users(id) ON DELETE SET NULL
+public,res_groups_implied_rel,res_groups_implied_rel_gid_fkey,f,FOREIGN KEY (gid) REFERENCES res_groups(id) ON DELETE CASCADE
+public,res_groups_implied_rel,res_groups_implied_rel_hid_fkey,f,FOREIGN KEY (hid) REFERENCES res_groups(id) ON DELETE CASCADE
+public,res_groups_implied_rel,res_groups_implied_rel_pkey,p,"PRIMARY KEY (gid, hid)"
+public,res_groups_privilege,res_groups_privilege_category_id_fkey,f,FOREIGN KEY (category_id) REFERENCES ir_module_category(id) ON DELETE SET NULL
+public,res_groups_privilege,res_groups_privilege_create_uid_fkey,f,FOREIGN KEY (create_uid) REFERENCES res_users(id) ON DELETE SET NULL
+public,res_groups_privilege,res_groups_privilege_pkey,p,PRIMARY KEY (id)
+public,res_groups_privilege,res_groups_privilege_write_uid_fkey,f,FOREIGN KEY (write_uid) REFERENCES res_users(id) ON DELETE SET NULL
+public,res_groups_report_rel,res_groups_report_rel_gid_fkey,f,FOREIGN KEY (gid) REFERENCES res_groups(id) ON DELETE CASCADE
+public,res_groups_report_rel,res_groups_report_rel_pkey,p,"PRIMARY KEY (uid, gid)"
+public,res_groups_report_rel,res_groups_report_rel_uid_fkey,f,FOREIGN KEY (uid) REFERENCES ir_act_report_xml(id) ON DELETE CASCADE
+public,res_groups_users_rel,res_groups_users_rel_gid_fkey,f,FOREIGN KEY (gid) REFERENCES res_groups(id) ON DELETE CASCADE
+public,res_groups_users_rel,res_groups_users_rel_pkey,p,"PRIMARY KEY (gid, uid)"
+public,res_groups_users_rel,res_groups_users_rel_uid_fkey,f,FOREIGN KEY (uid) REFERENCES res_users(id) ON DELETE CASCADE
+public,res_lang,res_lang_code_uniq,u,UNIQUE (code)
+public,res_lang,res_lang_create_uid_fkey,f,FOREIGN KEY (create_uid) REFERENCES res_users(id) ON DELETE SET NULL
+public,res_lang,res_lang_name_uniq,u,UNIQUE (name)
+public,res_lang,res_lang_pkey,p,PRIMARY KEY (id)
+public,res_lang,res_lang_url_code_uniq,u,UNIQUE (url_code)
+public,res_lang,res_lang_write_uid_fkey,f,FOREIGN KEY (write_uid) REFERENCES res_users(id) ON DELETE SET NULL
+public,res_lang_install_rel,res_lang_install_rel_lang_id_fkey,f,FOREIGN KEY (lang_id) REFERENCES res_lang(id) ON DELETE CASCADE
+public,res_lang_install_rel,res_lang_install_rel_language_wizard_id_fkey,f,FOREIGN KEY (language_wizard_id) REFERENCES base_language_install(id) ON DELETE CASCADE
+public,res_lang_install_rel,res_lang_install_rel_pkey,p,"PRIMARY KEY (language_wizard_id, lang_id)"
+public,res_partner,res_partner_check_name,c,CHECK (((((type)::text = 'contact'::text) AND (name IS NOT NULL)) OR ((type)::text <> 'contact'::text)))
+public,res_partner,res_partner_commercial_partner_id_fkey,f,FOREIGN KEY (commercial_partner_id) REFERENCES res_partner(id) ON DELETE SET NULL
+public,res_partner,res_partner_company_id_fkey,f,FOREIGN KEY (company_id) REFERENCES res_company(id) ON DELETE SET NULL
+public,res_partner,res_partner_country_id_fkey,f,FOREIGN KEY (country_id) REFERENCES res_country(id) ON DELETE RESTRICT
+public,res_partner,res_partner_create_uid_fkey,f,FOREIGN KEY (create_uid) REFERENCES res_users(id) ON DELETE SET NULL
+public,res_partner,res_partner_industry_id_fkey,f,FOREIGN KEY (industry_id) REFERENCES res_partner_industry(id) ON DELETE SET NULL
+public,res_partner,res_partner_parent_id_fkey,f,FOREIGN KEY (parent_id) REFERENCES res_partner(id) ON DELETE SET NULL
+public,res_partner,res_partner_pkey,p,PRIMARY KEY (id)
+public,res_partner,res_partner_state_id_fkey,f,FOREIGN KEY (state_id) REFERENCES res_country_state(id) ON DELETE RESTRICT
+public,res_partner,res_partner_user_id_fkey,f,FOREIGN KEY (user_id) REFERENCES res_users(id) ON DELETE SET NULL
+public,res_partner,res_partner_write_uid_fkey,f,FOREIGN KEY (write_uid) REFERENCES res_users(id) ON DELETE SET NULL
+public,res_partner_bank,res_partner_bank_bank_id_fkey,f,FOREIGN KEY (bank_id) REFERENCES res_bank(id) ON DELETE SET NULL
+public,res_partner_bank,res_partner_bank_company_id_fkey,f,FOREIGN KEY (company_id) REFERENCES res_company(id) ON DELETE SET NULL
+public,res_partner_bank,res_partner_bank_create_uid_fkey,f,FOREIGN KEY (create_uid) REFERENCES res_users(id) ON DELETE SET NULL
+public,res_partner_bank,res_partner_bank_currency_id_fkey,f,FOREIGN KEY (currency_id) REFERENCES res_currency(id) ON DELETE SET NULL
+public,res_partner_bank,res_partner_bank_partner_id_fkey,f,FOREIGN KEY (partner_id) REFERENCES res_partner(id) ON DELETE CASCADE
+public,res_partner_bank,res_partner_bank_pkey,p,PRIMARY KEY (id)
+public,res_partner_bank,res_partner_bank_unique_number,u,"UNIQUE (sanitized_acc_number, partner_id)"
+public,res_partner_bank,res_partner_bank_write_uid_fkey,f,FOREIGN KEY (write_uid) REFERENCES res_users(id) ON DELETE SET NULL
+public,res_partner_category,res_partner_category_create_uid_fkey,f,FOREIGN KEY (create_uid) REFERENCES res_users(id) ON DELETE SET NULL
+public,res_partner_category,res_partner_category_parent_id_fkey,f,FOREIGN KEY (parent_id) REFERENCES res_partner_category(id) ON DELETE CASCADE
+public,res_partner_category,res_partner_category_pkey,p,PRIMARY KEY (id)
+public,res_partner_category,res_partner_category_write_uid_fkey,f,FOREIGN KEY (write_uid) REFERENCES res_users(id) ON DELETE SET NULL
+public,res_partner_industry,res_partner_industry_create_uid_fkey,f,FOREIGN KEY (create_uid) REFERENCES res_users(id) ON DELETE SET NULL
+public,res_partner_industry,res_partner_industry_pkey,p,PRIMARY KEY (id)
+public,res_partner_industry,res_partner_industry_write_uid_fkey,f,FOREIGN KEY (write_uid) REFERENCES res_users(id) ON DELETE SET NULL
+public,res_partner_res_partner_category_rel,res_partner_res_partner_category_rel_category_id_fkey,f,FOREIGN KEY (category_id) REFERENCES res_partner_category(id) ON DELETE CASCADE
+public,res_partner_res_partner_category_rel,res_partner_res_partner_category_rel_partner_id_fkey,f,FOREIGN KEY (partner_id) REFERENCES res_partner(id) ON DELETE CASCADE
+public,res_partner_res_partner_category_rel,res_partner_res_partner_category_rel_pkey,p,"PRIMARY KEY (category_id, partner_id)"
+public,res_role,res_role_create_uid_fkey,f,FOREIGN KEY (create_uid) REFERENCES res_users(id) ON DELETE SET NULL
+public,res_role,res_role_pkey,p,PRIMARY KEY (id)
+public,res_role,res_role_write_uid_fkey,f,FOREIGN KEY (write_uid) REFERENCES res_users(id) ON DELETE SET NULL
+public,res_role_res_users_rel,res_role_res_users_rel_pkey,p,"PRIMARY KEY (res_role_id, res_users_id)"
+public,res_role_res_users_rel,res_role_res_users_rel_res_role_id_fkey,f,FOREIGN KEY (res_role_id) REFERENCES res_role(id) ON DELETE CASCADE
+public,res_role_res_users_rel,res_role_res_users_rel_res_users_id_fkey,f,FOREIGN KEY (res_users_id) REFERENCES res_users(id) ON DELETE CASCADE
+public,res_users,res_users_company_id_fkey,f,FOREIGN KEY (company_id) REFERENCES res_company(id) ON DELETE RESTRICT
+public,res_users,res_users_create_uid_fkey,f,FOREIGN KEY (create_uid) REFERENCES res_users(id) ON DELETE SET NULL
+public,res_users,res_users_login_key,u,UNIQUE (login)
+public,res_users,res_users_notification_type,c,CHECK ((((notification_type)::text = 'email'::text) OR (NOT share)))
+public,res_users,res_users_partner_id_fkey,f,FOREIGN KEY (partner_id) REFERENCES res_partner(id) ON DELETE RESTRICT
+public,res_users,res_users_pkey,p,PRIMARY KEY (id)
+public,res_users,res_users_sale_team_id_fkey,f,FOREIGN KEY (sale_team_id) REFERENCES crm_team(id) ON DELETE SET NULL
+public,res_users,res_users_write_uid_fkey,f,FOREIGN KEY (write_uid) REFERENCES res_users(id) ON DELETE SET NULL
+public,res_users_apikeys,res_users_apikeys_index_check,c,CHECK ((char_length((index)::text) = 8))
+public,res_users_apikeys,res_users_apikeys_pkey,p,PRIMARY KEY (id)
+public,res_users_apikeys,res_users_apikeys_user_id_fkey,f,FOREIGN KEY (user_id) REFERENCES res_users(id) ON DELETE CASCADE
+public,res_users_apikeys_description,res_users_apikeys_description_create_uid_fkey,f,FOREIGN KEY (create_uid) REFERENCES res_users(id) ON DELETE SET NULL
+public,res_users_apikeys_description,res_users_apikeys_description_pkey,p,PRIMARY KEY (id)
+public,res_users_apikeys_description,res_users_apikeys_description_write_uid_fkey,f,FOREIGN KEY (write_uid) REFERENCES res_users(id) ON DELETE SET NULL
+public,res_users_deletion,res_users_deletion_create_uid_fkey,f,FOREIGN KEY (create_uid) REFERENCES res_users(id) ON DELETE SET NULL
+public,res_users_deletion,res_users_deletion_pkey,p,PRIMARY KEY (id)
+public,res_users_deletion,res_users_deletion_user_id_fkey,f,FOREIGN KEY (user_id) REFERENCES res_users(id) ON DELETE SET NULL
+public,res_users_deletion,res_users_deletion_write_uid_fkey,f,FOREIGN KEY (write_uid) REFERENCES res_users(id) ON DELETE SET NULL
+public,res_users_identitycheck,res_users_identitycheck_create_uid_fkey,f,FOREIGN KEY (create_uid) REFERENCES res_users(id) ON DELETE SET NULL
+public,res_users_identitycheck,res_users_identitycheck_pkey,p,PRIMARY KEY (id)
+public,res_users_identitycheck,res_users_identitycheck_write_uid_fkey,f,FOREIGN KEY (write_uid) REFERENCES res_users(id) ON DELETE SET NULL
+public,res_users_log,res_users_log_create_uid_fkey,f,FOREIGN KEY (create_uid) REFERENCES res_users(id) ON DELETE SET NULL
+public,res_users_log,res_users_log_pkey,p,PRIMARY KEY (id)
+public,res_users_log,res_users_log_write_uid_fkey,f,FOREIGN KEY (write_uid) REFERENCES res_users(id) ON DELETE SET NULL
+public,res_users_settings,res_users_settings_create_uid_fkey,f,FOREIGN KEY (create_uid) REFERENCES res_users(id) ON DELETE SET NULL
+public,res_users_settings,res_users_settings_pkey,p,PRIMARY KEY (id)
+public,res_users_settings,res_users_settings_unique_user_id,u,UNIQUE (user_id)
+public,res_users_settings,res_users_settings_user_id_fkey,f,FOREIGN KEY (user_id) REFERENCES res_users(id) ON DELETE CASCADE
+public,res_users_settings,res_users_settings_write_uid_fkey,f,FOREIGN KEY (write_uid) REFERENCES res_users(id) ON DELETE SET NULL
+public,res_users_settings_embedded_action,res_users_settings_embedded_action_action_id_fkey,f,FOREIGN KEY (action_id) REFERENCES ir_act_window(id) ON DELETE CASCADE
+public,res_users_settings_embedded_action,res_users_settings_embedded_action_create_uid_fkey,f,FOREIGN KEY (create_uid) REFERENCES res_users(id) ON DELETE SET NULL
+public,res_users_settings_embedded_action,res_users_settings_embedded_action_pkey,p,PRIMARY KEY (id)
+public,res_users_settings_embedded_action,res_users_settings_embedded_action_res_user_settings_e_91890fa3,u,"UNIQUE (user_setting_id, action_id, res_id)"
+public,res_users_settings_embedded_action,res_users_settings_embedded_action_user_setting_id_fkey,f,FOREIGN KEY (user_setting_id) REFERENCES res_users_settings(id) ON DELETE CASCADE
+public,res_users_settings_embedded_action,res_users_settings_embedded_action_write_uid_fkey,f,FOREIGN KEY (write_uid) REFERENCES res_users(id) ON DELETE SET NULL
+public,res_users_settings_volumes,res_users_settings_volumes_create_uid_fkey,f,FOREIGN KEY (create_uid) REFERENCES res_users(id) ON DELETE SET NULL
+public,res_users_settings_volumes,res_users_settings_volumes_guest_id_fkey,f,FOREIGN KEY (guest_id) REFERENCES res_partner(id) ON DELETE CASCADE
+public,res_users_settings_volumes,res_users_settings_volumes_partner_id_fkey,f,FOREIGN KEY (partner_id) REFERENCES res_partner(id) ON DELETE CASCADE
+public,res_users_settings_volumes,res_users_settings_volumes_partner_or_guest_exists,c,CHECK ((((partner_id IS NOT NULL) AND (guest_id IS NULL)) OR ((partner_id IS NULL) AND (guest_id IS NOT NULL))))
+public,res_users_settings_volumes,res_users_settings_volumes_pkey,p,PRIMARY KEY (id)
+public,res_users_settings_volumes,res_users_settings_volumes_user_setting_id_fkey,f,FOREIGN KEY (user_setting_id) REFERENCES res_users_settings(id) ON DELETE CASCADE
+public,res_users_settings_volumes,res_users_settings_volumes_write_uid_fkey,f,FOREIGN KEY (write_uid) REFERENCES res_users(id) ON DELETE SET NULL
+public,res_users_web_tour_tour_rel,res_users_web_tour_tour_rel_pkey,p,"PRIMARY KEY (web_tour_tour_id, res_users_id)"
+public,res_users_web_tour_tour_rel,res_users_web_tour_tour_rel_res_users_id_fkey,f,FOREIGN KEY (res_users_id) REFERENCES res_users(id) ON DELETE CASCADE
+public,res_users_web_tour_tour_rel,res_users_web_tour_tour_rel_web_tour_tour_id_fkey,f,FOREIGN KEY (web_tour_tour_id) REFERENCES web_tour_tour(id) ON DELETE CASCADE
+public,reset_view_arch_wizard,reset_view_arch_wizard_compare_view_id_fkey,f,FOREIGN KEY (compare_view_id) REFERENCES ir_ui_view(id) ON DELETE SET NULL
+public,reset_view_arch_wizard,reset_view_arch_wizard_create_uid_fkey,f,FOREIGN KEY (create_uid) REFERENCES res_users(id) ON DELETE SET NULL
+public,reset_view_arch_wizard,reset_view_arch_wizard_pkey,p,PRIMARY KEY (id)
+public,reset_view_arch_wizard,reset_view_arch_wizard_view_id_fkey,f,FOREIGN KEY (view_id) REFERENCES ir_ui_view(id) ON DELETE SET NULL
+public,reset_view_arch_wizard,reset_view_arch_wizard_write_uid_fkey,f,FOREIGN KEY (write_uid) REFERENCES res_users(id) ON DELETE SET NULL
+public,resource_calendar,resource_calendar_company_id_fkey,f,FOREIGN KEY (company_id) REFERENCES res_company(id) ON DELETE SET NULL
+public,resource_calendar,resource_calendar_create_uid_fkey,f,FOREIGN KEY (create_uid) REFERENCES res_users(id) ON DELETE SET NULL
+public,resource_calendar,resource_calendar_pkey,p,PRIMARY KEY (id)
+public,resource_calendar,resource_calendar_write_uid_fkey,f,FOREIGN KEY (write_uid) REFERENCES res_users(id) ON DELETE SET NULL
+public,resource_calendar_attendance,resource_calendar_attendance_calendar_id_fkey,f,FOREIGN KEY (calendar_id) REFERENCES resource_calendar(id) ON DELETE CASCADE
+public,resource_calendar_attendance,resource_calendar_attendance_create_uid_fkey,f,FOREIGN KEY (create_uid) REFERENCES res_users(id) ON DELETE SET NULL
+public,resource_calendar_attendance,resource_calendar_attendance_pkey,p,PRIMARY KEY (id)
+public,resource_calendar_attendance,resource_calendar_attendance_write_uid_fkey,f,FOREIGN KEY (write_uid) REFERENCES res_users(id) ON DELETE SET NULL
+public,resource_calendar_leaves,resource_calendar_leaves_calendar_id_fkey,f,FOREIGN KEY (calendar_id) REFERENCES resource_calendar(id) ON DELETE SET NULL
+public,resource_calendar_leaves,resource_calendar_leaves_company_id_fkey,f,FOREIGN KEY (company_id) REFERENCES res_company(id) ON DELETE SET NULL
+public,resource_calendar_leaves,resource_calendar_leaves_create_uid_fkey,f,FOREIGN KEY (create_uid) REFERENCES res_users(id) ON DELETE SET NULL
+public,resource_calendar_leaves,resource_calendar_leaves_pkey,p,PRIMARY KEY (id)
+public,resource_calendar_leaves,resource_calendar_leaves_resource_id_fkey,f,FOREIGN KEY (resource_id) REFERENCES resource_resource(id) ON DELETE SET NULL
+public,resource_calendar_leaves,resource_calendar_leaves_write_uid_fkey,f,FOREIGN KEY (write_uid) REFERENCES res_users(id) ON DELETE SET NULL
+public,resource_resource,resource_resource_calendar_id_fkey,f,FOREIGN KEY (calendar_id) REFERENCES resource_calendar(id) ON DELETE SET NULL
+public,resource_resource,resource_resource_check_time_efficiency,c,CHECK ((time_efficiency > (0)::double precision))
+public,resource_resource,resource_resource_company_id_fkey,f,FOREIGN KEY (company_id) REFERENCES res_company(id) ON DELETE SET NULL
+public,resource_resource,resource_resource_create_uid_fkey,f,FOREIGN KEY (create_uid) REFERENCES res_users(id) ON DELETE SET NULL
+public,resource_resource,resource_resource_pkey,p,PRIMARY KEY (id)
+public,resource_resource,resource_resource_user_id_fkey,f,FOREIGN KEY (user_id) REFERENCES res_users(id) ON DELETE SET NULL
+public,resource_resource,resource_resource_write_uid_fkey,f,FOREIGN KEY (write_uid) REFERENCES res_users(id) ON DELETE SET NULL
+public,rule_group_rel,rule_group_rel_group_id_fkey,f,FOREIGN KEY (group_id) REFERENCES res_groups(id) ON DELETE RESTRICT
+public,rule_group_rel,rule_group_rel_pkey,p,"PRIMARY KEY (rule_group_id, group_id)"
+public,rule_group_rel,rule_group_rel_rule_group_id_fkey,f,FOREIGN KEY (rule_group_id) REFERENCES ir_rule(id) ON DELETE CASCADE
+public,scheduled_message_attachment_rel,scheduled_message_attachment_rel_attachment_id_fkey,f,FOREIGN KEY (attachment_id) REFERENCES ir_attachment(id) ON DELETE CASCADE
+public,scheduled_message_attachment_rel,scheduled_message_attachment_rel_pkey,p,"PRIMARY KEY (scheduled_message_id, attachment_id)"
+public,scheduled_message_attachment_rel,scheduled_message_attachment_rel_scheduled_message_id_fkey,f,FOREIGN KEY (scheduled_message_id) REFERENCES mail_scheduled_message(id) ON DELETE CASCADE
+public,server_action_history_wizard,server_action_history_wizard_action_id_fkey,f,FOREIGN KEY (action_id) REFERENCES ir_act_server(id) ON DELETE SET NULL
+public,server_action_history_wizard,server_action_history_wizard_create_uid_fkey,f,FOREIGN KEY (create_uid) REFERENCES res_users(id) ON DELETE SET NULL
+public,server_action_history_wizard,server_action_history_wizard_pkey,p,PRIMARY KEY (id)
+public,server_action_history_wizard,server_action_history_wizard_revision_fkey,f,FOREIGN KEY (revision) REFERENCES ir_actions_server_history(id) ON DELETE CASCADE
+public,server_action_history_wizard,server_action_history_wizard_write_uid_fkey,f,FOREIGN KEY (write_uid) REFERENCES res_users(id) ON DELETE SET NULL
+public,sms_account_code,sms_account_code_account_id_fkey,f,FOREIGN KEY (account_id) REFERENCES iap_account(id) ON DELETE CASCADE
+public,sms_account_code,sms_account_code_create_uid_fkey,f,FOREIGN KEY (create_uid) REFERENCES res_users(id) ON DELETE SET NULL
+public,sms_account_code,sms_account_code_pkey,p,PRIMARY KEY (id)
+public,sms_account_code,sms_account_code_write_uid_fkey,f,FOREIGN KEY (write_uid) REFERENCES res_users(id) ON DELETE SET NULL
+public,sms_account_phone,sms_account_phone_account_id_fkey,f,FOREIGN KEY (account_id) REFERENCES iap_account(id) ON DELETE CASCADE
+public,sms_account_phone,sms_account_phone_create_uid_fkey,f,FOREIGN KEY (create_uid) REFERENCES res_users(id) ON DELETE SET NULL
+public,sms_account_phone,sms_account_phone_pkey,p,PRIMARY KEY (id)
+public,sms_account_phone,sms_account_phone_write_uid_fkey,f,FOREIGN KEY (write_uid) REFERENCES res_users(id) ON DELETE SET NULL
+public,sms_account_sender,sms_account_sender_account_id_fkey,f,FOREIGN KEY (account_id) REFERENCES iap_account(id) ON DELETE CASCADE
+public,sms_account_sender,sms_account_sender_create_uid_fkey,f,FOREIGN KEY (create_uid) REFERENCES res_users(id) ON DELETE SET NULL
+public,sms_account_sender,sms_account_sender_pkey,p,PRIMARY KEY (id)
+public,sms_account_sender,sms_account_sender_write_uid_fkey,f,FOREIGN KEY (write_uid) REFERENCES res_users(id) ON DELETE SET NULL
+public,sms_composer,sms_composer_create_uid_fkey,f,FOREIGN KEY (create_uid) REFERENCES res_users(id) ON DELETE SET NULL
+public,sms_composer,sms_composer_pkey,p,PRIMARY KEY (id)
+public,sms_composer,sms_composer_template_id_fkey,f,FOREIGN KEY (template_id) REFERENCES sms_template(id) ON DELETE SET NULL
+public,sms_composer,sms_composer_write_uid_fkey,f,FOREIGN KEY (write_uid) REFERENCES res_users(id) ON DELETE SET NULL
+public,sms_sms,sms_sms_create_uid_fkey,f,FOREIGN KEY (create_uid) REFERENCES res_users(id) ON DELETE SET NULL
+public,sms_sms,sms_sms_mail_message_id_fkey,f,FOREIGN KEY (mail_message_id) REFERENCES mail_message(id) ON DELETE SET NULL
+public,sms_sms,sms_sms_partner_id_fkey,f,FOREIGN KEY (partner_id) REFERENCES res_partner(id) ON DELETE SET NULL
+public,sms_sms,sms_sms_pkey,p,PRIMARY KEY (id)
+public,sms_sms,sms_sms_uuid_unique,u,UNIQUE (uuid)
+public,sms_sms,sms_sms_write_uid_fkey,f,FOREIGN KEY (write_uid) REFERENCES res_users(id) ON DELETE SET NULL
+public,sms_template,sms_template_create_uid_fkey,f,FOREIGN KEY (create_uid) REFERENCES res_users(id) ON DELETE SET NULL
+public,sms_template,sms_template_model_id_fkey,f,FOREIGN KEY (model_id) REFERENCES ir_model(id) ON DELETE CASCADE
+public,sms_template,sms_template_pkey,p,PRIMARY KEY (id)
+public,sms_template,sms_template_sidebar_action_id_fkey,f,FOREIGN KEY (sidebar_action_id) REFERENCES ir_act_window(id) ON DELETE SET NULL
+public,sms_template,sms_template_write_uid_fkey,f,FOREIGN KEY (write_uid) REFERENCES res_users(id) ON DELETE SET NULL
+public,sms_template_preview,sms_template_preview_create_uid_fkey,f,FOREIGN KEY (create_uid) REFERENCES res_users(id) ON DELETE SET NULL
+public,sms_template_preview,sms_template_preview_pkey,p,PRIMARY KEY (id)
+public,sms_template_preview,sms_template_preview_sms_template_id_fkey,f,FOREIGN KEY (sms_template_id) REFERENCES sms_template(id) ON DELETE CASCADE
+public,sms_template_preview,sms_template_preview_write_uid_fkey,f,FOREIGN KEY (write_uid) REFERENCES res_users(id) ON DELETE SET NULL
+public,sms_template_reset,sms_template_reset_create_uid_fkey,f,FOREIGN KEY (create_uid) REFERENCES res_users(id) ON DELETE SET NULL
+public,sms_template_reset,sms_template_reset_pkey,p,PRIMARY KEY (id)
+public,sms_template_reset,sms_template_reset_write_uid_fkey,f,FOREIGN KEY (write_uid) REFERENCES res_users(id) ON DELETE SET NULL
+public,sms_template_sms_template_reset_rel,sms_template_sms_template_reset_rel_pkey,p,"PRIMARY KEY (sms_template_reset_id, sms_template_id)"
+public,sms_template_sms_template_reset_rel,sms_template_sms_template_reset_rel_sms_template_id_fkey,f,FOREIGN KEY (sms_template_id) REFERENCES sms_template(id) ON DELETE CASCADE
+public,sms_template_sms_template_reset_rel,sms_template_sms_template_reset_rel_sms_template_reset_id_fkey,f,FOREIGN KEY (sms_template_reset_id) REFERENCES sms_template_reset(id) ON DELETE CASCADE
+public,sms_tracker,sms_tracker_create_uid_fkey,f,FOREIGN KEY (create_uid) REFERENCES res_users(id) ON DELETE SET NULL
+public,sms_tracker,sms_tracker_mail_notification_id_fkey,f,FOREIGN KEY (mail_notification_id) REFERENCES mail_notification(id) ON DELETE CASCADE
+public,sms_tracker,sms_tracker_pkey,p,PRIMARY KEY (id)
+public,sms_tracker,sms_tracker_sms_uuid_unique,u,UNIQUE (sms_uuid)
+public,sms_tracker,sms_tracker_write_uid_fkey,f,FOREIGN KEY (write_uid) REFERENCES res_users(id) ON DELETE SET NULL
+public,snailmail_letter,snailmail_letter_attachment_id_fkey,f,FOREIGN KEY (attachment_id) REFERENCES ir_attachment(id) ON DELETE CASCADE
+public,snailmail_letter,snailmail_letter_company_id_fkey,f,FOREIGN KEY (company_id) REFERENCES res_company(id) ON DELETE RESTRICT
+public,snailmail_letter,snailmail_letter_country_id_fkey,f,FOREIGN KEY (country_id) REFERENCES res_country(id) ON DELETE SET NULL
+public,snailmail_letter,snailmail_letter_create_uid_fkey,f,FOREIGN KEY (create_uid) REFERENCES res_users(id) ON DELETE SET NULL
+public,snailmail_letter,snailmail_letter_message_id_fkey,f,FOREIGN KEY (message_id) REFERENCES mail_message(id) ON DELETE SET NULL
+public,snailmail_letter,snailmail_letter_partner_id_fkey,f,FOREIGN KEY (partner_id) REFERENCES res_partner(id) ON DELETE RESTRICT
+public,snailmail_letter,snailmail_letter_pkey,p,PRIMARY KEY (id)
+public,snailmail_letter,snailmail_letter_report_template_fkey,f,FOREIGN KEY (report_template) REFERENCES ir_act_report_xml(id) ON DELETE SET NULL
+public,snailmail_letter,snailmail_letter_state_id_fkey,f,FOREIGN KEY (state_id) REFERENCES res_country_state(id) ON DELETE SET NULL
+public,snailmail_letter,snailmail_letter_user_id_fkey,f,FOREIGN KEY (user_id) REFERENCES res_users(id) ON DELETE SET NULL
+public,snailmail_letter,snailmail_letter_write_uid_fkey,f,FOREIGN KEY (write_uid) REFERENCES res_users(id) ON DELETE SET NULL
+public,team_favorite_user_rel,team_favorite_user_rel_pkey,p,"PRIMARY KEY (team_id, user_id)"
+public,team_favorite_user_rel,team_favorite_user_rel_team_id_fkey,f,FOREIGN KEY (team_id) REFERENCES crm_team(id) ON DELETE CASCADE
+public,team_favorite_user_rel,team_favorite_user_rel_user_id_fkey,f,FOREIGN KEY (user_id) REFERENCES res_users(id) ON DELETE CASCADE
+public,utm_campaign,utm_campaign_create_uid_fkey,f,FOREIGN KEY (create_uid) REFERENCES res_users(id) ON DELETE SET NULL
+public,utm_campaign,utm_campaign_pkey,p,PRIMARY KEY (id)
+public,utm_campaign,utm_campaign_stage_id_fkey,f,FOREIGN KEY (stage_id) REFERENCES utm_stage(id) ON DELETE RESTRICT
+public,utm_campaign,utm_campaign_unique_name,u,UNIQUE (name)
+public,utm_campaign,utm_campaign_user_id_fkey,f,FOREIGN KEY (user_id) REFERENCES res_users(id) ON DELETE RESTRICT
+public,utm_campaign,utm_campaign_write_uid_fkey,f,FOREIGN KEY (write_uid) REFERENCES res_users(id) ON DELETE SET NULL
+public,utm_medium,utm_medium_create_uid_fkey,f,FOREIGN KEY (create_uid) REFERENCES res_users(id) ON DELETE SET NULL
+public,utm_medium,utm_medium_pkey,p,PRIMARY KEY (id)
+public,utm_medium,utm_medium_unique_name,u,UNIQUE (name)
+public,utm_medium,utm_medium_write_uid_fkey,f,FOREIGN KEY (write_uid) REFERENCES res_users(id) ON DELETE SET NULL
+public,utm_source,utm_source_create_uid_fkey,f,FOREIGN KEY (create_uid) REFERENCES res_users(id) ON DELETE SET NULL
+public,utm_source,utm_source_pkey,p,PRIMARY KEY (id)
+public,utm_source,utm_source_unique_name,u,UNIQUE (name)
+public,utm_source,utm_source_write_uid_fkey,f,FOREIGN KEY (write_uid) REFERENCES res_users(id) ON DELETE SET NULL
+public,utm_stage,utm_stage_create_uid_fkey,f,FOREIGN KEY (create_uid) REFERENCES res_users(id) ON DELETE SET NULL
+public,utm_stage,utm_stage_pkey,p,PRIMARY KEY (id)
+public,utm_stage,utm_stage_write_uid_fkey,f,FOREIGN KEY (write_uid) REFERENCES res_users(id) ON DELETE SET NULL
+public,utm_tag,utm_tag_create_uid_fkey,f,FOREIGN KEY (create_uid) REFERENCES res_users(id) ON DELETE SET NULL
+public,utm_tag,utm_tag_name_uniq,u,UNIQUE (name)
+public,utm_tag,utm_tag_pkey,p,PRIMARY KEY (id)
+public,utm_tag,utm_tag_write_uid_fkey,f,FOREIGN KEY (write_uid) REFERENCES res_users(id) ON DELETE SET NULL
+public,utm_tag_rel,utm_tag_rel_campaign_id_fkey,f,FOREIGN KEY (campaign_id) REFERENCES utm_tag(id) ON DELETE CASCADE
+public,utm_tag_rel,utm_tag_rel_pkey,p,"PRIMARY KEY (tag_id, campaign_id)"
+public,utm_tag_rel,utm_tag_rel_tag_id_fkey,f,FOREIGN KEY (tag_id) REFERENCES utm_campaign(id) ON DELETE CASCADE
+public,web_tour_tour,web_tour_tour_create_uid_fkey,f,FOREIGN KEY (create_uid) REFERENCES res_users(id) ON DELETE SET NULL
+public,web_tour_tour,web_tour_tour_pkey,p,PRIMARY KEY (id)
+public,web_tour_tour,web_tour_tour_uniq_name,u,UNIQUE (name)
+public,web_tour_tour,web_tour_tour_write_uid_fkey,f,FOREIGN KEY (write_uid) REFERENCES res_users(id) ON DELETE SET NULL
+public,web_tour_tour_step,web_tour_tour_step_create_uid_fkey,f,FOREIGN KEY (create_uid) REFERENCES res_users(id) ON DELETE SET NULL
+public,web_tour_tour_step,web_tour_tour_step_pkey,p,PRIMARY KEY (id)
+public,web_tour_tour_step,web_tour_tour_step_tour_id_fkey,f,FOREIGN KEY (tour_id) REFERENCES web_tour_tour(id) ON DELETE CASCADE
+public,web_tour_tour_step,web_tour_tour_step_write_uid_fkey,f,FOREIGN KEY (write_uid) REFERENCES res_users(id) ON DELETE SET NULL
+public,wizard_ir_model_menu_create,wizard_ir_model_menu_create_create_uid_fkey,f,FOREIGN KEY (create_uid) REFERENCES res_users(id) ON DELETE SET NULL
+public,wizard_ir_model_menu_create,wizard_ir_model_menu_create_menu_id_fkey,f,FOREIGN KEY (menu_id) REFERENCES ir_ui_menu(id) ON DELETE CASCADE
+public,wizard_ir_model_menu_create,wizard_ir_model_menu_create_pkey,p,PRIMARY KEY (id)
+public,wizard_ir_model_menu_create,wizard_ir_model_menu_create_write_uid_fkey,f,FOREIGN KEY (write_uid) REFERENCES res_users(id) ON DELETE SET NULL

@@ -1,0 +1,282 @@
+table_name,object_type,category,base_owner,crm_owner,owner_modules,objects,model_count,field_count,relation_field_count,column_count,index_count,fk_count,incoming_fk_count,outgoing_fk_count,primary_key_count,unique_count,check_count,degree,notes
+base_enable_profiling_wizard,model_table,base,true,false,base,base.enable.profiling.wizard,1,8,0,7,1,2,0,2,1,0,0,2,
+base_language_export,model_table,base,true,false,base,base.language.export,1,16,0,13,1,3,1,3,1,0,0,4,
+base_language_import,model_table,base,true,false,base,base.language.import,1,11,0,10,1,2,0,2,1,0,0,2,
+base_language_install,model_table,base,true,false,base,base.language.install,1,9,0,6,1,2,1,2,1,0,0,3,
+base_module_uninstall_ir_module_module_rel,relation_table,base,true,false,base,base.module.uninstall.module_ids,0,0,1,2,2,2,0,2,1,0,0,2,many-to-many bridge
+base_module_update,model_table,base,true,false,base,base.module.update,1,9,0,8,1,2,0,2,1,0,0,2,
+base_module_upgrade,model_table,base,true,false,base,base.module.upgrade,1,7,0,6,1,2,0,2,1,0,0,2,
+base_partner_merge_automatic_wizard_res_partner_rel,relation_table,base,true,false,base,base.partner.merge.automatic.wizard.partner_ids,0,0,1,2,2,2,0,2,1,0,0,2,many-to-many bridge
+base_partner_merge_line,model_table,base,true,false,base,base.partner.merge.line,1,9,0,8,1,3,1,3,1,0,0,4,
+change_password_own,model_table,base,true,false,base,change.password.own,1,8,0,7,1,2,0,2,1,0,0,2,
+change_password_user,model_table,base,true,false,base,change.password.user,1,10,0,9,1,4,0,4,1,0,0,4,
+change_password_wizard,model_table,base,true,false,base,change.password.wizard,1,7,0,5,1,2,1,2,1,0,0,3,
+decimal_precision,model_table,base,true,false,base,decimal.precision,1,8,0,7,2,2,0,2,1,1,0,2,
+ir_act_client,model_table,base,true,false,base,ir.actions.client,1,20,0,17,2,3,0,3,1,1,0,3,
+ir_act_server_group_rel,relation_table,base,true,false,base,ir.actions.server.group_ids,0,0,1,2,2,2,0,2,1,0,0,2,many-to-many bridge
+ir_act_server_webhook_field_rel,relation_table,base,true,false,base,ir.actions.server.webhook_field_ids,0,0,1,2,2,2,0,2,1,0,0,2,many-to-many bridge
+ir_act_url,model_table,base,true,false,base,ir.actions.act_url,1,16,0,14,2,3,0,3,1,1,0,3,
+ir_act_window,model_table,base,true,false,base,ir.actions.act_window,1,31,0,25,2,5,6,5,1,1,0,11,
+ir_act_window_group_rel,relation_table,base,true,false,base,ir.actions.act_window.group_ids,0,0,1,2,2,2,0,2,1,0,0,2,many-to-many bridge
+ir_actions,model_table,base,true,false,base,ir.actions.actions,1,14,0,12,2,3,0,3,1,1,0,3,
+ir_actions_server_history,model_table,base,true,false,base,ir.actions.server.history,1,8,0,7,1,3,1,3,1,0,0,4,
+ir_actions_todo,model_table,base,true,false,base,ir.actions.todo,1,10,0,9,2,2,0,2,1,0,0,2,
+ir_asset,model_table,base,true,false,base,ir.asset,1,13,0,12,1,2,0,2,1,0,0,2,
+ir_cron_progress,model_table,base,true,false,base,ir.cron.progress,1,11,0,10,2,3,0,3,1,0,0,3,
+ir_cron_trigger,model_table,base,true,false,base,ir.cron.trigger,1,8,0,7,3,3,1,3,1,0,0,4,
+ir_default,model_table,base,true,false,base,ir.default,1,11,0,10,4,5,0,5,1,0,0,5,
+ir_demo,model_table,base,true,false,base,ir.demo,1,6,0,5,1,2,0,2,1,0,0,2,
+ir_demo_failure,model_table,base,true,false,base,ir.demo_failure,1,9,0,8,1,4,0,4,1,0,0,4,
+ir_demo_failure_wizard,model_table,base,true,false,base,ir.demo_failure.wizard,1,8,0,5,1,2,1,2,1,0,0,3,
+ir_embedded_actions,model_table,base,true,false,base,ir.embedded.actions,1,21,0,16,1,4,2,4,1,0,2,6,
+ir_embedded_actions_res_groups_rel,relation_table,base,true,false,base,ir.embedded.actions.groups_ids,0,0,1,2,2,2,0,2,1,0,0,2,many-to-many bridge
+ir_exports,model_table,base,true,false,base,ir.exports,1,9,0,7,2,2,1,2,1,0,0,3,
+ir_exports_line,model_table,base,true,false,base,ir.exports.line,1,8,0,7,2,3,0,3,1,0,0,3,
+ir_filters,model_table,base,true,false,base,ir.filters,1,17,0,15,3,3,1,3,1,0,2,4,
+ir_filters_res_users_rel,relation_table,base,true,false,base,ir.filters.user_ids,0,0,1,2,2,2,0,2,1,0,0,2,many-to-many bridge
+ir_logging,model_table,base,true,false,base,ir.logging,1,14,0,13,4,0,0,0,1,0,0,0,
+ir_model_access,model_table,base,true,false,base,ir.model.access,1,14,0,13,4,4,0,4,1,0,0,4,
+ir_model_constraint,model_table,base,true,false,base,ir.model.constraint,1,12,0,11,5,4,0,4,1,1,0,4,
+ir_model_data,model_table,base,true,false,base,ir.model.data,1,13,0,10,3,2,0,2,1,0,1,2,
+ir_model_fields_group_rel,relation_table,base,true,false,base,ir.model.fields.groups,0,0,1,2,2,2,0,2,1,0,0,2,many-to-many bridge
+ir_model_fields_selection,model_table,base,true,false,base,ir.model.fields.selection,1,10,0,9,3,3,1,3,1,1,0,4,
+ir_model_inherit,model_table,base,true,false,base,ir.model.inherit,1,5,0,4,2,3,0,3,1,1,0,3,
+ir_model_relation,model_table,base,true,false,base,ir.model.relation,1,9,0,8,4,4,0,4,1,0,0,4,
+ir_module_category,model_table,base,true,false,base,ir.module.category,1,16,0,11,2,3,3,3,1,0,0,6,
+ir_module_module_dependency,model_table,base,true,false,base,ir.module.module.dependency,1,7,0,4,2,1,0,1,1,0,0,1,
+ir_module_module_exclusion,model_table,base,true,false,base,ir.module.module.exclusion,1,10,0,7,2,3,0,3,1,0,0,3,
+ir_profile,model_table,base,true,false,base,ir.profile,1,18,0,14,2,0,0,0,1,0,0,0,
+ir_rule,model_table,base,true,false,base,ir.rule,1,16,0,14,2,3,1,3,1,0,1,4,
+ir_sequence,model_table,base,true,false,base,ir.sequence,1,19,0,16,1,3,2,3,1,0,0,5,
+ir_sequence_date_range,model_table,base,true,false,base,ir.sequence.date_range,1,11,0,9,2,3,0,3,1,1,0,3,
+ir_ui_menu_group_rel,relation_table,base,true,false,base,ir.ui.menu.group_ids | res.groups.menu_access,0,0,2,2,2,2,0,2,1,0,0,2,many-to-many bridge
+ir_ui_view_custom,model_table,base,true,false,base,ir.ui.view.custom,1,9,0,8,4,4,0,4,1,0,0,4,
+ir_ui_view_group_rel,relation_table,base,true,false,base,ir.ui.view.group_ids | res.groups.view_access,0,0,2,2,2,2,0,2,1,0,0,2,many-to-many bridge
+module_country,relation_table,base,true,false,base,ir.module.module.country_ids,0,0,1,2,2,2,0,2,1,0,0,2,many-to-many bridge
+rel_modules_langexport,relation_table,base,true,false,base,base.language.export.modules,0,0,1,2,2,2,0,2,1,0,0,2,many-to-many bridge
+report_layout,model_table,base,true,false,base,report.layout,1,11,0,10,1,3,1,3,1,0,0,4,
+report_paperformat,model_table,base,true,false,base,report.paperformat,1,24,0,20,1,2,2,2,1,0,0,4,
+res_bank,model_table,base,true,false,base,res.bank,1,18,0,16,2,4,1,4,1,0,0,5,
+res_company_users_rel,relation_table,base,true,false,base,res.company.user_ids | res.users.company_ids,0,0,2,2,2,2,0,2,1,0,0,2,many-to-many bridge
+res_config,model_table,base,true,false,base,res.config,1,6,0,5,1,2,0,2,1,0,0,2,
+res_country,model_table,base,true,false,base,res.country,1,20,0,15,3,4,9,4,1,2,0,13,
+res_country_group,model_table,base,true,false,base,res.country.group,1,9,0,7,2,2,1,2,1,1,0,3,
+res_country_res_country_group_rel,relation_table,base,true,false,base,res.country.country_group_ids | res.country.group.country_ids,0,0,2,2,2,2,0,2,1,0,0,2,many-to-many bridge
+res_country_state,model_table,base,true,false,base,res.country.state,1,9,0,8,3,3,5,3,1,1,0,8,
+res_currency,model_table,base,true,false,base,res.currency,1,22,0,15,2,2,5,2,1,1,1,7,
+res_currency_rate,model_table,base,true,false,base,res.currency.rate,1,12,0,9,4,4,0,4,1,1,1,4,
+res_device_log,model_table,base,true,false,base,res.device.log,1,19,0,16,6,3,0,3,1,0,0,3,
+res_groups_implied_rel,relation_table,base,true,false,base,res.groups.implied_by_ids | res.groups.implied_ids,0,0,2,2,2,2,0,2,1,0,0,2,many-to-many bridge
+res_groups_privilege,model_table,base,true,false,base,res.groups.privilege,1,12,0,10,2,3,1,3,1,0,0,4,
+res_groups_report_rel,relation_table,base,true,false,base,ir.actions.report.group_ids,0,0,1,2,2,2,0,2,1,0,0,2,many-to-many bridge
+res_groups_users_rel,relation_table,base,true,false,base,res.groups.user_ids | res.users.group_ids,0,0,2,2,2,2,0,2,1,0,0,2,many-to-many bridge
+res_lang_install_rel,relation_table,base,true,false,base,base.language.install.lang_ids,0,0,1,2,2,2,0,2,1,0,0,2,many-to-many bridge
+res_partner_bank,model_table,base,true,false,base,res.partner.bank,1,23,0,17,3,6,0,6,1,1,0,6,
+res_partner_category,model_table,base,true,false,base,res.partner.category,1,13,0,10,3,3,2,3,1,0,0,5,
+res_partner_industry,model_table,base,true,false,base,res.partner.industry,1,9,0,8,1,2,1,2,1,0,0,3,
+res_partner_res_partner_category_rel,relation_table,base,true,false,base,res.partner.category.partner_ids | res.partner.category_id,0,0,2,2,2,2,0,2,1,0,0,2,many-to-many bridge
+res_users_apikeys,model_table,base,true,false,base,res.users.apikeys,1,7,0,8,2,1,0,1,1,0,1,1,
+res_users_deletion,model_table,base,true,false,base,res.users.deletion,1,9,0,8,1,3,0,3,1,0,0,3,
+res_users_log,model_table,base,true,false,base,res.users.log,1,6,0,5,2,2,0,2,1,0,0,2,
+reset_view_arch_wizard,model_table,base,true,false,base,reset.view.arch.wizard,1,13,0,8,1,4,0,4,1,0,0,4,
+rule_group_rel,relation_table,base,true,false,base,ir.rule.groups | res.groups.rule_groups,0,0,2,2,2,2,0,2,1,0,0,2,many-to-many bridge
+server_action_history_wizard,model_table,base,true,false,base,server.action.history.wizard,1,10,0,7,1,4,0,4,1,0,0,4,
+wizard_ir_model_menu_create,model_table,base,true,false,base,wizard.ir.model.menu.create,1,8,0,7,1,3,0,3,1,0,0,3,
+crm_convert_lead_mass_lead_rel,relation_table,crm,false,true,crm,crm.lead2opportunity.partner.mass.lead_tomerge_ids,0,0,1,2,2,2,0,2,1,0,0,2,many-to-many bridge
+crm_lead2opportunity_partner,model_table,crm,false,true,crm,crm.lead2opportunity.partner,1,17,0,13,1,7,1,7,1,0,0,8,
+crm_lead2opportunity_partner_mass,model_table,crm,false,true,crm,crm.lead2opportunity.partner.mass,1,20,0,14,1,7,3,7,1,0,0,10,
+crm_lead2opportunity_partner_mass_res_users_rel,relation_table,crm,false,true,crm,crm.lead2opportunity.partner.mass.user_ids,0,0,1,2,2,2,0,2,1,0,0,2,many-to-many bridge
+crm_lead_crm_lead2opportunity_partner_mass_rel,relation_table,crm,false,true,crm,crm.lead2opportunity.partner.mass.duplicated_lead_ids,0,0,1,2,2,2,0,2,1,0,0,2,many-to-many bridge
+crm_lead_crm_lead2opportunity_partner_rel,relation_table,crm,false,true,crm,crm.lead2opportunity.partner.duplicated_lead_ids,0,0,1,2,2,2,0,2,1,0,0,2,many-to-many bridge
+crm_lead_crm_lead_lost_rel,relation_table,crm,false,true,crm,crm.lead.lost.lead_ids,0,0,1,2,2,2,0,2,1,0,0,2,many-to-many bridge
+crm_lead_lost,model_table,crm,false,true,crm,crm.lead.lost,1,9,0,7,1,3,1,3,1,0,0,4,
+crm_lead_pls_update,model_table,crm,false,true,crm,crm.lead.pls.update,1,8,0,6,1,2,1,2,1,0,0,3,
+crm_lead_pls_update_crm_lead_scoring_frequency_field_rel,relation_table,crm,false,true,crm,crm.lead.pls.update.pls_fields,0,0,1,2,2,2,0,2,1,0,0,2,many-to-many bridge
+crm_lead_scoring_frequency,model_table,crm,false,true,crm,crm.lead.scoring.frequency,1,11,0,10,2,3,0,3,1,0,0,3,
+crm_lead_scoring_frequency_field,model_table,crm,false,true,crm,crm.lead.scoring.frequency.field,1,9,0,7,1,3,1,3,1,0,0,4,
+crm_lost_reason,model_table,crm,false,true,crm,crm.lost.reason,1,9,0,7,1,2,2,2,1,0,0,4,
+crm_merge_opportunity,model_table,crm,false,true,crm,crm.merge.opportunity,1,9,0,7,1,4,1,4,1,0,0,5,
+crm_recurring_plan,model_table,crm,false,true,crm,crm.recurring.plan,1,10,0,9,1,2,1,2,1,0,1,3,
+crm_stage,model_table,crm,false,true,crm,crm.stage,1,15,0,12,1,2,2,2,1,0,0,4,
+crm_stage_crm_team_rel,relation_table,crm,false,true,crm,crm.stage.team_ids,0,0,1,2,2,2,0,2,1,0,0,2,many-to-many bridge
+crm_tag_rel,relation_table,crm,false,true,crm,crm.lead.tag_ids,0,0,1,2,2,2,0,2,1,0,0,2,many-to-many bridge
+merge_opportunity_rel,relation_table,crm,false,true,crm,crm.merge.opportunity.opportunity_ids,0,0,1,2,2,2,0,2,1,0,0,2,many-to-many bridge
+activity_attachment_rel,relation_table,shared,false,false,mail,mail.activity.attachment_ids,0,0,1,2,2,2,0,2,1,0,0,2,many-to-many bridge | shared across modules
+auth_passkey_key,model_table,shared,false,false,auth_passkey,auth.passkey.key,1,10,0,9,3,2,0,2,1,1,0,2,shared across modules
+auth_passkey_key_create,model_table,shared,false,false,auth_passkey,auth.passkey.key.create,1,7,0,6,1,2,0,2,1,0,0,2,shared across modules
+auth_totp_device,model_table,shared,false,false,"auth_totp, auth_totp_mail",auth_totp.device,1,9,0,8,2,1,0,1,1,0,1,1,shared across modules
+auth_totp_rate_limit_log,model_table,shared,false,false,auth_totp,auth.totp.rate.limit.log,1,9,0,8,2,3,0,3,1,0,0,3,shared across modules
+auth_totp_wizard,model_table,shared,false,false,auth_totp,auth_totp.wizard,1,11,0,9,1,3,0,3,1,0,0,3,shared across modules
+base_document_layout,model_table,shared,false,false,web,base.document.layout,1,32,0,7,1,4,0,4,1,0,0,4,shared across modules
+base_import_import,model_table,shared,false,false,base_import,base_import.import,1,10,0,9,1,2,0,2,1,0,0,2,shared across modules
+base_import_mapping,model_table,shared,false,false,base_import,base_import.mapping,1,9,0,8,2,2,0,2,1,0,0,2,shared across modules
+base_import_module,model_table,shared,false,false,base_import_module,base.import.module,1,12,0,11,1,2,0,2,1,0,0,2,shared across modules
+base_module_install_request,model_table,shared,false,false,base_install_request,base.module.install.request,1,10,0,8,1,4,0,4,1,0,0,4,shared across modules
+base_module_install_review,model_table,shared,false,false,base_install_request,base.module.install.review,1,9,0,6,1,3,0,3,1,0,0,3,shared across modules
+base_module_uninstall,model_table,shared,true,false,"base, base_import_module, mail",base.module.uninstall,1,14,0,6,1,2,1,2,1,0,0,3,shared across modules
+base_partner_merge_automatic_wizard,model_table,shared,true,false,"base, mail",base.partner.merge.automatic.wizard,1,22,0,17,1,4,2,4,1,0,0,6,shared across modules
+bus_bus,model_table,shared,false,false,bus,bus.bus,1,8,0,7,1,2,0,2,1,0,0,2,shared across modules
+calendar_alarm,model_table,shared,false,false,"calendar, calendar_sms",calendar.alarm,1,18,0,14,1,4,1,4,1,0,0,5,shared across modules
+calendar_alarm_calendar_event_rel,relation_table,shared,false,false,calendar,calendar.event.alarm_ids,0,0,1,2,2,2,0,2,1,0,0,2,many-to-many bridge | shared across modules
+calendar_attendee,model_table,shared,false,false,calendar,calendar.attendee,1,16,0,11,2,4,0,4,1,0,0,4,shared across modules
+calendar_event,model_table,shared,false,true,"crm, calendar, calendar_sms",calendar.event,1,90,0,29,7,7,7,7,1,0,0,14,shared across modules
+calendar_event_res_partner_rel,relation_table,shared,false,false,calendar,calendar.event.partner_ids | res.partner.meeting_ids,0,0,2,2,2,2,0,2,1,0,0,2,many-to-many bridge | shared across modules
+calendar_event_type,model_table,shared,false,false,calendar,calendar.event.type,1,8,0,7,2,2,1,2,1,1,0,3,shared across modules
+calendar_filters,model_table,shared,false,false,calendar,calendar.filters,1,10,0,9,4,4,0,4,1,1,0,4,shared across modules
+calendar_popover_delete_wizard,model_table,shared,false,false,calendar,calendar.popover.delete.wizard,1,17,0,11,1,4,0,4,1,0,0,4,shared across modules
+calendar_provider_config,model_table,shared,false,false,calendar,calendar.provider.config,1,13,0,12,1,2,0,2,1,0,0,2,shared across modules
+calendar_recurrence,model_table,shared,false,false,calendar,calendar.recurrence,1,29,0,26,1,4,1,4,1,0,1,5,shared across modules
+crm_iap_lead_helpers,model_table,shared,false,false,crm_iap_mine,crm.iap.lead.helpers,1,6,0,5,1,2,0,2,1,0,0,2,shared across modules
+crm_iap_lead_industry,model_table,shared,false,false,crm_iap_mine,crm.iap.lead.industry,1,10,0,9,2,2,1,2,1,1,0,3,shared across modules
+crm_iap_lead_industry_crm_iap_lead_mining_request_rel,relation_table,shared,false,false,crm_iap_mine,crm.iap.lead.mining.request.industry_ids,0,0,1,2,2,2,0,2,1,0,0,2,many-to-many bridge | shared across modules
+crm_iap_lead_mining_request,model_table,shared,false,false,crm_iap_mine,crm.iap.lead.mining.request,1,32,0,20,1,6,6,6,1,0,0,12,shared across modules
+crm_iap_lead_mining_request_crm_iap_lead_role_rel,relation_table,shared,false,false,crm_iap_mine,crm.iap.lead.mining.request.role_ids,0,0,1,2,2,2,0,2,1,0,0,2,many-to-many bridge | shared across modules
+crm_iap_lead_mining_request_crm_tag_rel,relation_table,shared,false,false,crm_iap_mine,crm.iap.lead.mining.request.tag_ids,0,0,1,2,2,2,0,2,1,0,0,2,many-to-many bridge | shared across modules
+crm_iap_lead_mining_request_res_country_rel,relation_table,shared,false,false,crm_iap_mine,crm.iap.lead.mining.request.country_ids,0,0,1,2,2,2,0,2,1,0,0,2,many-to-many bridge | shared across modules
+crm_iap_lead_mining_request_res_country_state_rel,relation_table,shared,false,false,crm_iap_mine,crm.iap.lead.mining.request.state_ids,0,0,1,2,2,2,0,2,1,0,0,2,many-to-many bridge | shared across modules
+crm_iap_lead_role,model_table,shared,false,false,crm_iap_mine,crm.iap.lead.role,1,9,0,8,2,2,2,2,1,1,0,4,shared across modules
+crm_iap_lead_seniority,model_table,shared,false,false,crm_iap_mine,crm.iap.lead.seniority,1,8,0,7,2,2,1,2,1,1,0,3,shared across modules
+crm_lead,model_table,shared,false,true,"crm, crm_iap_enrich, crm_iap_mine, iap_crm",crm.lead,1,118,0,63,27,16,9,16,1,0,1,25,shared across modules
+crm_tag,model_table,shared,false,false,sales_team,crm.tag,1,8,0,7,2,2,2,2,1,1,0,4,shared across modules
+crm_team,model_table,shared,false,true,"crm, sales_team",crm.team,1,62,0,17,2,5,10,5,1,0,0,15,shared across modules
+crm_team_member,model_table,shared,false,true,"crm, sales_team",crm.team.member,1,40,0,12,3,4,0,4,1,0,0,4,shared across modules
+digest_digest,model_table,shared,false,true,"crm, digest",digest.digest,1,25,0,14,1,3,2,3,1,0,0,5,shared across modules
+digest_digest_res_users_rel,relation_table,shared,false,false,digest,digest.digest.user_ids,0,0,1,2,2,2,0,2,1,0,0,2,many-to-many bridge | shared across modules
+digest_tip,model_table,shared,false,false,digest,digest.tip,1,11,0,9,1,3,1,3,1,0,0,4,shared across modules
+digest_tip_res_users_rel,relation_table,shared,false,false,digest,digest.tip.user_ids,0,0,1,2,2,2,0,2,1,0,0,2,many-to-many bridge | shared across modules
+discuss_call_history,model_table,shared,false,false,mail,discuss.call.history,1,11,0,9,6,4,0,4,1,1,2,4,shared across modules
+discuss_channel,model_table,shared,false,false,"calendar, mail, mail_bot",discuss.channel,1,53,0,17,5,5,6,5,1,2,1,11,shared across modules
+discuss_channel_member,hybrid,shared,false,false,mail,discuss.channel.member,1,23,0,18,10,8,1,8,1,0,1,9,shared across modules
+discuss_channel_res_groups_rel,relation_table,shared,false,false,mail,discuss.channel.group_ids,0,0,1,2,2,2,0,2,1,0,0,2,many-to-many bridge | shared across modules
+discuss_channel_rtc_session,model_table,shared,false,false,mail,discuss.channel.rtc.session,1,14,0,12,5,5,1,5,1,1,0,6,shared across modules
+discuss_gif_favorite,model_table,shared,false,false,mail,discuss.gif.favorite,1,7,0,6,2,2,0,2,1,1,0,2,shared across modules
+discuss_voice_metadata,model_table,shared,false,false,mail,discuss.voice.metadata,1,7,0,6,2,3,0,3,1,0,0,3,shared across modules
+email_template_attachment_rel,relation_table,shared,false,false,mail,mail.template.attachment_ids,0,0,1,2,2,2,0,2,1,0,0,2,many-to-many bridge | shared across modules
+fetchmail_server,model_table,shared,false,false,"google_gmail, mail, microsoft_outlook",fetchmail.server,1,42,0,29,3,3,1,3,1,0,0,4,shared across modules
+html_editor_converter_test,model_table,shared,false,false,html_editor,html_editor.converter.test,1,17,0,16,1,3,0,3,1,0,0,3,shared across modules
+html_editor_converter_test_sub,model_table,shared,false,false,html_editor,html_editor.converter.test.sub,1,7,0,6,1,2,1,2,1,0,0,3,shared across modules
+iap_account,model_table,shared,false,false,"iap, iap_mail, sms",iap.account,1,37,0,13,1,3,5,3,1,0,0,8,shared across modules
+iap_account_res_company_rel,relation_table,shared,false,false,"iap, iap_mail",iap.account.company_ids,0,0,2,2,2,2,0,2,1,0,0,2,many-to-many bridge | shared across modules
+iap_account_res_users_rel,relation_table,shared,false,false,"iap, iap_mail",iap.account.warning_user_ids,0,0,2,2,2,2,0,2,1,0,0,2,many-to-many bridge | shared across modules
+iap_service,model_table,shared,false,false,iap,iap.service,1,11,0,10,2,2,1,2,1,1,0,3,shared across modules
+ir_act_report_xml,model_table,shared,true,false,"base, snailmail",ir.actions.report,1,28,0,22,3,4,3,4,1,1,0,7,shared across modules
+ir_act_server,model_table,shared,true,false,"base, mail, sms",ir.actions.server,1,98,0,48,4,15,7,15,1,1,0,22,shared across modules
+ir_act_server_res_partner_rel,relation_table,shared,false,false,mail,ir.actions.server.partner_ids,0,0,1,2,2,2,0,2,1,0,0,2,many-to-many bridge | shared across modules
+ir_act_window_view,model_table,shared,true,false,"base, mail",ir.actions.act_window.view,1,14,0,10,3,4,0,4,1,0,0,4,shared across modules
+ir_attachment,model_table,shared,true,false,"base, api_doc, bus, html_editor, mail, web_unsplash",ir.attachment,1,43,0,22,5,4,8,4,1,0,0,12,shared across modules
+ir_config_parameter,model_table,shared,true,true,"base, crm, mail",ir.config_parameter,1,12,0,7,2,2,0,2,1,1,0,2,shared across modules
+ir_cron,model_table,shared,true,false,"base, mail",ir.cron,1,111,0,16,2,4,2,4,1,0,1,6,shared across modules
+ir_mail_server,model_table,shared,true,false,"base, google_gmail, mail, microsoft_outlook",ir.mail_server,1,43,0,28,3,3,3,3,1,1,1,6,shared across modules
+ir_model,model_table,shared,true,false,"base, bus, mail, sms, web",ir.model,1,33,0,16,2,2,27,2,1,1,0,29,shared across modules
+ir_model_fields,model_table,shared,true,false,"base, mail",ir.model.fields,1,51,0,44,6,5,12,5,1,1,2,17,shared across modules
+ir_module_module,model_table,shared,true,false,"base, base_import_module, base_install_request",ir.module.module,1,43,0,31,4,3,10,3,1,1,0,13,shared across modules
+ir_ui_menu,model_table,shared,true,false,"base, mail, web",ir.ui.menu,1,21,0,12,3,3,3,3,1,0,0,6,shared across modules
+ir_ui_view,model_table,shared,true,false,"base, base_import_module, html_editor, mail, portal, web",ir.ui.view,1,39,0,18,5,3,11,3,1,0,2,14,shared across modules
+mail_activity,model_table,shared,false,true,"crm, calendar, mail",mail.activity,1,36,0,22,7,8,1,8,1,0,2,9,shared across modules
+mail_activity_plan,model_table,shared,false,false,mail,mail.activity.plan,1,14,0,10,1,4,3,4,1,0,0,7,shared across modules
+mail_activity_plan_mail_activity_schedule_rel,relation_table,shared,false,false,mail,mail.activity.schedule.plan_available_ids,0,0,1,2,2,2,0,2,1,0,0,2,many-to-many bridge | shared across modules
+mail_activity_plan_template,model_table,shared,false,false,mail,mail.activity.plan.template,1,20,0,15,2,5,1,5,1,0,0,6,shared across modules
+mail_activity_plan_template_mail_activity_type_rel,relation_table,shared,false,false,mail,mail.activity.plan.template.next_activity_ids,0,0,1,2,2,2,0,2,1,0,0,2,many-to-many bridge | shared across modules
+mail_activity_rel,relation_table,shared,false,false,mail,mail.activity.type.previous_type_ids | mail.activity.type.suggested_next_type_ids,0,0,2,2,2,2,0,2,1,0,0,2,many-to-many bridge | shared across modules
+mail_activity_schedule,model_table,shared,false,false,"calendar, mail",mail.activity.schedule,1,30,0,16,1,7,2,7,1,0,0,9,shared across modules
+mail_activity_schedule_line,model_table,shared,false,false,mail,mail.activity.schedule.line,1,10,0,9,1,4,0,4,1,0,0,4,shared across modules
+mail_activity_type,model_table,shared,false,false,"calendar, mail",mail.activity.type,1,30,0,20,2,4,13,4,1,0,0,17,shared across modules
+mail_activity_type_mail_template_rel,relation_table,shared,false,false,mail,mail.activity.type.mail_template_ids,0,0,1,2,2,2,0,2,1,0,0,2,many-to-many bridge | shared across modules
+mail_alias,model_table,shared,false,false,mail,mail.alias,1,19,0,17,3,5,1,5,1,0,0,6,shared across modules
+mail_alias_domain,model_table,shared,false,false,mail,mail.alias.domain,1,15,0,10,3,2,4,2,1,2,0,6,shared across modules
+mail_blacklist,model_table,shared,false,false,mail,mail.blacklist,1,20,0,7,3,2,0,2,1,1,0,2,shared across modules
+mail_blacklist_remove,model_table,shared,false,false,mail,mail.blacklist.remove,1,8,0,7,1,2,0,2,1,0,0,2,shared across modules
+mail_canned_response,model_table,shared,false,false,mail,mail.canned.response,1,12,0,9,2,2,1,2,1,0,0,3,shared across modules
+mail_canned_response_res_groups_rel,relation_table,shared,false,false,mail,mail.canned.response.group_ids,0,0,1,2,2,2,0,2,1,0,0,2,many-to-many bridge | shared across modules
+mail_compose_message,model_table,shared,false,false,mail,mail.compose.message,1,50,0,37,1,11,2,11,1,0,0,13,shared across modules
+mail_compose_message_ir_attachments_rel,relation_table,shared,false,false,mail,mail.compose.message.attachment_ids,0,0,1,2,2,2,0,2,1,0,0,2,many-to-many bridge | shared across modules
+mail_compose_message_res_partner_rel,relation_table,shared,false,false,mail,mail.compose.message.partner_ids,0,0,1,2,2,2,0,2,1,0,0,2,many-to-many bridge | shared across modules
+mail_followers,model_table,shared,false,false,"mail, sms",mail.followers,1,11,0,4,5,1,1,1,1,1,0,2,shared across modules
+mail_followers_edit,model_table,shared,false,false,mail,mail.followers.edit,1,12,0,10,1,2,1,2,1,0,0,3,shared across modules
+mail_followers_edit_res_partner_rel,relation_table,shared,false,false,mail,mail.followers.edit.partner_ids,0,0,1,2,2,2,0,2,1,0,0,2,many-to-many bridge | shared across modules
+mail_followers_mail_message_subtype_rel,relation_table,shared,false,false,mail,mail.followers.subtype_ids,0,0,1,2,2,2,0,2,1,0,0,2,many-to-many bridge | shared across modules
+mail_gateway_allowed,model_table,shared,false,false,mail,mail.gateway.allowed,1,8,0,7,2,2,0,2,1,0,0,2,shared across modules
+mail_guest,model_table,shared,false,false,mail,mail.guest,1,26,0,11,1,3,4,3,1,0,0,7,shared across modules
+mail_ice_server,model_table,shared,false,false,mail,mail.ice.server,1,10,0,9,1,2,0,2,1,0,0,2,shared across modules
+mail_link_preview,model_table,shared,false,false,mail,mail.link.preview,1,15,0,13,3,2,1,2,1,0,0,3,shared across modules
+mail_mail,model_table,shared,false,false,mail,mail.mail,1,74,0,18,3,4,2,4,1,0,0,6,shared across modules
+mail_mail_res_partner_rel,relation_table,shared,false,false,mail,mail.mail.recipient_ids,0,0,1,2,2,2,0,2,1,0,0,2,many-to-many bridge | shared across modules
+mail_message,model_table,shared,false,false,"mail, portal, sms, snailmail",mail.message,1,62,0,30,8,10,18,10,1,0,0,28,shared across modules
+mail_message_link_preview,model_table,shared,false,false,mail,mail.message.link.preview,1,11,0,9,4,4,0,4,1,0,0,4,shared across modules
+mail_message_reaction,model_table,shared,false,false,mail,mail.message.reaction,1,6,0,5,4,3,0,3,1,0,1,3,shared across modules
+mail_message_res_partner_rel,relation_table,shared,false,false,mail,mail.message.partner_ids,0,0,1,2,2,2,0,2,1,0,0,2,many-to-many bridge | shared across modules
+mail_message_res_partner_starred_rel,relation_table,shared,false,false,mail,mail.message.starred_partner_ids,0,0,1,2,2,2,0,2,1,0,0,2,many-to-many bridge | shared across modules
+mail_message_schedule,model_table,shared,false,false,mail,mail.message.schedule,1,9,0,8,1,3,0,3,1,0,0,3,shared across modules
+mail_message_subtype,model_table,shared,false,false,mail,mail.message.subtype,1,16,0,15,1,3,4,3,1,0,0,7,shared across modules
+mail_message_translation,model_table,shared,false,false,mail,mail.message.translation,1,10,0,9,3,3,0,3,1,0,0,3,shared across modules
+mail_notification,hybrid,shared,false,false,"mail, sms, snailmail",mail.notification,1,26,0,15,12,5,1,5,1,0,2,6,shared across modules
+mail_presence,model_table,shared,false,false,mail,mail.presence,1,7,0,6,3,2,0,2,1,0,1,2,shared across modules
+mail_push,model_table,shared,false,false,mail,mail.push,1,8,0,7,1,3,0,3,1,0,0,3,shared across modules
+mail_push_device,model_table,shared,false,false,mail,mail.push.device,1,10,0,9,3,3,1,3,1,1,0,4,shared across modules
+mail_scheduled_message,model_table,shared,false,false,mail,mail.scheduled.message,1,18,0,15,1,3,2,3,1,0,0,5,shared across modules
+mail_scheduled_message_res_partner_rel,relation_table,shared,false,false,mail,mail.scheduled.message.partner_ids,0,0,1,2,2,2,0,2,1,0,0,2,many-to-many bridge | shared across modules
+mail_template,model_table,shared,false,false,mail,mail.template,1,35,0,26,3,6,9,6,1,0,0,15,shared across modules
+mail_template_ir_actions_report_rel,relation_table,shared,false,false,mail,mail.template.report_template_ids,0,0,1,2,2,2,0,2,1,0,0,2,many-to-many bridge | shared across modules
+mail_template_mail_template_reset_rel,relation_table,shared,false,false,mail,mail.template.reset.template_ids,0,0,1,2,2,2,0,2,1,0,0,2,many-to-many bridge | shared across modules
+mail_template_preview,model_table,shared,false,false,mail,mail.template.preview,1,23,0,8,1,3,0,3,1,0,0,3,shared across modules
+mail_template_reset,model_table,shared,false,false,mail,mail.template.reset,1,7,0,5,1,2,1,2,1,0,0,3,shared across modules
+mail_tracking_value,model_table,shared,false,false,mail,mail.tracking.value,1,20,0,19,3,5,0,5,1,0,0,5,shared across modules
+meeting_category_rel,relation_table,shared,false,false,calendar,calendar.event.categ_ids,0,0,1,2,2,2,0,2,1,0,0,2,many-to-many bridge | shared across modules
+message_attachment_rel,relation_table,shared,false,false,mail,mail.message.attachment_ids,0,0,1,2,2,2,0,2,1,0,0,2,many-to-many bridge | shared across modules
+orm_signaling_assets,physical_only,shared,false,false,,,0,0,0,2,1,0,0,0,1,0,0,0,physical table without Odoo model metadata
+orm_signaling_default,physical_only,shared,false,false,,,0,0,0,2,1,0,0,0,1,0,0,0,physical table without Odoo model metadata
+orm_signaling_groups,physical_only,shared,false,false,,,0,0,0,2,1,0,0,0,1,0,0,0,physical table without Odoo model metadata
+orm_signaling_registry,physical_only,shared,false,false,,,0,0,0,2,1,0,0,0,1,0,0,0,physical table without Odoo model metadata
+orm_signaling_routing,physical_only,shared,false,false,,,0,0,0,2,1,0,0,0,1,0,0,0,physical table without Odoo model metadata
+orm_signaling_stable,physical_only,shared,false,false,,,0,0,0,2,1,0,0,0,1,0,0,0,physical table without Odoo model metadata
+orm_signaling_templates,physical_only,shared,false,false,,,0,0,0,2,1,0,0,0,1,0,0,0,physical table without Odoo model metadata
+phone_blacklist,model_table,shared,false,false,phone_validation,phone.blacklist,1,20,0,7,2,2,0,2,1,1,0,2,shared across modules
+phone_blacklist_remove,model_table,shared,false,false,phone_validation,phone.blacklist.remove,1,8,0,7,1,2,0,2,1,0,0,2,shared across modules
+portal_share,model_table,shared,false,false,portal,portal.share,1,13,0,8,1,2,1,2,1,0,0,3,shared across modules
+portal_share_res_partner_rel,relation_table,shared,false,false,portal,portal.share.partner_ids,0,0,1,2,2,2,0,2,1,0,0,2,many-to-many bridge | shared across modules
+portal_wizard,model_table,shared,false,false,portal,portal.wizard,1,9,0,6,1,2,2,2,1,0,0,4,shared across modules
+portal_wizard_res_partner_rel,relation_table,shared,false,false,portal,portal.wizard.partner_ids,0,0,1,2,2,2,0,2,1,0,0,2,many-to-many bridge | shared across modules
+portal_wizard_user,model_table,shared,false,false,portal,portal.wizard.user,1,14,0,8,1,4,0,4,1,0,0,4,shared across modules
+privacy_log,model_table,shared,false,false,privacy_lookup,privacy.log,1,13,0,12,1,3,1,3,1,0,0,4,shared across modules
+privacy_lookup_wizard,model_table,shared,false,false,privacy_lookup,privacy.lookup.wizard,1,13,0,9,1,3,1,3,1,0,0,4,shared across modules
+privacy_lookup_wizard_line,model_table,shared,false,false,privacy_lookup,privacy.lookup.wizard.line,1,16,0,14,1,4,0,4,1,0,0,4,shared across modules
+properties_base_definition,model_table,shared,true,false,"base, web",properties.base.definition,1,10,0,7,2,3,0,3,1,1,0,3,shared across modules
+res_company,model_table,shared,true,false,"base, mail, partner_autocomplete, resource, sms, snailmail, web",res.company,1,75,0,33,6,9,22,9,1,1,0,31,shared across modules
+res_config_settings,model_table,shared,true,true,"base, crm, auth_signup, auth_totp_mail, base_setup, crm_iap_enrich, digest, google_gmail, mail, microsoft_outlook, partner_autocomplete, portal, snailmail, web, web_unsplash",res.config.settings,1,118,0,66,1,5,0,5,1,0,0,5,shared across modules
+res_groups,model_table,shared,true,false,"base, bus, mail",res.groups,1,30,0,11,3,3,16,3,1,1,1,19,shared across modules
+res_lang,model_table,shared,true,false,"base, http_routing",res.lang,1,22,0,17,4,2,2,2,1,3,0,4,shared across modules
+res_partner,model_table,shared,true,true,"base, crm, auth_signup, bus, calendar, contacts, mail, partner_autocomplete, phone_validation, portal, privacy_lookup, snailmail, web",res.partner,1,156,0,45,12,9,40,9,1,0,1,49,shared across modules
+res_role,model_table,shared,false,false,mail,res.role,1,8,0,6,2,2,1,2,1,0,0,3,shared across modules
+res_role_res_users_rel,relation_table,shared,false,false,mail,res.role.user_ids | res.users.role_ids,0,0,2,2,2,2,0,2,1,0,0,2,many-to-many bridge | shared across modules
+res_users,model_table,shared,true,true,"base, crm, auth_passkey, auth_signup, auth_totp, auth_totp_mail, auth_totp_portal, base_import, base_setup, bus, calendar, contacts, digest, google_gmail, mail, mail_bot, microsoft_outlook, phone_validation, resource, sales_team, web, web_tour, web_unsplash",res.users,1,219,0,24,3,5,439,5,1,1,1,444,shared across modules
+res_users_apikeys_description,model_table,shared,true,false,"base, portal",res.users.apikeys.description,1,11,0,8,1,2,0,2,1,0,0,2,shared across modules
+res_users_identitycheck,model_table,shared,true,false,"base, auth_passkey",res.users.identitycheck,1,12,0,7,1,2,0,2,1,0,0,2,shared across modules
+res_users_settings,model_table,shared,true,false,"base, bus, calendar, mail, web",res.users.settings,1,24,0,13,2,3,2,3,1,1,0,5,shared across modules
+res_users_settings_embedded_action,model_table,shared,false,false,web,res.users.settings.embedded.action,1,13,0,12,3,4,0,4,1,1,0,4,shared across modules
+res_users_settings_volumes,model_table,shared,false,false,mail,res.users.settings.volumes,1,10,0,9,6,5,0,5,1,0,1,5,shared across modules
+res_users_web_tour_tour_rel,relation_table,shared,false,false,web_tour,web_tour.tour.user_consumed_ids,0,0,1,2,2,2,0,2,1,0,0,2,many-to-many bridge | shared across modules
+resource_calendar,model_table,shared,false,false,resource,resource.calendar,1,27,0,16,2,3,4,3,1,0,0,7,shared across modules
+resource_calendar_attendance,model_table,shared,false,false,resource,resource.calendar.attendance,1,19,0,16,4,3,0,3,1,0,0,3,shared across modules
+resource_calendar_leaves,model_table,shared,false,false,resource,resource.calendar.leaves,1,13,0,12,3,5,0,5,1,0,0,5,shared across modules
+resource_resource,model_table,shared,false,false,"resource, resource_mail",resource.resource,1,22,0,14,2,5,1,5,1,0,1,6,shared across modules
+scheduled_message_attachment_rel,relation_table,shared,false,false,mail,mail.scheduled.message.attachment_ids,0,0,1,2,2,2,0,2,1,0,0,2,many-to-many bridge | shared across modules
+sms_account_code,model_table,shared,false,false,sms,sms.account.code,1,8,0,7,1,3,0,3,1,0,0,3,shared across modules
+sms_account_phone,model_table,shared,false,false,sms,sms.account.phone,1,8,0,7,1,3,0,3,1,0,0,3,shared across modules
+sms_account_sender,model_table,shared,false,false,sms,sms.account.sender,1,8,0,7,1,3,0,3,1,0,0,3,shared across modules
+sms_composer,model_table,shared,false,false,sms,sms.composer,1,27,0,17,1,3,0,3,1,0,0,3,shared across modules
+sms_sms,model_table,shared,false,false,sms,sms.sms,1,15,0,13,3,4,0,4,1,1,0,4,shared across modules
+sms_template,model_table,shared,false,false,sms,sms.template,1,14,0,12,2,4,5,4,1,0,0,9,shared across modules
+sms_template_preview,model_table,shared,false,false,sms,sms.template.preview,1,12,0,8,1,3,0,3,1,0,0,3,shared across modules
+sms_template_reset,model_table,shared,false,false,sms,sms.template.reset,1,7,0,5,1,2,1,2,1,0,0,3,shared across modules
+sms_template_sms_template_reset_rel,relation_table,shared,false,false,sms,sms.template.reset.template_ids,0,0,1,2,2,2,0,2,1,0,0,2,many-to-many bridge | shared across modules
+sms_tracker,model_table,shared,false,false,sms,sms.tracker,1,8,0,7,3,3,0,3,1,1,0,3,shared across modules
+snailmail_letter,model_table,shared,false,false,snailmail,snailmail.letter,1,30,0,25,3,10,1,10,1,0,0,11,shared across modules
+team_favorite_user_rel,relation_table,shared,false,false,sales_team,crm.team.favorite_user_ids,0,0,1,2,2,2,0,2,1,0,0,2,many-to-many bridge | shared across modules
+utm_campaign,model_table,shared,false,true,"crm, utm",utm.campaign,1,18,0,12,2,4,2,4,1,1,0,6,shared across modules
+utm_medium,model_table,shared,false,false,utm,utm.medium,1,8,0,7,2,2,1,2,1,1,0,3,shared across modules
+utm_source,model_table,shared,false,false,utm,utm.source,1,7,0,6,2,2,1,2,1,1,0,3,shared across modules
+utm_stage,model_table,shared,false,false,utm,utm.stage,1,8,0,7,1,2,1,2,1,0,0,3,shared across modules
+utm_tag,model_table,shared,false,false,utm,utm.tag,1,8,0,7,2,2,1,2,1,1,0,3,shared across modules
+utm_tag_rel,relation_table,shared,false,false,utm,utm.campaign.tag_ids,0,0,1,2,2,2,0,2,1,0,0,2,many-to-many bridge | shared across modules
+web_tour_tour,model_table,shared,false,false,web_tour,web_tour.tour,1,14,0,10,2,2,2,2,1,1,0,4,shared across modules
+web_tour_tour_step,model_table,shared,false,false,web_tour,web_tour.tour.step,1,12,0,11,2,3,0,3,1,0,0,3,shared across modules

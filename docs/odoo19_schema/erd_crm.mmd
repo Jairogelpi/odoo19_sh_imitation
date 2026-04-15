@@ -1,0 +1,219 @@
+erDiagram
+  crm_lead2opportunity_partner_mass {
+    int id PK
+    int commercial_partner_id FK
+    int create_uid FK
+    int lead_id FK
+    int partner_id FK
+    int team_id FK
+    int user_id FK
+    int write_uid FK
+  }
+  crm_lead2opportunity_partner {
+    int id PK
+    int commercial_partner_id FK
+    int create_uid FK
+    int lead_id FK
+    int partner_id FK
+    int team_id FK
+    int user_id FK
+    int write_uid FK
+  }
+  crm_merge_opportunity {
+    int id PK
+    int create_uid FK
+    int team_id FK
+    int user_id FK
+    int write_uid FK
+  }
+  crm_stage {
+    int id PK
+    int create_uid FK
+    int write_uid FK
+  }
+  crm_lead_lost {
+    int id PK
+    int create_uid FK
+    int lost_reason_id FK
+    int write_uid FK
+  }
+  crm_lead_scoring_frequency_field {
+    int id PK
+    int create_uid FK
+    int field_id FK
+    int write_uid FK
+  }
+  crm_lost_reason {
+    int id PK
+    int create_uid FK
+    int write_uid FK
+  }
+  crm_lead_scoring_frequency {
+    int id PK
+    int create_uid FK
+    int team_id FK
+    int write_uid FK
+  }
+  crm_recurring_plan {
+    int id PK
+    int create_uid FK
+    int write_uid FK
+  }
+  crm_lead_pls_update {
+    int id PK
+    int create_uid FK
+    int write_uid FK
+  }
+  crm_convert_lead_mass_lead_rel {
+    int crm_lead2opportunity_partner_mass_id FK
+    int crm_lead_id FK
+  }
+  crm_lead2opportunity_partner_mass_res_users_rel {
+    int crm_lead2opportunity_partner_mass_id FK
+    int res_users_id FK
+  }
+  crm_lead_crm_lead2opportunity_partner_mass_rel {
+    int crm_lead2opportunity_partner_mass_id FK
+    int crm_lead_id FK
+  }
+  crm_lead_crm_lead2opportunity_partner_rel {
+    int crm_lead2opportunity_partner_id FK
+    int crm_lead_id FK
+  }
+  crm_lead_crm_lead_lost_rel {
+    int crm_lead_id FK
+    int crm_lead_lost_id FK
+  }
+  crm_lead_pls_update_crm_lead_scoring_frequency_field_rel {
+    int crm_lead_pls_update_id FK
+    int crm_lead_scoring_frequency_field_id FK
+  }
+  crm_stage_crm_team_rel {
+    int crm_stage_id FK
+    int crm_team_id FK
+  }
+  crm_tag_rel {
+    int lead_id FK
+    int tag_id FK
+  }
+  res_users {
+    int id PK
+    int create_uid FK
+    int partner_id FK
+    int sale_team_id FK
+    int write_uid FK
+  }
+  res_partner {
+    int id PK
+    int commercial_partner_id FK
+    int create_uid FK
+    int parent_id FK
+    int user_id FK
+    int write_uid FK
+  }
+  crm_lead {
+    int id PK
+    int create_uid FK
+    int lost_reason_id FK
+    int partner_id FK
+    int recurring_plan FK
+    int stage_id FK
+    int team_id FK
+    int user_id FK
+    int write_uid FK
+  }
+  ir_model_fields {
+    int id PK
+    int create_uid FK
+    int related_field_id FK
+    int relation_field_id FK
+    int write_uid FK
+  }
+  crm_team {
+    int id PK
+    int create_uid FK
+    int user_id FK
+    int write_uid FK
+  }
+  crm_tag {
+    int id PK
+    int create_uid FK
+    int write_uid FK
+  }
+  merge_opportunity_rel {
+    int merge_id FK
+    int opportunity_id FK
+  }
+  crm_lead2opportunity_partner_mass ||--o{ crm_convert_lead_mass_lead_rel : crm_convert_lead_mass_lead_re_crm_lead2opportunity_partner_fkey
+  crm_lead ||--o{ crm_convert_lead_mass_lead_rel : crm_convert_lead_mass_lead_rel_crm_lead_id_fkey
+  res_users ||--o{ crm_lead : crm_lead_create_uid_fkey
+  crm_lost_reason ||--o{ crm_lead : crm_lead_lost_reason_id_fkey
+  res_partner ||--o{ crm_lead : crm_lead_partner_id_fkey
+  crm_recurring_plan ||--o{ crm_lead : crm_lead_recurring_plan_fkey
+  crm_stage ||--o{ crm_lead : crm_lead_stage_id_fkey
+  crm_team ||--o{ crm_lead : crm_lead_team_id_fkey
+  res_users ||--o{ crm_lead : crm_lead_user_id_fkey
+  res_users ||--o{ crm_lead : crm_lead_write_uid_fkey
+  res_partner ||--o{ crm_lead2opportunity_partner : crm_lead2opportunity_partner_commercial_partner_id_fkey
+  res_users ||--o{ crm_lead2opportunity_partner : crm_lead2opportunity_partner_create_uid_fkey
+  crm_lead ||--o{ crm_lead2opportunity_partner : crm_lead2opportunity_partner_lead_id_fkey
+  res_partner ||--o{ crm_lead2opportunity_partner : crm_lead2opportunity_partner_partner_id_fkey
+  crm_team ||--o{ crm_lead2opportunity_partner : crm_lead2opportunity_partner_team_id_fkey
+  res_users ||--o{ crm_lead2opportunity_partner : crm_lead2opportunity_partner_user_id_fkey
+  res_users ||--o{ crm_lead2opportunity_partner : crm_lead2opportunity_partner_write_uid_fkey
+  res_partner ||--o{ crm_lead2opportunity_partner_mass : crm_lead2opportunity_partner_mass_commercial_partner_id_fkey
+  res_users ||--o{ crm_lead2opportunity_partner_mass : crm_lead2opportunity_partner_mass_create_uid_fkey
+  crm_lead ||--o{ crm_lead2opportunity_partner_mass : crm_lead2opportunity_partner_mass_lead_id_fkey
+  res_partner ||--o{ crm_lead2opportunity_partner_mass : crm_lead2opportunity_partner_mass_partner_id_fkey
+  crm_team ||--o{ crm_lead2opportunity_partner_mass : crm_lead2opportunity_partner_mass_team_id_fkey
+  res_users ||--o{ crm_lead2opportunity_partner_mass : crm_lead2opportunity_partner_mass_user_id_fkey
+  res_users ||--o{ crm_lead2opportunity_partner_mass : crm_lead2opportunity_partner_mass_write_uid_fkey
+  crm_lead2opportunity_partner_mass ||--o{ crm_lead2opportunity_partner_mass_res_users_rel : crm_lead2opportunity_partner__crm_lead2opportunity_partner_fkey
+  res_users ||--o{ crm_lead2opportunity_partner_mass_res_users_rel : crm_lead2opportunity_partner_mass_res_users_r_res_users_id_fkey
+  crm_lead2opportunity_partner_mass ||--o{ crm_lead_crm_lead2opportunity_partner_mass_rel : crm_lead_crm_lead2opportunit_crm_lead2opportunity_partner_fkey1
+  crm_lead ||--o{ crm_lead_crm_lead2opportunity_partner_mass_rel : crm_lead_crm_lead2opportunity_partner_mass_rel_crm_lead_id_fkey
+  crm_lead2opportunity_partner ||--o{ crm_lead_crm_lead2opportunity_partner_rel : crm_lead_crm_lead2opportunity_crm_lead2opportunity_partner_fkey
+  crm_lead ||--o{ crm_lead_crm_lead2opportunity_partner_rel : crm_lead_crm_lead2opportunity_partner_rel_crm_lead_id_fkey
+  crm_lead ||--o{ crm_lead_crm_lead_lost_rel : crm_lead_crm_lead_lost_rel_crm_lead_id_fkey
+  crm_lead_lost ||--o{ crm_lead_crm_lead_lost_rel : crm_lead_crm_lead_lost_rel_crm_lead_lost_id_fkey
+  res_users ||--o{ crm_lead_lost : crm_lead_lost_create_uid_fkey
+  crm_lost_reason ||--o{ crm_lead_lost : crm_lead_lost_lost_reason_id_fkey
+  res_users ||--o{ crm_lead_lost : crm_lead_lost_write_uid_fkey
+  res_users ||--o{ crm_lead_pls_update : crm_lead_pls_update_create_uid_fkey
+  res_users ||--o{ crm_lead_pls_update : crm_lead_pls_update_write_uid_fkey
+  crm_lead_scoring_frequency_field ||--o{ crm_lead_pls_update_crm_lead_scoring_frequency_field_rel : crm_lead_pls_update_crm_lead__crm_lead_scoring_frequency_f_fkey
+  crm_lead_pls_update ||--o{ crm_lead_pls_update_crm_lead_scoring_frequency_field_rel : crm_lead_pls_update_crm_lead_scorin_crm_lead_pls_update_id_fkey
+  res_users ||--o{ crm_lead_scoring_frequency : crm_lead_scoring_frequency_create_uid_fkey
+  crm_team ||--o{ crm_lead_scoring_frequency : crm_lead_scoring_frequency_team_id_fkey
+  res_users ||--o{ crm_lead_scoring_frequency : crm_lead_scoring_frequency_write_uid_fkey
+  res_users ||--o{ crm_lead_scoring_frequency_field : crm_lead_scoring_frequency_field_create_uid_fkey
+  ir_model_fields ||--o{ crm_lead_scoring_frequency_field : crm_lead_scoring_frequency_field_field_id_fkey
+  res_users ||--o{ crm_lead_scoring_frequency_field : crm_lead_scoring_frequency_field_write_uid_fkey
+  res_users ||--o{ crm_lost_reason : crm_lost_reason_create_uid_fkey
+  res_users ||--o{ crm_lost_reason : crm_lost_reason_write_uid_fkey
+  res_users ||--o{ crm_merge_opportunity : crm_merge_opportunity_create_uid_fkey
+  crm_team ||--o{ crm_merge_opportunity : crm_merge_opportunity_team_id_fkey
+  res_users ||--o{ crm_merge_opportunity : crm_merge_opportunity_user_id_fkey
+  res_users ||--o{ crm_merge_opportunity : crm_merge_opportunity_write_uid_fkey
+  res_users ||--o{ crm_recurring_plan : crm_recurring_plan_create_uid_fkey
+  res_users ||--o{ crm_recurring_plan : crm_recurring_plan_write_uid_fkey
+  res_users ||--o{ crm_stage : crm_stage_create_uid_fkey
+  res_users ||--o{ crm_stage : crm_stage_write_uid_fkey
+  crm_stage ||--o{ crm_stage_crm_team_rel : crm_stage_crm_team_rel_crm_stage_id_fkey
+  crm_team ||--o{ crm_stage_crm_team_rel : crm_stage_crm_team_rel_crm_team_id_fkey
+  res_users ||--o{ crm_tag : crm_tag_create_uid_fkey
+  res_users ||--o{ crm_tag : crm_tag_write_uid_fkey
+  crm_lead ||--o{ crm_tag_rel : crm_tag_rel_lead_id_fkey
+  crm_tag ||--o{ crm_tag_rel : crm_tag_rel_tag_id_fkey
+  res_users ||--o{ crm_team : crm_team_create_uid_fkey
+  res_users ||--o{ crm_team : crm_team_user_id_fkey
+  res_users ||--o{ crm_team : crm_team_write_uid_fkey
+  res_users ||--o{ ir_model_fields : ir_model_fields_create_uid_fkey
+  res_users ||--o{ ir_model_fields : ir_model_fields_write_uid_fkey
+  crm_merge_opportunity ||--o{ merge_opportunity_rel : merge_opportunity_rel_merge_id_fkey
+  crm_lead ||--o{ merge_opportunity_rel : merge_opportunity_rel_opportunity_id_fkey
+  res_users ||--o{ res_partner : res_partner_create_uid_fkey
+  res_users ||--o{ res_partner : res_partner_user_id_fkey
+  res_users ||--o{ res_partner : res_partner_write_uid_fkey
+  res_partner ||--o{ res_users : res_users_partner_id_fkey
+  crm_team ||--o{ res_users : res_users_sale_team_id_fkey

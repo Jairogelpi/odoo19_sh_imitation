@@ -1,0 +1,14 @@
+.env
+.env.*
+!.env.example
+postgres/
+pgadmin/
+backups/
+logs/
+tmp/
+*.log
+*.pid
+__pycache__/
+.DS_Store
+.idea/
+.vscode/

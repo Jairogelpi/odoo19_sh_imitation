@@ -1,0 +1,633 @@
+erDiagram
+  res_users {
+    int id PK
+    int company_id FK
+    int create_uid FK
+    int partner_id FK
+    int sale_team_id FK
+    int write_uid FK
+  }
+  res_partner {
+    int id PK
+    int commercial_partner_id FK
+    int company_id FK
+    int country_id FK
+    int create_uid FK
+    int parent_id FK
+    int state_id FK
+    int user_id FK
+    int write_uid FK
+  }
+  res_company {
+    int id PK
+    int create_uid FK
+    int currency_id FK
+    int external_report_layout_id FK
+    int parent_id FK
+    int partner_id FK
+    int resource_calendar_id FK
+    int write_uid FK
+  }
+  ir_model {
+    int id PK
+    int create_uid FK
+    int write_uid FK
+  }
+  mail_message {
+    int id PK
+    int author_guest_id FK
+    int author_id FK
+    int create_uid FK
+    int mail_activity_type_id FK
+    int mail_server_id FK
+    int parent_id FK
+    int record_company_id FK
+    int subtype_id FK
+    int write_uid FK
+  }
+  crm_lead {
+    int id PK
+    int campaign_id FK
+    int company_id FK
+    int country_id FK
+    int create_uid FK
+    int lead_mining_request_id FK
+    int partner_id FK
+    int state_id FK
+    int team_id FK
+    int user_id FK
+    int write_uid FK
+  }
+  ir_act_server {
+    int id PK
+    int activity_type_id FK
+    int activity_user_id FK
+    int binding_model_id FK
+    int create_uid FK
+    int crud_model_id FK
+    int link_field_id FK
+    int model_id FK
+    int parent_id FK
+    int sms_template_id FK
+    int template_id FK
+    int update_field_id FK
+    int update_related_model_id FK
+    int write_uid FK
+  }
+  res_groups {
+    int id PK
+    int create_uid FK
+    int write_uid FK
+  }
+  ir_model_fields {
+    int id PK
+    int create_uid FK
+    int model_id FK
+    int related_field_id FK
+    int relation_field_id FK
+    int write_uid FK
+  }
+  mail_activity_type {
+    int id PK
+    int create_uid FK
+    int default_user_id FK
+    int triggered_next_type_id FK
+    int write_uid FK
+  }
+  mail_template {
+    int id PK
+    int create_uid FK
+    int mail_server_id FK
+    int model_id FK
+    int ref_ir_act_window FK
+    int user_id FK
+    int write_uid FK
+  }
+  crm_team {
+    int id PK
+    int alias_id FK
+    int company_id FK
+    int create_uid FK
+    int user_id FK
+    int write_uid FK
+  }
+  calendar_event {
+    int id PK
+    int create_uid FK
+    int opportunity_id FK
+    int res_model_id FK
+    int user_id FK
+    int videocall_channel_id FK
+    int write_uid FK
+  }
+  ir_ui_view {
+    int id PK
+    int create_uid FK
+    int inherit_id FK
+    int write_uid FK
+  }
+  mail_compose_message {
+    int id PK
+    int author_id FK
+    int create_uid FK
+    int mail_activity_type_id FK
+    int mail_server_id FK
+    int parent_id FK
+    int record_company_id FK
+    int res_domain_user_id FK
+    int subtype_id FK
+    int template_id FK
+    int write_uid FK
+  }
+  ir_module_module {
+    int id PK
+    int category_id FK
+    int create_uid FK
+    int write_uid FK
+  }
+  ir_attachment {
+    int id PK
+    int company_id FK
+    int create_uid FK
+    int original_id FK
+    int write_uid FK
+  }
+  crm_iap_lead_mining_request {
+    int id PK
+    int create_uid FK
+    int team_id FK
+    int user_id FK
+    int write_uid FK
+  }
+  snailmail_letter {
+    int id PK
+    int attachment_id FK
+    int company_id FK
+    int country_id FK
+    int create_uid FK
+    int message_id FK
+    int partner_id FK
+    int report_template FK
+    int state_id FK
+    int user_id FK
+    int write_uid FK
+  }
+  discuss_channel {
+    int id PK
+    int create_uid FK
+    int from_message_id FK
+    int group_public_id FK
+    int parent_channel_id FK
+    int write_uid FK
+  }
+  mail_activity {
+    int id PK
+    int activity_type_id FK
+    int calendar_event_id FK
+    int create_uid FK
+    int previous_activity_type_id FK
+    int recommended_activity_type_id FK
+    int res_model_id FK
+    int user_id FK
+    int write_uid FK
+  }
+  discuss_channel_member {
+    int id PK
+    int channel_id FK
+    int create_uid FK
+    int fetched_message_id FK
+    int guest_id FK
+    int partner_id FK
+    int rtc_inviting_session_id FK
+    int seen_message_id FK
+    int write_uid FK
+  }
+  mail_activity_schedule {
+    int id PK
+    int activity_type_id FK
+    int activity_user_id FK
+    int create_uid FK
+    int plan_id FK
+    int plan_on_demand_user_id FK
+    int res_model_id FK
+    int write_uid FK
+  }
+  sms_template {
+    int id PK
+    int create_uid FK
+    int model_id FK
+    int sidebar_action_id FK
+    int write_uid FK
+  }
+  iap_account {
+    int id PK
+    int create_uid FK
+    int write_uid FK
+  }
+  ir_act_report_xml {
+    int id PK
+    int binding_model_id FK
+    int create_uid FK
+    int write_uid FK
+  }
+  resource_calendar {
+    int id PK
+    int company_id FK
+    int create_uid FK
+    int write_uid FK
+  }
+  mail_message_subtype {
+    int id PK
+    int create_uid FK
+    int parent_id FK
+    int write_uid FK
+  }
+  res_country {
+    int id PK
+    int address_view_id FK
+    int create_uid FK
+    int currency_id FK
+    int write_uid FK
+  }
+  ir_act_window {
+    int id PK
+    int binding_model_id FK
+    int create_uid FK
+    int search_view_id FK
+    int view_id FK
+    int write_uid FK
+  }
+  crm_lead2opportunity_partner_mass {
+    int id PK
+    int commercial_partner_id FK
+    int create_uid FK
+    int lead_id FK
+    int partner_id FK
+    int team_id FK
+    int user_id FK
+    int write_uid FK
+  }
+  crm_lead2opportunity_partner {
+    int id PK
+    int commercial_partner_id FK
+    int create_uid FK
+    int lead_id FK
+    int partner_id FK
+    int team_id FK
+    int user_id FK
+    int write_uid FK
+  }
+  res_country_state {
+    int id PK
+    int country_id FK
+    int create_uid FK
+    int write_uid FK
+  }
+  res_currency {
+    int id PK
+    int create_uid FK
+    int write_uid FK
+  }
+  mail_guest {
+    int id PK
+    int country_id FK
+    int create_uid FK
+    int write_uid FK
+  }
+  mail_activity_plan {
+    int id PK
+    int company_id FK
+    int create_uid FK
+    int res_model_id FK
+    int write_uid FK
+  }
+  ir_mail_server {
+    int id PK
+    int create_uid FK
+    int owner_user_id FK
+    int write_uid FK
+  }
+  mail_mail {
+    int id PK
+    int create_uid FK
+    int mail_message_id FK
+    int write_uid FK
+  }
+  base_partner_merge_automatic_wizard {
+    int id PK
+    int create_uid FK
+    int dst_partner_id FK
+    int write_uid FK
+  }
+  mail_alias {
+    int id PK
+    int alias_model_id FK
+    int alias_parent_model_id FK
+    int create_uid FK
+    int write_uid FK
+  }
+  res_partner_bank {
+    int id PK
+    int company_id FK
+    int create_uid FK
+    int currency_id FK
+    int partner_id FK
+    int write_uid FK
+  }
+  ir_cron {
+    int id PK
+    int create_uid FK
+    int ir_actions_server_id FK
+    int user_id FK
+    int write_uid FK
+  }
+  ir_embedded_actions {
+    int id PK
+    int create_uid FK
+    int parent_action_id FK
+    int user_id FK
+    int write_uid FK
+  }
+  mail_activity_plan_template {
+    int id PK
+    int activity_type_id FK
+    int create_uid FK
+    int plan_id FK
+    int responsible_id FK
+    int write_uid FK
+  }
+  mail_notification {
+    int id PK
+    int author_id FK
+    int letter_id FK
+    int mail_mail_id FK
+    int mail_message_id FK
+    int res_partner_id FK
+  }
+  resource_resource {
+    int id PK
+    int calendar_id FK
+    int company_id FK
+    int create_uid FK
+    int user_id FK
+    int write_uid FK
+  }
+  discuss_channel_rtc_session {
+    int id PK
+    int channel_id FK
+    int channel_member_id FK
+    int create_uid FK
+    int partner_id FK
+    int write_uid FK
+  }
+  ir_ui_menu {
+    int id PK
+    int create_uid FK
+    int parent_id FK
+    int write_uid FK
+  }
+  utm_campaign {
+    int id PK
+    int create_uid FK
+    int user_id FK
+    int write_uid FK
+  }
+  ir_module_category {
+    int id PK
+    int create_uid FK
+    int parent_id FK
+    int write_uid FK
+  }
+  res_users ||--o{ base_partner_merge_automatic_wizard : base_partner_merge_automatic_wizard_create_uid_fkey
+  res_partner ||--o{ base_partner_merge_automatic_wizard : base_partner_merge_automatic_wizard_dst_partner_id_fkey
+  res_users ||--o{ base_partner_merge_automatic_wizard : base_partner_merge_automatic_wizard_write_uid_fkey
+  res_users ||--o{ calendar_event : calendar_event_create_uid_fkey
+  crm_lead ||--o{ calendar_event : calendar_event_opportunity_id_fkey
+  ir_model ||--o{ calendar_event : calendar_event_res_model_id_fkey
+  res_users ||--o{ calendar_event : calendar_event_user_id_fkey
+  discuss_channel ||--o{ calendar_event : calendar_event_videocall_channel_id_fkey
+  res_users ||--o{ calendar_event : calendar_event_write_uid_fkey
+  res_users ||--o{ crm_iap_lead_mining_request : crm_iap_lead_mining_request_create_uid_fkey
+  crm_team ||--o{ crm_iap_lead_mining_request : crm_iap_lead_mining_request_team_id_fkey
+  res_users ||--o{ crm_iap_lead_mining_request : crm_iap_lead_mining_request_user_id_fkey
+  res_users ||--o{ crm_iap_lead_mining_request : crm_iap_lead_mining_request_write_uid_fkey
+  utm_campaign ||--o{ crm_lead : crm_lead_campaign_id_fkey
+  res_company ||--o{ crm_lead : crm_lead_company_id_fkey
+  res_country ||--o{ crm_lead : crm_lead_country_id_fkey
+  res_users ||--o{ crm_lead : crm_lead_create_uid_fkey
+  crm_iap_lead_mining_request ||--o{ crm_lead : crm_lead_lead_mining_request_id_fkey
+  res_partner ||--o{ crm_lead : crm_lead_partner_id_fkey
+  res_country_state ||--o{ crm_lead : crm_lead_state_id_fkey
+  crm_team ||--o{ crm_lead : crm_lead_team_id_fkey
+  res_users ||--o{ crm_lead : crm_lead_user_id_fkey
+  res_users ||--o{ crm_lead : crm_lead_write_uid_fkey
+  res_partner ||--o{ crm_lead2opportunity_partner : crm_lead2opportunity_partner_commercial_partner_id_fkey
+  res_users ||--o{ crm_lead2opportunity_partner : crm_lead2opportunity_partner_create_uid_fkey
+  crm_lead ||--o{ crm_lead2opportunity_partner : crm_lead2opportunity_partner_lead_id_fkey
+  res_partner ||--o{ crm_lead2opportunity_partner : crm_lead2opportunity_partner_partner_id_fkey
+  crm_team ||--o{ crm_lead2opportunity_partner : crm_lead2opportunity_partner_team_id_fkey
+  res_users ||--o{ crm_lead2opportunity_partner : crm_lead2opportunity_partner_user_id_fkey
+  res_users ||--o{ crm_lead2opportunity_partner : crm_lead2opportunity_partner_write_uid_fkey
+  res_partner ||--o{ crm_lead2opportunity_partner_mass : crm_lead2opportunity_partner_mass_commercial_partner_id_fkey
+  res_users ||--o{ crm_lead2opportunity_partner_mass : crm_lead2opportunity_partner_mass_create_uid_fkey
+  crm_lead ||--o{ crm_lead2opportunity_partner_mass : crm_lead2opportunity_partner_mass_lead_id_fkey
+  res_partner ||--o{ crm_lead2opportunity_partner_mass : crm_lead2opportunity_partner_mass_partner_id_fkey
+  crm_team ||--o{ crm_lead2opportunity_partner_mass : crm_lead2opportunity_partner_mass_team_id_fkey
+  res_users ||--o{ crm_lead2opportunity_partner_mass : crm_lead2opportunity_partner_mass_user_id_fkey
+  res_users ||--o{ crm_lead2opportunity_partner_mass : crm_lead2opportunity_partner_mass_write_uid_fkey
+  mail_alias ||--o{ crm_team : crm_team_alias_id_fkey
+  res_company ||--o{ crm_team : crm_team_company_id_fkey
+  res_users ||--o{ crm_team : crm_team_create_uid_fkey
+  res_users ||--o{ crm_team : crm_team_user_id_fkey
+  res_users ||--o{ crm_team : crm_team_write_uid_fkey
+  res_users ||--o{ discuss_channel : discuss_channel_create_uid_fkey
+  mail_message ||--o{ discuss_channel : discuss_channel_from_message_id_fkey
+  res_groups ||--o{ discuss_channel : discuss_channel_group_public_id_fkey
+  res_users ||--o{ discuss_channel : discuss_channel_write_uid_fkey
+  discuss_channel ||--o{ discuss_channel_member : discuss_channel_member_channel_id_fkey
+  res_users ||--o{ discuss_channel_member : discuss_channel_member_create_uid_fkey
+  mail_message ||--o{ discuss_channel_member : discuss_channel_member_fetched_message_id_fkey
+  mail_guest ||--o{ discuss_channel_member : discuss_channel_member_guest_id_fkey
+  res_partner ||--o{ discuss_channel_member : discuss_channel_member_partner_id_fkey
+  discuss_channel_rtc_session ||--o{ discuss_channel_member : discuss_channel_member_rtc_inviting_session_id_fkey
+  mail_message ||--o{ discuss_channel_member : discuss_channel_member_seen_message_id_fkey
+  res_users ||--o{ discuss_channel_member : discuss_channel_member_write_uid_fkey
+  discuss_channel ||--o{ discuss_channel_rtc_session : discuss_channel_rtc_session_channel_id_fkey
+  discuss_channel_member ||--o{ discuss_channel_rtc_session : discuss_channel_rtc_session_channel_member_id_fkey
+  res_users ||--o{ discuss_channel_rtc_session : discuss_channel_rtc_session_create_uid_fkey
+  res_partner ||--o{ discuss_channel_rtc_session : discuss_channel_rtc_session_partner_id_fkey
+  res_users ||--o{ discuss_channel_rtc_session : discuss_channel_rtc_session_write_uid_fkey
+  res_users ||--o{ iap_account : iap_account_create_uid_fkey
+  res_users ||--o{ iap_account : iap_account_write_uid_fkey
+  ir_model ||--o{ ir_act_report_xml : ir_act_report_xml_binding_model_id_fkey
+  res_users ||--o{ ir_act_report_xml : ir_act_report_xml_create_uid_fkey
+  res_users ||--o{ ir_act_report_xml : ir_act_report_xml_write_uid_fkey
+  mail_activity_type ||--o{ ir_act_server : ir_act_server_activity_type_id_fkey
+  res_users ||--o{ ir_act_server : ir_act_server_activity_user_id_fkey
+  ir_model ||--o{ ir_act_server : ir_act_server_binding_model_id_fkey
+  res_users ||--o{ ir_act_server : ir_act_server_create_uid_fkey
+  ir_model ||--o{ ir_act_server : ir_act_server_crud_model_id_fkey
+  ir_model_fields ||--o{ ir_act_server : ir_act_server_link_field_id_fkey
+  ir_model ||--o{ ir_act_server : ir_act_server_model_id_fkey
+  sms_template ||--o{ ir_act_server : ir_act_server_sms_template_id_fkey
+  mail_template ||--o{ ir_act_server : ir_act_server_template_id_fkey
+  ir_model_fields ||--o{ ir_act_server : ir_act_server_update_field_id_fkey
+  ir_model ||--o{ ir_act_server : ir_act_server_update_related_model_id_fkey
+  res_users ||--o{ ir_act_server : ir_act_server_write_uid_fkey
+  ir_model ||--o{ ir_act_window : ir_act_window_binding_model_id_fkey
+  res_users ||--o{ ir_act_window : ir_act_window_create_uid_fkey
+  ir_ui_view ||--o{ ir_act_window : ir_act_window_search_view_id_fkey
+  ir_ui_view ||--o{ ir_act_window : ir_act_window_view_id_fkey
+  res_users ||--o{ ir_act_window : ir_act_window_write_uid_fkey
+  res_company ||--o{ ir_attachment : ir_attachment_company_id_fkey
+  res_users ||--o{ ir_attachment : ir_attachment_create_uid_fkey
+  res_users ||--o{ ir_attachment : ir_attachment_write_uid_fkey
+  res_users ||--o{ ir_cron : ir_cron_create_uid_fkey
+  ir_act_server ||--o{ ir_cron : ir_cron_ir_actions_server_id_fkey
+  res_users ||--o{ ir_cron : ir_cron_user_id_fkey
+  res_users ||--o{ ir_cron : ir_cron_write_uid_fkey
+  res_users ||--o{ ir_embedded_actions : ir_embedded_actions_create_uid_fkey
+  ir_act_window ||--o{ ir_embedded_actions : ir_embedded_actions_parent_action_id_fkey
+  res_users ||--o{ ir_embedded_actions : ir_embedded_actions_user_id_fkey
+  res_users ||--o{ ir_embedded_actions : ir_embedded_actions_write_uid_fkey
+  res_users ||--o{ ir_mail_server : ir_mail_server_create_uid_fkey
+  res_users ||--o{ ir_mail_server : ir_mail_server_owner_user_id_fkey
+  res_users ||--o{ ir_mail_server : ir_mail_server_write_uid_fkey
+  res_users ||--o{ ir_model : ir_model_create_uid_fkey
+  res_users ||--o{ ir_model : ir_model_write_uid_fkey
+  res_users ||--o{ ir_model_fields : ir_model_fields_create_uid_fkey
+  ir_model ||--o{ ir_model_fields : ir_model_fields_model_id_fkey
+  res_users ||--o{ ir_model_fields : ir_model_fields_write_uid_fkey
+  res_users ||--o{ ir_module_category : ir_module_category_create_uid_fkey
+  res_users ||--o{ ir_module_category : ir_module_category_write_uid_fkey
+  ir_module_category ||--o{ ir_module_module : ir_module_module_category_id_fkey
+  res_users ||--o{ ir_module_module : ir_module_module_create_uid_fkey
+  res_users ||--o{ ir_module_module : ir_module_module_write_uid_fkey
+  res_users ||--o{ ir_ui_menu : ir_ui_menu_create_uid_fkey
+  res_users ||--o{ ir_ui_menu : ir_ui_menu_write_uid_fkey
+  res_users ||--o{ ir_ui_view : ir_ui_view_create_uid_fkey
+  res_users ||--o{ ir_ui_view : ir_ui_view_write_uid_fkey
+  mail_activity_type ||--o{ mail_activity : mail_activity_activity_type_id_fkey
+  calendar_event ||--o{ mail_activity : mail_activity_calendar_event_id_fkey
+  res_users ||--o{ mail_activity : mail_activity_create_uid_fkey
+  mail_activity_type ||--o{ mail_activity : mail_activity_previous_activity_type_id_fkey
+  mail_activity_type ||--o{ mail_activity : mail_activity_recommended_activity_type_id_fkey
+  ir_model ||--o{ mail_activity : mail_activity_res_model_id_fkey
+  res_users ||--o{ mail_activity : mail_activity_user_id_fkey
+  res_users ||--o{ mail_activity : mail_activity_write_uid_fkey
+  res_company ||--o{ mail_activity_plan : mail_activity_plan_company_id_fkey
+  res_users ||--o{ mail_activity_plan : mail_activity_plan_create_uid_fkey
+  ir_model ||--o{ mail_activity_plan : mail_activity_plan_res_model_id_fkey
+  res_users ||--o{ mail_activity_plan : mail_activity_plan_write_uid_fkey
+  mail_activity_type ||--o{ mail_activity_plan_template : mail_activity_plan_template_activity_type_id_fkey
+  res_users ||--o{ mail_activity_plan_template : mail_activity_plan_template_create_uid_fkey
+  mail_activity_plan ||--o{ mail_activity_plan_template : mail_activity_plan_template_plan_id_fkey
+  res_users ||--o{ mail_activity_plan_template : mail_activity_plan_template_responsible_id_fkey
+  res_users ||--o{ mail_activity_plan_template : mail_activity_plan_template_write_uid_fkey
+  mail_activity_type ||--o{ mail_activity_schedule : mail_activity_schedule_activity_type_id_fkey
+  res_users ||--o{ mail_activity_schedule : mail_activity_schedule_activity_user_id_fkey
+  res_users ||--o{ mail_activity_schedule : mail_activity_schedule_create_uid_fkey
+  mail_activity_plan ||--o{ mail_activity_schedule : mail_activity_schedule_plan_id_fkey
+  res_users ||--o{ mail_activity_schedule : mail_activity_schedule_plan_on_demand_user_id_fkey
+  ir_model ||--o{ mail_activity_schedule : mail_activity_schedule_res_model_id_fkey
+  res_users ||--o{ mail_activity_schedule : mail_activity_schedule_write_uid_fkey
+  res_users ||--o{ mail_activity_type : mail_activity_type_create_uid_fkey
+  res_users ||--o{ mail_activity_type : mail_activity_type_default_user_id_fkey
+  res_users ||--o{ mail_activity_type : mail_activity_type_write_uid_fkey
+  ir_model ||--o{ mail_alias : mail_alias_alias_model_id_fkey
+  ir_model ||--o{ mail_alias : mail_alias_alias_parent_model_id_fkey
+  res_users ||--o{ mail_alias : mail_alias_create_uid_fkey
+  res_users ||--o{ mail_alias : mail_alias_write_uid_fkey
+  res_partner ||--o{ mail_compose_message : mail_compose_message_author_id_fkey
+  res_users ||--o{ mail_compose_message : mail_compose_message_create_uid_fkey
+  mail_activity_type ||--o{ mail_compose_message : mail_compose_message_mail_activity_type_id_fkey
+  ir_mail_server ||--o{ mail_compose_message : mail_compose_message_mail_server_id_fkey
+  mail_message ||--o{ mail_compose_message : mail_compose_message_parent_id_fkey
+  res_company ||--o{ mail_compose_message : mail_compose_message_record_company_id_fkey
+  res_users ||--o{ mail_compose_message : mail_compose_message_res_domain_user_id_fkey
+  mail_message_subtype ||--o{ mail_compose_message : mail_compose_message_subtype_id_fkey
+  mail_template ||--o{ mail_compose_message : mail_compose_message_template_id_fkey
+  res_users ||--o{ mail_compose_message : mail_compose_message_write_uid_fkey
+  res_country ||--o{ mail_guest : mail_guest_country_id_fkey
+  res_users ||--o{ mail_guest : mail_guest_create_uid_fkey
+  res_users ||--o{ mail_guest : mail_guest_write_uid_fkey
+  res_users ||--o{ mail_mail : mail_mail_create_uid_fkey
+  mail_message ||--o{ mail_mail : mail_mail_mail_message_id_fkey
+  res_users ||--o{ mail_mail : mail_mail_write_uid_fkey
+  mail_guest ||--o{ mail_message : mail_message_author_guest_id_fkey
+  res_partner ||--o{ mail_message : mail_message_author_id_fkey
+  res_users ||--o{ mail_message : mail_message_create_uid_fkey
+  mail_activity_type ||--o{ mail_message : mail_message_mail_activity_type_id_fkey
+  ir_mail_server ||--o{ mail_message : mail_message_mail_server_id_fkey
+  res_company ||--o{ mail_message : mail_message_record_company_id_fkey
+  mail_message_subtype ||--o{ mail_message : mail_message_subtype_id_fkey
+  res_users ||--o{ mail_message : mail_message_write_uid_fkey
+  res_users ||--o{ mail_message_subtype : mail_message_subtype_create_uid_fkey
+  res_users ||--o{ mail_message_subtype : mail_message_subtype_write_uid_fkey
+  res_partner ||--o{ mail_notification : mail_notification_author_id_fkey
+  snailmail_letter ||--o{ mail_notification : mail_notification_letter_id_fkey
+  mail_mail ||--o{ mail_notification : mail_notification_mail_mail_id_fkey
+  mail_message ||--o{ mail_notification : mail_notification_mail_message_id_fkey
+  res_partner ||--o{ mail_notification : mail_notification_res_partner_id_fkey
+  res_users ||--o{ mail_template : mail_template_create_uid_fkey
+  ir_mail_server ||--o{ mail_template : mail_template_mail_server_id_fkey
+  ir_model ||--o{ mail_template : mail_template_model_id_fkey
+  ir_act_window ||--o{ mail_template : mail_template_ref_ir_act_window_fkey
+  res_users ||--o{ mail_template : mail_template_user_id_fkey
+  res_users ||--o{ mail_template : mail_template_write_uid_fkey
+  res_users ||--o{ res_company : res_company_create_uid_fkey
+  res_currency ||--o{ res_company : res_company_currency_id_fkey
+  ir_ui_view ||--o{ res_company : res_company_external_report_layout_id_fkey
+  res_partner ||--o{ res_company : res_company_partner_id_fkey
+  resource_calendar ||--o{ res_company : res_company_resource_calendar_id_fkey
+  res_users ||--o{ res_company : res_company_write_uid_fkey
+  ir_ui_view ||--o{ res_country : res_country_address_view_id_fkey
+  res_users ||--o{ res_country : res_country_create_uid_fkey
+  res_currency ||--o{ res_country : res_country_currency_id_fkey
+  res_users ||--o{ res_country : res_country_write_uid_fkey
+  res_country ||--o{ res_country_state : res_country_state_country_id_fkey
+  res_users ||--o{ res_country_state : res_country_state_create_uid_fkey
+  res_users ||--o{ res_country_state : res_country_state_write_uid_fkey
+  res_users ||--o{ res_currency : res_currency_create_uid_fkey
+  res_users ||--o{ res_currency : res_currency_write_uid_fkey
+  res_users ||--o{ res_groups : res_groups_create_uid_fkey
+  res_users ||--o{ res_groups : res_groups_write_uid_fkey
+  res_company ||--o{ res_partner : res_partner_company_id_fkey
+  res_country ||--o{ res_partner : res_partner_country_id_fkey
+  res_users ||--o{ res_partner : res_partner_create_uid_fkey
+  res_country_state ||--o{ res_partner : res_partner_state_id_fkey
+  res_users ||--o{ res_partner : res_partner_user_id_fkey
+  res_users ||--o{ res_partner : res_partner_write_uid_fkey
+  res_company ||--o{ res_partner_bank : res_partner_bank_company_id_fkey
+  res_users ||--o{ res_partner_bank : res_partner_bank_create_uid_fkey
+  res_currency ||--o{ res_partner_bank : res_partner_bank_currency_id_fkey
+  res_partner ||--o{ res_partner_bank : res_partner_bank_partner_id_fkey
+  res_users ||--o{ res_partner_bank : res_partner_bank_write_uid_fkey
+  res_company ||--o{ res_users : res_users_company_id_fkey
+  res_partner ||--o{ res_users : res_users_partner_id_fkey
+  crm_team ||--o{ res_users : res_users_sale_team_id_fkey
+  res_company ||--o{ resource_calendar : resource_calendar_company_id_fkey
+  res_users ||--o{ resource_calendar : resource_calendar_create_uid_fkey
+  res_users ||--o{ resource_calendar : resource_calendar_write_uid_fkey
+  resource_calendar ||--o{ resource_resource : resource_resource_calendar_id_fkey
+  res_company ||--o{ resource_resource : resource_resource_company_id_fkey
+  res_users ||--o{ resource_resource : resource_resource_create_uid_fkey
+  res_users ||--o{ resource_resource : resource_resource_user_id_fkey
+  res_users ||--o{ resource_resource : resource_resource_write_uid_fkey
+  res_users ||--o{ sms_template : sms_template_create_uid_fkey
+  ir_model ||--o{ sms_template : sms_template_model_id_fkey
+  ir_act_window ||--o{ sms_template : sms_template_sidebar_action_id_fkey
+  res_users ||--o{ sms_template : sms_template_write_uid_fkey
+  ir_attachment ||--o{ snailmail_letter : snailmail_letter_attachment_id_fkey
+  res_company ||--o{ snailmail_letter : snailmail_letter_company_id_fkey
+  res_country ||--o{ snailmail_letter : snailmail_letter_country_id_fkey
+  res_users ||--o{ snailmail_letter : snailmail_letter_create_uid_fkey
+  mail_message ||--o{ snailmail_letter : snailmail_letter_message_id_fkey
+  res_partner ||--o{ snailmail_letter : snailmail_letter_partner_id_fkey
+  ir_act_report_xml ||--o{ snailmail_letter : snailmail_letter_report_template_fkey
+  res_country_state ||--o{ snailmail_letter : snailmail_letter_state_id_fkey
+  res_users ||--o{ snailmail_letter : snailmail_letter_user_id_fkey
+  res_users ||--o{ snailmail_letter : snailmail_letter_write_uid_fkey
+  res_users ||--o{ utm_campaign : utm_campaign_create_uid_fkey
+  res_users ||--o{ utm_campaign : utm_campaign_user_id_fkey
+  res_users ||--o{ utm_campaign : utm_campaign_write_uid_fkey

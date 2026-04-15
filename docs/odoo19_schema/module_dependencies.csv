@@ -1,0 +1,3 @@
+module,depends_on
+base,""
+crm,"base_setup, calendar, contacts, digest, mail, phone_validation, resource, sales_team, utm, web_tour"

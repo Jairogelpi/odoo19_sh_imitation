@@ -1,0 +1,446 @@
+erDiagram
+  res_country {
+    int id PK
+    int address_view_id FK
+    int create_uid FK
+    int currency_id FK
+    int write_uid FK
+  }
+  ir_act_window {
+    int id PK
+    int binding_model_id FK
+    int create_uid FK
+    int search_view_id FK
+    int view_id FK
+    int write_uid FK
+  }
+  res_country_state {
+    int id PK
+    int country_id FK
+    int create_uid FK
+    int write_uid FK
+  }
+  res_currency {
+    int id PK
+    int create_uid FK
+    int write_uid FK
+  }
+  res_partner_bank {
+    int id PK
+    int bank_id FK
+    int company_id FK
+    int create_uid FK
+    int currency_id FK
+    int partner_id FK
+    int write_uid FK
+  }
+  ir_embedded_actions {
+    int id PK
+    int create_uid FK
+    int parent_action_id FK
+    int user_id FK
+    int write_uid FK
+  }
+  ir_module_category {
+    int id PK
+    int create_uid FK
+    int parent_id FK
+    int write_uid FK
+  }
+  ir_sequence {
+    int id PK
+    int company_id FK
+    int create_uid FK
+    int write_uid FK
+  }
+  res_bank {
+    int id PK
+    int country FK
+    int create_uid FK
+    int state FK
+    int write_uid FK
+  }
+  ir_default {
+    int id PK
+    int company_id FK
+    int create_uid FK
+    int field_id FK
+    int user_id FK
+    int write_uid FK
+  }
+  res_partner_category {
+    int id PK
+    int create_uid FK
+    int parent_id FK
+    int write_uid FK
+  }
+  report_paperformat {
+    int id PK
+    int create_uid FK
+    int write_uid FK
+  }
+  ir_filters {
+    int id PK
+    int create_uid FK
+    int embedded_action_id FK
+    int write_uid FK
+  }
+  ir_rule {
+    int id PK
+    int create_uid FK
+    int model_id FK
+    int write_uid FK
+  }
+  base_language_export {
+    int id PK
+    int create_uid FK
+    int model_id FK
+    int write_uid FK
+  }
+  ir_model_access {
+    int id PK
+    int create_uid FK
+    int group_id FK
+    int model_id FK
+    int write_uid FK
+  }
+  ir_model_constraint {
+    int id PK
+    int create_uid FK
+    int model FK
+    int module FK
+    int write_uid FK
+  }
+  report_layout {
+    int id PK
+    int create_uid FK
+    int view_id FK
+    int write_uid FK
+  }
+  res_users {
+    int id PK
+    int company_id FK
+    int create_uid FK
+    int partner_id FK
+    int write_uid FK
+  }
+  res_partner {
+    int id PK
+    int commercial_partner_id FK
+    int company_id FK
+    int country_id FK
+    int create_uid FK
+    int parent_id FK
+    int state_id FK
+    int user_id FK
+    int write_uid FK
+  }
+  res_company {
+    int id PK
+    int create_uid FK
+    int currency_id FK
+    int external_report_layout_id FK
+    int paperformat_id FK
+    int parent_id FK
+    int partner_id FK
+    int write_uid FK
+  }
+  ir_model {
+    int id PK
+    int create_uid FK
+    int write_uid FK
+  }
+  crm_lead {
+    int id PK
+    int company_id FK
+    int country_id FK
+    int create_uid FK
+    int partner_id FK
+    int state_id FK
+    int user_id FK
+    int write_uid FK
+  }
+  ir_act_server {
+    int id PK
+    int activity_user_id FK
+    int binding_model_id FK
+    int create_uid FK
+    int crud_model_id FK
+    int link_field_id FK
+    int model_id FK
+    int parent_id FK
+    int sequence_id FK
+    int sms_template_id FK
+    int template_id FK
+    int update_field_id FK
+    int update_related_model_id FK
+    int write_uid FK
+  }
+  res_groups {
+    int id PK
+    int create_uid FK
+    int privilege_id FK
+    int write_uid FK
+  }
+  ir_model_fields {
+    int id PK
+    int create_uid FK
+    int model_id FK
+    int related_field_id FK
+    int relation_field_id FK
+    int write_uid FK
+  }
+  mail_template {
+    int id PK
+    int create_uid FK
+    int model_id FK
+    int ref_ir_act_window FK
+    int user_id FK
+    int write_uid FK
+  }
+  ir_ui_view {
+    int id PK
+    int create_uid FK
+    int inherit_id FK
+    int write_uid FK
+  }
+  ir_module_module {
+    int id PK
+    int category_id FK
+    int create_uid FK
+    int write_uid FK
+  }
+  snailmail_letter {
+    int id PK
+    int company_id FK
+    int country_id FK
+    int create_uid FK
+    int partner_id FK
+    int report_template FK
+    int state_id FK
+    int user_id FK
+    int write_uid FK
+  }
+  sms_template {
+    int id PK
+    int create_uid FK
+    int model_id FK
+    int sidebar_action_id FK
+    int write_uid FK
+  }
+  ir_act_report_xml {
+    int id PK
+    int binding_model_id FK
+    int create_uid FK
+    int paperformat_id FK
+    int write_uid FK
+  }
+  mail_guest {
+    int id PK
+    int country_id FK
+    int create_uid FK
+    int write_uid FK
+  }
+  mail_tracking_value {
+    int id PK
+    int create_uid FK
+    int currency_id FK
+    int field_id FK
+    int write_uid FK
+  }
+  res_users_settings_embedded_action {
+    int id PK
+    int action_id FK
+    int create_uid FK
+    int write_uid FK
+  }
+  ir_act_window_view {
+    int id PK
+    int act_window_id FK
+    int create_uid FK
+    int view_id FK
+    int write_uid FK
+  }
+  res_groups_privilege {
+    int id PK
+    int category_id FK
+    int create_uid FK
+    int write_uid FK
+  }
+  res_currency_rate {
+    int id PK
+    int company_id FK
+    int create_uid FK
+    int currency_id FK
+    int write_uid FK
+  }
+  base_document_layout {
+    int id PK
+    int company_id FK
+    int create_uid FK
+    int report_layout_id FK
+    int write_uid FK
+  }
+  ir_sequence_date_range {
+    int id PK
+    int create_uid FK
+    int sequence_id FK
+    int write_uid FK
+  }
+  res_company ||--o{ base_document_layout : base_document_layout_company_id_fkey
+  res_users ||--o{ base_document_layout : base_document_layout_create_uid_fkey
+  report_layout ||--o{ base_document_layout : base_document_layout_report_layout_id_fkey
+  res_users ||--o{ base_document_layout : base_document_layout_write_uid_fkey
+  res_users ||--o{ base_language_export : base_language_export_create_uid_fkey
+  ir_model ||--o{ base_language_export : base_language_export_model_id_fkey
+  res_users ||--o{ base_language_export : base_language_export_write_uid_fkey
+  res_company ||--o{ crm_lead : crm_lead_company_id_fkey
+  res_country ||--o{ crm_lead : crm_lead_country_id_fkey
+  res_users ||--o{ crm_lead : crm_lead_create_uid_fkey
+  res_partner ||--o{ crm_lead : crm_lead_partner_id_fkey
+  res_country_state ||--o{ crm_lead : crm_lead_state_id_fkey
+  res_users ||--o{ crm_lead : crm_lead_user_id_fkey
+  res_users ||--o{ crm_lead : crm_lead_write_uid_fkey
+  ir_model ||--o{ ir_act_report_xml : ir_act_report_xml_binding_model_id_fkey
+  res_users ||--o{ ir_act_report_xml : ir_act_report_xml_create_uid_fkey
+  report_paperformat ||--o{ ir_act_report_xml : ir_act_report_xml_paperformat_id_fkey
+  res_users ||--o{ ir_act_report_xml : ir_act_report_xml_write_uid_fkey
+  res_users ||--o{ ir_act_server : ir_act_server_activity_user_id_fkey
+  ir_model ||--o{ ir_act_server : ir_act_server_binding_model_id_fkey
+  res_users ||--o{ ir_act_server : ir_act_server_create_uid_fkey
+  ir_model ||--o{ ir_act_server : ir_act_server_crud_model_id_fkey
+  ir_model_fields ||--o{ ir_act_server : ir_act_server_link_field_id_fkey
+  ir_model ||--o{ ir_act_server : ir_act_server_model_id_fkey
+  ir_sequence ||--o{ ir_act_server : ir_act_server_sequence_id_fkey
+  sms_template ||--o{ ir_act_server : ir_act_server_sms_template_id_fkey
+  mail_template ||--o{ ir_act_server : ir_act_server_template_id_fkey
+  ir_model_fields ||--o{ ir_act_server : ir_act_server_update_field_id_fkey
+  ir_model ||--o{ ir_act_server : ir_act_server_update_related_model_id_fkey
+  res_users ||--o{ ir_act_server : ir_act_server_write_uid_fkey
+  ir_model ||--o{ ir_act_window : ir_act_window_binding_model_id_fkey
+  res_users ||--o{ ir_act_window : ir_act_window_create_uid_fkey
+  ir_ui_view ||--o{ ir_act_window : ir_act_window_search_view_id_fkey
+  ir_ui_view ||--o{ ir_act_window : ir_act_window_view_id_fkey
+  res_users ||--o{ ir_act_window : ir_act_window_write_uid_fkey
+  ir_act_window ||--o{ ir_act_window_view : ir_act_window_view_act_window_id_fkey
+  res_users ||--o{ ir_act_window_view : ir_act_window_view_create_uid_fkey
+  ir_ui_view ||--o{ ir_act_window_view : ir_act_window_view_view_id_fkey
+  res_users ||--o{ ir_act_window_view : ir_act_window_view_write_uid_fkey
+  res_company ||--o{ ir_default : ir_default_company_id_fkey
+  res_users ||--o{ ir_default : ir_default_create_uid_fkey
+  ir_model_fields ||--o{ ir_default : ir_default_field_id_fkey
+  res_users ||--o{ ir_default : ir_default_user_id_fkey
+  res_users ||--o{ ir_default : ir_default_write_uid_fkey
+  res_users ||--o{ ir_embedded_actions : ir_embedded_actions_create_uid_fkey
+  ir_act_window ||--o{ ir_embedded_actions : ir_embedded_actions_parent_action_id_fkey
+  res_users ||--o{ ir_embedded_actions : ir_embedded_actions_user_id_fkey
+  res_users ||--o{ ir_embedded_actions : ir_embedded_actions_write_uid_fkey
+  res_users ||--o{ ir_filters : ir_filters_create_uid_fkey
+  ir_embedded_actions ||--o{ ir_filters : ir_filters_embedded_action_id_fkey
+  res_users ||--o{ ir_filters : ir_filters_write_uid_fkey
+  res_users ||--o{ ir_model : ir_model_create_uid_fkey
+  res_users ||--o{ ir_model : ir_model_write_uid_fkey
+  res_users ||--o{ ir_model_access : ir_model_access_create_uid_fkey
+  res_groups ||--o{ ir_model_access : ir_model_access_group_id_fkey
+  ir_model ||--o{ ir_model_access : ir_model_access_model_id_fkey
+  res_users ||--o{ ir_model_access : ir_model_access_write_uid_fkey
+  res_users ||--o{ ir_model_constraint : ir_model_constraint_create_uid_fkey
+  ir_model ||--o{ ir_model_constraint : ir_model_constraint_model_fkey
+  ir_module_module ||--o{ ir_model_constraint : ir_model_constraint_module_fkey
+  res_users ||--o{ ir_model_constraint : ir_model_constraint_write_uid_fkey
+  res_users ||--o{ ir_model_fields : ir_model_fields_create_uid_fkey
+  ir_model ||--o{ ir_model_fields : ir_model_fields_model_id_fkey
+  res_users ||--o{ ir_model_fields : ir_model_fields_write_uid_fkey
+  res_users ||--o{ ir_module_category : ir_module_category_create_uid_fkey
+  res_users ||--o{ ir_module_category : ir_module_category_write_uid_fkey
+  ir_module_category ||--o{ ir_module_module : ir_module_module_category_id_fkey
+  res_users ||--o{ ir_module_module : ir_module_module_create_uid_fkey
+  res_users ||--o{ ir_module_module : ir_module_module_write_uid_fkey
+  res_users ||--o{ ir_rule : ir_rule_create_uid_fkey
+  ir_model ||--o{ ir_rule : ir_rule_model_id_fkey
+  res_users ||--o{ ir_rule : ir_rule_write_uid_fkey
+  res_company ||--o{ ir_sequence : ir_sequence_company_id_fkey
+  res_users ||--o{ ir_sequence : ir_sequence_create_uid_fkey
+  res_users ||--o{ ir_sequence : ir_sequence_write_uid_fkey
+  res_users ||--o{ ir_sequence_date_range : ir_sequence_date_range_create_uid_fkey
+  ir_sequence ||--o{ ir_sequence_date_range : ir_sequence_date_range_sequence_id_fkey
+  res_users ||--o{ ir_sequence_date_range : ir_sequence_date_range_write_uid_fkey
+  res_users ||--o{ ir_ui_view : ir_ui_view_create_uid_fkey
+  res_users ||--o{ ir_ui_view : ir_ui_view_write_uid_fkey
+  res_country ||--o{ mail_guest : mail_guest_country_id_fkey
+  res_users ||--o{ mail_guest : mail_guest_create_uid_fkey
+  res_users ||--o{ mail_guest : mail_guest_write_uid_fkey
+  res_users ||--o{ mail_template : mail_template_create_uid_fkey
+  ir_model ||--o{ mail_template : mail_template_model_id_fkey
+  ir_act_window ||--o{ mail_template : mail_template_ref_ir_act_window_fkey
+  res_users ||--o{ mail_template : mail_template_user_id_fkey
+  res_users ||--o{ mail_template : mail_template_write_uid_fkey
+  res_users ||--o{ mail_tracking_value : mail_tracking_value_create_uid_fkey
+  res_currency ||--o{ mail_tracking_value : mail_tracking_value_currency_id_fkey
+  ir_model_fields ||--o{ mail_tracking_value : mail_tracking_value_field_id_fkey
+  res_users ||--o{ mail_tracking_value : mail_tracking_value_write_uid_fkey
+  res_users ||--o{ report_layout : report_layout_create_uid_fkey
+  ir_ui_view ||--o{ report_layout : report_layout_view_id_fkey
+  res_users ||--o{ report_layout : report_layout_write_uid_fkey
+  res_users ||--o{ report_paperformat : report_paperformat_create_uid_fkey
+  res_users ||--o{ report_paperformat : report_paperformat_write_uid_fkey
+  res_country ||--o{ res_bank : res_bank_country_fkey
+  res_users ||--o{ res_bank : res_bank_create_uid_fkey
+  res_country_state ||--o{ res_bank : res_bank_state_fkey
+  res_users ||--o{ res_bank : res_bank_write_uid_fkey
+  res_users ||--o{ res_company : res_company_create_uid_fkey
+  res_currency ||--o{ res_company : res_company_currency_id_fkey
+  ir_ui_view ||--o{ res_company : res_company_external_report_layout_id_fkey
+  report_paperformat ||--o{ res_company : res_company_paperformat_id_fkey
+  res_partner ||--o{ res_company : res_company_partner_id_fkey
+  res_users ||--o{ res_company : res_company_write_uid_fkey
+  ir_ui_view ||--o{ res_country : res_country_address_view_id_fkey
+  res_users ||--o{ res_country : res_country_create_uid_fkey
+  res_currency ||--o{ res_country : res_country_currency_id_fkey
+  res_users ||--o{ res_country : res_country_write_uid_fkey
+  res_country ||--o{ res_country_state : res_country_state_country_id_fkey
+  res_users ||--o{ res_country_state : res_country_state_create_uid_fkey
+  res_users ||--o{ res_country_state : res_country_state_write_uid_fkey
+  res_users ||--o{ res_currency : res_currency_create_uid_fkey
+  res_users ||--o{ res_currency : res_currency_write_uid_fkey
+  res_company ||--o{ res_currency_rate : res_currency_rate_company_id_fkey
+  res_users ||--o{ res_currency_rate : res_currency_rate_create_uid_fkey
+  res_currency ||--o{ res_currency_rate : res_currency_rate_currency_id_fkey
+  res_users ||--o{ res_currency_rate : res_currency_rate_write_uid_fkey
+  res_users ||--o{ res_groups : res_groups_create_uid_fkey
+  res_groups_privilege ||--o{ res_groups : res_groups_privilege_id_fkey
+  res_users ||--o{ res_groups : res_groups_write_uid_fkey
+  ir_module_category ||--o{ res_groups_privilege : res_groups_privilege_category_id_fkey
+  res_users ||--o{ res_groups_privilege : res_groups_privilege_create_uid_fkey
+  res_users ||--o{ res_groups_privilege : res_groups_privilege_write_uid_fkey
+  res_company ||--o{ res_partner : res_partner_company_id_fkey
+  res_country ||--o{ res_partner : res_partner_country_id_fkey
+  res_users ||--o{ res_partner : res_partner_create_uid_fkey
+  res_country_state ||--o{ res_partner : res_partner_state_id_fkey
+  res_users ||--o{ res_partner : res_partner_user_id_fkey
+  res_users ||--o{ res_partner : res_partner_write_uid_fkey
+  res_bank ||--o{ res_partner_bank : res_partner_bank_bank_id_fkey
+  res_company ||--o{ res_partner_bank : res_partner_bank_company_id_fkey
+  res_users ||--o{ res_partner_bank : res_partner_bank_create_uid_fkey
+  res_currency ||--o{ res_partner_bank : res_partner_bank_currency_id_fkey
+  res_partner ||--o{ res_partner_bank : res_partner_bank_partner_id_fkey
+  res_users ||--o{ res_partner_bank : res_partner_bank_write_uid_fkey
+  res_users ||--o{ res_partner_category : res_partner_category_create_uid_fkey
+  res_users ||--o{ res_partner_category : res_partner_category_write_uid_fkey
+  res_company ||--o{ res_users : res_users_company_id_fkey
+  res_partner ||--o{ res_users : res_users_partner_id_fkey
+  ir_act_window ||--o{ res_users_settings_embedded_action : res_users_settings_embedded_action_action_id_fkey
+  res_users ||--o{ res_users_settings_embedded_action : res_users_settings_embedded_action_create_uid_fkey
+  res_users ||--o{ res_users_settings_embedded_action : res_users_settings_embedded_action_write_uid_fkey
+  res_users ||--o{ sms_template : sms_template_create_uid_fkey
+  ir_model ||--o{ sms_template : sms_template_model_id_fkey
+  ir_act_window ||--o{ sms_template : sms_template_sidebar_action_id_fkey
+  res_users ||--o{ sms_template : sms_template_write_uid_fkey
+  res_company ||--o{ snailmail_letter : snailmail_letter_company_id_fkey
+  res_country ||--o{ snailmail_letter : snailmail_letter_country_id_fkey
+  res_users ||--o{ snailmail_letter : snailmail_letter_create_uid_fkey
+  res_partner ||--o{ snailmail_letter : snailmail_letter_partner_id_fkey
+  ir_act_report_xml ||--o{ snailmail_letter : snailmail_letter_report_template_fkey
+  res_country_state ||--o{ snailmail_letter : snailmail_letter_state_id_fkey
+  res_users ||--o{ snailmail_letter : snailmail_letter_user_id_fkey
+  res_users ||--o{ snailmail_letter : snailmail_letter_write_uid_fkey

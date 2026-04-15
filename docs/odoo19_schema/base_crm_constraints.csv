@@ -1,0 +1,66 @@
+owning_module,model_name,constraint_id,constraint_name,definition,type,message,create_date,write_date
+base,decimal.precision,57,decimal_precision_name_uniq,unique (name),u,"{""en_US"": ""Only one value can be defined for each given usage!""}",2026-04-15 17:53:33.467536,2026-04-15 17:53:33.467536
+base,ir.actions.act_url,19,ir_act_url_path_unique,unique(path),u,"{""en_US"": ""Path to show in the URL must be unique! Please choose another one.""}",2026-04-15 17:53:33.467536,2026-04-15 17:53:33.467536
+base,ir.actions.act_window,17,ir_act_window_path_unique,unique(path),u,"{""en_US"": ""Path to show in the URL must be unique! Please choose another one.""}",2026-04-15 17:53:33.467536,2026-04-15 17:53:33.467536
+base,ir.actions.act_window.view,18,ir_act_window_view_unique_mode_per_action,"UNIQUE INDEX (act_window_id, view_mode)",i,"{""en_US"": null}",2026-04-15 17:53:33.467536,2026-04-15 17:53:33.467536
+base,ir.actions.actions,16,ir_actions_path_unique,unique(path),u,"{""en_US"": ""Path to show in the URL must be unique! Please choose another one.""}",2026-04-15 17:53:33.467536,2026-04-15 17:53:33.467536
+base,ir.actions.client,21,ir_act_client_path_unique,unique(path),u,"{""en_US"": ""Path to show in the URL must be unique! Please choose another one.""}",2026-04-15 17:53:33.467536,2026-04-15 17:53:33.467536
+base,ir.actions.report,24,ir_act_report_xml_path_unique,unique(path),u,"{""en_US"": ""Path to show in the URL must be unique! Please choose another one.""}",2026-04-15 17:53:33.467536,2026-04-15 17:53:33.467536
+base,ir.actions.server,20,ir_act_server_path_unique,unique(path),u,"{""en_US"": ""Path to show in the URL must be unique! Please choose another one.""}",2026-04-15 17:53:33.467536,2026-04-15 17:53:33.467536
+base,ir.attachment,25,ir_attachment_res_idx,"INDEX (res_model, res_id)",i,"{""en_US"": null}",2026-04-15 17:53:33.467536,2026-04-15 17:53:33.467536
+base,ir.config_parameter,31,ir_config_parameter_key_uniq,unique (key),u,"{""en_US"": ""Key must be unique.""}",2026-04-15 17:53:33.467536,2026-04-15 17:53:33.467536
+base,ir.cron,26,ir_cron_check_strictly_positive_interval,CHECK(interval_number > 0),u,"{""en_US"": ""The interval number must be a strictly positive number.""}",2026-04-15 17:53:33.467536,2026-04-15 17:53:33.467536
+base,ir.embedded.actions,22,ir_embedded_actions_check_only_one_action_defined,"CHECK(
+            (action_id IS NOT NULL AND python_method IS NULL)
+            OR (action_id IS NULL AND python_method IS NOT NULL)
+        )",u,"{""en_US"": ""Constraint to ensure that either an XML action or a python_method is defined, but not both.""}",2026-04-15 17:53:33.467536,2026-04-15 17:53:33.467536
+base,ir.embedded.actions,23,ir_embedded_actions_check_python_method_requires_name,CHECK(NOT (python_method IS NOT NULL AND name IS NULL)),u,"{""en_US"": ""Constraint to ensure that if a python_method is defined, then the name must also be defined.""}",2026-04-15 17:53:33.467536,2026-04-15 17:53:33.467536
+base,ir.filters,28,ir_filters_check_res_id_only_when_embedded_action,CHECK(NOT (embedded_parent_res_id IS NOT NULL AND embedded_action_id IS NULL)),u,"{""en_US"": ""Constraint to ensure that the embedded_parent_res_id is only defined when a top_action_id is defined.""}",2026-04-15 17:53:33.467536,2026-04-15 17:53:33.467536
+base,ir.filters,29,ir_filters_check_sort_json,CHECK(sort IS NULL OR jsonb_typeof(sort::jsonb) = 'array'),u,"{""en_US"": ""Invalid sort definition""}",2026-04-15 17:53:33.467536,2026-04-15 17:53:33.467536
+base,ir.filters,27,ir_filters_get_filters_index,"INDEX (model_id, action_id, embedded_action_id, embedded_parent_res_id)",i,"{""en_US"": null}",2026-04-15 17:53:33.467536,2026-04-15 17:53:33.467536
+base,ir.mail_server,32,ir_mail_server_certificate_requires_tls,CHECK(smtp_encryption != 'none' OR smtp_authentication != 'certificate'),u,"{""en_US"": ""Certificate-based authentication requires a TLS transport""}",2026-04-15 17:53:33.467536,2026-04-15 17:53:33.467536
+base,ir.model,1,ir_model_obj_name_uniq,UNIQUE (model),u,"{""en_US"": ""Each model must have a unique name.""}",2026-04-15 17:53:33.467536,2026-04-15 17:53:33.467536
+base,ir.model.constraint,7,ir_model_constraint_module_name_uniq,"UNIQUE (name, module)",u,"{""en_US"": ""Constraints with the same name are unique per module.""}",2026-04-15 17:53:33.467536,2026-04-15 17:53:33.467536
+base,ir.model.data,10,ir_model_data_model_res_id_index,"INDEX (model, res_id)",i,"{""en_US"": null}",2026-04-15 17:53:33.467536,2026-04-15 17:53:33.467536
+base,ir.model.data,9,ir_model_data_module_name_uniq_index,"UNIQUE INDEX (module, name)",i,"{""en_US"": null}",2026-04-15 17:53:33.467536,2026-04-15 17:53:33.467536
+base,ir.model.data,8,ir_model_data_name_nospaces,CHECK(name NOT LIKE '% %'),u,"{""en_US"": ""External IDs cannot contain spaces""}",2026-04-15 17:53:33.467536,2026-04-15 17:53:33.467536
+base,ir.model.fields,4,ir_model_fields_name_manual_field,CHECK (state != 'manual' OR name LIKE 'x\_%'),u,"{""en_US"": ""Custom fields must have a name that starts with 'x_'!""}",2026-04-15 17:53:33.467536,2026-04-15 17:53:33.467536
+base,ir.model.fields,2,ir_model_fields_name_unique,"UNIQUE(model, name)",u,"{""en_US"": ""Field names must be unique per model.""}",2026-04-15 17:53:33.467536,2026-04-15 17:53:33.467536
+base,ir.model.fields,3,ir_model_fields_size_gt_zero,CHECK (size>=0),u,"{""en_US"": ""Size of the field cannot be negative.""}",2026-04-15 17:53:33.467536,2026-04-15 17:53:33.467536
+base,ir.model.fields.selection,6,ir_model_fields_selection_selection_field_uniq,"UNIQUE (field_id, value)",u,"{""en_US"": ""Selections values must be unique per field""}",2026-04-15 17:53:33.467536,2026-04-15 17:53:33.467536
+base,ir.model.inherit,5,ir_model_inherit_uniq,"UNIQUE(model_id, parent_id)",u,"{""en_US"": ""Models inherits from another only once""}",2026-04-15 17:53:33.467536,2026-04-15 17:53:33.467536
+base,ir.module.module,33,ir_module_module_name_uniq,UNIQUE (name),u,"{""en_US"": ""The name of the module must be unique!""}",2026-04-15 17:53:33.467536,2026-04-15 17:53:33.467536
+base,ir.rule,30,ir_rule_no_access_rights,CHECK (perm_read!=False or perm_write!=False or perm_create!=False or perm_unlink!=False),u,"{""en_US"": ""Rule must have at least one checked access right!""}",2026-04-15 17:53:33.467536,2026-04-15 17:53:33.467536
+base,ir.sequence.date_range,11,ir_sequence_date_range_unique_range_per_sequence,"UNIQUE(sequence_id, date_from, date_to)",u,"{""en_US"": ""You cannot create two date ranges for the same sequence with the same date range.""}",2026-04-15 17:53:33.467536,2026-04-15 17:53:33.467536
+base,ir.ui.view,13,ir_ui_view_inheritance_mode,CHECK (mode != 'extension' OR inherit_id IS NOT NULL),u,"{""en_US"": ""Invalid inheritance mode: if the mode is 'extension', the view must extend an other view""}",2026-04-15 17:53:33.467536,2026-04-15 17:53:33.467536
+base,ir.ui.view,15,ir_ui_view_model_type_inherit_id,"INDEX (model, inherit_id)",i,"{""en_US"": null}",2026-04-15 17:53:33.467536,2026-04-15 17:53:33.467536
+base,ir.ui.view,14,ir_ui_view_qweb_required_key,CHECK (type != 'qweb' OR key IS NOT NULL),u,"{""en_US"": ""Invalid key: QWeb view should have a key""}",2026-04-15 17:53:33.467536,2026-04-15 17:53:33.467536
+base,ir.ui.view.custom,12,ir_ui_view_custom_user_id_ref_id,"INDEX (user_id, ref_id)",i,"{""en_US"": null}",2026-04-15 17:53:33.467536,2026-04-15 17:53:33.467536
+base,properties.base.definition,34,properties_base_definition_unique_properties_field_id,UNIQUE(properties_field_id),u,"{""en_US"": ""Only one definition per properties field""}",2026-04-15 17:53:33.467536,2026-04-15 17:53:33.467536
+base,res.company,48,res_company_name_uniq,unique (name),u,"{""en_US"": ""The company name must be unique!""}",2026-04-15 17:53:33.467536,2026-04-15 17:53:33.467536
+base,res.country,36,res_country_code_uniq,unique (code),u,"{""en_US"": ""The code of the country must be unique!""}",2026-04-15 17:53:33.467536,2026-04-15 17:53:33.467536
+base,res.country,35,res_country_name_uniq,unique (name),u,"{""en_US"": ""The name of the country must be unique!""}",2026-04-15 17:53:33.467536,2026-04-15 17:53:33.467536
+base,res.country.group,37,res_country_group_check_code_uniq,unique(code),u,"{""en_US"": ""The country group code must be unique!""}",2026-04-15 17:53:33.467536,2026-04-15 17:53:33.467536
+base,res.country.state,38,res_country_state_name_code_uniq,"unique(country_id, code)",u,"{""en_US"": ""The code of the state must be unique by country!""}",2026-04-15 17:53:33.467536,2026-04-15 17:53:33.467536
+base,res.currency,45,res_currency_rounding_gt_zero,CHECK (rounding>0),u,"{""en_US"": ""The rounding factor must be greater than 0!""}",2026-04-15 17:53:33.467536,2026-04-15 17:53:33.467536
+base,res.currency,44,res_currency_unique_name,unique (name),u,"{""en_US"": ""The currency code must be unique!""}",2026-04-15 17:53:33.467536,2026-04-15 17:53:33.467536
+base,res.currency.rate,47,res_currency_rate_currency_rate_check,CHECK (rate>0),u,"{""en_US"": ""The currency rate must be strictly positive.""}",2026-04-15 17:53:33.467536,2026-04-15 17:53:33.467536
+base,res.currency.rate,46,res_currency_rate_unique_name_per_day,"unique (name,currency_id,company_id)",u,"{""en_US"": ""Only one currency rate per day allowed!""}",2026-04-15 17:53:33.467536,2026-04-15 17:53:33.467536
+base,res.device,55,res_device_composite_idx,"INDEX (user_id, session_identifier, platform, browser, last_activity, id) WHERE revoked IS NOT TRUE",i,"{""en_US"": null}",2026-04-15 17:53:33.467536,2026-04-15 17:53:33.467536
+base,res.device,56,res_device_revoked_idx,INDEX (revoked) WHERE revoked IS NOT TRUE,i,"{""en_US"": null}",2026-04-15 17:53:33.467536,2026-04-15 17:53:33.467536
+base,res.device.log,53,res_device_log_composite_idx,"INDEX (user_id, session_identifier, platform, browser, last_activity, id) WHERE revoked IS NOT TRUE",i,"{""en_US"": null}",2026-04-15 17:53:33.467536,2026-04-15 17:53:33.467536
+base,res.device.log,54,res_device_log_revoked_idx,INDEX (revoked) WHERE revoked IS NOT TRUE,i,"{""en_US"": null}",2026-04-15 17:53:33.467536,2026-04-15 17:53:33.467536
+base,res.groups,50,res_groups_check_api_key_duration,CHECK(api_key_duration >= 0),u,"{""en_US"": ""The api key duration cannot be a negative value.""}",2026-04-15 17:53:33.467536,2026-04-15 17:53:33.467536
+base,res.groups,49,res_groups_name_uniq,"UNIQUE (privilege_id, name)",u,"{""en_US"": ""The name of the group must be unique within a group privilege!""}",2026-04-15 17:53:33.467536,2026-04-15 17:53:33.467536
+base,res.lang,40,res_lang_code_uniq,unique(code),u,"{""en_US"": ""The code of the language must be unique!""}",2026-04-15 17:53:33.467536,2026-04-15 17:53:33.467536
+base,res.lang,39,res_lang_name_uniq,unique(name),u,"{""en_US"": ""The name of the language must be unique!""}",2026-04-15 17:53:33.467536,2026-04-15 17:53:33.467536
+base,res.lang,41,res_lang_url_code_uniq,unique(url_code),u,"{""en_US"": ""The URL code of the language must be unique!""}",2026-04-15 17:53:33.467536,2026-04-15 17:53:33.467536
+base,res.partner,42,res_partner_check_name,CHECK( (type='contact' AND name IS NOT NULL) or (type!='contact') ),u,"{""en_US"": ""Contacts require a name""}",2026-04-15 17:53:33.467536,2026-04-15 17:53:33.467536
+base,res.partner.bank,43,res_partner_bank_unique_number,"unique(sanitized_acc_number, partner_id)",u,"{""en_US"": ""The combination Account Number/Partner must be unique.""}",2026-04-15 17:53:33.467536,2026-04-15 17:53:33.467536
+base,res.users,51,res_users_login_key,UNIQUE (login),u,"{""en_US"": ""You can not have two users with the same login!""}",2026-04-15 17:53:33.467536,2026-04-15 17:53:33.467536
+base,res.users.settings,52,res_users_settings_unique_user_id,UNIQUE(user_id),u,"{""en_US"": ""One user should only have one user settings.""}",2026-04-15 17:53:33.467536,2026-04-15 17:53:33.467536
+crm,crm.lead,852,crm_lead_check_probability,check(probability >= 0 and probability <= 100),u,"{""en_US"": ""The probability of closing the deal should be between 0% and 100%!""}",2026-04-15 17:54:54.333009,2026-04-15 17:54:54.333009
+crm,crm.lead,854,crm_lead_create_date_team_id_idx,"INDEX (create_date, team_id)",i,"{""en_US"": null}",2026-04-15 17:54:54.333009,2026-04-15 17:54:54.333009
+crm,crm.lead,855,crm_lead_default_order_idx,"INDEX (priority DESC, id DESC) WHERE active IS TRUE",i,"{""en_US"": null}",2026-04-15 17:54:54.333009,2026-04-15 17:54:54.333009
+crm,crm.lead,853,crm_lead_user_id_team_id_type_index,"INDEX (user_id, team_id, type)",i,"{""en_US"": null}",2026-04-15 17:54:54.333009,2026-04-15 17:54:54.333009
+crm,crm.recurring.plan,856,crm_recurring_plan_check_number_of_months,CHECK(number_of_months >= 0),u,"{""en_US"": ""The number of month can't be negative.""}",2026-04-15 17:54:54.333009,2026-04-15 17:54:54.333009
