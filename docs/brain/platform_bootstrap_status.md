@@ -22,7 +22,7 @@ Track the current state of the Odoo self-hosted platform while keeping the techn
 - Redis service added to the platform base.
 - pgBackRest service, config, and utility scripts added.
 - PostgreSQL custom image added so `pgBackRest` can run archive commands from the database container.
-- GitHub Actions workflow skeleton added.
+- GitHub Actions workflow upgraded to validate compose, publish custom images to GHCR, and deploy over SSH.
 - Obsidian integrated as an optional admin/knowledge service instead of part of the production-safe base compose.
 
 ## Verification evidence already run
@@ -39,6 +39,7 @@ Track the current state of the Odoo self-hosted platform while keeping the techn
 - `docker compose -f compose.yaml -f compose.dev.yaml exec pgbackrest /scripts/check-db.sh` -> success
 - `docker compose -f compose.yaml -f compose.dev.yaml exec pgbackrest /scripts/backup-db.sh` -> full backup completed
 - `powershell -ExecutionPolicy Bypass -File .\ops\health\check-local-stack.ps1` -> local stack verification script added
+- remote deploy workflow and script implemented, pending validation against a real host with GitHub Environment secrets
 
 ## Why Obsidian is in the admin layer
 - It is useful for local documentation and knowledge capture.
@@ -47,9 +48,9 @@ Track the current state of the Odoo self-hosted platform while keeping the techn
 
 ## Next recommended implementation slice
 - Add restore and neutralization automation for staging.
-- Upgrade the CI workflow from validation-only to GHCR plus SSH deployment.
 - Add offsite backup replication.
-- Move from example-only secrets to managed environment secrets.
+- Automate first-time server bootstrap.
+- Exercise the live deploy path against real `dev`, `staging`, and `prod` targets.
 
 ## Links
 - [Platform](platform.md)
@@ -62,4 +63,5 @@ Track the current state of the Odoo self-hosted platform while keeping the techn
 - [Environments and promotions](../runbooks/environments-and-promotions.md)
 - [Secrets and configuration](../runbooks/secrets-and-config.md)
 - [CI/CD scaffold](../runbooks/ci-cd-scaffold.md)
+- [Deployment over SSH](../runbooks/deployment-over-ssh.md)
 - [Backup and restore runbook](../runbooks/backup-and-restore.md)

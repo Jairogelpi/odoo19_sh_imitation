@@ -47,6 +47,12 @@ For staging and production, the preferred longer-term approach is:
 
 - `SERVER_NAME`
 
+### Optional image overrides
+
+- `POSTGRES_IMAGE`
+- `PGBACKREST_IMAGE`
+- `ODOO_IMAGE`
+
 ### Admin and knowledge layer
 
 - `PGADMIN_DEFAULT_EMAIL`
@@ -56,6 +62,21 @@ For staging and production, the preferred longer-term approach is:
 - `TZ`
 - `OBSIDIAN_CUSTOM_USER`
 - `OBSIDIAN_PASSWORD`
+
+## GitHub Environment secrets
+
+These are not stored in the repository and should live in the GitHub Environments for `dev`, `staging`, and `prod`:
+
+- `DEPLOY_HOST`
+- `DEPLOY_PORT`
+- `DEPLOY_USER`
+- `DEPLOY_SSH_KEY`
+- `DEPLOY_KNOWN_HOSTS`
+- `DEPLOY_APP_DIR`
+- `DEPLOY_ENV_FILE`
+- `DEPLOY_HEALTHCHECK_URL`
+- `GHCR_PULL_USERNAME`
+- `GHCR_PULL_TOKEN`
 
 ## Environment intent
 
@@ -82,4 +103,5 @@ For staging and production, the preferred longer-term approach is:
 - never commit real environment files
 - never commit tokens or passwords to tracked config
 - keep example files aligned with compose and workflow changes
+- prefer GitHub Environment secrets plus server-side env files for staging and production deploys
 - update this runbook and the Obsidian brain when variables are added or removed

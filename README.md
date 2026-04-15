@@ -9,7 +9,7 @@ Professional self-hosted Odoo 19 platform scaffold inspired by the operational s
 - Dev, admin, staging, and production compose overrides
 - Optional Obsidian knowledge layer and pgAdmin admin layer
 - Bootstrap backup and restore scripts
-- GitHub Actions validation workflow scaffold
+- GitHub Actions pipeline for validation, GHCR publish, and SSH deploy
 
 ## Documentation map
 
@@ -20,6 +20,7 @@ Professional self-hosted Odoo 19 platform scaffold inspired by the operational s
 - Secrets and configuration: [docs/runbooks/secrets-and-config.md](docs/runbooks/secrets-and-config.md)
 - Backup and restore: [docs/runbooks/backup-and-restore.md](docs/runbooks/backup-and-restore.md)
 - CI/CD scaffold: [docs/runbooks/ci-cd-scaffold.md](docs/runbooks/ci-cd-scaffold.md)
+- Deployment over SSH: [docs/runbooks/deployment-over-ssh.md](docs/runbooks/deployment-over-ssh.md)
 - Obsidian brain: [docs/00_Odoo_Brain.md](docs/00_Odoo_Brain.md)
 
 ## Main entrypoints
@@ -80,4 +81,5 @@ docker compose -f compose.yaml -f compose.dev.yaml exec -T pgbackrest /scripts/b
 
 - `docker-compose.yml` remains as a legacy compatibility stack for local use.
 - The forward-looking platform path is `compose.yaml` plus overrides.
+- Remote delivery now expects GHCR-published images plus server-side env files and GitHub Environment secrets.
 - The `docs/` directory doubles as the Obsidian vault.

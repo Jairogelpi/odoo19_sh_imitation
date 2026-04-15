@@ -20,7 +20,9 @@
 - [Local development runbook](../runbooks/local-development.md)
 - [Environments and promotions](../runbooks/environments-and-promotions.md)
 - [Secrets and configuration](../runbooks/secrets-and-config.md)
+- [Deployment over SSH](../runbooks/deployment-over-ssh.md)
 - [Local health check script](../../ops/health/check-local-stack.ps1)
+- [Remote deploy script](../../ops/deploy/remote-deploy.sh)
 - [Backup and restore runbook](../runbooks/backup-and-restore.md)
 
 ## Service ports
@@ -40,6 +42,7 @@
 - `docker compose -f compose.yaml -f compose.dev.yaml exec pgbackrest /scripts/check-db.sh`
 - `docker compose -f compose.yaml -f compose.dev.yaml exec pgbackrest /scripts/backup-db.sh`
 - `powershell -ExecutionPolicy Bypass -File .\ops\health\check-local-stack.ps1`
+- `bash ops/deploy/remote-deploy.sh`
 
 ## Notes
 - `docker-compose.yml` remains a legacy local compatibility entrypoint.
@@ -47,3 +50,4 @@
 - Obsidian uses a browser-accessible desktop session.
 - The vault is the `docs/` directory, so the knowledge graph and the source notes stay in one place.
 - If you change the vault layout, update the home note, this operations note, and the bootstrap status note together.
+- Production-shaped deploys now pull immutable GHCR images instead of relying on local builds on the server.

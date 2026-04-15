@@ -1,5 +1,6 @@
 services:
   db:
+    image: ${POSTGRES_IMAGE:-odoo19-db:local}
     build:
       context: .
       dockerfile: postgres_image/Dockerfile
@@ -41,6 +42,7 @@ services:
       - odoo_net
 
   pgbackrest:
+    image: ${PGBACKREST_IMAGE:-odoo19-pgbackrest:local}
     build:
       context: .
       dockerfile: pgbackrest/Dockerfile
@@ -66,6 +68,7 @@ services:
       - odoo_net
 
   odoo:
+    image: ${ODOO_IMAGE:-odoo19-odoo:local}
     build:
       context: .
       dockerfile: odoo/Dockerfile

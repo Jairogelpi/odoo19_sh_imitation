@@ -20,6 +20,8 @@ This note is the Obsidian-side shortcut into the platform service topology.
 - `pgadmin`: optional admin UI
 - `obsidian`: optional knowledge layer
 
+The custom `db`, `pgbackrest`, and `odoo` services now support both local builds and GHCR-published image overrides.
+
 ## Use this note when you need
 
 - to remember which compose layer owns a service

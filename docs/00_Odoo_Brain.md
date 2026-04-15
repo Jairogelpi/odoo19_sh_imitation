@@ -52,6 +52,7 @@ graph TD
 - [Environments and promotions](runbooks/environments-and-promotions.md)
 - [Secrets and configuration](runbooks/secrets-and-config.md)
 - [CI/CD scaffold](runbooks/ci-cd-scaffold.md)
+- [Deployment over SSH](runbooks/deployment-over-ssh.md)
 - [Backup and restore runbook](runbooks/backup-and-restore.md)
 - [Base module doc](odoo19_schema/base_module.md)
 - [CRM module doc](odoo19_schema/crm_module.md)

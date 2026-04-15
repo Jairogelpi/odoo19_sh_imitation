@@ -61,6 +61,5 @@ Recommended path:
 ## Remaining gaps
 
 - automated staging neutralization
-- real deploy-over-SSH workflow
-- environment-specific secret injection
+- first-time server bootstrap automation
 - offsite backup promotion and restore drills

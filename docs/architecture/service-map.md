@@ -15,6 +15,7 @@ Purpose:
 Important details:
 
 - built from `postgres_image/Dockerfile`
+- can run from a local build or a GHCR-published image override
 - runs with `archive_mode=on`
 - shares the PostgreSQL socket and data volumes with `pgbackrest`
 - should never be publicly exposed
@@ -42,6 +43,7 @@ Purpose:
 Important details:
 
 - built from `pgbackrest/Dockerfile`
+- can run from a local build or a GHCR-published image override
 - uses shared PostgreSQL data and socket volumes
 - currently validated for local `stanza-create`, `check`, and `full backup`
 - offsite replication is still pending
@@ -55,6 +57,7 @@ Purpose:
 Important details:
 
 - built from `odoo/Dockerfile`
+- can run from a local build or a GHCR-published image override
 - uses `config/` and `addons/` from the repository
 - persists filestore data in `odoo-web-data`
 - is internal in production-like layouts, with `nginx` as the edge
