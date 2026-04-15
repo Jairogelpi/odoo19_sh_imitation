@@ -16,6 +16,7 @@ This repository is the versioned starting point for the Odoo 19 self-hosted plat
 - bootstrap backup/restore scripts
 - working local `pgBackRest` flow
 - GHCR publish and SSH deploy workflow
+- automated staging restore neutralization with `Mailpit`
 
 ## Current service inventory
 
@@ -31,6 +32,10 @@ Optional admin and knowledge stack:
 
 - `pgadmin`: browser admin UI for PostgreSQL
 - `obsidian`: browser-accessible knowledge workspace over the `docs/` vault
+
+Staging support stack:
+
+- `mailpit`: local-only SMTP sink for neutralized staging restores
 
 ## Runtime data policy
 
@@ -72,7 +77,7 @@ powershell -ExecutionPolicy Bypass -File .\ops\health\check-local-stack.ps1
 
 ## Not implemented yet
 
-- staging neutralization automation
 - offsite backups
 - first-time server bootstrap automation
 - live deploy validation against a real remote target
+- deeper data anonymization for restored staging copies

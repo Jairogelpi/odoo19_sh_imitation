@@ -54,6 +54,7 @@ graph TD
 - [CI/CD scaffold](runbooks/ci-cd-scaffold.md)
 - [Deployment over SSH](runbooks/deployment-over-ssh.md)
 - [Backup and restore runbook](runbooks/backup-and-restore.md)
+- [Staging neutralization](runbooks/staging-neutralization.md)
 - [Base module doc](odoo19_schema/base_module.md)
 - [CRM module doc](odoo19_schema/crm_module.md)
 - [Base vs CRM comparison](odoo19_schema/base_vs_crm.md)

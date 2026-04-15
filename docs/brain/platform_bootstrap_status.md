@@ -23,6 +23,8 @@ Track the current state of the Odoo self-hosted platform while keeping the techn
 - pgBackRest service, config, and utility scripts added.
 - PostgreSQL custom image added so `pgBackRest` can run archive commands from the database container.
 - GitHub Actions workflow upgraded to validate compose, publish custom images to GHCR, and deploy over SSH.
+- Staging restore wrapper upgraded to automate database restore, filestore restore, and post-restore neutralization.
+- Staging now includes `Mailpit` as a safe SMTP sink during neutralized operation.
 - Obsidian integrated as an optional admin/knowledge service instead of part of the production-safe base compose.
 
 ## Verification evidence already run
@@ -40,6 +42,10 @@ Track the current state of the Odoo self-hosted platform while keeping the techn
 - `docker compose -f compose.yaml -f compose.dev.yaml exec pgbackrest /scripts/backup-db.sh` -> full backup completed
 - `powershell -ExecutionPolicy Bypass -File .\ops\health\check-local-stack.ps1` -> local stack verification script added
 - remote deploy workflow and script implemented, pending validation against a real host with GitHub Environment secrets
+- `docker compose -f compose.yaml -f compose.staging.yaml config` -> staging compose including `mailpit` is valid
+- `docker run --rm -v "${PWD}:/work" odoo19-odoo:test bash -n /work/ops/restore/restore-to-staging.sh` -> restore wrapper syntax passes
+- `docker run --rm -v "${PWD}:/work" odoo19-odoo:test bash -n /work/backup/scripts/backup-filestore.sh` -> filestore backup script syntax passes
+- staging compose now includes `mailpit` and restore/neutralization scripts are present, pending validation with a real backup set
 
 ## Why Obsidian is in the admin layer
 - It is useful for local documentation and knowledge capture.
@@ -47,10 +53,10 @@ Track the current state of the Odoo self-hosted platform while keeping the techn
 - Keeping it in `compose.admin.yaml` preserves a cleaner platform base.
 
 ## Next recommended implementation slice
-- Add restore and neutralization automation for staging.
 - Add offsite backup replication.
 - Automate first-time server bootstrap.
 - Exercise the live deploy path against real `dev`, `staging`, and `prod` targets.
+- Add deeper data anonymization for restored staging data.
 
 ## Links
 - [Platform](platform.md)
@@ -65,3 +71,4 @@ Track the current state of the Odoo self-hosted platform while keeping the techn
 - [CI/CD scaffold](../runbooks/ci-cd-scaffold.md)
 - [Deployment over SSH](../runbooks/deployment-over-ssh.md)
 - [Backup and restore runbook](../runbooks/backup-and-restore.md)
+- [Staging neutralization runbook](../runbooks/staging-neutralization.md)

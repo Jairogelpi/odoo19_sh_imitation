@@ -102,6 +102,22 @@ Important details:
 - helps keep technical docs and operational notes close to the code
 - should remain optional and local/admin-oriented
 
+## Staging-only support service
+
+### `mailpit`
+
+Purpose:
+
+- staging SMTP sink after restore neutralization
+- safe inspection point for messages that must never leave staging
+
+Important details:
+
+- belongs in `compose.staging.yaml`
+- SMTP stays internal on `mailpit:1025`
+- UI is published only on loopback through `127.0.0.1:${STAGING_MAILPIT_UI_PORT:-8025}`
+- should be accessed through SSH tunneling, not public exposure
+
 ## Compose layer responsibilities
 
 - `compose.yaml`: production-safe platform base

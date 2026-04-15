@@ -25,3 +25,4 @@ This note tracks how code is expected to move from local work to production.
 - the remote host is expected to keep a checked-out copy of this repository plus a server-side env file
 - deploys use immutable GHCR image tags based on the commit SHA
 - documentation now reflects the implemented branch-to-environment model
+- staging restore is now part of the delivery story because preproduction should be rebuilt as a neutralized production copy when needed

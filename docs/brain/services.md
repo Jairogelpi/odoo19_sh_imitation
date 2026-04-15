@@ -19,8 +19,10 @@ This note is the Obsidian-side shortcut into the platform service topology.
 - `nginx`: reverse proxy
 - `pgadmin`: optional admin UI
 - `obsidian`: optional knowledge layer
+- `mailpit`: staging-only SMTP sink
 
 The custom `db`, `pgbackrest`, and `odoo` services now support both local builds and GHCR-published image overrides.
+`mailpit` exists only to keep restored staging environments safe.
 
 ## Use this note when you need
 

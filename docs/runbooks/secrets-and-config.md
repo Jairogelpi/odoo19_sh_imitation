@@ -33,6 +33,12 @@ For staging and production, the preferred longer-term approach is:
 - store secrets outside the repository
 - inject them through GitHub environment secrets, Vault, 1Password, or SOPS-managed files
 
+For staging restore automation, the wrapper script also expects:
+
+- `STAGING_ENV_FILE`
+
+This should point to the real untracked staging env file on the target host.
+
 ## Current variable groups
 
 ### Database and Odoo core
@@ -52,6 +58,13 @@ For staging and production, the preferred longer-term approach is:
 - `POSTGRES_IMAGE`
 - `PGBACKREST_IMAGE`
 - `ODOO_IMAGE`
+
+### Staging restore and neutralization
+
+- `STAGING_WEB_BASE_URL`
+- `STAGING_MAILPIT_SMTP_HOST`
+- `STAGING_MAILPIT_SMTP_PORT`
+- `STAGING_MAILPIT_UI_PORT`
 
 ### Admin and knowledge layer
 

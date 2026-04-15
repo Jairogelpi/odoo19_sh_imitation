@@ -50,6 +50,7 @@ Recommended path:
 - production-like edge exposure
 - production-like Odoo config
 - must become a neutralized copy of production
+- uses `Mailpit` as the default SMTP sink after restore neutralization
 - should not depend on admin services to operate
 
 ### Production
@@ -60,6 +61,6 @@ Recommended path:
 
 ## Remaining gaps
 
-- automated staging neutralization
 - first-time server bootstrap automation
 - offsite backup promotion and restore drills
+- data anonymization beyond operational neutralization

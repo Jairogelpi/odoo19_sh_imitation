@@ -48,10 +48,37 @@ Example:
 Use:
 
 ```bash
-./ops/restore/restore-to-staging.sh <db_dump_path> <filestore_archive> <staging_filestore_dir>
+STAGING_ENV_FILE=/srv/odoo/env/staging.env \
+./ops/restore/restore-to-staging.sh <db_dump_path> <filestore_archive> <target_database>
 ```
 
-This script prints the operator checklist for restoring a recent production copy into staging.
+Example:
+
+```bash
+STAGING_ENV_FILE=/srv/odoo/env/staging.env \
+./ops/restore/restore-to-staging.sh \
+  /srv/odoo/project/backups/prod-latest.sql.gz \
+  /srv/odoo/project/backups/filestore-latest.tar.gz \
+  staging_prod_latest
+```
+
+What it does now:
+
+- validates the staging compose config
+- starts the required staging services
+- drops and recreates the target database
+- restores the database dump
+- restores the filestore into `/var/lib/odoo/filestore/<target_database>`
+- applies `ops/restore/staging-neutralize.sql`
+- prints post-restore smoke checks
+
+Staging-specific neutralization details live in:
+
+- `docs/runbooks/staging-neutralization.md`
+
+Current limitation:
+
+- the wrapper and neutralization flow are verified for compose validity and script syntax, but not yet exercised end-to-end against a real backup set from this workspace
 
 ## Next step
 
@@ -60,4 +87,4 @@ Upgrade this bootstrap runbook with:
 - production retention policy refinement
 - offsite `S3-compatible` copy
 - scheduled restore drills
-- staging neutralization checklist
+- automated restore drill scheduling

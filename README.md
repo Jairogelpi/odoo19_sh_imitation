@@ -9,6 +9,7 @@ Professional self-hosted Odoo 19 platform scaffold inspired by the operational s
 - Dev, admin, staging, and production compose overrides
 - Optional Obsidian knowledge layer and pgAdmin admin layer
 - Bootstrap backup and restore scripts
+- Automated staging restore neutralization with Mailpit
 - GitHub Actions pipeline for validation, GHCR publish, and SSH deploy
 
 ## Documentation map
@@ -19,6 +20,7 @@ Professional self-hosted Odoo 19 platform scaffold inspired by the operational s
 - Environments and promotions: [docs/runbooks/environments-and-promotions.md](docs/runbooks/environments-and-promotions.md)
 - Secrets and configuration: [docs/runbooks/secrets-and-config.md](docs/runbooks/secrets-and-config.md)
 - Backup and restore: [docs/runbooks/backup-and-restore.md](docs/runbooks/backup-and-restore.md)
+- Staging neutralization: [docs/runbooks/staging-neutralization.md](docs/runbooks/staging-neutralization.md)
 - CI/CD scaffold: [docs/runbooks/ci-cd-scaffold.md](docs/runbooks/ci-cd-scaffold.md)
 - Deployment over SSH: [docs/runbooks/deployment-over-ssh.md](docs/runbooks/deployment-over-ssh.md)
 - Obsidian brain: [docs/00_Odoo_Brain.md](docs/00_Odoo_Brain.md)
