@@ -27,6 +27,7 @@ Track the current state of the Odoo self-hosted platform while keeping the techn
 - Staging now includes `Mailpit` as a safe SMTP sink during neutralized operation.
 - Offsite backup scripts added to export production backup artifacts and replicate them to S3-compatible storage.
 - Obsidian integrated as an optional admin/knowledge service instead of part of the production-safe base compose.
+- Portainer integrated as an optional admin/container-management service alongside Obsidian and pgAdmin.
 
 ## Verification evidence already run
 - `docker compose -f compose.yaml -f compose.dev.yaml config`
@@ -34,7 +35,7 @@ Track the current state of the Odoo self-hosted platform while keeping the techn
 - `docker compose -f compose.yaml -f compose.dev.yaml up -d`
 - `Invoke-WebRequest http://localhost:8088/web/login`
 - `Invoke-WebRequest http://localhost:8069/web/login`
-- `docker compose -f compose.yaml -f compose.dev.yaml -f compose.admin.yaml up -d obsidian pgadmin`
+- `docker compose -f compose.yaml -f compose.dev.yaml -f compose.admin.yaml up -d obsidian pgadmin portainer`
 - `Invoke-WebRequest http://localhost:3000` -> `401` expected because Obsidian is access-controlled
 - `docker compose -f compose.yaml -f compose.staging.yaml config`
 - `docker compose -f compose.yaml -f compose.prod.yaml config`
@@ -52,7 +53,28 @@ Track the current state of the Odoo self-hosted platform while keeping the techn
 - `docker run --rm -v "${PWD}:/work" odoo19-odoo:test bash -n /work/backup/scripts/offsite-sync-rclone.sh` -> offsite sync script syntax passes
 - `docker run --rm -v "${PWD}:/work" odoo19-odoo:test bash -n /work/backup/scripts/run-offsite-backup.sh` -> offsite wrapper syntax passes
 - `docker run --rm rclone/rclone:latest version` -> rclone container is available
-- offsite backup scripts are present, pending end-to-end upload validation with real offsite credentials
+- offsite backup flow validated locally against a temporary MinIO target; real offsite credentials are still pending
+- the filestore export helper now tolerates a missing filestore directory by writing an empty archive instead of failing
+- local restore drill from the offsite artifacts completed successfully against isolated temporary volumes and a temporary PostgreSQL container
+
+## Current local runtime snapshot
+- The project stack is currently up through Docker Desktop with `compose.yaml`, `compose.dev.yaml`, and `compose.admin.yaml`.
+- Verified running services: `db`, `redis`, `pgbackrest`, `odoo`, `nginx`, `pgadmin`, `obsidian`, and `portainer`.
+- Local access points in this workspace:
+	- Odoo direct: `http://localhost:8069/web/login`
+	- Odoo through Nginx: `http://localhost:8088/web/login`
+	- pgAdmin: `http://localhost:8080`
+	- Obsidian: `http://localhost:3000`
+- Default local credentials currently documented in the repo:
+	- PostgreSQL user: `odoo`
+	- PostgreSQL password: `change_me`
+	- Odoo master password: `change_me`
+	- pgAdmin user: `admin@example.com`
+	- pgAdmin password: `change_me`
+	- Obsidian user: `obsidian`
+	- Obsidian password: `change_me`
+- Obsidian does not open the vault automatically on first launch; the vault must be opened from `/config/ObsidianVault`, which maps to the repository `docs/` directory.
+- After the first manual open, the vault selection should persist in the `obsidian-config` volume.
 
 ## Why Obsidian is in the admin layer
 - It is useful for local documentation and knowledge capture.
@@ -72,6 +94,7 @@ Track the current state of the Odoo self-hosted platform while keeping the techn
 - [Operations](operations.md)
 - [Platform bootstrap doc](../architecture/platform-bootstrap.md)
 - [Service map](../architecture/service-map.md)
+- [Stack topology](stack_topology.md)
 - [Local development runbook](../runbooks/local-development.md)
 - [Environments and promotions](../runbooks/environments-and-promotions.md)
 - [Secrets and configuration](../runbooks/secrets-and-config.md)
@@ -79,5 +102,4 @@ Track the current state of the Odoo self-hosted platform while keeping the techn
 - [Deployment over SSH](../runbooks/deployment-over-ssh.md)
 - [Backup and restore runbook](../runbooks/backup-and-restore.md)
 - [Staging neutralization runbook](../runbooks/staging-neutralization.md)
-- [Offsite backups runbook](../runbooks/offsite-backups.md)
 - [Offsite backups runbook](../runbooks/offsite-backups.md)

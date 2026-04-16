@@ -9,6 +9,7 @@
 - Staging-only `Mailpit`
 - Optional `pgAdmin`
 - Optional Obsidian knowledge vault
+- Optional Portainer container-management UI
 
 ## Compose entry points
 - [compose.yaml](../../compose.yaml)
@@ -24,6 +25,7 @@
 - [Deployment over SSH](../runbooks/deployment-over-ssh.md)
 - [Local health check script](../../ops/health/check-local-stack.ps1)
 - [Remote deploy script](../../ops/deploy/remote-deploy.sh)
+- [Portainer](portainer.md)
 - [Backup and restore runbook](../runbooks/backup-and-restore.md)
 - [Staging neutralization runbook](../runbooks/staging-neutralization.md)
 - [Offsite backups runbook](../runbooks/offsite-backups.md)
@@ -39,14 +41,32 @@
 - Nginx dev: `8088`
 - pgAdmin admin: `8080`
 - Obsidian GUI: `3000` and `3001`
+- Portainer UI: `9443`
 - Staging/prod edge ports: `80` and `443`
 - Staging Mailpit UI on host loopback: `127.0.0.1:8025` by default
+
+## Default local credentials
+- PostgreSQL user: `odoo`
+- PostgreSQL password: `change_me`
+- Odoo database master password: `change_me`
+- pgAdmin email: `admin@example.com`
+- pgAdmin password: `change_me`
+- Obsidian user: `obsidian`
+- Obsidian password: `change_me`
+
+## Obsidian vault behavior
+- The browser container starts on the Obsidian launcher, not directly inside the vault.
+- The mounted vault path is `/config/ObsidianVault` inside the container.
+- That path maps to the repository `docs/` directory.
+- If the vault does not open automatically, choose `Open folder as vault` and select `/config/ObsidianVault`.
+- The selection should persist after the first open because the container uses the `obsidian-config` volume.
 
 ## Start commands
 - `docker compose -f compose.yaml -f compose.dev.yaml up -d`
 - `docker compose -f compose.yaml -f compose.dev.yaml -f compose.admin.yaml up -d`
 - `docker compose -f compose.yaml -f compose.dev.yaml logs -f odoo nginx`
-- `docker compose -f compose.yaml -f compose.dev.yaml -f compose.admin.yaml logs -f obsidian`
+- `docker compose -f compose.yaml -f compose.dev.yaml -f compose.admin.yaml logs -f obsidian portainer pgadmin`
+- `docker compose -f compose.yaml -f compose.dev.yaml -f compose.admin.yaml logs -f portainer`
 - `docker compose -f compose.yaml -f compose.dev.yaml exec redis redis-cli ping`
 - `docker compose -f compose.yaml -f compose.dev.yaml exec pgbackrest /scripts/stanza-create.sh`
 - `docker compose -f compose.yaml -f compose.dev.yaml exec pgbackrest /scripts/check-db.sh`

@@ -2,11 +2,24 @@
 
 This vault organizes the Odoo 19 documentation as an Obsidian-style knowledge graph.
 
+## Start here
+- [Architecture Overview](brain/architecture_overview.md)
+- [Platform](brain/platform.md)
+- [Delivery](brain/delivery.md)
+- [Stack Topology](brain/stack_topology.md)
+- [Future Control Plane](brain/future_control_plane.md)
+
 ## Entry points
+- [Architecture Overview](brain/architecture_overview.md)
 - [Platform](brain/platform.md)
 - [Platform Bootstrap Status](brain/platform_bootstrap_status.md)
-- [Services](brain/services.md)
 - [Delivery](brain/delivery.md)
+- [Stack Topology](brain/stack_topology.md)
+- [Future Control Plane](brain/future_control_plane.md)
+- [Portainer](brain/portainer.md)
+- [Portainer Workflow](brain/portainer_workflow.md)
+- [Daily Checklist](brain/daily_checklist.md)
+- [Services](brain/services.md)
 - [Base](brain/base.md)
 - [CRM](brain/crm.md)
 - [Schema Atlas](brain/schema.md)
@@ -17,6 +30,11 @@ This vault organizes the Odoo 19 documentation as an Obsidian-style knowledge gr
 graph TD
   Home[Odoo Brain] --> Platform[Platform]
   Home --> Bootstrap[Platform Bootstrap Status]
+  Home --> Checklist[Daily Checklist]
+  Home --> Portainer[Portainer]
+  Home --> PortainerWorkflow[Portainer Workflow]
+  Home --> ArchitectureOverview[Architecture Overview]
+  Home --> Topology[Stack Topology]
   Home --> Services[Services]
   Home --> Delivery[Delivery]
   Home --> Base[Base]
@@ -25,6 +43,11 @@ graph TD
   Home --> Ops[Operations]
   Platform --> Bootstrap
   Platform --> Services
+  Platform --> Checklist
+  Platform --> Portainer
+  Platform --> PortainerWorkflow
+  Platform --> ArchitectureOverview
+  Platform --> Topology
   Bootstrap --> Delivery
   Bootstrap --> Ops
   Base --> BaseDoc[base_module.md]

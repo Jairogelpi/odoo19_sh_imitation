@@ -4,7 +4,15 @@
 
 Run and verify the platform locally with the smallest reliable workflow.
 
+On Windows, the recommended runtime is Docker Desktop with the WSL 2 backend.
+
 ## Recommended startup paths
+
+Before first start:
+
+- Make sure Docker Desktop is running.
+- Confirm file sharing is enabled for the repository location.
+- Keep the repository on the local disk rather than a removable or network drive.
 
 Development base stack:
 
@@ -86,3 +94,4 @@ docker compose -f compose.yaml -f compose.dev.yaml -f compose.admin.yaml down
 - `compose.yaml` is the canonical base. Prefer it over `docker-compose.yml`.
 - `compose.admin.yaml` is intentionally optional.
 - The `docs/` directory is both repository documentation and the Obsidian vault.
+- Extra Odoo addons should be mounted into `/mnt/extra-addons` through `./addons` or another mounted path.

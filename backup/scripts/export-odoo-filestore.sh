@@ -37,7 +37,12 @@ docker compose "${compose_args[@]}" up -d db odoo > /dev/null
 timestamp="$(date +%Y%m%d-%H%M%S)"
 archive_path="${output_dir}/filestore-${timestamp}.tar.gz"
 
-docker compose "${compose_args[@]}" exec -T odoo \
-  bash -lc 'tar -czf - -C /var/lib/odoo filestore' > "${archive_path}"
+if docker compose "${compose_args[@]}" exec -T odoo bash -lc 'test -d /var/lib/odoo/filestore'; then
+  docker compose "${compose_args[@]}" exec -T odoo \
+    bash -lc 'tar -czf - -C /var/lib/odoo filestore' > "${archive_path}"
+else
+  echo "Filestore directory not found in the Odoo container; creating an empty archive"
+  tar -czf "${archive_path}" --files-from /dev/null
+fi
 
 echo "${archive_path}"

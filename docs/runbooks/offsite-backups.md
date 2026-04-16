@@ -13,6 +13,8 @@ The offsite flow is script-driven:
 3. export a timestamped snapshot of `/var/lib/odoo/filestore`
 4. upload the local archive directories with an ephemeral `rclone` container
 
+If the Odoo filestore directory is missing on a clean stack, the export helper now creates an empty archive instead of aborting the run.
+
 Scripts involved:
 
 - `backup/scripts/export-pgbackrest-repo.sh`
@@ -70,10 +72,10 @@ odoo-backups/project/prod/filestore
 
 ## Current limitation
 
-This slice implements offsite replication, but it does not yet:
+This slice implements offsite replication, and it has been validated locally against a temporary MinIO target plus a full local restore drill in this workspace, but it does not yet:
 
 - schedule itself automatically
 - prune local archives beyond whatever operators choose to keep locally
-- prove a full restore from offsite within this workspace
+- prove the flow against real offsite credentials and the production object-store endpoint
 
 Those belong to the next hardening steps.

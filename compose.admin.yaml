@@ -1,4 +1,15 @@
 services:
+  portainer:
+    image: portainer/portainer-ce:latest
+    restart: unless-stopped
+    ports:
+      - "9443:9443"
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - portainer-data:/data
+    networks:
+      - odoo_net
+
   pgadmin:
     image: dpage/pgadmin4:9.14
     restart: unless-stopped
@@ -35,5 +46,6 @@ services:
       - odoo_net
 
 volumes:
+  portainer-data:
   pgadmin-data:
   obsidian-config:
