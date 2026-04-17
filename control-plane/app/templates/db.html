@@ -1,0 +1,167 @@
+{% extends "base.html" %}
+{% block content %}
+<section class="hero">
+  <div>
+    <h1>Database Manager</h1>
+    <p class="muted">
+      Gestión de bases de datos PostgreSQL en
+      <code>{{ env }}</code>.
+    </p>
+  </div>
+  <div class="kpis">
+    <div class="kpi">
+      <span class="kpi-label">Bases de datos</span>
+      <span class="kpi-value">{{ databases|length }}</span>
+    </div>
+  </div>
+</section>
+
+{% if flash %}
+  <div class="alert {% if flash_ok %}alert-ok{% else %}alert-err{% endif %}">{{ flash }}</div>
+{% endif %}
+
+{% if error %}
+  <div class="alert alert-err">{{ error }}</div>
+{% endif %}
+
+<div class="split">
+  <section class="panel">
+    <div class="panel-head">
+      <h2>Bases de datos</h2>
+      <button class="btn btn-primary" type="button"
+              onclick="document.getElementById('create-dialog').showModal()">
+        Crear nueva
+      </button>
+    </div>
+    {% if databases %}
+    <div class="table-wrap">
+      <table class="table">
+        <thead>
+          <tr>
+            <th>Nombre</th>
+            <th class="num">Tamaño</th>
+            <th class="action">Duplicar</th>
+            <th class="action">Eliminar</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for db in databases %}
+          <tr>
+            <td><code class="mono">{{ db.name }}</code></td>
+            <td class="num">{{ db.size_human }}</td>
+            <td class="action">
+              <button class="btn-ghost" type="button"
+                      onclick="openDuplicate('{{ db.name }}')">Duplicar</button>
+            </td>
+            <td class="action">
+              {% if db.name not in ('postgres', 'template0', 'template1') %}
+              <button class="btn-ghost" style="color:var(--danger)" type="button"
+                      onclick="openDrop('{{ db.name }}')">Eliminar</button>
+              {% else %}
+              <span class="muted small">protegida</span>
+              {% endif %}
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+    {% else %}
+      {% if not error %}
+      <div class="empty muted">Sin bases de datos.</div>
+      {% endif %}
+    {% endif %}
+  </section>
+
+  <section class="panel">
+    <div class="panel-head"><h2>Acciones rápidas</h2></div>
+    <div style="padding:1.25rem">
+      <p class="muted small">
+        Desde aquí puedes crear, duplicar y eliminar bases de datos directamente en el contenedor PostgreSQL.
+      </p>
+      <ul class="muted small" style="margin:.75rem 0">
+        <li><strong>Crear</strong>: crea una base vacía con owner <code>odoo</code></li>
+        <li><strong>Duplicar</strong>: copia completa (esquema + datos) usando <code>CREATE DATABASE ... WITH TEMPLATE</code></li>
+        <li><strong>Eliminar</strong>: requiere confirmación escrita del nombre</li>
+      </ul>
+      <p class="warn">
+        ⚠ Las eliminaciones son irreversibles. Asegúrate de tener un backup antes.
+      </p>
+    </div>
+  </section>
+</div>
+
+<!-- create dialog -->
+<dialog id="create-dialog" class="dialog">
+  <form method="post" action="/db/create">
+    <header class="dialog-head">
+      <h2>Crear base de datos</h2>
+      <button type="button" class="btn-ghost" onclick="document.getElementById('create-dialog').close()" aria-label="Cerrar">✕</button>
+    </header>
+    <label class="field">
+      <span class="field-label">Nombre</span>
+      <input name="name" required autocomplete="off" placeholder="mi_nueva_db" pattern="^[a-zA-Z_][a-zA-Z0-9_-]*$">
+    </label>
+    <footer class="dialog-foot">
+      <button type="button" class="btn-ghost" onclick="document.getElementById('create-dialog').close()">Cancelar</button>
+      <button type="submit" class="btn btn-primary">Crear</button>
+    </footer>
+  </form>
+</dialog>
+
+<!-- duplicate dialog -->
+<dialog id="duplicate-dialog" class="dialog">
+  <form method="post" action="/db/duplicate">
+    <header class="dialog-head">
+      <h2>Duplicar base de datos</h2>
+      <button type="button" class="btn-ghost" onclick="document.getElementById('duplicate-dialog').close()" aria-label="Cerrar">✕</button>
+    </header>
+    <p class="muted">Duplicando <code id="dup-source-display" class="mono"></code></p>
+    <input type="hidden" name="source" id="dup-source">
+    <label class="field">
+      <span class="field-label">Nombre de la copia</span>
+      <input name="target" required autocomplete="off" placeholder="db_copia" pattern="^[a-zA-Z_][a-zA-Z0-9_-]*$">
+    </label>
+    <footer class="dialog-foot">
+      <button type="button" class="btn-ghost" onclick="document.getElementById('duplicate-dialog').close()">Cancelar</button>
+      <button type="submit" class="btn btn-primary">Duplicar</button>
+    </footer>
+  </form>
+</dialog>
+
+<!-- drop dialog -->
+<dialog id="drop-dialog" class="dialog">
+  <form method="post" action="/db/drop">
+    <header class="dialog-head">
+      <h2>Eliminar base de datos</h2>
+      <button type="button" class="btn-ghost" onclick="document.getElementById('drop-dialog').close()" aria-label="Cerrar">✕</button>
+    </header>
+    <p class="muted">
+      Vas a eliminar permanentemente <code id="drop-name-display" class="mono"></code>.
+      Esta acción es irreversible.
+    </p>
+    <input type="hidden" name="name" id="drop-name">
+    <label class="field">
+      <span class="field-label">Escribe el nombre para confirmar</span>
+      <input name="confirm" required autocomplete="off">
+    </label>
+    <footer class="dialog-foot">
+      <button type="button" class="btn-ghost" onclick="document.getElementById('drop-dialog').close()">Cancelar</button>
+      <button type="submit" class="btn btn-danger">Eliminar</button>
+    </footer>
+  </form>
+</dialog>
+
+<script>
+  function openDuplicate(name) {
+    document.getElementById('dup-source').value = name;
+    document.getElementById('dup-source-display').textContent = name;
+    document.getElementById('duplicate-dialog').showModal();
+  }
+  function openDrop(name) {
+    document.getElementById('drop-name').value = name;
+    document.getElementById('drop-name-display').textContent = name;
+    document.getElementById('drop-dialog').showModal();
+  }
+</script>
+{% endblock %}

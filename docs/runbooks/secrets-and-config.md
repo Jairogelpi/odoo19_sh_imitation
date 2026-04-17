@@ -52,6 +52,8 @@ This should point to the real untracked staging env file on the target host.
 ### Reverse proxy
 
 - `SERVER_NAME`
+- `NGINX_TLS_MODE`
+- `NGINX_TLS_CERTS_DIR`
 
 ### Optional image overrides
 
@@ -83,6 +85,7 @@ This should point to the real untracked staging env file on the target host.
 
 - `PGADMIN_DEFAULT_EMAIL`
 - `PGADMIN_DEFAULT_PASSWORD`
+- `HOMEPAGE_ALLOWED_HOSTS`
 - `PUID`
 - `PGID`
 - `TZ`
@@ -124,14 +127,26 @@ They point to the real untracked environment file paths used by the operational 
 ### Staging
 
 - production-like hostname
+- origin TLS certificates mounted through `NGINX_TLS_CERTS_DIR`
 - production-like Odoo settings
 - admin layer only when explicitly needed
 
 ### Production
 
 - real public hostname
+- origin TLS certificates mounted through `NGINX_TLS_CERTS_DIR`
 - no optional admin/knowledge services in normal runtime
 - secrets should come from a managed source, not a hand-edited `.env` in the repo
+
+## Current caveats
+
+These are current implementation realities, not just recommendations:
+
+- `NGINX_TLS_MODE` defaults to `disabled` in the base compose and is forced to `required` by `compose.staging.yaml` and `compose.prod.yaml`
+- `NGINX_TLS_CERTS_DIR` must expose `fullchain.pem` and `privkey.pem` for staging and production
+- `HOMEPAGE_ALLOWED_HOSTS` controls which hostnames can serve the optional lobby on `:8081`
+- `ODOO_ADMIN_PASSWORD` is present in the env example files, but Odoo still reads `admin_passwd` from `config/odoo.conf`, `config/odoo.staging.conf`, and `config/odoo.prod.conf`
+- until Odoo config templating is added, rotating the master password means changing both the env file and the relevant `config/odoo*.conf`
 
 ## Rules
 

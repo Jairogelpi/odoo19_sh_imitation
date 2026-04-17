@@ -1,0 +1,279 @@
+/* ------------------------------------------------------------------ *
+ * Odoo19 Lobby — custom theme
+ * Clean, professional, fully responsive
+ * ------------------------------------------------------------------ */
+
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap");
+
+:root {
+  --lobby-font: "Inter", ui-sans-serif, system-ui, -apple-system, "Segoe UI",
+    Roboto, sans-serif;
+  --lobby-bg: #f7f8fa;
+  --lobby-bg-gradient: radial-gradient(
+      1200px 600px at 10% -10%,
+      #eef2f7 0%,
+      transparent 60%
+    ),
+    radial-gradient(900px 500px at 90% 0%, #e8eef7 0%, transparent 55%),
+    linear-gradient(180deg, #f7f8fa 0%, #eef1f6 100%);
+  --lobby-surface: rgba(255, 255, 255, 0.78);
+  --lobby-surface-strong: rgba(255, 255, 255, 0.92);
+  --lobby-border: rgba(15, 23, 42, 0.08);
+  --lobby-border-strong: rgba(15, 23, 42, 0.12);
+  --lobby-text: #0f172a;
+  --lobby-text-muted: #475569;
+  --lobby-text-subtle: #64748b;
+  --lobby-accent: #2563eb;
+  --lobby-accent-soft: rgba(37, 99, 235, 0.08);
+  --lobby-success: #10b981;
+  --lobby-warning: #f59e0b;
+  --lobby-danger: #ef4444;
+  --lobby-shadow-sm: 0 1px 2px rgba(15, 23, 42, 0.04),
+    0 1px 3px rgba(15, 23, 42, 0.04);
+  --lobby-shadow: 0 1px 2px rgba(15, 23, 42, 0.04),
+    0 8px 24px rgba(15, 23, 42, 0.06);
+  --lobby-shadow-lg: 0 2px 4px rgba(15, 23, 42, 0.04),
+    0 16px 40px rgba(15, 23, 42, 0.08);
+  --lobby-radius: 14px;
+  --lobby-radius-sm: 10px;
+}
+
+/* ---------- base ---------- */
+html,
+body,
+#__next {
+  background: var(--lobby-bg) !important;
+  background-image: var(--lobby-bg-gradient) !important;
+  background-attachment: fixed;
+  font-family: var(--lobby-font) !important;
+  color: var(--lobby-text);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  letter-spacing: -0.005em;
+}
+
+body * {
+  font-family: var(--lobby-font) !important;
+}
+
+/* ---------- layout container ---------- */
+main,
+#page_container {
+  max-width: 1440px !important;
+  margin: 0 auto !important;
+  padding: clamp(16px, 3vw, 40px) !important;
+}
+
+/* ---------- top info row ---------- */
+.information-widgets-row,
+.information-widget {
+  background: var(--lobby-surface) !important;
+  border: 1px solid var(--lobby-border) !important;
+  border-radius: var(--lobby-radius) !important;
+  box-shadow: var(--lobby-shadow-sm) !important;
+  backdrop-filter: blur(14px) saturate(140%);
+  -webkit-backdrop-filter: blur(14px) saturate(140%);
+}
+
+.information-widget {
+  padding: 10px 14px !important;
+}
+
+.information-widget .text,
+.information-widget span,
+.information-widget div {
+  color: var(--lobby-text) !important;
+  font-weight: 500 !important;
+}
+
+/* search */
+input[type="search"],
+input[type="text"] {
+  background: var(--lobby-surface-strong) !important;
+  border: 1px solid var(--lobby-border) !important;
+  border-radius: var(--lobby-radius-sm) !important;
+  color: var(--lobby-text) !important;
+  font-weight: 500 !important;
+  padding: 10px 14px !important;
+  box-shadow: var(--lobby-shadow-sm) !important;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+input[type="search"]::placeholder {
+  color: var(--lobby-text-subtle) !important;
+  font-weight: 400 !important;
+}
+
+input[type="search"]:focus {
+  border-color: var(--lobby-accent) !important;
+  box-shadow: 0 0 0 3px var(--lobby-accent-soft) !important;
+  outline: none !important;
+}
+
+.datetime-text {
+  font-variant-numeric: tabular-nums;
+  font-weight: 500 !important;
+  color: var(--lobby-text-muted) !important;
+  letter-spacing: 0.01em;
+}
+
+/* ---------- group headings ---------- */
+h1,
+h2,
+h3 {
+  font-family: var(--lobby-font) !important;
+  color: var(--lobby-text) !important;
+  letter-spacing: -0.02em !important;
+}
+
+.services-group > div > button h2,
+.services-group h2,
+.bookmarks-group h2 {
+  font-size: 0.78rem !important;
+  font-weight: 600 !important;
+  letter-spacing: 0.08em !important;
+  text-transform: uppercase !important;
+  color: var(--lobby-text-muted) !important;
+}
+
+.services-group > div > button,
+.bookmarks-group > div > button {
+  padding-bottom: 8px !important;
+  border-bottom: 1px solid var(--lobby-border) !important;
+  margin-bottom: 14px !important;
+}
+
+.services-group button svg,
+.bookmarks-group button svg {
+  color: var(--lobby-text-subtle);
+  opacity: 0.7;
+}
+
+/* ---------- service / bookmark tiles ---------- */
+.service-card,
+.bookmark-text,
+li[class*="service"] > div,
+li[class*="bookmark"] > a {
+  background: var(--lobby-surface) !important;
+  border: 1px solid var(--lobby-border) !important;
+  border-radius: var(--lobby-radius) !important;
+  box-shadow: var(--lobby-shadow-sm) !important;
+  transition: transform 0.18s ease, box-shadow 0.18s ease,
+    border-color 0.18s ease;
+  backdrop-filter: blur(10px) saturate(130%);
+  -webkit-backdrop-filter: blur(10px) saturate(130%);
+}
+
+.service-card:hover,
+li[class*="service"] > div:hover,
+li[class*="bookmark"] > a:hover {
+  transform: translateY(-1px);
+  box-shadow: var(--lobby-shadow);
+  border-color: var(--lobby-border-strong) !important;
+}
+
+/* service tile internals */
+.service-name,
+.service-card a {
+  color: var(--lobby-text) !important;
+  font-weight: 600 !important;
+  letter-spacing: -0.01em !important;
+}
+
+.service-description,
+.service-card p {
+  color: var(--lobby-text-subtle) !important;
+  font-weight: 400 !important;
+  font-size: 0.82rem !important;
+  margin-top: 2px !important;
+}
+
+.service-icon,
+.service-card img,
+.service-card svg {
+  filter: drop-shadow(0 1px 2px rgba(15, 23, 42, 0.08));
+}
+
+/* ---------- status dots: bigger, with white halo ---------- */
+.service-card [class*="status"],
+.service-card span[aria-label*="status"],
+.service-card span[aria-label*="HTTP"] {
+  box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.85);
+}
+
+/* ---------- bookmarks ---------- */
+.bookmark-text {
+  padding: 10px 14px !important;
+}
+
+.bookmark-text > div:first-child {
+  background: var(--lobby-accent-soft) !important;
+  color: var(--lobby-accent) !important;
+  border-radius: 8px !important;
+  font-weight: 600 !important;
+  letter-spacing: 0.02em;
+}
+
+.bookmark-name {
+  color: var(--lobby-text) !important;
+  font-weight: 600 !important;
+}
+
+.bookmark-description {
+  color: var(--lobby-text-subtle) !important;
+  font-weight: 400 !important;
+}
+
+/* ---------- scrollbars ---------- */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(15, 23, 42, 0.2) transparent;
+}
+
+*::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+*::-webkit-scrollbar-thumb {
+  background: rgba(15, 23, 42, 0.18);
+  border-radius: 8px;
+}
+
+*::-webkit-scrollbar-thumb:hover {
+  background: rgba(15, 23, 42, 0.28);
+}
+
+/* ---------- responsive ---------- */
+@media (max-width: 1024px) {
+  main,
+  #page_container {
+    padding: 20px !important;
+  }
+}
+
+@media (max-width: 768px) {
+  main,
+  #page_container {
+    padding: 16px !important;
+  }
+  .information-widgets-row {
+    flex-wrap: wrap !important;
+    gap: 8px !important;
+  }
+}
+
+@media (max-width: 480px) {
+  main,
+  #page_container {
+    padding: 12px !important;
+  }
+  .information-widget {
+    flex: 1 1 48% !important;
+  }
+}
+
+/* ---------- hide version link ---------- */
+[href*="gethomepage/homepage/releases"] {
+  display: none !important;
+}

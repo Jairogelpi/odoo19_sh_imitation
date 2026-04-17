@@ -1,0 +1,215 @@
+- generic [active] [ref=e1]:
+  - generic [ref=e5]:
+    - generic [ref=e7]:
+      - generic [ref=e9]:
+        - generic [ref=e10]:
+          - img [ref=e11]
+          - generic [ref=e15]:
+            - generic [ref=e16]: "-"
+            - generic [ref=e17]: CPU
+        - generic [ref=e19]:
+          - img [ref=e20]
+          - generic [ref=e23]:
+            - generic [ref=e24]: "-"
+            - generic [ref=e25]: Libre
+        - generic [ref=e27]:
+          - img [ref=e28]
+          - generic [ref=e31]:
+            - generic [ref=e32]: "-"
+            - generic [ref=e33]: Libre
+      - generic [ref=e35]:
+        - generic [ref=e37]:
+          - combobox "Buscar…" [ref=e38]
+          - button "search.search" [disabled] [ref=e39]:
+            - img [ref=e40]
+            - generic [ref=e42]: search.search
+        - generic [ref=e45]: 16/4/26, 21:46
+    - generic [ref=e46]:
+      - generic [ref=e47]:
+        - button "Plataforma" [disabled] [expanded] [ref=e48]:
+          - heading "Plataforma" [level=2] [ref=e51]
+        - list [ref=e53]:
+          - listitem [ref=e54]:
+            - generic [ref=e56]:
+              - link "odoo.png" [ref=e57] [cursor=pointer]:
+                - /url: http://localhost:8088
+                - img "logo" [ref=e58]
+              - link "Odoo ERP (vía Nginx)" [ref=e59] [cursor=pointer]:
+                - /url: http://localhost:8088
+                - generic [ref=e60]:
+                  - text: Odoo
+                  - paragraph [ref=e61]: ERP (vía Nginx)
+              - generic [ref=e62]:
+                - generic [ref=e63]:
+                  - generic "Estado HTTP No disponible" [ref=e64]
+                  - generic [ref=e66]: Site monitor status
+                - button "View container stats" [ref=e67] [cursor=pointer]:
+                  - generic "Desconocido" [ref=e68]
+                  - generic [ref=e70]: View container stats
+          - listitem [ref=e71]:
+            - generic [ref=e73]:
+              - link "mdi-bug-outline-#475569" [ref=e74] [cursor=pointer]:
+                - /url: http://localhost:8069
+              - link "Odoo directo Bypass de Nginx para debug" [ref=e76] [cursor=pointer]:
+                - /url: http://localhost:8069
+                - generic [ref=e77]:
+                  - text: Odoo directo
+                  - paragraph [ref=e78]: Bypass de Nginx para debug
+              - generic [ref=e79]:
+                - generic [ref=e80]:
+                  - generic "Estado HTTP No disponible" [ref=e81]
+                  - generic [ref=e83]: Site monitor status
+                - button "View container stats" [ref=e84] [cursor=pointer]:
+                  - generic "Desconocido" [ref=e85]
+                  - generic [ref=e87]: View container stats
+          - listitem [ref=e88]:
+            - generic [ref=e90]:
+              - link "nginx.png" [ref=e91] [cursor=pointer]:
+                - /url: http://localhost:8088
+                - img "logo" [ref=e92]
+              - link "Nginx Reverse proxy frontal" [ref=e93] [cursor=pointer]:
+                - /url: http://localhost:8088
+                - generic [ref=e94]:
+                  - text: Nginx
+                  - paragraph [ref=e95]: Reverse proxy frontal
+              - generic [ref=e96]:
+                - generic [ref=e97]:
+                  - generic "Estado HTTP No disponible" [ref=e98]
+                  - generic [ref=e100]: Site monitor status
+                - button "View container stats" [ref=e101] [cursor=pointer]:
+                  - generic "Desconocido" [ref=e102]
+                  - generic [ref=e104]: View container stats
+      - generic [ref=e105]:
+        - button "Operaciones" [disabled] [expanded] [ref=e106]:
+          - heading "Operaciones" [level=2] [ref=e109]
+        - list [ref=e111]:
+          - listitem [ref=e112]:
+            - generic [ref=e114]:
+              - link "portainer.png" [ref=e115] [cursor=pointer]:
+                - /url: https://localhost:9443
+                - img "logo" [ref=e116]
+              - link "Portainer Gestión Docker" [ref=e117] [cursor=pointer]:
+                - /url: https://localhost:9443
+                - generic [ref=e118]:
+                  - text: Portainer
+                  - paragraph [ref=e119]: Gestión Docker
+              - button "View container stats" [ref=e121] [cursor=pointer]:
+                - generic "Desconocido" [ref=e122]
+                - generic [ref=e124]: View container stats
+          - listitem [ref=e125]:
+            - generic [ref=e127]:
+              - link "pgadmin.png" [ref=e128] [cursor=pointer]:
+                - /url: http://localhost:8080
+                - img "logo" [ref=e129]
+              - link "pgAdmin Cliente PostgreSQL" [ref=e130] [cursor=pointer]:
+                - /url: http://localhost:8080
+                - generic [ref=e131]:
+                  - text: pgAdmin
+                  - paragraph [ref=e132]: Cliente PostgreSQL
+              - generic [ref=e133]:
+                - generic [ref=e134]:
+                  - generic "Estado HTTP No disponible" [ref=e135]
+                  - generic [ref=e137]: Site monitor status
+                - button "View container stats" [ref=e138] [cursor=pointer]:
+                  - generic "Desconocido" [ref=e139]
+                  - generic [ref=e141]: View container stats
+          - listitem [ref=e142]:
+            - generic [ref=e144]:
+              - link "mdi-database-sync-outline-#475569" [ref=e145] [cursor=pointer]:
+                - /url: https://pgbackrest.org/
+              - link "pgBackRest Backups WAL + full (CLI)" [ref=e147] [cursor=pointer]:
+                - /url: https://pgbackrest.org/
+                - generic [ref=e148]:
+                  - text: pgBackRest
+                  - paragraph [ref=e149]: Backups WAL + full (CLI)
+              - button "View container stats" [ref=e151] [cursor=pointer]:
+                - generic "Desconocido" [ref=e152]
+                - generic [ref=e154]: View container stats
+      - generic [ref=e155]:
+        - button "Conocimiento" [disabled] [expanded] [ref=e156]:
+          - heading "Conocimiento" [level=2] [ref=e159]
+        - list [ref=e161]:
+          - listitem [ref=e162]:
+            - generic [ref=e164]:
+              - link "obsidian.png" [ref=e165] [cursor=pointer]:
+                - /url: http://localhost:3000
+                - img "logo" [ref=e166]
+              - link "Obsidian Vault de runbooks y docs" [ref=e167] [cursor=pointer]:
+                - /url: http://localhost:3000
+                - generic [ref=e168]:
+                  - text: Obsidian
+                  - paragraph [ref=e169]: Vault de runbooks y docs
+              - generic [ref=e170]:
+                - generic [ref=e171]:
+                  - generic "Estado HTTP No disponible" [ref=e172]
+                  - generic [ref=e174]: Site monitor status
+                - button "View container stats" [ref=e175] [cursor=pointer]:
+                  - generic "Desconocido" [ref=e176]
+                  - generic [ref=e178]: View container stats
+          - listitem [ref=e179]:
+            - generic [ref=e181]:
+              - link "mdi-book-open-variant-#475569" [ref=e182] [cursor=pointer]:
+                - /url: http://localhost:3000
+              - link "Runbooks Operativa y despliegues" [ref=e184] [cursor=pointer]:
+                - /url: http://localhost:3000
+                - generic [ref=e185]:
+                  - text: Runbooks
+                  - paragraph [ref=e186]: Operativa y despliegues
+          - listitem [ref=e187]:
+            - generic [ref=e189]:
+              - link "mdi-sitemap-outline-#475569" [ref=e190] [cursor=pointer]:
+                - /url: http://localhost:3000
+              - link "Arquitectura Service map y bootstrap" [ref=e192] [cursor=pointer]:
+                - /url: http://localhost:3000
+                - generic [ref=e193]:
+                  - text: Arquitectura
+                  - paragraph [ref=e194]: Service map y bootstrap
+    - generic [ref=e195]:
+      - generic [ref=e196]:
+        - button "Documentación" [disabled] [expanded] [ref=e197]:
+          - heading "Documentación" [level=2] [ref=e198]
+        - list [ref=e200]:
+          - listitem [ref=e201]:
+            - link "AR Arquitectura docs/architecture/*" [ref=e202] [cursor=pointer]:
+              - /url: https://github.com/jairogelpi
+              - generic [ref=e203]:
+                - generic [ref=e204]: AR
+                - generic [ref=e205]:
+                  - generic [ref=e206]: Arquitectura
+                  - generic [ref=e207]: docs/architecture/*
+          - listitem [ref=e208]:
+            - link "RB Runbooks docs/runbooks/*" [ref=e209] [cursor=pointer]:
+              - /url: https://github.com/jairogelpi
+              - generic [ref=e210]:
+                - generic [ref=e211]: RB
+                - generic [ref=e212]:
+                  - generic [ref=e213]: Runbooks
+                  - generic [ref=e214]: docs/runbooks/*
+      - generic [ref=e215]:
+        - button "Externo" [disabled] [expanded] [ref=e216]:
+          - heading "Externo" [level=2] [ref=e217]
+        - list [ref=e219]:
+          - listitem [ref=e220]:
+            - link "logo Odoo 19 docs www.odoo.com" [ref=e221] [cursor=pointer]:
+              - /url: https://www.odoo.com/documentation/19.0/
+              - generic [ref=e222]:
+                - img "logo" [ref=e225]
+                - generic [ref=e226]:
+                  - generic [ref=e227]: Odoo 19 docs
+                  - generic [ref=e228]: www.odoo.com
+          - listitem [ref=e229]:
+            - link "pgBackRest docs pgbackrest.org" [ref=e230] [cursor=pointer]:
+              - /url: https://pgbackrest.org/user-guide.html
+              - generic [ref=e235]:
+                - generic [ref=e236]: pgBackRest docs
+                - generic [ref=e237]: pgbackrest.org
+          - listitem [ref=e238]:
+            - link "logo Portainer docs docs.portainer.io" [ref=e239] [cursor=pointer]:
+              - /url: https://docs.portainer.io/
+              - generic [ref=e240]:
+                - img "logo" [ref=e243]
+                - generic [ref=e244]:
+                  - generic [ref=e245]: Portainer docs
+                  - generic [ref=e246]: docs.portainer.io
+    - img [ref=e250] [cursor=pointer]
+  - alert [ref=e253]

@@ -1,0 +1,325 @@
+- generic [ref=e3]:
+  - generic [ref=e4]:
+    - complementary [ref=e5]:
+      - heading "Dozzle" [level=1] [ref=e6]:
+        - link "Dozzle" [ref=e7] [cursor=pointer]:
+          - /url: /
+          - img [ref=e8]
+          - text: Dozzle
+      - button "Buscar k" [ref=e141] [cursor=pointer]:
+        - img [ref=e142]
+        - text: Buscar
+        - generic [ref=e144]:
+          - img [ref=e145]
+          - generic [ref=e147]: k
+      - generic [ref=e149]:
+        - generic [ref=e152]:
+          - generic [ref=e153]:
+            - list [ref=e155]:
+              - listitem [ref=e156]:
+                - generic [ref=e157] [cursor=pointer]: Hosts
+              - listitem [ref=e158]:
+                - link "docker-desktop" [ref=e159] [cursor=pointer]:
+                  - /url: /host/eeb78205-8f93-402f-8e39-42e3e9968d61
+                  - img [ref=e160]
+                  - text: docker-desktop
+            - img [ref=e165] [cursor=pointer]
+          - list [ref=e170]:
+            - listitem [ref=e171]:
+              - group [ref=e172]:
+                - generic "odoo19 (13)" [ref=e173]:
+                  - img [ref=e174]
+                  - text: odoo19 (13)
+                  - link "Fusionar todo en un flujo" [ref=e176] [cursor=pointer]:
+                    - /url: /merged/6041bdd89aca,540ed143e077,3ea51383d534,3919b80e489e,264f61ea8601,34fe11beb212,762516fc866c,86a472ccb949,225fbde96e8e,a0ceab7dfd19,3107e137bd09,3c557f3f74b4,1704b5c665da
+                    - img [ref=e177]
+                - list [ref=e179]:
+                  - listitem [ref=e180]:
+                    - link "odoo19-code-server-1" [ref=e181] [cursor=pointer]:
+                      - /url: /container/6041bdd89aca
+                      - generic [ref=e183]: odoo19-code-server-1
+                  - listitem [ref=e184]:
+                    - link "odoo19-control-plane-1" [ref=e185] [cursor=pointer]:
+                      - /url: /container/540ed143e077
+                      - generic [ref=e187]: odoo19-control-plane-1
+                  - listitem [ref=e188]:
+                    - link "odoo19-db-1" [ref=e189] [cursor=pointer]:
+                      - /url: /container/3ea51383d534
+                      - generic [ref=e191]: odoo19-db-1
+                      - generic "healthy" [ref=e192]:
+                        - img [ref=e193]
+                  - listitem [ref=e196]:
+                    - link "odoo19-dozzle-1" [ref=e197] [cursor=pointer]:
+                      - /url: /container/3919b80e489e
+                      - generic [ref=e199]: odoo19-dozzle-1
+                  - listitem [ref=e200]:
+                    - link "odoo19-homepage-1" [ref=e201] [cursor=pointer]:
+                      - /url: /container/264f61ea8601
+                      - generic [ref=e203]: odoo19-homepage-1
+                      - generic "healthy" [ref=e204]:
+                        - img [ref=e205]
+                  - listitem [ref=e208]:
+                    - link "odoo19-nginx-1" [ref=e209] [cursor=pointer]:
+                      - /url: /container/34fe11beb212
+                      - generic [ref=e211]: odoo19-nginx-1
+                  - listitem [ref=e212]:
+                    - link "odoo19-obsidian-1" [ref=e213] [cursor=pointer]:
+                      - /url: /container/762516fc866c
+                      - generic [ref=e215]: odoo19-obsidian-1
+                  - listitem [ref=e216]:
+                    - link "odoo19-odoo-1" [ref=e217] [cursor=pointer]:
+                      - /url: /container/86a472ccb949
+                      - generic [ref=e219]: odoo19-odoo-1
+                  - listitem [ref=e220]:
+                    - link "odoo19-pgadmin-1" [ref=e221] [cursor=pointer]:
+                      - /url: /container/225fbde96e8e
+                      - generic [ref=e223]: odoo19-pgadmin-1
+                  - listitem [ref=e224]:
+                    - link "odoo19-pgbackrest-1" [ref=e225] [cursor=pointer]:
+                      - /url: /container/a0ceab7dfd19
+                      - generic [ref=e227]: odoo19-pgbackrest-1
+                  - listitem [ref=e228]:
+                    - link "odoo19-portainer-1" [ref=e229] [cursor=pointer]:
+                      - /url: /container/3107e137bd09
+                      - generic [ref=e231]: odoo19-portainer-1
+                  - listitem [ref=e232]:
+                    - link "odoo19-redis-1" [ref=e233] [cursor=pointer]:
+                      - /url: /container/3c557f3f74b4
+                      - generic [ref=e235]: odoo19-redis-1
+                  - listitem [ref=e236]:
+                    - link "odoo19-web-terminal-1" [ref=e237] [cursor=pointer]:
+                      - /url: /container/1704b5c665da
+                      - generic [ref=e239]: odoo19-web-terminal-1
+        - heading "Hosts y Contenedores" [level=3] [ref=e241]
+    - generic [ref=e246]:
+      - generic [ref=e248]:
+        - generic [ref=e249]: v10.3.3
+        - img [ref=e252] [cursor=pointer]
+        - link "Notifications" [ref=e254] [cursor=pointer]:
+          - /url: /notifications
+          - img [ref=e255]
+        - img [ref=e260] [cursor=pointer]
+        - link "Configuración" [ref=e262] [cursor=pointer]:
+          - /url: /settings
+          - img [ref=e263]
+      - generic [ref=e265]:
+        - generic [ref=e266]:
+          - heading "1 Host" [level=2] [ref=e267]
+          - button [ref=e268] [cursor=pointer]:
+            - img [ref=e269]
+        - list [ref=e271]:
+          - listitem [ref=e272]:
+            - generic [ref=e274]:
+              - generic [ref=e275]:
+                - generic [ref=e276]:
+                  - img [ref=e277]
+                  - generic [ref=e279]: docker-desktop
+                - list [ref=e280]:
+                  - listitem [ref=e281]:
+                    - img [ref=e282]
+                    - text: 13 contenedores
+                  - listitem [ref=e284]:
+                    - img [ref=e285]
+                    - text: 28.3.2
+              - generic [ref=e287]:
+                - generic [ref=e288]:
+                  - generic [ref=e289]:
+                    - img [ref=e290]
+                    - generic [ref=e292]: 16 CPU
+                  - generic [ref=e293]: 0.0%
+                  - generic [ref=e294]: avg 0.0% • pk 0.0%
+                - generic [ref=e339]:
+                  - generic [ref=e340]:
+                    - img [ref=e341]
+                    - generic [ref=e343]: 7.7 GB
+                  - generic [ref=e344]: 0 Bytes
+                  - generic [ref=e345]: avg 0 Bytes • pk 0 Bytes
+      - generic [ref=e390]:
+        - generic [ref=e391]:
+          - heading "13 contenedores" [level=2] [ref=e392]
+          - button [ref=e393] [cursor=pointer]:
+            - img [ref=e394]
+        - generic [ref=e396]:
+          - generic [ref=e399]:
+            - button [ref=e400] [cursor=pointer]:
+              - img [ref=e401]
+            - button [ref=e403] [cursor=pointer]:
+              - img [ref=e404]
+          - table [ref=e407]:
+            - rowgroup [ref=e408]:
+              - row "Nombre del contenedor Host Estado Creado Promedio de CPU (%) Promedio de MEM (%)" [ref=e409]:
+                - columnheader "Nombre del contenedor" [ref=e410]:
+                  - generic [ref=e412] [cursor=pointer]: Nombre del contenedor
+                - columnheader "Host" [ref=e413]:
+                  - generic [ref=e415] [cursor=pointer]: Host
+                - columnheader "Estado" [ref=e416]:
+                  - generic [ref=e418] [cursor=pointer]: Estado
+                - columnheader "Creado" [ref=e419]:
+                  - generic [ref=e420] [cursor=pointer]:
+                    - generic [ref=e421]: Creado
+                    - img [ref=e423]
+                - columnheader "Promedio de CPU (%)" [ref=e425]:
+                  - generic [ref=e427] [cursor=pointer]: Promedio de CPU (%)
+                - columnheader "Promedio de MEM (%)" [ref=e428]:
+                  - generic [ref=e430] [cursor=pointer]: Promedio de MEM (%)
+            - rowgroup [ref=e431]:
+              - row "odoo19-web-terminal-1 docker-desktop running hace 1 minuto 0% 0 Bytes" [ref=e432]:
+                - cell "odoo19-web-terminal-1" [ref=e433]:
+                  - link "odoo19-web-terminal-1" [ref=e434] [cursor=pointer]:
+                    - /url: /container/1704b5c665da
+                - cell "docker-desktop" [ref=e435]
+                - cell "running" [ref=e436]
+                - cell "hace 1 minuto" [ref=e437]:
+                  - time [ref=e438]: hace 1 minuto
+                - cell "0%" [ref=e439]:
+                  - generic [ref=e442]: 0%
+                - cell "0 Bytes" [ref=e443]:
+                  - generic [ref=e446]: 0 Bytes
+              - row "odoo19-code-server-1 docker-desktop running hace 1 minuto 0% 12.58 MB" [ref=e447]:
+                - cell "odoo19-code-server-1" [ref=e448]:
+                  - link "odoo19-code-server-1" [ref=e449] [cursor=pointer]:
+                    - /url: /container/6041bdd89aca
+                - cell "docker-desktop" [ref=e450]
+                - cell "running" [ref=e451]
+                - cell "hace 1 minuto" [ref=e452]:
+                  - time [ref=e453]: hace 1 minuto
+                - cell "0%" [ref=e454]:
+                  - generic [ref=e457]: 0%
+                - cell "12.58 MB" [ref=e458]:
+                  - generic [ref=e461]: 12.58 MB
+              - row "odoo19-dozzle-1 docker-desktop running hace 1 minuto 0% 0 Bytes" [ref=e462]:
+                - cell "odoo19-dozzle-1" [ref=e463]:
+                  - link "odoo19-dozzle-1" [ref=e464] [cursor=pointer]:
+                    - /url: /container/3919b80e489e
+                - cell "docker-desktop" [ref=e465]
+                - cell "running" [ref=e466]
+                - cell "hace 1 minuto" [ref=e467]:
+                  - time [ref=e468]: hace 1 minuto
+                - cell "0%" [ref=e469]:
+                  - generic [ref=e472]: 0%
+                - cell "0 Bytes" [ref=e473]:
+                  - generic [ref=e476]: 0 Bytes
+              - row "odoo19-control-plane-1 docker-desktop running hace 13 minutos 0% 0 Bytes" [ref=e477]:
+                - cell "odoo19-control-plane-1" [ref=e478]:
+                  - link "odoo19-control-plane-1" [ref=e479] [cursor=pointer]:
+                    - /url: /container/540ed143e077
+                - cell "docker-desktop" [ref=e480]
+                - cell "running" [ref=e481]
+                - cell "hace 13 minutos" [ref=e482]:
+                  - time [ref=e483]: hace 13 minutos
+                - cell "0%" [ref=e484]:
+                  - generic [ref=e487]: 0%
+                - cell "0 Bytes" [ref=e488]:
+                  - generic [ref=e491]: 0 Bytes
+              - row "odoo19-homepage-1 docker-desktop running hace 1 hora 0% 0 Bytes" [ref=e492]:
+                - cell "odoo19-homepage-1" [ref=e493]:
+                  - link "odoo19-homepage-1" [ref=e494] [cursor=pointer]:
+                    - /url: /container/264f61ea8601
+                - cell "docker-desktop" [ref=e495]
+                - cell "running" [ref=e496]
+                - cell "hace 1 hora" [ref=e497]:
+                  - time [ref=e498]: hace 1 hora
+                - cell "0%" [ref=e499]:
+                  - generic [ref=e502]: 0%
+                - cell "0 Bytes" [ref=e503]:
+                  - generic [ref=e506]: 0 Bytes
+              - row "odoo19-pgbackrest-1 docker-desktop running hace 1 hora 0% 0 Bytes" [ref=e507]:
+                - cell "odoo19-pgbackrest-1" [ref=e508]:
+                  - link "odoo19-pgbackrest-1" [ref=e509] [cursor=pointer]:
+                    - /url: /container/a0ceab7dfd19
+                - cell "docker-desktop" [ref=e510]
+                - cell "running" [ref=e511]
+                - cell "hace 1 hora" [ref=e512]:
+                  - time [ref=e513]: hace 1 hora
+                - cell "0%" [ref=e514]:
+                  - generic [ref=e517]: 0%
+                - cell "0 Bytes" [ref=e518]:
+                  - generic [ref=e521]: 0 Bytes
+              - row "odoo19-odoo-1 docker-desktop running hace 1 hora 0% 0 Bytes" [ref=e522]:
+                - cell "odoo19-odoo-1" [ref=e523]:
+                  - link "odoo19-odoo-1" [ref=e524] [cursor=pointer]:
+                    - /url: /container/86a472ccb949
+                - cell "docker-desktop" [ref=e525]
+                - cell "running" [ref=e526]
+                - cell "hace 1 hora" [ref=e527]:
+                  - time [ref=e528]: hace 1 hora
+                - cell "0%" [ref=e529]:
+                  - generic [ref=e532]: 0%
+                - cell "0 Bytes" [ref=e533]:
+                  - generic [ref=e536]: 0 Bytes
+              - row "odoo19-db-1 docker-desktop running hace 1 hora 0% 0 Bytes" [ref=e537]:
+                - cell "odoo19-db-1" [ref=e538]:
+                  - link "odoo19-db-1" [ref=e539] [cursor=pointer]:
+                    - /url: /container/3ea51383d534
+                - cell "docker-desktop" [ref=e540]
+                - cell "running" [ref=e541]
+                - cell "hace 1 hora" [ref=e542]:
+                  - time [ref=e543]: hace 1 hora
+                - cell "0%" [ref=e544]:
+                  - generic [ref=e547]: 0%
+                - cell "0 Bytes" [ref=e548]:
+                  - generic [ref=e551]: 0 Bytes
+              - row "odoo19-nginx-1 docker-desktop running hace 6 horas 0% 0 Bytes" [ref=e552]:
+                - cell "odoo19-nginx-1" [ref=e553]:
+                  - link "odoo19-nginx-1" [ref=e554] [cursor=pointer]:
+                    - /url: /container/34fe11beb212
+                - cell "docker-desktop" [ref=e555]
+                - cell "running" [ref=e556]
+                - cell "hace 6 horas" [ref=e557]:
+                  - time [ref=e558]: hace 6 horas
+                - cell "0%" [ref=e559]:
+                  - generic [ref=e562]: 0%
+                - cell "0 Bytes" [ref=e563]:
+                  - generic [ref=e566]: 0 Bytes
+              - row "odoo19-portainer-1 docker-desktop running hace 6 horas 0% 0 Bytes" [ref=e567]:
+                - cell "odoo19-portainer-1" [ref=e568]:
+                  - link "odoo19-portainer-1" [ref=e569] [cursor=pointer]:
+                    - /url: /container/3107e137bd09
+                - cell "docker-desktop" [ref=e570]
+                - cell "running" [ref=e571]
+                - cell "hace 6 horas" [ref=e572]:
+                  - time [ref=e573]: hace 6 horas
+                - cell "0%" [ref=e574]:
+                  - generic [ref=e577]: 0%
+                - cell "0 Bytes" [ref=e578]:
+                  - generic [ref=e581]: 0 Bytes
+              - row "odoo19-redis-1 docker-desktop running ayer 0% 1.79 MB" [ref=e582]:
+                - cell "odoo19-redis-1" [ref=e583]:
+                  - link "odoo19-redis-1" [ref=e584] [cursor=pointer]:
+                    - /url: /container/3c557f3f74b4
+                - cell "docker-desktop" [ref=e585]
+                - cell "running" [ref=e586]
+                - cell "ayer" [ref=e587]:
+                  - time [ref=e588]: ayer
+                - cell "0%" [ref=e589]:
+                  - generic [ref=e592]: 0%
+                - cell "1.79 MB" [ref=e593]:
+                  - generic [ref=e596]: 1.79 MB
+              - row "odoo19-pgadmin-1 docker-desktop running ayer 0% 0 Bytes" [ref=e597]:
+                - cell "odoo19-pgadmin-1" [ref=e598]:
+                  - link "odoo19-pgadmin-1" [ref=e599] [cursor=pointer]:
+                    - /url: /container/225fbde96e8e
+                - cell "docker-desktop" [ref=e600]
+                - cell "running" [ref=e601]
+                - cell "ayer" [ref=e602]:
+                  - time [ref=e603]: ayer
+                - cell "0%" [ref=e604]:
+                  - generic [ref=e607]: 0%
+                - cell "0 Bytes" [ref=e608]:
+                  - generic [ref=e611]: 0 Bytes
+              - row "odoo19-obsidian-1 docker-desktop running ayer 0% 0 Bytes" [ref=e612]:
+                - cell "odoo19-obsidian-1" [ref=e613]:
+                  - link "odoo19-obsidian-1" [ref=e614] [cursor=pointer]:
+                    - /url: /container/762516fc866c
+                - cell "docker-desktop" [ref=e615]
+                - cell "running" [ref=e616]
+                - cell "ayer" [ref=e617]:
+                  - time [ref=e618]: ayer
+                - cell "0%" [ref=e619]:
+                  - generic [ref=e622]: 0%
+                - cell "0 Bytes" [ref=e623]:
+                  - generic [ref=e626]: 0 Bytes
+  - generic [ref=e628] [cursor=pointer]:
+    - checkbox
+    - img [ref=e629]
+    - img [ref=e631]

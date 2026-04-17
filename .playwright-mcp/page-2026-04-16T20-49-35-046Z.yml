@@ -1,0 +1,217 @@
+- generic [active] [ref=e1]:
+  - banner [ref=e2]:
+    - generic [ref=e3]:
+      - link "Odoo19 Control Plane" [ref=e4] [cursor=pointer]:
+        - /url: /
+        - generic [ref=e6]: Odoo19
+        - generic [ref=e7]: Control Plane
+      - generic [ref=e8]: dev
+    - navigation [ref=e9]:
+      - link "Backups" [ref=e10] [cursor=pointer]:
+        - /url: /backups
+        - img [ref=e11]
+        - text: Backups
+      - link "Deploys" [ref=e15] [cursor=pointer]:
+        - /url: /deploys
+        - img [ref=e16]
+        - text: Deploys
+      - link "Docs" [ref=e21] [cursor=pointer]:
+        - /url: /docs
+        - img [ref=e22]
+        - text: Docs
+    - link "← Lobby" [ref=e26] [cursor=pointer]:
+      - /url: http://localhost:8081
+  - main [ref=e27]:
+    - generic [ref=e28]:
+      - generic [ref=e29]:
+        - heading "Deploys" [level=1] [ref=e30]
+        - paragraph [ref=e31]:
+          - text: Actividad de CI/CD y ramas en
+          - link "Jairogelpi/odoo19_sh_imitation" [ref=e32] [cursor=pointer]:
+            - /url: https://github.com/Jairogelpi/odoo19_sh_imitation
+            - code [ref=e33]: Jairogelpi/odoo19_sh_imitation
+          - text: .
+      - generic [ref=e34]:
+        - generic [ref=e35]:
+          - generic [ref=e36]: Ramas
+          - generic [ref=e37]: "1"
+        - generic [ref=e38]:
+          - generic [ref=e39]: PRs abiertos
+          - generic [ref=e40]: "0"
+        - generic [ref=e41]:
+          - generic [ref=e42]: Runs
+          - generic [ref=e43]: "10"
+    - generic [ref=e44]:
+      - generic [ref=e45]:
+        - heading "Deploy por rama" [level=2] [ref=e46]
+        - button "Disparar workflow" [ref=e47] [cursor=pointer]
+      - paragraph [ref=e48]:
+        - text: Selecciona un workflow y una rama para disparar un
+        - code [ref=e49]: workflow_dispatch
+        - text: en GitHub Actions.
+    - generic [ref=e50]:
+      - generic [ref=e51]:
+        - heading "Workflow runs" [level=2] [ref=e52]
+        - link "Ver en GitHub ↗" [ref=e53] [cursor=pointer]:
+          - /url: https://github.com/Jairogelpi/odoo19_sh_imitation/actions
+      - table [ref=e55]:
+        - rowgroup [ref=e56]:
+          - row "Workflow Rama Evento Autor Estado Commit Creado Duración" [ref=e57]:
+            - columnheader "Workflow" [ref=e58]
+            - columnheader "Rama" [ref=e59]
+            - columnheader "Evento" [ref=e60]
+            - columnheader "Autor" [ref=e61]
+            - columnheader "Estado" [ref=e62]
+            - columnheader "Commit" [ref=e63]
+            - columnheader "Creado" [ref=e64]
+            - columnheader "Duración" [ref=e65]
+        - rowgroup [ref=e66]:
+          - row ".github/workflows/platform-ci.yml main push Jairogelpi failure 67ec97e 2026-04-16 13:01 —" [ref=e67]:
+            - cell ".github/workflows/platform-ci.yml" [ref=e68]:
+              - link ".github/workflows/platform-ci.yml" [ref=e69] [cursor=pointer]:
+                - /url: https://github.com/Jairogelpi/odoo19_sh_imitation/actions/runs/24511677770
+            - cell "main" [ref=e70]:
+              - generic [ref=e71]: main
+            - cell "push" [ref=e72]
+            - cell "Jairogelpi" [ref=e73]
+            - cell "failure" [ref=e74]:
+              - generic [ref=e75]: failure
+            - cell "67ec97e" [ref=e76]
+            - cell "2026-04-16 13:01" [ref=e77]
+            - cell "—" [ref=e78]
+          - row ".github/workflows/platform-ci.yml main push Jairogelpi failure e1a9c1d 2026-04-15 21:54 —" [ref=e79]:
+            - cell ".github/workflows/platform-ci.yml" [ref=e80]:
+              - link ".github/workflows/platform-ci.yml" [ref=e81] [cursor=pointer]:
+                - /url: https://github.com/Jairogelpi/odoo19_sh_imitation/actions/runs/24480391883
+            - cell "main" [ref=e82]:
+              - generic [ref=e83]: main
+            - cell "push" [ref=e84]
+            - cell "Jairogelpi" [ref=e85]
+            - cell "failure" [ref=e86]:
+              - generic [ref=e87]: failure
+            - cell "e1a9c1d" [ref=e88]
+            - cell "2026-04-15 21:54" [ref=e89]
+            - cell "—" [ref=e90]
+          - row ".github/workflows/platform-ci.yml main push Jairogelpi failure 021b4bb 2026-04-15 21:46 —" [ref=e91]:
+            - cell ".github/workflows/platform-ci.yml" [ref=e92]:
+              - link ".github/workflows/platform-ci.yml" [ref=e93] [cursor=pointer]:
+                - /url: https://github.com/Jairogelpi/odoo19_sh_imitation/actions/runs/24480066803
+            - cell "main" [ref=e94]:
+              - generic [ref=e95]: main
+            - cell "push" [ref=e96]
+            - cell "Jairogelpi" [ref=e97]
+            - cell "failure" [ref=e98]:
+              - generic [ref=e99]: failure
+            - cell "021b4bb" [ref=e100]
+            - cell "2026-04-15 21:46" [ref=e101]
+            - cell "—" [ref=e102]
+          - row ".github/workflows/platform-ci.yml main push Jairogelpi failure e792085 2026-04-15 21:29 —" [ref=e103]:
+            - cell ".github/workflows/platform-ci.yml" [ref=e104]:
+              - link ".github/workflows/platform-ci.yml" [ref=e105] [cursor=pointer]:
+                - /url: https://github.com/Jairogelpi/odoo19_sh_imitation/actions/runs/24479356275
+            - cell "main" [ref=e106]:
+              - generic [ref=e107]: main
+            - cell "push" [ref=e108]
+            - cell "Jairogelpi" [ref=e109]
+            - cell "failure" [ref=e110]:
+              - generic [ref=e111]: failure
+            - cell "e792085" [ref=e112]
+            - cell "2026-04-15 21:29" [ref=e113]
+            - cell "—" [ref=e114]
+          - row ".github/workflows/platform-ci.yml main push Jairogelpi failure e425ed5 2026-04-15 21:15 —" [ref=e115]:
+            - cell ".github/workflows/platform-ci.yml" [ref=e116]:
+              - link ".github/workflows/platform-ci.yml" [ref=e117] [cursor=pointer]:
+                - /url: https://github.com/Jairogelpi/odoo19_sh_imitation/actions/runs/24478778082
+            - cell "main" [ref=e118]:
+              - generic [ref=e119]: main
+            - cell "push" [ref=e120]
+            - cell "Jairogelpi" [ref=e121]
+            - cell "failure" [ref=e122]:
+              - generic [ref=e123]: failure
+            - cell "e425ed5" [ref=e124]
+            - cell "2026-04-15 21:15" [ref=e125]
+            - cell "—" [ref=e126]
+          - row ".github/workflows/platform-ci.yml main push Jairogelpi failure c895a9c 2026-04-15 21:13 —" [ref=e127]:
+            - cell ".github/workflows/platform-ci.yml" [ref=e128]:
+              - link ".github/workflows/platform-ci.yml" [ref=e129] [cursor=pointer]:
+                - /url: https://github.com/Jairogelpi/odoo19_sh_imitation/actions/runs/24478718437
+            - cell "main" [ref=e130]:
+              - generic [ref=e131]: main
+            - cell "push" [ref=e132]
+            - cell "Jairogelpi" [ref=e133]
+            - cell "failure" [ref=e134]:
+              - generic [ref=e135]: failure
+            - cell "c895a9c" [ref=e136]
+            - cell "2026-04-15 21:13" [ref=e137]
+            - cell "—" [ref=e138]
+          - row ".github/workflows/platform-ci.yml main push Jairogelpi failure 1529316 2026-04-15 21:10 —" [ref=e139]:
+            - cell ".github/workflows/platform-ci.yml" [ref=e140]:
+              - link ".github/workflows/platform-ci.yml" [ref=e141] [cursor=pointer]:
+                - /url: https://github.com/Jairogelpi/odoo19_sh_imitation/actions/runs/24478591813
+            - cell "main" [ref=e142]:
+              - generic [ref=e143]: main
+            - cell "push" [ref=e144]
+            - cell "Jairogelpi" [ref=e145]
+            - cell "failure" [ref=e146]:
+              - generic [ref=e147]: failure
+            - cell "1529316" [ref=e148]
+            - cell "2026-04-15 21:10" [ref=e149]
+            - cell "—" [ref=e150]
+          - row ".github/workflows/platform-ci.yml main push Jairogelpi failure 60b24ea 2026-04-15 21:09 —" [ref=e151]:
+            - cell ".github/workflows/platform-ci.yml" [ref=e152]:
+              - link ".github/workflows/platform-ci.yml" [ref=e153] [cursor=pointer]:
+                - /url: https://github.com/Jairogelpi/odoo19_sh_imitation/actions/runs/24478525660
+            - cell "main" [ref=e154]:
+              - generic [ref=e155]: main
+            - cell "push" [ref=e156]
+            - cell "Jairogelpi" [ref=e157]
+            - cell "failure" [ref=e158]:
+              - generic [ref=e159]: failure
+            - cell "60b24ea" [ref=e160]
+            - cell "2026-04-15 21:09" [ref=e161]
+            - cell "—" [ref=e162]
+          - row ".github/workflows/platform-ci.yml main push Jairogelpi failure 16ee189 2026-04-15 21:01 —" [ref=e163]:
+            - cell ".github/workflows/platform-ci.yml" [ref=e164]:
+              - link ".github/workflows/platform-ci.yml" [ref=e165] [cursor=pointer]:
+                - /url: https://github.com/Jairogelpi/odoo19_sh_imitation/actions/runs/24478196071
+            - cell "main" [ref=e166]:
+              - generic [ref=e167]: main
+            - cell "push" [ref=e168]
+            - cell "Jairogelpi" [ref=e169]
+            - cell "failure" [ref=e170]:
+              - generic [ref=e171]: failure
+            - cell "16ee189" [ref=e172]
+            - cell "2026-04-15 21:01" [ref=e173]
+            - cell "—" [ref=e174]
+          - row ".github/workflows/platform-ci.yml main push Jairogelpi failure abea398 2026-04-15 20:54 —" [ref=e175]:
+            - cell ".github/workflows/platform-ci.yml" [ref=e176]:
+              - link ".github/workflows/platform-ci.yml" [ref=e177] [cursor=pointer]:
+                - /url: https://github.com/Jairogelpi/odoo19_sh_imitation/actions/runs/24477869263
+            - cell "main" [ref=e178]:
+              - generic [ref=e179]: main
+            - cell "push" [ref=e180]
+            - cell "Jairogelpi" [ref=e181]
+            - cell "failure" [ref=e182]:
+              - generic [ref=e183]: failure
+            - cell "abea398" [ref=e184]
+            - cell "2026-04-15 20:54" [ref=e185]
+            - cell "—" [ref=e186]
+    - generic [ref=e187]:
+      - generic [ref=e188]:
+        - generic [ref=e189]:
+          - heading "Ramas" [level=2] [ref=e190]
+          - link "Ver en GitHub ↗" [ref=e191] [cursor=pointer]:
+            - /url: https://github.com/Jairogelpi/odoo19_sh_imitation/branches
+        - list [ref=e192]:
+          - listitem [ref=e193]:
+            - strong [ref=e195]: main
+            - generic [ref=e196]:
+              - code [ref=e197]: 67ec97e
+              - text: · jairogelpi · 2026-04-16
+            - generic [ref=e198]: "feat: document stack and restore drills"
+      - generic [ref=e199]:
+        - generic [ref=e200]:
+          - heading "Pull requests abiertos" [level=2] [ref=e201]
+          - link "Ver en GitHub ↗" [ref=e202] [cursor=pointer]:
+            - /url: https://github.com/Jairogelpi/odoo19_sh_imitation/pulls
+        - generic [ref=e203]: Sin PRs abiertos.

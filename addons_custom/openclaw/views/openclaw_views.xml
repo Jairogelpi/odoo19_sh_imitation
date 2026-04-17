@@ -1,0 +1,163 @@
+<odoo>
+  <data>
+    <record id="view_openclaw_policy_tree" model="ir.ui.view">
+      <field name="name">openclaw.policy.tree</field>
+      <field name="model">openclaw.policy</field>
+      <field name="arch" type="xml">
+        <list>
+          <field name="sequence"/>
+          <field name="name"/>
+          <field name="key"/>
+          <field name="active"/>
+          <field name="allow_read_db"/>
+          <field name="allow_write_db"/>
+          <field name="allow_read_odoo"/>
+          <field name="allow_write_odoo"/>
+          <field name="allow_read_docs"/>
+          <field name="allow_write_docs"/>
+          <field name="allow_workspace_read"/>
+          <field name="allow_workspace_write"/>
+          <field name="allow_web_search"/>
+          <field name="allow_code_generation"/>
+          <field name="allow_shell_actions"/>
+          <field name="require_human_approval"/>
+        </list>
+      </field>
+    </record>
+
+    <record id="view_openclaw_policy_form" model="ir.ui.view">
+      <field name="name">openclaw.policy.form</field>
+      <field name="model">openclaw.policy</field>
+      <field name="arch" type="xml">
+        <form>
+          <sheet>
+            <group>
+              <group>
+                <field name="sequence"/>
+                <field name="name"/>
+                <field name="key"/>
+                <field name="active"/>
+                <field name="group_ids" widget="many2many_tags"/>
+                <field name="require_human_approval"/>
+              </group>
+              <group>
+                <field name="allow_read_db"/>
+                <field name="allow_write_db"/>
+                <field name="allow_read_odoo"/>
+                <field name="allow_write_odoo"/>
+                <field name="allow_read_docs"/>
+                <field name="allow_write_docs"/>
+                <field name="allow_workspace_read"/>
+                <field name="allow_workspace_write"/>
+                <field name="allow_web_search"/>
+                <field name="allow_code_generation"/>
+                <field name="allow_shell_actions"/>
+              </group>
+            </group>
+            <group>
+              <field name="tool_allowlist" placeholder="db.read"/>
+              <field name="description"/>
+              <field name="notes"/>
+            </group>
+          </sheet>
+        </form>
+      </field>
+    </record>
+
+    <record id="action_openclaw_policy" model="ir.actions.act_window">
+      <field name="name">OpenClaw Policies</field>
+      <field name="res_model">openclaw.policy</field>
+      <field name="view_mode">list,form</field>
+    </record>
+
+    <record id="view_openclaw_request_tree" model="ir.ui.view">
+      <field name="name">openclaw.request.tree</field>
+      <field name="model">openclaw.request</field>
+      <field name="arch" type="xml">
+        <list>
+          <field name="requested_at"/>
+          <field name="name"/>
+          <field name="state"/>
+          <field name="action_type"/>
+          <field name="custom_tool_name"/>
+          <field name="gateway_tool_name"/>
+          <field name="policy_id"/>
+          <field name="requested_by"/>
+          <field name="target_model"/>
+          <field name="target_ref"/>
+          <field name="submitted_at"/>
+          <field name="approved_by"/>
+          <field name="approved_at"/>
+          <field name="executed_at"/>
+          <field name="failed_at"/>
+        </list>
+      </field>
+    </record>
+
+    <record id="view_openclaw_request_form" model="ir.ui.view">
+      <field name="name">openclaw.request.form</field>
+      <field name="model">openclaw.request</field>
+      <field name="arch" type="xml">
+        <form>
+          <header>
+            <button name="action_submit" type="object" string="Submit" class="btn-primary" invisible="state != 'draft'"/>
+            <button name="action_approve" type="object" string="Approve" class="btn-primary" invisible="state != 'pending'"/>
+            <button name="action_execute" type="object" string="Execute via MCP" class="btn-primary" invisible="state != 'approved'"/>
+            <button name="action_reject" type="object" string="Reject" invisible="state != 'pending'"/>
+            <button name="action_mark_executed" type="object" string="Mark Executed" invisible="state != 'approved'"/>
+            <button name="action_mark_failed" type="object" string="Mark Failed" invisible="state not in ('pending', 'approved')"/>
+            <field name="state" widget="statusbar" statusbar_visible="draft,pending,approved,executed,rejected,failed"/>
+          </header>
+          <sheet>
+            <group>
+              <group>
+                <field name="name"/>
+                <field name="instruction" placeholder="Fill this contact with the latest company data and create a follow-up opportunity."/>
+                <field name="requested_by"/>
+                <field name="policy_id"/>
+                <field name="action_type"/>
+                <field name="custom_tool_name" placeholder="workspace.write_file"/>
+                <field name="target_model"/>
+                <field name="target_ref"/>
+              </group>
+              <group>
+                <field name="requested_at" readonly="1"/>
+                <field name="submitted_at" readonly="1"/>
+                <field name="approved_by" readonly="1"/>
+                <field name="approved_at" readonly="1"/>
+                <field name="executed_at" readonly="1"/>
+                <field name="failed_at" readonly="1"/>
+                <field name="approval_required" readonly="1"/>
+                <field name="gateway_tool_name" readonly="1"/>
+              </group>
+            </group>
+            <notebook>
+              <page string="Payload">
+                <field name="payload_json"/>
+                <field name="result_summary" readonly="1"/>
+                <field name="error_message" readonly="1"/>
+              </page>
+              <page string="Policy Snapshot">
+                <field name="tool_allowlist" readonly="1"/>
+                <field name="policy_snapshot_json" readonly="1"/>
+                <field name="decision_note"/>
+                <field name="gateway_response_json" readonly="1"/>
+              </page>
+            </notebook>
+          </sheet>
+        </form>
+      </field>
+    </record>
+
+    <record id="action_openclaw_request" model="ir.actions.act_window">
+      <field name="name">OpenClaw Requests</field>
+      <field name="res_model">openclaw.request</field>
+      <field name="view_mode">list,form</field>
+      <field name="context">{'default_name': 'New'}</field>
+    </record>
+
+    <menuitem id="menu_openclaw_root" name="OpenClaw" sequence="15" groups="openclaw.group_openclaw_user"/>
+    <menuitem id="menu_openclaw_requests" name="Requests" parent="menu_openclaw_root" action="action_openclaw_request" sequence="10"/>
+    <menuitem id="menu_openclaw_policies" name="Policies" parent="menu_openclaw_root" action="action_openclaw_policy" sequence="20" groups="openclaw.group_openclaw_admin"/>
+  </data>
+</odoo>

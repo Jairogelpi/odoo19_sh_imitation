@@ -54,6 +54,8 @@ graph TD
   end
 
   subgraph AdminLayer[Admin and Knowledge Layer]
+    Lobby[Homepage Lobby\nhttp://localhost:8081]
+    CtrlPlane[Control Plane\nhttp://localhost:8082]
     Portainer[Portainer\nhttps://localhost:9443]
     PgAdmin[pgAdmin\nhttp://localhost:8080]
     Obsidian[Obsidian\nhttp://localhost:3000\nhttps://localhost:3001]
@@ -74,6 +76,16 @@ graph TD
     Mailpit[Mailpit\n127.0.0.1:8025]
   end
 
+  Browser --> Lobby
+  Lobby --> Portainer
+  Lobby --> PgAdmin
+  Lobby --> Obsidian
+  Lobby --> Nginx
+  Lobby --> CtrlPlane
+  Lobby -. Docker socket .-> DockerHost
+  CtrlPlane -. Docker socket .-> DockerHost
+  CtrlPlane --> PgBackRest
+  Browser --> CtrlPlane
   Browser --> Portainer
   Browser --> PgAdmin
   Browser --> Obsidian
@@ -97,6 +109,8 @@ graph TD
   PgAdmin --- odoo_net
   Obsidian --- odoo_net
   Portainer --- odoo_net
+  Lobby --- odoo_net
+  CtrlPlane --- odoo_net
   Mailpit --- odoo_net
 ```
 
@@ -104,7 +118,7 @@ graph TD
 
 - edge: nginx is the browser entrypoint for Odoo
 - core runtime: db, redis, pgBackRest, and Odoo stay private on `odoo_net`
-- admin and support: pgAdmin, Portainer, Obsidian, and Mailpit stay optional and local or staging oriented
+- admin and support: Homepage lobby, pgAdmin, Portainer, Obsidian, and Mailpit stay optional and local or staging oriented
 - delivery and persistence: Git, GitHub Actions, GHCR, env files, and named volumes define repeatable deployment
 
 ## When to use this note
@@ -116,6 +130,8 @@ graph TD
 
 ## Recommended use
 
+- use the Homepage lobby at `http://localhost:8081` as the first click, it links to every other UI and shows live container status
+- expect Homepage web checks to come from inside Docker, not from host `localhost`; Nginx is monitored through `http://nginx/healthz`
 - use Portainer for container visibility and simple lifecycle actions
 - use pgAdmin for database inspection and emergency admin tasks
 - use Obsidian for documentation and operational notes
@@ -138,8 +154,11 @@ graph TD
 ## Related notes
 - [Odoo Brain](../00_Odoo_Brain.md)
 - [Platform](platform.md)
+- [Environment State Model](environment_state_model.md)
 - [Platform Bootstrap Status](platform_bootstrap_status.md)
 - [Delivery](delivery.md)
 - [Services](services.md)
 - [Portainer](portainer.md)
+- [Lobby](lobby.md)
+- [Control Plane](control_plane.md)
 - [Operations](operations.md)

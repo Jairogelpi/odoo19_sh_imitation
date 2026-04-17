@@ -1,0 +1,30 @@
+services:
+  nginx:
+    environment:
+      NGINX_TLS_MODE: acme
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - certbot-webroot:/var/www/certbot:ro
+      - certbot-certs:/etc/nginx/certs:ro
+
+  certbot:
+    image: certbot/certbot:latest
+    restart: unless-stopped
+    entrypoint: ["/bin/sh", "/opt/certbot-scripts/entrypoint.sh"]
+    environment:
+      CERTBOT_DOMAIN: ${SERVER_NAME:?SERVER_NAME required}
+      CERTBOT_EMAIL: ${CERTBOT_EMAIL:?CERTBOT_EMAIL required}
+      CERTBOT_RENEWAL_HOURS: ${CERTBOT_RENEWAL_HOURS:-12}
+      CERTBOT_EXTRA_ARGS: ${CERTBOT_EXTRA_ARGS:-}
+    volumes:
+      - ./certbot/scripts:/opt/certbot-scripts:ro
+      - certbot-webroot:/var/www/certbot
+      - certbot-certs:/etc/letsencrypt
+    networks:
+      - odoo_net
+
+volumes:
+  certbot-webroot:
+  certbot-certs:

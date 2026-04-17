@@ -22,6 +22,8 @@ Exposure model:
 - `pgadmin`: optional admin UI, published on `8080` only for local/admin access, not intended for public exposure
 - `obsidian`: optional knowledge workspace, published on `3000` and `3001` only for local/admin access
 - `portainer`: optional container manager, published on `9443` only for local/admin access
+- `homepage`: optional lobby dashboard, published on `8081` only for local/admin access
+- `control-plane`: optional operator console (backups restore, GitHub deploys, docs browser), published on `8082` only for local/admin access
 - `mailpit`: staging-only sink, published only on host loopback at `127.0.0.1:${STAGING_MAILPIT_UI_PORT:-8025}`
 
 Practical rule:
@@ -142,9 +144,11 @@ Purpose:
 
 Important details:
 
-- template lives at `nginx/conf.d/odoo.conf.template`
+- templates live at `nginx/templates/`
+- startup selector lives at `nginx/scripts/configure-template.sh`
+- exposes a static `/healthz` route for in-network monitoring by Homepage
 - serves dev through `8088`
-- serves `80/443` in staging and production overrides
+- serves `80/443` in staging and production overrides, with HTTP redirected to HTTPS once origin certs are mounted
 - carries websocket routing scaffold for Odoo
 - attaches to `odoo_net` so it can proxy to `odoo` by service name
 
@@ -191,7 +195,27 @@ Important details:
 - helps keep technical docs and operational notes close to the code
 - should remain optional and local/admin-oriented
 - should not be treated as part of the core runtime
+- is auth-gated, so Homepage should rely on Docker status rather than an HTTP site monitor
 - attaches to `odoo_net` so it is reachable on the same compose network as the other admin tools
+
+### `homepage`
+
+Purpose:
+
+- single lobby/landing page that links to every admin UI of the stack
+- shows live container status by reading the host Docker socket in read-only mode
+
+Important details:
+
+- image `ghcr.io/gethomepage/homepage:latest`
+- published on `8081` only for local/admin access
+- configuration lives in `homepage/config/` and is bind-mounted into the container
+- mounts `/var/run/docker.sock` read-only to drive the live status dots and CPU/RAM widgets
+- uses container-reachable site monitors such as `http://nginx/healthz`, `http://odoo:8069/web/login`, `http://pgadmin:80`, and `http://portainer:9000`
+- intentionally avoids `siteMonitor` for `obsidian` and `pgbackrest` because one is auth-gated and the other is CLI-only
+- respects `HOMEPAGE_ALLOWED_HOSTS` — must be extended if the lobby is exposed beyond `localhost`
+- has no built-in authentication; never expose publicly without a reverse proxy and auth in front
+- attaches to `odoo_net` for consistency with the rest of the admin tools
 
 ## Staging-only support service
 
@@ -229,6 +253,7 @@ Important details:
 - `pgadmin` is for database inspection and emergency administration
 - `obsidian` is for local documentation and operational notes in the `docs/` vault
 - `portainer` is for container lifecycle management, inspection, and log access
+- `homepage` is the lobby dashboard that links to every admin UI and shows live container status
 - `mailpit` is for safe staging email handling after restore neutralization
 
 Rule of thumb:
@@ -247,4 +272,5 @@ Rule of thumb:
 - [Stack Topology](../brain/stack_topology.md)
 - [Services](../brain/services.md)
 - [Portainer](../brain/portainer.md)
+- [Lobby](../brain/lobby.md)
 - [Operations](../brain/operations.md)

@@ -1,0 +1,22 @@
+---
+- Documentación:
+    - Brain:
+        - abbr: BR
+          href: http://localhost:8082/docs?path=00_Odoo_Brain.md
+          description: Entrada al cerebro Obsidian
+    - Arquitectura:
+        - abbr: AR
+          href: http://localhost:8082/docs?path=architecture
+          description: docs/architecture/*
+    - Runbooks:
+        - abbr: RB
+          href: http://localhost:8082/docs?path=runbooks
+          description: docs/runbooks/*
+    - Superpoderes:
+        - abbr: SP
+          href: http://localhost:8082/docs?path=superpowers
+          description: docs/superpowers/*
+    - Schema:
+        - abbr: SC
+          href: http://localhost:8082/docs?path=odoo19_schema
+          description: docs/odoo19_schema/*

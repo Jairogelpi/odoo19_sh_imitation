@@ -1,0 +1,273 @@
+- generic [active] [ref=e1]:
+  - generic [ref=e5]:
+    - generic [ref=e7]:
+      - generic [ref=e9]:
+        - generic [ref=e10]:
+          - img [ref=e11]
+          - generic [ref=e15]:
+            - generic [ref=e16]: "-"
+            - generic [ref=e17]: CPU
+        - generic [ref=e19]:
+          - img [ref=e20]
+          - generic [ref=e23]:
+            - generic [ref=e24]: "-"
+            - generic [ref=e25]: Libre
+        - generic [ref=e27]:
+          - img [ref=e28]
+          - generic [ref=e31]:
+            - generic [ref=e32]: "-"
+            - generic [ref=e33]: Libre
+      - generic [ref=e35]:
+        - generic [ref=e37]:
+          - combobox "Buscar…" [ref=e38]
+          - button "search.search" [disabled] [ref=e39]:
+            - img [ref=e40]
+            - generic [ref=e42]: search.search
+        - generic [ref=e45]: 16/4/26, 22:20
+    - generic [ref=e46]:
+      - generic [ref=e47]:
+        - button "Plataforma" [expanded] [ref=e48]:
+          - heading "Plataforma" [level=2] [ref=e49]
+          - img [ref=e50]
+        - list [ref=e54]:
+          - listitem [ref=e55]:
+            - generic [ref=e57]:
+              - link "odoo.png" [ref=e58] [cursor=pointer]:
+                - /url: http://localhost:8088
+                - img "logo" [ref=e59]
+              - link "Odoo ERP · acceso vía Nginx" [ref=e60] [cursor=pointer]:
+                - /url: http://localhost:8088
+                - generic [ref=e61]:
+                  - text: Odoo
+                  - paragraph [ref=e62]: ERP · acceso vía Nginx
+              - generic [ref=e63]:
+                - generic [ref=e64]:
+                  - generic "Estado HTTP No disponible" [ref=e65]
+                  - generic [ref=e67]: Site monitor status
+                - button "View container stats" [ref=e68] [cursor=pointer]:
+                  - generic "Desconocido" [ref=e69]
+                  - generic [ref=e71]: View container stats
+          - listitem [ref=e72]:
+            - generic [ref=e74]:
+              - link "mdi-bug-check-outline-#2563eb" [ref=e75] [cursor=pointer]:
+                - /url: http://localhost:8069
+              - link "Odoo directo Bypass de Nginx para debug" [ref=e77] [cursor=pointer]:
+                - /url: http://localhost:8069
+                - generic [ref=e78]:
+                  - text: Odoo directo
+                  - paragraph [ref=e79]: Bypass de Nginx para debug
+              - generic [ref=e80]:
+                - generic [ref=e81]:
+                  - generic "Estado HTTP No disponible" [ref=e82]
+                  - generic [ref=e84]: Site monitor status
+                - button "View container stats" [ref=e85] [cursor=pointer]:
+                  - generic "Desconocido" [ref=e86]
+                  - generic [ref=e88]: View container stats
+          - listitem [ref=e89]:
+            - generic [ref=e91]:
+              - link "nginx.png" [ref=e92] [cursor=pointer]:
+                - /url: http://localhost:8088
+                - img "logo" [ref=e93]
+              - link "Nginx Reverse proxy de la plataforma" [ref=e94] [cursor=pointer]:
+                - /url: http://localhost:8088
+                - generic [ref=e95]:
+                  - text: Nginx
+                  - paragraph [ref=e96]: Reverse proxy de la plataforma
+              - generic [ref=e97]:
+                - generic [ref=e98]:
+                  - generic "Estado HTTP No disponible" [ref=e99]
+                  - generic [ref=e101]: Site monitor status
+                - button "View container stats" [ref=e102] [cursor=pointer]:
+                  - generic "Desconocido" [ref=e103]
+                  - generic [ref=e105]: View container stats
+      - generic [ref=e106]:
+        - button "Operaciones" [expanded] [ref=e107]:
+          - heading "Operaciones" [level=2] [ref=e108]
+          - img [ref=e109]
+        - list [ref=e113]:
+          - listitem [ref=e114]:
+            - generic [ref=e116]:
+              - link "portainer.png" [ref=e117] [cursor=pointer]:
+                - /url: https://localhost:9443
+                - img "logo" [ref=e118]
+              - link "Portainer Gestión y logs de contenedores" [ref=e119] [cursor=pointer]:
+                - /url: https://localhost:9443
+                - generic [ref=e120]:
+                  - text: Portainer
+                  - paragraph [ref=e121]: Gestión y logs de contenedores
+              - generic [ref=e122]:
+                - generic [ref=e123]:
+                  - generic "Estado HTTP No disponible" [ref=e124]
+                  - generic [ref=e126]: Site monitor status
+                - button "View container stats" [ref=e127] [cursor=pointer]:
+                  - generic "Desconocido" [ref=e128]
+                  - generic [ref=e130]: View container stats
+          - listitem [ref=e131]:
+            - generic [ref=e133]:
+              - link "pgadmin.png" [ref=e134] [cursor=pointer]:
+                - /url: http://localhost:8080
+                - img "logo" [ref=e135]
+              - link "pgAdmin Cliente web PostgreSQL" [ref=e136] [cursor=pointer]:
+                - /url: http://localhost:8080
+                - generic [ref=e137]:
+                  - text: pgAdmin
+                  - paragraph [ref=e138]: Cliente web PostgreSQL
+              - generic [ref=e139]:
+                - generic [ref=e140]:
+                  - generic "Estado HTTP No disponible" [ref=e141]
+                  - generic [ref=e143]: Site monitor status
+                - button "View container stats" [ref=e144] [cursor=pointer]:
+                  - generic "Desconocido" [ref=e145]
+                  - generic [ref=e147]: View container stats
+          - listitem [ref=e148]:
+            - generic [ref=e150]:
+              - link "mdi-database-sync-outline-#2563eb" [ref=e151] [cursor=pointer]:
+                - /url: http://localhost:8082/backups
+              - link "pgBackRest Backups WAL + full · recuperar desde UI" [ref=e153] [cursor=pointer]:
+                - /url: http://localhost:8082/backups
+                - generic [ref=e154]:
+                  - text: pgBackRest
+                  - paragraph [ref=e155]: Backups WAL + full · recuperar desde UI
+              - generic [ref=e156]:
+                - generic [ref=e157]:
+                  - generic "Estado HTTP No disponible" [ref=e158]
+                  - generic [ref=e160]: Site monitor status
+                - button "View container stats" [ref=e161] [cursor=pointer]:
+                  - generic "Desconocido" [ref=e162]
+                  - generic [ref=e164]: View container stats
+      - generic [ref=e165]:
+        - button "Conocimiento" [expanded] [ref=e166]:
+          - heading "Conocimiento" [level=2] [ref=e167]
+          - img [ref=e168]
+        - list [ref=e172]:
+          - listitem [ref=e173]:
+            - generic [ref=e175]:
+              - link "obsidian.png" [ref=e176] [cursor=pointer]:
+                - /url: http://localhost:3000
+                - img "logo" [ref=e177]
+              - link "Obsidian Vault de runbooks y docs" [ref=e178] [cursor=pointer]:
+                - /url: http://localhost:3000
+                - generic [ref=e179]:
+                  - text: Obsidian
+                  - paragraph [ref=e180]: Vault de runbooks y docs
+              - button "View container stats" [ref=e182] [cursor=pointer]:
+                - generic "Desconocido" [ref=e183]
+                - generic [ref=e185]: View container stats
+          - listitem [ref=e186]:
+            - generic [ref=e188]:
+              - link "mdi-book-open-variant-#2563eb" [ref=e189] [cursor=pointer]:
+                - /url: http://localhost:3000
+              - link "Runbooks Operativa y despliegues" [ref=e191] [cursor=pointer]:
+                - /url: http://localhost:3000
+                - generic [ref=e192]:
+                  - text: Runbooks
+                  - paragraph [ref=e193]: Operativa y despliegues
+          - listitem [ref=e194]:
+            - generic [ref=e196]:
+              - link "mdi-sitemap-outline-#2563eb" [ref=e197] [cursor=pointer]:
+                - /url: http://localhost:3000
+              - link "Arquitectura Service map y bootstrap" [ref=e199] [cursor=pointer]:
+                - /url: http://localhost:3000
+                - generic [ref=e200]:
+                  - text: Arquitectura
+                  - paragraph [ref=e201]: Service map y bootstrap
+      - generic [ref=e202]:
+        - button "Documentación" [expanded] [ref=e203]:
+          - heading "Documentación" [level=2] [ref=e204]
+          - img [ref=e205]
+        - list [ref=e209]:
+          - listitem [ref=e210]:
+            - link "BR Brain Entrada al cerebro Obsidian" [ref=e211] [cursor=pointer]:
+              - /url: http://localhost:8082/docs?path=00_Odoo_Brain.md
+              - generic [ref=e212]:
+                - generic [ref=e213]: BR
+                - generic [ref=e214]:
+                  - generic [ref=e215]: Brain
+                  - generic [ref=e216]: Entrada al cerebro Obsidian
+          - listitem [ref=e217]:
+            - link "AR Arquitectura docs/architecture/*" [ref=e218] [cursor=pointer]:
+              - /url: http://localhost:8082/docs?path=architecture
+              - generic [ref=e219]:
+                - generic [ref=e220]: AR
+                - generic [ref=e221]:
+                  - generic [ref=e222]: Arquitectura
+                  - generic [ref=e223]: docs/architecture/*
+          - listitem [ref=e224]:
+            - link "RB Runbooks docs/runbooks/*" [ref=e225] [cursor=pointer]:
+              - /url: http://localhost:8082/docs?path=runbooks
+              - generic [ref=e226]:
+                - generic [ref=e227]: RB
+                - generic [ref=e228]:
+                  - generic [ref=e229]: Runbooks
+                  - generic [ref=e230]: docs/runbooks/*
+          - listitem [ref=e231]:
+            - link "SP Superpoderes docs/superpowers/*" [ref=e232] [cursor=pointer]:
+              - /url: http://localhost:8082/docs?path=superpowers
+              - generic [ref=e233]:
+                - generic [ref=e234]: SP
+                - generic [ref=e235]:
+                  - generic [ref=e236]: Superpoderes
+                  - generic [ref=e237]: docs/superpowers/*
+          - listitem [ref=e238]:
+            - link "SC Schema docs/odoo19_schema/*" [ref=e239] [cursor=pointer]:
+              - /url: http://localhost:8082/docs?path=odoo19_schema
+              - generic [ref=e240]:
+                - generic [ref=e241]: SC
+                - generic [ref=e242]:
+                  - generic [ref=e243]: Schema
+                  - generic [ref=e244]: docs/odoo19_schema/*
+    - generic [ref=e246]:
+      - button "Control plane" [expanded] [ref=e247]:
+        - heading "Control plane" [level=2] [ref=e248]
+        - img [ref=e249]
+      - list [ref=e253]:
+        - listitem [ref=e254]:
+          - generic [ref=e256]:
+            - link "mdi-backup-restore-#2563eb" [ref=e257] [cursor=pointer]:
+              - /url: http://localhost:8082/backups
+            - link "Backups Restaurar backups por entorno" [ref=e259] [cursor=pointer]:
+              - /url: http://localhost:8082/backups
+              - generic [ref=e260]:
+                - text: Backups
+                - paragraph [ref=e261]: Restaurar backups por entorno
+            - generic [ref=e262]:
+              - generic [ref=e263]:
+                - generic "Estado HTTP No disponible" [ref=e264]
+                - generic [ref=e266]: Site monitor status
+              - button "View container stats" [ref=e267] [cursor=pointer]:
+                - generic "Desconocido" [ref=e268]
+                - generic [ref=e270]: View container stats
+        - listitem [ref=e271]:
+          - generic [ref=e273]:
+            - link "mdi-source-branch-check-#2563eb" [ref=e274] [cursor=pointer]:
+              - /url: http://localhost:8082/deploys
+            - link "Deploys GitHub Actions · ramas · PRs" [ref=e276] [cursor=pointer]:
+              - /url: http://localhost:8082/deploys
+              - generic [ref=e277]:
+                - text: Deploys
+                - paragraph [ref=e278]: GitHub Actions · ramas · PRs
+            - generic [ref=e279]:
+              - generic [ref=e280]:
+                - generic "Estado HTTP No disponible" [ref=e281]
+                - generic [ref=e283]: Site monitor status
+              - button "View container stats" [ref=e284] [cursor=pointer]:
+                - generic "Desconocido" [ref=e285]
+                - generic [ref=e287]: View container stats
+        - listitem [ref=e288]:
+          - generic [ref=e290]:
+            - link "mdi-file-tree-outline-#2563eb" [ref=e291] [cursor=pointer]:
+              - /url: http://localhost:8082/docs
+            - link "Docs Navegador del vault de docs" [ref=e293] [cursor=pointer]:
+              - /url: http://localhost:8082/docs
+              - generic [ref=e294]:
+                - text: Docs
+                - paragraph [ref=e295]: Navegador del vault de docs
+            - generic [ref=e296]:
+              - generic [ref=e297]:
+                - generic "Estado HTTP No disponible" [ref=e298]
+                - generic [ref=e300]: Site monitor status
+              - button "View container stats" [ref=e301] [cursor=pointer]:
+                - generic "Desconocido" [ref=e302]
+                - generic [ref=e304]: View container stats
+    - img [ref=e308] [cursor=pointer]
+  - alert [ref=e311]

@@ -1,0 +1,7 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_openclaw_policy_user,openclaw.policy user,model_openclaw_policy,openclaw.group_openclaw_user,1,0,0,0
+access_openclaw_policy_operator,openclaw.policy operator,model_openclaw_policy,openclaw.group_openclaw_operator,1,0,0,0
+access_openclaw_policy_admin,openclaw.policy admin,model_openclaw_policy,openclaw.group_openclaw_admin,1,1,1,1
+access_openclaw_request_user,openclaw.request user,model_openclaw_request,openclaw.group_openclaw_user,1,1,1,0
+access_openclaw_request_operator,openclaw.request operator,model_openclaw_request,openclaw.group_openclaw_operator,1,1,1,0
+access_openclaw_request_admin,openclaw.request admin,model_openclaw_request,openclaw.group_openclaw_admin,1,1,1,1

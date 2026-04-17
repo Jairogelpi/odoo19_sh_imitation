@@ -8,6 +8,7 @@
 - Nginx
 - Staging-only `Mailpit`
 - Optional `pgAdmin`
+- Optional Homepage lobby
 - Optional Obsidian knowledge vault
 - Optional Portainer container-management UI
 
@@ -22,8 +23,10 @@
 - [Local development runbook](../runbooks/local-development.md)
 - [Environments and promotions](../runbooks/environments-and-promotions.md)
 - [Secrets and configuration](../runbooks/secrets-and-config.md)
+- [Runtime validation](../runbooks/runtime-validation.md)
 - [Deployment over SSH](../runbooks/deployment-over-ssh.md)
 - [Local health check script](../../ops/health/check-local-stack.ps1)
+- [Admin health check script](../../ops/health/check-admin-stack.ps1)
 - [Remote deploy script](../../ops/deploy/remote-deploy.sh)
 - [Portainer](portainer.md)
 - [Backup and restore runbook](../runbooks/backup-and-restore.md)
@@ -37,6 +40,7 @@
 - [rclone sync script](../../backup/scripts/offsite-sync-rclone.sh)
 
 ## Service ports
+- Homepage lobby: `8081`
 - Odoo direct dev: `8069`
 - Nginx dev: `8088`
 - pgAdmin admin: `8080`
@@ -48,7 +52,7 @@
 ## Default local credentials
 - PostgreSQL user: `odoo`
 - PostgreSQL password: `change_me`
-- Odoo database master password: `change_me`
+- Odoo database master password: currently `change_me` from `config/odoo*.conf`
 - pgAdmin email: `admin@example.com`
 - pgAdmin password: `change_me`
 - Obsidian user: `obsidian`
@@ -72,6 +76,7 @@
 - `docker compose -f compose.yaml -f compose.dev.yaml exec pgbackrest /scripts/check-db.sh`
 - `docker compose -f compose.yaml -f compose.dev.yaml exec pgbackrest /scripts/backup-db.sh`
 - `powershell -ExecutionPolicy Bypass -File .\ops\health\check-local-stack.ps1`
+- `powershell -ExecutionPolicy Bypass -File .\ops\health\check-admin-stack.ps1`
 - `bash ops/deploy/remote-deploy.sh`
 - `STAGING_ENV_FILE=/srv/odoo/env/staging.env bash ops/restore/restore-to-staging.sh <db_dump> <filestore_archive> <target_db>`
 - `OFFSITE_ENV_FILE=/srv/odoo/env/prod.env bash backup/scripts/run-offsite-backup.sh`
@@ -85,3 +90,4 @@
 - Production-shaped deploys now pull immutable GHCR images instead of relying on local builds on the server.
 - Restoring staging now includes automatic neutralization before the environment should be reopened.
 - Offsite replication now runs as an operational wrapper and does not require a permanent Docker service.
+- Homepage uses internal container routes for monitor checks and should not probe host `localhost` ports from inside the container.

@@ -1,0 +1,195 @@
+{% extends "base.html" %}
+{% block content %}
+<section class="hero">
+  <div>
+    <h1>Deploys</h1>
+    <p class="muted">
+      Actividad de CI/CD y ramas en
+      {% if repo_meta.html_url %}
+        <a href="{{ repo_meta.html_url }}" target="_blank" rel="noopener"><code>{{ repo }}</code></a>.
+      {% else %}
+        <code>{{ repo }}</code>.
+      {% endif %}
+    </p>
+  </div>
+  <div class="kpis">
+    <div class="kpi">
+      <span class="kpi-label">Ramas</span>
+      <span class="kpi-value">{{ branches|length }}</span>
+    </div>
+    <div class="kpi">
+      <span class="kpi-label">PRs abiertos</span>
+      <span class="kpi-value">{{ prs|length }}</span>
+    </div>
+    <div class="kpi">
+      <span class="kpi-label">Runs</span>
+      <span class="kpi-value">{{ runs|length }}</span>
+    </div>
+  </div>
+</section>
+
+{% for err in errors %}
+  <div class="alert alert-err">{{ err }}</div>
+{% endfor %}
+
+{% if request.query_params.get("msg") %}
+  <div class="alert {% if request.query_params.get('ok') == '1' %}alert-ok{% else %}alert-err{% endif %}">
+    {{ request.query_params.get("msg") }}
+  </div>
+{% endif %}
+
+{% if workflows and branches %}
+<section class="panel">
+  <div class="panel-head">
+    <h2>Deploy por rama</h2>
+    <button class="btn btn-primary" type="button" onclick="document.getElementById('dispatch-dialog').showModal()">
+      Disparar workflow
+    </button>
+  </div>
+  <p class="muted" style="padding:0 1.25rem .75rem">
+    Selecciona un workflow y una rama para disparar un <code>workflow_dispatch</code> en GitHub Actions.
+  </p>
+</section>
+{% endif %}
+
+<section class="panel">
+  <div class="panel-head">
+    <h2>Workflow runs</h2>
+    <a href="https://github.com/{{ repo }}/actions" target="_blank" rel="noopener" class="btn-ghost">Ver en GitHub ↗</a>
+  </div>
+  {% if runs %}
+  <div class="table-wrap">
+    <table class="table">
+      <thead>
+        <tr>
+          <th>Workflow</th>
+          <th>Rama</th>
+          <th>Evento</th>
+          <th>Autor</th>
+          <th>Estado</th>
+          <th>Commit</th>
+          <th>Creado</th>
+          <th class="num">Duración</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for r in runs %}
+        <tr>
+          <td><a href="{{ r.html_url }}" target="_blank" rel="noopener">{{ r.name }}</a></td>
+          <td><span class="chip chip-branch">{{ r.branch }}</span></td>
+          <td class="muted">{{ r.event }}</td>
+          <td class="muted">{{ r.actor }}</td>
+          <td><span class="badge badge-{{ r.badge }}">{{ r.badge }}</span></td>
+          <td class="mono small">{{ r.head_sha }}</td>
+          <td class="muted">{{ r.created_at.strftime("%Y-%m-%d %H:%M") }}</td>
+          <td class="num muted">
+            {% if r.duration_seconds %}{{ r.duration_seconds }}s{% else %}—{% endif %}
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+  {% else %}
+    <div class="empty muted">Sin runs aún.</div>
+  {% endif %}
+</section>
+
+<div class="split">
+  <section class="panel">
+    <div class="panel-head">
+      <h2>Ramas</h2>
+      <a href="https://github.com/{{ repo }}/branches" target="_blank" rel="noopener" class="btn-ghost">Ver en GitHub ↗</a>
+    </div>
+    {% if branches %}
+    <ul class="list">
+      {% for b in branches %}
+      <li>
+        <div>
+          <strong>{{ b.name }}</strong>
+          {% if b.protected %}<span class="chip chip-protected">protected</span>{% endif %}
+        </div>
+        <div class="muted small">
+          <code class="mono">{{ b.sha }}</code>
+          · {{ b.last_commit_author or "?" }}
+          {% if b.last_commit_date %}
+            · {{ b.last_commit_date.strftime("%Y-%m-%d") }}
+          {% endif %}
+        </div>
+        {% if b.last_commit_message %}
+          <div class="muted small">{{ b.last_commit_message }}</div>
+        {% endif %}
+      </li>
+      {% endfor %}
+    </ul>
+    {% else %}
+    <div class="empty muted">Sin ramas.</div>
+    {% endif %}
+  </section>
+
+  <section class="panel">
+    <div class="panel-head">
+      <h2>Pull requests abiertos</h2>
+      <a href="https://github.com/{{ repo }}/pulls" target="_blank" rel="noopener" class="btn-ghost">Ver en GitHub ↗</a>
+    </div>
+    {% if prs %}
+    <ul class="list">
+      {% for p in prs %}
+      <li>
+        <div>
+          <a href="{{ p.html_url }}" target="_blank" rel="noopener"><strong>#{{ p.number }} {{ p.title }}</strong></a>
+          {% if p.draft %}<span class="chip">draft</span>{% endif %}
+        </div>
+        <div class="muted small">
+          {{ p.author }} · <code class="mono">{{ p.head }}</code> → <code class="mono">{{ p.base }}</code>
+          · actualizado {{ p.updated_at.strftime("%Y-%m-%d") }}
+        </div>
+      </li>
+      {% endfor %}
+    </ul>
+    {% else %}
+    <div class="empty muted">Sin PRs abiertos.</div>
+    {% endif %}
+  </section>
+</div>
+
+<!-- dispatch modal -->
+{% if workflows and branches %}
+<dialog id="dispatch-dialog" class="dialog">
+  <form method="post" action="/deploys/dispatch">
+    <header class="dialog-head">
+      <h2>Disparar workflow</h2>
+      <button type="button" class="btn-ghost" onclick="document.getElementById('dispatch-dialog').close()" aria-label="Cerrar">✕</button>
+    </header>
+
+    <p class="muted">
+      Selecciona el workflow y la rama sobre la que se ejecutará.
+      Equivale al botón "Run workflow" de GitHub Actions.
+    </p>
+
+    <label class="field">
+      <span class="field-label">Workflow</span>
+      <select name="workflow_id" required>
+        {% for w in workflows %}
+        <option value="{{ w.id }}">{{ w.name }} ({{ w.path }})</option>
+        {% endfor %}
+      </select>
+    </label>
+
+    <label class="field">
+      <span class="field-label">Rama destino</span>
+      <select name="ref" required>
+        {% for b in branches %}
+        <option value="{{ b.name }}">{{ b.name }}</option>
+        {% endfor %}
+      </select>
+    </label>
+
+    <footer class="dialog-foot">
+      <button type="button" class="btn-ghost" onclick="document.getElementById('dispatch-dialog').close()">Cancelar</button>
+      <button type="submit" class="btn btn-primary">Ejecutar</button>
+    </footer>
+  </form>
+</dialog>
+{% endif %}
+{% endblock %}

@@ -1,0 +1,31 @@
+---
+title: Odoo19 · Lobby
+description: Centro de control de la plataforma
+headerStyle: clean
+language: es
+theme: light
+color: slate
+cardBlur: sm
+layout:
+  Plataforma:
+    style: row
+    columns: 3
+  Operaciones:
+    style: row
+    columns: 3
+  Conocimiento:
+    style: row
+    columns: 3
+  Documentación:
+    style: row
+    columns: 2
+  Externo:
+    style: row
+    columns: 3
+statusStyle: dot
+hideVersion: true
+disableCollapse: false
+fiveColumns: false
+fullWidth: false
+useEqualHeights: true
+target: _blank

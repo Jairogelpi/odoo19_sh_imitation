@@ -76,9 +76,11 @@ Staging-specific neutralization details live in:
 
 - `docs/runbooks/staging-neutralization.md`
 
-Current limitation:
+Current verification status:
 
-- the wrapper and neutralization flow are verified for compose validity and script syntax, but not yet exercised end-to-end against a real backup set from this workspace
+- the wrapper and neutralization flow are syntax-checked in CI and still validated for compose consistency
+- end-to-end restore drill against a real backup set is still pending
+- local runtime validation evidence lives in `docs/runbooks/runtime-validation.md`
 
 ## Next step
 
@@ -101,3 +103,4 @@ bash backup/scripts/run-offsite-backup.sh
 Details live in:
 
 - `docs/runbooks/offsite-backups.md`
+- `docs/runbooks/runtime-validation.md`

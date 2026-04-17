@@ -1,0 +1,142 @@
+---
+- Plataforma:
+    - Odoo:
+        icon: odoo.png
+        href: http://localhost:8088
+        description: ERP · acceso vía Nginx
+        server: my-docker
+        container: odoo19-odoo-1
+        siteMonitor: http://nginx/healthz
+    - Odoo directo:
+        icon: mdi-bug-check-outline-#2563eb
+        href: http://localhost:8069
+        description: Bypass de Nginx para debug
+        server: my-docker
+        container: odoo19-odoo-1
+        siteMonitor: http://odoo:8069/web/login
+    - Nginx:
+        icon: nginx.png
+        href: http://localhost:8088
+        description: Reverse proxy de la plataforma
+        server: my-docker
+        container: odoo19-nginx-1
+        siteMonitor: http://nginx/healthz
+
+- Operaciones:
+    - Portainer:
+        icon: portainer.png
+        href: https://localhost:9443
+        description: Gestión y logs de contenedores
+        server: my-docker
+        container: odoo19-portainer-1
+        siteMonitor: http://portainer:9000
+    - pgAdmin:
+        icon: pgadmin.png
+        href: http://localhost:8080
+        description: Cliente web PostgreSQL
+        server: my-docker
+        container: odoo19-pgadmin-1
+        siteMonitor: http://pgadmin:80
+    - pgBackRest:
+        icon: mdi-database-sync-outline-#2563eb
+        href: http://localhost:8082/backups
+        description: Backups WAL + full · recuperar desde UI
+        server: my-docker
+        container: odoo19-pgbackrest-1
+        siteMonitor: http://control-plane:8082/healthz
+
+- Control plane:
+    - Backups:
+        icon: mdi-backup-restore-#2563eb
+        href: http://localhost:8082/backups
+        description: Restaurar backups por entorno
+        server: my-docker
+        container: odoo19-control-plane-1
+        siteMonitor: http://control-plane:8082/healthz
+    - Deploys:
+        icon: mdi-source-branch-check-#2563eb
+        href: http://localhost:8082/deploys
+        description: GitHub Actions · ramas · PRs
+        server: my-docker
+        container: odoo19-control-plane-1
+        siteMonitor: http://control-plane:8082/healthz
+    - Tests:
+        icon: mdi-check-decagram-outline-#2563eb
+        href: http://localhost:8082/tests
+        description: Resultados CI por commit
+        server: my-docker
+        container: odoo19-control-plane-1
+        siteMonitor: http://control-plane:8082/healthz
+    - DB Manager:
+        icon: mdi-database-edit-outline-#2563eb
+        href: http://localhost:8082/db
+        description: Crear, duplicar y eliminar bases de datos
+        server: my-docker
+        container: odoo19-control-plane-1
+        siteMonitor: http://control-plane:8082/healthz
+    - Docs:
+        icon: mdi-file-tree-outline-#2563eb
+        href: http://localhost:8082/docs
+        description: Navegador del vault de docs
+        server: my-docker
+        container: odoo19-control-plane-1
+        siteMonitor: http://control-plane:8082/healthz
+
+- Monitoreo:
+    - Grafana:
+        icon: grafana.png
+        href: http://localhost:3002
+        description: Dashboards de CPU, RAM, red, disco
+        server: my-docker
+        container: odoo19-grafana-1
+        siteMonitor: http://grafana:3000/api/health
+    - Prometheus:
+        icon: mdi-database-clock-outline-#2563eb
+        href: http://localhost:3002
+        description: Métricas time-series
+        server: my-docker
+        container: odoo19-prometheus-1
+    - cAdvisor:
+        icon: mdi-chart-box-outline-#2563eb
+        href: http://localhost:3002
+        description: Métricas por contenedor
+        server: my-docker
+        container: odoo19-cadvisor-1
+
+- Desarrollo:
+    - Code Server:
+        icon: mdi-microsoft-visual-studio-code-#2563eb
+        href: http://localhost:8083
+        description: VS Code en el navegador · addons, config, docs
+        server: my-docker
+        container: odoo19-code-server-1
+        siteMonitor: http://code-server:8443
+    - Terminal Web:
+        icon: mdi-console-#2563eb
+        href: http://localhost:8085
+        description: Shell en el navegador
+        server: my-docker
+        container: odoo19-web-terminal-1
+    - Logs en vivo:
+        icon: mdi-text-box-search-outline-#2563eb
+        href: http://localhost:8084
+        description: Visor de logs Docker en tiempo real
+        server: my-docker
+        container: odoo19-dozzle-1
+        siteMonitor: http://dozzle:8080
+
+- Conocimiento:
+    - Obsidian:
+        icon: obsidian.png
+        href: http://localhost:3000
+        description: Vault de runbooks y docs
+        server: my-docker
+        container: odoo19-obsidian-1
+    - Runbooks:
+        icon: mdi-book-open-variant-#2563eb
+        href: http://localhost:3000
+        description: Operativa y despliegues
+    - Arquitectura:
+        icon: mdi-sitemap-outline-#2563eb
+        href: http://localhost:3000
+        description: Service map y bootstrap

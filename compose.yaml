@@ -84,6 +84,7 @@ services:
       - odoo-web-data:/var/lib/odoo
       - ./config:/etc/odoo:ro
       - ./addons:/mnt/extra-addons
+      - ./addons_custom:/mnt/custom-addons
     networks:
       - odoo_net
 
@@ -92,12 +93,15 @@ services:
     restart: unless-stopped
     depends_on:
       - odoo
+    entrypoint: ["/bin/sh", "/opt/odoo-nginx-scripts/start-nginx.sh"]
     environment:
       SERVER_NAME: ${SERVER_NAME:-_}
       ODOO_UPSTREAM: odoo:8069
       WEBSOCKET_UPSTREAM: odoo:8072
+      NGINX_TLS_MODE: ${NGINX_TLS_MODE:-disabled}
     volumes:
-      - ./nginx/conf.d/odoo.conf.template:/etc/nginx/templates/default.conf.template:ro
+      - ./nginx/templates:/opt/odoo-nginx-templates:ro
+      - ./nginx/scripts:/opt/odoo-nginx-scripts:ro
     networks:
       - odoo_net
 

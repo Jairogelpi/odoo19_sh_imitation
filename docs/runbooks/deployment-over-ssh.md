@@ -74,6 +74,13 @@ cp /srv/odoo/odoo19_sh_imitation/.env.prod.example /srv/odoo/env/prod.env
 
 The deploy workflow does not write secrets into the repository. It expects the real env file to already exist on the server.
 
+## Addon promotion model
+
+- `addons/` and `addons_custom/` are promoted through Git with the rest of the repository
+- the remote host receives addon changes through `git pull` during deploy
+- no manual addon copy step should happen on the VPS host
+- once deployed, Odoo sees both mounted addon trees automatically
+
 ## Remote deploy script
 
 The server-side entrypoint is:
@@ -107,6 +114,15 @@ ODOO_IMAGE=ghcr.io/owner/odoo19-odoo:<sha> \
 bash /srv/odoo/odoo19_sh_imitation/ops/deploy/remote-deploy.sh
 ```
 
-## Current limitation
+## Current verification status
 
-The workflow and script are implemented, but a full remote deploy has not yet been exercised from this workspace because no real target host or GitHub environment secrets are available here.
+The workflow and remote deploy wrapper are syntax-checked in CI, and the workflow continues to validate compose plus image builds on every run.
+
+Reference validation scope:
+
+- `docs/runbooks/runtime-validation.md`
+
+What is still missing:
+
+- live deploy to a real target host is still pending
+- post-deploy verification against a real environment is still pending

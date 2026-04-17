@@ -1,0 +1,104 @@
+<odoo>
+  <data noupdate="1">
+    <record id="policy_read_only" model="openclaw.policy">
+      <field name="name">Read Only Analyst</field>
+      <field name="key">read_only</field>
+      <field name="sequence">10</field>
+      <field name="group_ids" eval="[(6, 0, [ref('openclaw.group_openclaw_user')])]"/>
+      <field name="tool_allowlist"><![CDATA[
+db.read
+odoo.read
+docs.read
+web.search
+    workspace.read_file
+    workspace.list_tree
+    workspace.search
+      ]]></field>
+      <field name="allow_read_db" eval="True"/>
+      <field name="allow_write_db" eval="False"/>
+      <field name="allow_read_odoo" eval="True"/>
+      <field name="allow_write_odoo" eval="False"/>
+      <field name="allow_read_docs" eval="True"/>
+      <field name="allow_write_docs" eval="False"/>
+      <field name="allow_workspace_read" eval="True"/>
+      <field name="allow_workspace_write" eval="False"/>
+      <field name="allow_web_search" eval="True"/>
+      <field name="allow_code_generation" eval="False"/>
+      <field name="allow_shell_actions" eval="False"/>
+      <field name="require_human_approval" eval="False"/>
+      <field name="description">Read-only access for inspection, lookup, and search tasks.</field>
+    </record>
+
+    <record id="policy_operator" model="openclaw.policy">
+      <field name="name">Operator</field>
+      <field name="key">operator</field>
+      <field name="sequence">20</field>
+      <field name="group_ids" eval="[(6, 0, [ref('openclaw.group_openclaw_operator')])]"/>
+      <field name="tool_allowlist"><![CDATA[
+db.read
+odoo.read
+odoo.write
+crm.write
+calendar.write
+docs.read
+    workspace.read_file
+    workspace.list_tree
+    workspace.search
+web.search
+      ]]></field>
+      <field name="allow_read_db" eval="True"/>
+      <field name="allow_write_db" eval="False"/>
+      <field name="allow_read_odoo" eval="True"/>
+      <field name="allow_write_odoo" eval="True"/>
+      <field name="allow_read_docs" eval="True"/>
+      <field name="allow_write_docs" eval="False"/>
+      <field name="allow_workspace_read" eval="True"/>
+      <field name="allow_workspace_write" eval="False"/>
+      <field name="allow_web_search" eval="True"/>
+      <field name="allow_code_generation" eval="False"/>
+      <field name="allow_shell_actions" eval="False"/>
+      <field name="require_human_approval" eval="True"/>
+      <field name="description">Operational access for CRM, calendar, and safe write actions in Odoo.</field>
+    </record>
+
+    <record id="policy_admin" model="openclaw.policy">
+      <field name="name">Admin</field>
+      <field name="key">admin</field>
+      <field name="sequence">30</field>
+      <field name="group_ids" eval="[(6, 0, [ref('openclaw.group_openclaw_admin')])]"/>
+      <field name="tool_allowlist"><![CDATA[
+db.read
+db.write
+odoo.read
+odoo.write
+crm.write
+calendar.write
+docs.read
+docs.write
+    docs.write_markdown
+    workspace.read_file
+    workspace.write_file
+    workspace.list_tree
+    workspace.search
+web.search
+code.generate
+repo.patch
+shell.execute
+mcp.tools.manage
+      ]]></field>
+      <field name="allow_read_db" eval="True"/>
+      <field name="allow_write_db" eval="True"/>
+      <field name="allow_read_odoo" eval="True"/>
+      <field name="allow_write_odoo" eval="True"/>
+      <field name="allow_read_docs" eval="True"/>
+      <field name="allow_write_docs" eval="True"/>
+      <field name="allow_workspace_read" eval="True"/>
+      <field name="allow_workspace_write" eval="True"/>
+      <field name="allow_web_search" eval="True"/>
+      <field name="allow_code_generation" eval="True"/>
+      <field name="allow_shell_actions" eval="True"/>
+      <field name="require_human_approval" eval="True"/>
+      <field name="description">Administrative access for module design, code generation, and high-risk operations.</field>
+    </record>
+  </data>
+</odoo>

@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+{% block content %}
+<section class="hero">
+  <div>
+    <h1>Docs</h1>
+    <p class="muted">
+      Navegador del repositorio de documentación (<code>docs/</code>). Click en cualquier archivo para renderizar el markdown.
+    </p>
+  </div>
+</section>
+
+{% if error %}
+  <div class="alert alert-err">{{ error }}</div>
+{% endif %}
+
+<div class="split-docs">
+  <aside class="tree">
+    {% macro render_node(node) -%}
+      {% if node.is_dir %}
+        <details {% if active_path.startswith(node.rel_path) or not node.rel_path %}open{% endif %}>
+          <summary><span class="tree-folder">{{ node.name }}</span></summary>
+          <div class="tree-children">
+            {% for child in node.children %}
+              {{ render_node(child) }}
+            {% endfor %}
+          </div>
+        </details>
+      {% else %}
+        <a href="/docs?path={{ node.rel_path }}"
+           class="tree-file {% if node.rel_path == active_path %}tree-file-active{% endif %}">
+          {{ node.name }}
+        </a>
+      {% endif %}
+    {%- endmacro %}
+    {{ render_node(tree) }}
+  </aside>
+
+  <article class="markdown">
+    {% if rendered_html %}
+      <div class="doc-crumb"><code class="mono">docs/{{ active_path }}</code></div>
+      {{ rendered_html|safe }}
+    {% else %}
+      <div class="empty">
+        <p class="muted">Selecciona un archivo del árbol para previsualizarlo.</p>
+      </div>
+    {% endif %}
+  </article>
+</div>
+{% endblock %}

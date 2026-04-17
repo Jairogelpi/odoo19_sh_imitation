@@ -1,0 +1,7 @@
+- generic [ref=e1]:
+  - link [ref=e3] [cursor=pointer]:
+    - /url: "#"
+    - img [ref=e4]
+  - generic [ref=e9]:
+    - generic:
+      - textbox "Terminal input" [active]

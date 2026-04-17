@@ -11,6 +11,12 @@ on:
       - main
       - staging
       - develop
+  workflow_dispatch:
+    inputs:
+      update_modules:
+        description: "Comma-separated list of addons to -u (leave empty to auto-detect from diff)"
+        required: false
+        default: ""
 
 permissions:
   contents: read
@@ -39,6 +45,41 @@ jobs:
 
       - name: Validate production compose config
         run: docker compose -f compose.yaml -f compose.prod.yaml config
+
+      - name: Shell syntax check critical scripts
+        run: |
+          bash -n ops/deploy/remote-deploy.sh
+          bash -n ops/restore/restore-to-staging.sh
+          bash -n backup/scripts/backup-filestore.sh
+          bash -n backup/scripts/export-odoo-filestore.sh
+          bash -n backup/scripts/export-pgbackrest-repo.sh
+          bash -n backup/scripts/offsite-sync-rclone.sh
+          bash -n backup/scripts/run-offsite-backup.sh
+          bash -n pgbackrest/scripts/backup-db.sh
+          bash -n pgbackrest/scripts/check-db.sh
+          bash -n pgbackrest/scripts/stanza-create.sh
+          bash -n nginx/scripts/configure-template.sh
+          bash -n nginx/scripts/start-nginx.sh
+
+      - name: PowerShell syntax check health scripts
+        shell: pwsh
+        run: |
+          $errors = $null
+          [void][System.Management.Automation.Language.Parser]::ParseFile("$PWD/ops/health/check-local-stack.ps1", [ref]$null, [ref]$errors)
+          if ($errors.Count -gt 0) {
+            $errors | ForEach-Object { Write-Error $_ }
+            exit 1
+          }
+
+          $errors = $null
+          [void][System.Management.Automation.Language.Parser]::ParseFile("$PWD/ops/health/check-admin-stack.ps1", [ref]$null, [ref]$errors)
+          if ($errors.Count -gt 0) {
+            $errors | ForEach-Object { Write-Error $_ }
+            exit 1
+          }
+
+      - name: Run scaffold contract tests
+        run: python -m unittest discover -s tests -p 'test_*.py' -v
 
       - name: Build PostgreSQL image
         run: docker build -t odoo19-db:test -f postgres_image/Dockerfile .
@@ -104,21 +145,13 @@ jobs:
           cache-to: type=gha,mode=max,scope=${{ matrix.image_name }}
 
   deploy:
-    if: github.event_name == 'push' && github.ref_name == matrix.branch
+    if: github.event_name == 'push'
     runs-on: ubuntu-latest
     needs: publish_images
-
-    strategy:
-      matrix:
-        include:
-          - branch: develop
-            environment: dev
-          - branch: staging
-            environment: staging
-          - branch: main
-            environment: prod
-
-    environment: ${{ matrix.environment }}
+    environment: ${{ github.ref_name == 'main' && 'prod' || github.ref_name == 'staging' && 'staging' || 'dev' }}
+    env:
+      TARGET_ENV: ${{ github.ref_name == 'main' && 'prod' || github.ref_name == 'staging' && 'staging' || 'dev' }}
+      DEPLOY_BRANCH: ${{ github.ref_name }}
 
     steps:
       - name: Start SSH agent
@@ -140,8 +173,6 @@ jobs:
         shell: bash
         env:
           IMAGE_OWNER: ${{ github.repository_owner }}
-          TARGET_ENV: ${{ matrix.environment }}
-          DEPLOY_BRANCH: ${{ matrix.branch }}
           DEPLOY_HOST: ${{ secrets.DEPLOY_HOST }}
           DEPLOY_PORT: ${{ secrets.DEPLOY_PORT }}
           DEPLOY_USER: ${{ secrets.DEPLOY_USER }}
@@ -158,6 +189,43 @@ jobs:
 
           ssh -p "${deploy_port}" "${DEPLOY_USER}@${DEPLOY_HOST}" \
             "TARGET_ENV='${TARGET_ENV}' DEPLOY_BRANCH='${DEPLOY_BRANCH}' APP_DIR='${DEPLOY_APP_DIR}' ENV_FILE='${DEPLOY_ENV_FILE}' GHCR_PULL_USERNAME='${GHCR_PULL_USERNAME}' GHCR_PULL_TOKEN='${GHCR_PULL_TOKEN}' ODOO_IMAGE='${odoo_image}' POSTGRES_IMAGE='${postgres_image}' PGBACKREST_IMAGE='${pgbackrest_image}' bash '${DEPLOY_APP_DIR}/ops/deploy/remote-deploy.sh'"
+
+      - name: Detect changed addons
+        id: changed
+        shell: bash
+        run: |
+          manual="${{ github.event.inputs.update_modules || '' }}"
+          if [ -n "${manual}" ]; then
+            echo "modules=${manual}" >> "$GITHUB_OUTPUT"
+            echo "Using manually specified modules: ${manual}"
+            exit 0
+          fi
+
+          changed=$(git diff --name-only HEAD~1 HEAD -- addons/ 2>/dev/null \
+            | sed -n 's|^addons/\([^/]*\)/.*|\1|p' \
+            | sort -u \
+            | paste -sd, -)
+          echo "modules=${changed}" >> "$GITHUB_OUTPUT"
+          if [ -n "${changed}" ]; then
+            echo "Auto-detected changed addons: ${changed}"
+          else
+            echo "No addons changed in this commit."
+          fi
+
+      - name: Update changed modules on remote
+        if: steps.changed.outputs.modules != ''
+        shell: bash
+        env:
+          DEPLOY_HOST: ${{ secrets.DEPLOY_HOST }}
+          DEPLOY_PORT: ${{ secrets.DEPLOY_PORT }}
+          DEPLOY_USER: ${{ secrets.DEPLOY_USER }}
+          DEPLOY_APP_DIR: ${{ secrets.DEPLOY_APP_DIR }}
+          MODULES: ${{ steps.changed.outputs.modules }}
+        run: |
+          deploy_port="${DEPLOY_PORT:-22}"
+          echo "Updating modules: ${MODULES}"
+          ssh -p "${deploy_port}" "${DEPLOY_USER}@${DEPLOY_HOST}" \
+            "cd '${DEPLOY_APP_DIR}' && docker compose exec -T odoo odoo -u ${MODULES} -d \$(grep POSTGRES_DB .env | cut -d= -f2) --stop-after-init"
 
       - name: Verify deploy health endpoint
         shell: bash

@@ -1,0 +1,176 @@
+- generic [active] [ref=e1]:
+  - banner [ref=e2]:
+    - generic [ref=e3]:
+      - link "Odoo19" [ref=e4] [cursor=pointer]:
+        - /url: /
+        - generic [ref=e6]: Odoo19
+      - generic [ref=e7]: dev
+    - navigation [ref=e8]:
+      - link "Backups" [ref=e9] [cursor=pointer]:
+        - /url: /backups
+        - img [ref=e10]
+        - text: Backups
+      - link "Deploys" [ref=e14] [cursor=pointer]:
+        - /url: /deploys
+        - img [ref=e15]
+        - text: Deploys
+      - link "Docs" [ref=e20] [cursor=pointer]:
+        - /url: /docs
+        - img [ref=e21]
+        - text: Docs
+    - link "← Lobby" [ref=e25] [cursor=pointer]:
+      - /url: http://localhost:8081
+  - main [ref=e26]:
+    - generic [ref=e28]:
+      - heading "Docs" [level=1] [ref=e29]
+      - paragraph [ref=e30]:
+        - text: Navegador del repositorio de documentación (
+        - code [ref=e31]: docs/
+        - text: ). Click en cualquier archivo para renderizar el markdown.
+    - generic [ref=e32]:
+      - complementary [ref=e33]:
+        - group [ref=e34]:
+          - generic "▸ docs" [ref=e35] [cursor=pointer]
+          - generic [ref=e36]:
+            - group [ref=e37]:
+              - generic "▸ architecture" [ref=e38] [cursor=pointer]
+            - group [ref=e39]:
+              - generic "▸ brain" [ref=e40] [cursor=pointer]
+            - group [ref=e41]:
+              - generic "▸ odoo19_schema" [ref=e42] [cursor=pointer]
+            - group [ref=e43]:
+              - generic "▸ runbooks" [ref=e44] [cursor=pointer]
+            - group [ref=e45]:
+              - generic "▸ superpowers" [ref=e46] [cursor=pointer]
+              - text: ▸ ▸
+            - link "00_Odoo_Brain.md" [ref=e47] [cursor=pointer]:
+              - /url: /docs?path=00_Odoo_Brain.md
+      - article [ref=e48]:
+        - code [ref=e50]: docs/00_Odoo_Brain.md
+        - heading "Odoo Brain" [level=1] [ref=e51]
+        - paragraph [ref=e52]: This vault organizes the Odoo 19 documentation as an Obsidian-style knowledge graph.
+        - heading "Start here" [level=2] [ref=e53]
+        - list [ref=e54]:
+          - listitem [ref=e55]:
+            - link "Architecture Overview" [ref=e56] [cursor=pointer]:
+              - /url: brain/architecture_overview.md
+          - listitem [ref=e57]:
+            - link "Platform" [ref=e58] [cursor=pointer]:
+              - /url: brain/platform.md
+          - listitem [ref=e59]:
+            - link "Delivery" [ref=e60] [cursor=pointer]:
+              - /url: brain/delivery.md
+          - listitem [ref=e61]:
+            - link "Stack Topology" [ref=e62] [cursor=pointer]:
+              - /url: brain/stack_topology.md
+          - listitem [ref=e63]:
+            - link "Future Control Plane" [ref=e64] [cursor=pointer]:
+              - /url: brain/future_control_plane.md
+        - heading "Entry points" [level=2] [ref=e65]
+        - list [ref=e66]:
+          - listitem [ref=e67]:
+            - link "Architecture Overview" [ref=e68] [cursor=pointer]:
+              - /url: brain/architecture_overview.md
+          - listitem [ref=e69]:
+            - link "Platform" [ref=e70] [cursor=pointer]:
+              - /url: brain/platform.md
+          - listitem [ref=e71]:
+            - link "Platform Bootstrap Status" [ref=e72] [cursor=pointer]:
+              - /url: brain/platform_bootstrap_status.md
+          - listitem [ref=e73]:
+            - link "Delivery" [ref=e74] [cursor=pointer]:
+              - /url: brain/delivery.md
+          - listitem [ref=e75]:
+            - link "Stack Topology" [ref=e76] [cursor=pointer]:
+              - /url: brain/stack_topology.md
+          - listitem [ref=e77]:
+            - link "Future Control Plane" [ref=e78] [cursor=pointer]:
+              - /url: brain/future_control_plane.md
+          - listitem [ref=e79]:
+            - link "Portainer" [ref=e80] [cursor=pointer]:
+              - /url: brain/portainer.md
+          - listitem [ref=e81]:
+            - link "Portainer Workflow" [ref=e82] [cursor=pointer]:
+              - /url: brain/portainer_workflow.md
+          - listitem [ref=e83]:
+            - link "Lobby" [ref=e84] [cursor=pointer]:
+              - /url: brain/lobby.md
+          - listitem [ref=e85]:
+            - link "Daily Checklist" [ref=e86] [cursor=pointer]:
+              - /url: brain/daily_checklist.md
+          - listitem [ref=e87]:
+            - link "Services" [ref=e88] [cursor=pointer]:
+              - /url: brain/services.md
+          - listitem [ref=e89]:
+            - link "Base" [ref=e90] [cursor=pointer]:
+              - /url: brain/base.md
+          - listitem [ref=e91]:
+            - link "CRM" [ref=e92] [cursor=pointer]:
+              - /url: brain/crm.md
+          - listitem [ref=e93]:
+            - link "Schema Atlas" [ref=e94] [cursor=pointer]:
+              - /url: brain/schema.md
+          - listitem [ref=e95]:
+            - link "Operations" [ref=e96] [cursor=pointer]:
+              - /url: brain/operations.md
+        - heading "Graph" [level=2] [ref=e97]
+        - code [ref=e100]: graph TD Home[Odoo Brain] --> Platform[Platform] Home --> Bootstrap[Platform Bootstrap Status] Home --> Checklist[Daily Checklist] Home --> Portainer[Portainer] Home --> PortainerWorkflow[Portainer Workflow] Home --> Lobby[Lobby] Home --> ArchitectureOverview[Architecture Overview] Home --> Topology[Stack Topology] Home --> Services[Services] Home --> Delivery[Delivery] Home --> Base[Base] Home --> CRM[CRM] Home --> Schema[Schema Atlas] Home --> Ops[Operations] Platform --> Bootstrap Platform --> Services Platform --> Checklist Platform --> Portainer Platform --> PortainerWorkflow Platform --> ArchitectureOverview Platform --> Topology Bootstrap --> Delivery Bootstrap --> Ops Base --> BaseDoc[base_module.md] Base --> Compare[base_vs_crm.md] CRM --> CRMDoc[crm_module.md] CRM --> Compare Schema --> Catalog[deduplicated_tables.md] Schema --> ERD[erd.md] Schema --> Readme[README.md] Ops --> Compose[compose.yaml] Ops --> Env[.env.example]
+        - heading "How to use this brain" [level=2] [ref=e101]
+        - list [ref=e102]:
+          - listitem [ref=e103]:
+            - text: Open the vault from the
+            - code [ref=e104]: docs/
+            - text: directory in Obsidian.
+          - listitem [ref=e105]: Start with the platform note if you want the stack overview.
+          - listitem [ref=e106]: Use the base and CRM notes when changing models, relations, or constraints.
+          - listitem [ref=e107]: Use the schema atlas when you need table-level navigation or ERDs.
+        - heading "Quick links" [level=2] [ref=e108]
+        - list [ref=e109]:
+          - listitem [ref=e110]:
+            - link "Odoo schema README" [ref=e111] [cursor=pointer]:
+              - /url: odoo19_schema/README.md
+          - listitem [ref=e112]:
+            - link "Platform bootstrap doc" [ref=e113] [cursor=pointer]:
+              - /url: architecture/platform-bootstrap.md
+          - listitem [ref=e114]:
+            - link "Service map" [ref=e115] [cursor=pointer]:
+              - /url: architecture/service-map.md
+          - listitem [ref=e116]:
+            - link "Local development runbook" [ref=e117] [cursor=pointer]:
+              - /url: runbooks/local-development.md
+          - listitem [ref=e118]:
+            - link "Environments and promotions" [ref=e119] [cursor=pointer]:
+              - /url: runbooks/environments-and-promotions.md
+          - listitem [ref=e120]:
+            - link "Secrets and configuration" [ref=e121] [cursor=pointer]:
+              - /url: runbooks/secrets-and-config.md
+          - listitem [ref=e122]:
+            - link "Runtime validation" [ref=e123] [cursor=pointer]:
+              - /url: runbooks/runtime-validation.md
+          - listitem [ref=e124]:
+            - link "CI/CD scaffold" [ref=e125] [cursor=pointer]:
+              - /url: runbooks/ci-cd-scaffold.md
+          - listitem [ref=e126]:
+            - link "Deployment over SSH" [ref=e127] [cursor=pointer]:
+              - /url: runbooks/deployment-over-ssh.md
+          - listitem [ref=e128]:
+            - link "Backup and restore runbook" [ref=e129] [cursor=pointer]:
+              - /url: runbooks/backup-and-restore.md
+          - listitem [ref=e130]:
+            - link "Staging neutralization" [ref=e131] [cursor=pointer]:
+              - /url: runbooks/staging-neutralization.md
+          - listitem [ref=e132]:
+            - link "Offsite backups" [ref=e133] [cursor=pointer]:
+              - /url: runbooks/offsite-backups.md
+          - listitem [ref=e134]:
+            - link "Lobby (homepage) runbook" [ref=e135] [cursor=pointer]:
+              - /url: runbooks/lobby-homepage.md
+          - listitem [ref=e136]:
+            - link "Base module doc" [ref=e137] [cursor=pointer]:
+              - /url: odoo19_schema/base_module.md
+          - listitem [ref=e138]:
+            - link "CRM module doc" [ref=e139] [cursor=pointer]:
+              - /url: odoo19_schema/crm_module.md
+          - listitem [ref=e140]:
+            - link "Base vs CRM comparison" [ref=e141] [cursor=pointer]:
+              - /url: odoo19_schema/base_vs_crm.md

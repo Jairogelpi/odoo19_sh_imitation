@@ -1,0 +1,64 @@
+<odoo>
+  <data>
+    <record id="view_res_config_settings_openclaw" model="ir.ui.view">
+      <field name="name">openclaw.res.config.settings.view.form</field>
+      <field name="model">res.config.settings</field>
+      <field name="inherit_id" ref="base_setup.res_config_settings_view_form"/>
+      <field name="arch" type="xml">
+        <xpath expr="//app[@name='general_settings']" position="inside">
+          <div class="app_settings_block" data-string="OpenClaw" string="OpenClaw">
+            <h2>OpenClaw</h2>
+            <div class="row mt16 o_settings_container">
+              <div class="col-12 col-lg-6 o_setting_box">
+                <div class="o_setting_left_pane">
+                  <field name="openclaw_enabled"/>
+                </div>
+                <div class="o_setting_right_pane">
+                  <label for="openclaw_enabled"/>
+                  <div class="text-muted">Enable the OpenClaw agent bridge.</div>
+                </div>
+              </div>
+
+              <div class="col-12 col-lg-6 o_setting_box">
+                <div class="o_setting_left_pane">
+                  <field name="openclaw_require_human_approval"/>
+                </div>
+                <div class="o_setting_right_pane">
+                  <label for="openclaw_require_human_approval"/>
+                  <div class="text-muted">Require a manual approval before dangerous actions are executed.</div>
+                </div>
+              </div>
+
+              <div class="col-12 col-lg-6 o_setting_box">
+                <div class="o_setting_left_pane"/>
+                <div class="o_setting_right_pane">
+                  <label for="openclaw_gateway_url"/>
+                  <field name="openclaw_gateway_url"/>
+                  <div class="text-muted">Internal URL of the MCP gateway or control-plane bridge.</div>
+                </div>
+              </div>
+
+              <div class="col-12 col-lg-6 o_setting_box">
+                <div class="o_setting_left_pane"/>
+                <div class="o_setting_right_pane">
+                  <label for="openclaw_docs_root"/>
+                  <field name="openclaw_docs_root"/>
+                  <div class="text-muted">Docs root exposed to the agent for Obsidian-backed knowledge writes.</div>
+                </div>
+              </div>
+
+              <div class="col-12 o_setting_box">
+                <div class="o_setting_left_pane"/>
+                <div class="o_setting_right_pane">
+                  <label for="openclaw_allowed_tools"/>
+                  <field name="openclaw_allowed_tools" placeholder="db.read"/>
+                  <div class="text-muted">One tool name per line. The MCP gateway should enforce this allowlist.</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </xpath>
+      </field>
+    </record>
+  </data>
+</odoo>

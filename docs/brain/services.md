@@ -10,6 +10,8 @@ This note is the Obsidian-side shortcut into the platform service topology.
 - [Platform bootstrap](../architecture/platform-bootstrap.md)
 - [Operations](operations.md)
 - [Portainer](portainer.md)
+- [Lobby](lobby.md)
+- [Control Plane](control_plane.md)
 
 ## Quick service mental model
 
@@ -21,10 +23,14 @@ This note is the Obsidian-side shortcut into the platform service topology.
 - `pgadmin`: optional admin UI, direct access on `http://localhost:8080`, default login `admin@example.com` / `change_me`
 - `obsidian`: optional knowledge layer, direct access on `http://localhost:3000` and `http://localhost:3001`, default login `obsidian` / `change_me`
 - `portainer`: optional container-management UI, direct access on `https://localhost:9443`, first admin user created on first launch
+- `homepage`: optional lobby dashboard, direct access on `http://localhost:8081`, links to every admin UI and shows live container status from the Docker socket
+- `control-plane`: optional operator console, direct access on `http://localhost:8082`, backups restore UI, GitHub deploys, docs browser
 - `mailpit`: staging-only SMTP sink, UI on `127.0.0.1:8025` by default in staging
+- `certbot`: optional SSL sidecar for auto Let's Encrypt provisioning, uses `compose.ssl.yaml` overlay
 
 The custom `db`, `pgbackrest`, and `odoo` services now support both local builds and GHCR-published image overrides.
 `mailpit` exists only to keep restored staging environments safe.
+The Homepage lobby uses internal monitor targets, not host `localhost` ports.
 
 ## Use this note when you need
 

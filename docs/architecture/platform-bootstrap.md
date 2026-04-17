@@ -13,9 +13,10 @@ This repository is the versioned starting point for the Odoo 19 self-hosted plat
 - Nginx reverse proxy template scaffold
 - staging and production compose overrides
 - Redis service
+- Homepage admin lobby
 - bootstrap backup/restore scripts
 - working local `pgBackRest` flow
-- GHCR publish and SSH deploy workflow
+- GHCR publish, SSH deploy, and scaffold contract workflow
 - automated staging restore neutralization with `Mailpit`
 - offsite backup replication scripts using ephemeral `rclone`
 
@@ -31,7 +32,9 @@ Core base stack:
 
 Optional admin and knowledge stack:
 
+- `homepage`: optional admin landing page and status lobby
 - `pgadmin`: browser admin UI for PostgreSQL
+- `portainer`: browser container-management UI
 - `obsidian`: browser-accessible knowledge workspace over the `docs/` vault
 
 Staging support stack:
@@ -76,9 +79,20 @@ Health verification:
 powershell -ExecutionPolicy Bypass -File .\ops\health\check-local-stack.ps1
 ```
 
+Admin layer verification:
+
+```bash
+powershell -ExecutionPolicy Bypass -File .\ops\health\check-admin-stack.ps1
+```
+
+Latest validated state:
+
+- [Runtime validation](../runbooks/runtime-validation.md)
+
 ## Not implemented yet
 
 - first-time server bootstrap automation
 - live deploy validation against a real remote target
 - deeper data anonymization for restored staging copies
 - scheduled restore drills from offsite backup sets
+- automatic Odoo master-password injection from `ODOO_ADMIN_PASSWORD`

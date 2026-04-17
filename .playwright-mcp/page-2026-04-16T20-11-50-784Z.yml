@@ -1,0 +1,66 @@
+- generic [active] [ref=e1]:
+  - banner [ref=e2]:
+    - generic [ref=e3]:
+      - link "Odoo19" [ref=e4] [cursor=pointer]:
+        - /url: /
+        - generic [ref=e6]: Odoo19
+      - generic [ref=e7]: dev
+    - navigation [ref=e8]:
+      - link "Backups" [ref=e9] [cursor=pointer]:
+        - /url: /backups
+        - img [ref=e10]
+        - text: Backups
+      - link "Deploys" [ref=e14] [cursor=pointer]:
+        - /url: /deploys
+        - img [ref=e15]
+        - text: Deploys
+      - link "Docs" [ref=e20] [cursor=pointer]:
+        - /url: /docs
+        - img [ref=e21]
+        - text: Docs
+    - link "← Lobby" [ref=e25] [cursor=pointer]:
+      - /url: http://localhost:8081
+  - main [ref=e26]:
+    - generic [ref=e27]:
+      - generic [ref=e28]:
+        - heading "Backups" [level=1] [ref=e29]
+        - paragraph [ref=e30]:
+          - text: Copias de seguridad gestionadas por pgBackRest sobre la stanza
+          - code [ref=e31]: odoo
+          - text: ". Estado:"
+          - strong [ref=e32]: ok
+          - text: .
+      - generic [ref=e33]:
+        - generic [ref=e34]:
+          - generic [ref=e35]: Total
+          - generic [ref=e36]: "1"
+        - generic [ref=e37]:
+          - generic [ref=e38]: Repo
+          - generic [ref=e39]: 2.9 MiB
+        - generic [ref=e40]:
+          - generic [ref=e41]: DBs
+          - generic [ref=e42]: "1"
+    - table [ref=e44]:
+      - rowgroup [ref=e45]:
+        - row "Label Tipo Creado Antigüedad Tamaño repo Tamaño DB WAL Recuperar" [ref=e46]:
+          - columnheader "Label" [ref=e47]
+          - columnheader "Tipo" [ref=e48]
+          - columnheader "Creado" [ref=e49]
+          - columnheader "Antigüedad" [ref=e50]
+          - columnheader "Tamaño repo" [ref=e51]
+          - columnheader "Tamaño DB" [ref=e52]
+          - columnheader "WAL" [ref=e53]
+          - columnheader "Recuperar" [ref=e54]
+      - rowgroup [ref=e55]:
+        - row "20260415-210724F full 2026-04-15 21:07 hace 23 h 2.9 MiB 22.1 MiB 000000010000000000000004 → 000000010000000000000005 Recuperar" [ref=e56]:
+          - cell "20260415-210724F" [ref=e57]:
+            - code [ref=e58]: 20260415-210724F
+          - cell "full" [ref=e59]:
+            - generic [ref=e60]: full
+          - cell "2026-04-15 21:07" [ref=e61]
+          - cell "hace 23 h" [ref=e62]
+          - cell "2.9 MiB" [ref=e63]
+          - cell "22.1 MiB" [ref=e64]
+          - cell "000000010000000000000004 → 000000010000000000000005" [ref=e65]
+          - cell "Recuperar" [ref=e66]:
+            - button "Recuperar" [ref=e67] [cursor=pointer]

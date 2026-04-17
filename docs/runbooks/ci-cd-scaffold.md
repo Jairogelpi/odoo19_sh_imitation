@@ -12,6 +12,8 @@ On push to `develop`, `staging`, or `main`, and on pull requests:
 
 - checks out the repository
 - validates `compose.yaml` with `dev`, `staging`, and `prod` overrides
+- syntax-checks critical shell and PowerShell scripts
+- runs scaffold contract tests for docs and configuration alignment
 - builds the custom PostgreSQL, pgBackRest, and Odoo images
 
 On push events it also:
@@ -47,11 +49,12 @@ The deploy job uses:
 The operational details live in:
 
 - `docs/runbooks/deployment-over-ssh.md`
+- `docs/runbooks/runtime-validation.md`
 
 ## Remaining gaps
 
-- automated staging neutralization after restore
-- offsite backup replication and restore drills
+- automated end-to-end staging restore drills against a real backup set
+- live deploy verification against a real remote target
 - environment bootstrap automation for first-time server provisioning
 
 ## Documentation alignment

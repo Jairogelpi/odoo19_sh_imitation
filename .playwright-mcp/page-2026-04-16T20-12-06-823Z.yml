@@ -1,0 +1,110 @@
+- generic [ref=e3]:
+  - generic:
+    - img
+  - generic [ref=e4]:
+    - generic [ref=e8]:
+      - heading "Odoo19 Control Plane 0.1.0 OAS 3.1" [level=1] [ref=e9]:
+        - text: Odoo19 Control Plane
+        - generic [ref=e10]:
+          - generic [ref=e12]: 0.1.0
+          - generic [ref=e14]: OAS 3.1
+      - link "/openapi.json" [ref=e15] [cursor=pointer]:
+        - /url: /openapi.json
+        - generic [ref=e16]: /openapi.json
+    - generic [ref=e21]:
+      - heading "default Collapse operation" [level=3] [ref=e22] [cursor=pointer]:
+        - link "default" [ref=e23]:
+          - /url: "#/default"
+        - button "Collapse operation" [expanded] [ref=e24]:
+          - img [ref=e25]
+      - generic [ref=e28]:
+        - generic [ref=e31] [cursor=pointer]:
+          - button "GET / Home" [ref=e32]:
+            - generic [ref=e33]: GET
+            - generic [ref=e34]:
+              - link / [ref=e36]:
+                - /url: "#/default/home__get"
+              - generic [ref=e37]: Home
+          - generic "Copy to clipboard"
+          - button "get /" [ref=e40]:
+            - img [ref=e41]
+        - generic [ref=e45] [cursor=pointer]:
+          - button "GET /backups Backups View" [ref=e46]:
+            - generic [ref=e47]: GET
+            - generic [ref=e48]:
+              - link "/backups" [ref=e50]:
+                - /url: "#/default/backups_view_backups_get"
+              - generic [ref=e51]: Backups View
+          - generic "Copy to clipboard"
+          - button "get /backups" [ref=e54]:
+            - img [ref=e55]
+        - generic [ref=e59] [cursor=pointer]:
+          - button "POST /backups/restore Backups Restore" [ref=e60]:
+            - generic [ref=e61]: POST
+            - generic [ref=e62]:
+              - link "/backups/restore" [ref=e64]:
+                - /url: "#/default/backups_restore_backups_restore_post"
+                - generic [ref=e65]:
+                  - text: /backups
+                  - text: /restore
+              - generic [ref=e66]: Backups Restore
+          - generic "Copy to clipboard"
+          - button "post /backups/restore" [ref=e69]:
+            - img [ref=e70]
+        - generic [ref=e74] [cursor=pointer]:
+          - button "GET /deploys Deploys View" [ref=e75]:
+            - generic [ref=e76]: GET
+            - generic [ref=e77]:
+              - link "/deploys" [ref=e79]:
+                - /url: "#/default/deploys_view_deploys_get"
+              - generic [ref=e80]: Deploys View
+          - generic "Copy to clipboard"
+          - button "get /deploys" [ref=e83]:
+            - img [ref=e84]
+        - generic [ref=e88] [cursor=pointer]:
+          - button "GET /docs Docs View" [ref=e89]:
+            - generic [ref=e90]: GET
+            - generic [ref=e91]:
+              - link "/docs" [ref=e93]:
+                - /url: "#/default/docs_view_docs_get"
+              - generic [ref=e94]: Docs View
+          - generic "Copy to clipboard"
+          - button "get /docs" [ref=e97]:
+            - img [ref=e98]
+        - generic [ref=e102] [cursor=pointer]:
+          - button "GET /healthz Healthz" [ref=e103]:
+            - generic [ref=e104]: GET
+            - generic [ref=e105]:
+              - link "/healthz" [ref=e107]:
+                - /url: "#/default/healthz_healthz_get"
+              - generic [ref=e108]: Healthz
+          - generic "Copy to clipboard"
+          - button "get /healthz" [ref=e111]:
+            - img [ref=e112]
+    - generic [ref=e116]:
+      - heading "Schemas" [level=4] [ref=e117] [cursor=pointer]:
+        - button "Schemas" [expanded] [ref=e118]:
+          - generic [ref=e119]: Schemas
+          - img [ref=e120]
+      - generic [ref=e122]:
+        - article [ref=e123]:
+          - generic [ref=e124]:
+            - button "Body_backups_restore_backups_restore_post" [ref=e125] [cursor=pointer]:
+              - generic [ref=e127]: Body_backups_restore_backups_restore_post
+              - img [ref=e129]
+            - button "Expand all" [ref=e131] [cursor=pointer]
+            - strong [ref=e132]: object
+        - article [ref=e133]:
+          - generic [ref=e134]:
+            - button "HTTPValidationError" [ref=e135] [cursor=pointer]:
+              - generic [ref=e137]: HTTPValidationError
+              - img [ref=e139]
+            - button "Expand all" [ref=e141] [cursor=pointer]
+            - strong [ref=e142]: object
+        - article [ref=e143]:
+          - generic [ref=e144]:
+            - button "ValidationError" [ref=e145] [cursor=pointer]:
+              - generic [ref=e147]: ValidationError
+              - img [ref=e149]
+            - button "Expand all" [ref=e151] [cursor=pointer]
+            - strong [ref=e152]: object

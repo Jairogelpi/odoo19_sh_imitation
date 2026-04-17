@@ -1,0 +1,132 @@
+{% extends "base.html" %}
+{% block content %}
+<section class="hero">
+  <div>
+    <h1>Backups</h1>
+    <p class="muted">
+      Copias de seguridad gestionadas por pgBackRest sobre la stanza
+      <code>{{ meta.name or "—" }}</code>. Estado: <strong>{{ meta.status or "desconocido" }}</strong>.
+    </p>
+  </div>
+  <div class="kpis">
+    <div class="kpi">
+      <span class="kpi-label">Total</span>
+      <span class="kpi-value">{{ meta.total_backups or 0 }}</span>
+    </div>
+    <div class="kpi">
+      <span class="kpi-label">Repo</span>
+      <span class="kpi-value">{{ meta.repo_size_human or "—" }}</span>
+    </div>
+    <div class="kpi">
+      <span class="kpi-label">DBs</span>
+      <span class="kpi-value">{{ meta.db_count or 0 }}</span>
+    </div>
+  </div>
+</section>
+
+{% if flash %}
+  <div class="alert {% if flash_ok %}alert-ok{% else %}alert-err{% endif %}">{{ flash }}</div>
+{% endif %}
+
+{% if error %}
+  <div class="alert alert-err">{{ error }}</div>
+{% endif %}
+
+{% if entries %}
+<div class="table-wrap">
+  <table class="table">
+    <thead>
+      <tr>
+        <th>Label</th>
+        <th>Tipo</th>
+        <th>Creado</th>
+        <th>Antigüedad</th>
+        <th class="num">Tamaño repo</th>
+        <th class="num">Tamaño DB</th>
+        <th>WAL</th>
+        <th class="action">Recuperar</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for e in entries %}
+      <tr>
+        <td><code class="mono">{{ e.label }}</code></td>
+        <td><span class="chip chip-{{ e.type }}">{{ e.type }}</span></td>
+        <td>{{ e.stopped.strftime("%Y-%m-%d %H:%M") }}</td>
+        <td class="muted">hace {{ e.age_human }}</td>
+        <td class="num">{{ e.size_human }}</td>
+        <td class="num">{{ e.db_size_human }}</td>
+        <td class="mono small">{{ e.wal_start }} → {{ e.wal_stop }}</td>
+        <td class="action">
+          <button class="btn btn-primary" type="button"
+                  onclick="openRestore('{{ e.label }}')">Recuperar</button>
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% else %}
+  {% if not error %}
+  <div class="empty">
+    <p>Todavía no hay backups. Ejecuta <code>pgbackrest --stanza={{ meta.name or "odoo" }} backup</code>.</p>
+  </div>
+  {% endif %}
+{% endif %}
+
+<!-- restore modal -->
+<dialog id="restore-dialog" class="dialog">
+  <form method="post" action="/backups/restore">
+    <header class="dialog-head">
+      <h2>Recuperar backup</h2>
+      <button type="button" class="btn-ghost" onclick="closeRestore()" aria-label="Cerrar">✕</button>
+    </header>
+
+    <p class="muted">
+      Vas a restaurar el backup <code id="restore-label-display" class="mono"></code>.
+      Se detendrán <code>odoo</code> y <code>db</code>, se aplicará el restore, y se reiniciarán.
+    </p>
+
+    <input type="hidden" name="label" id="restore-label">
+
+    <label class="field">
+      <span class="field-label">Entorno destino</span>
+      <select name="target_env" id="restore-env" required>
+        {% for env_name in allowed_envs %}
+        <option value="{{ env_name }}">{{ env_name }}</option>
+        {% endfor %}
+      </select>
+    </label>
+
+    <label class="field">
+      <span class="field-label">
+        Escribe el nombre del entorno para confirmar
+      </span>
+      <input name="confirm" required autocomplete="off"
+             placeholder="dev / staging / prod"
+             pattern="^(dev|staging|prod)$">
+    </label>
+
+    <p class="warn">
+      ⚠ Sólo <strong>dev</strong> se ejecuta desde aquí.
+      <strong>staging</strong> y <strong>prod</strong> generan el comando SSH para que lo pegues en el host correspondiente.
+    </p>
+
+    <footer class="dialog-foot">
+      <button type="button" class="btn-ghost" onclick="closeRestore()">Cancelar</button>
+      <button type="submit" class="btn btn-danger">Restaurar</button>
+    </footer>
+  </form>
+</dialog>
+
+<script>
+  function openRestore(label) {
+    document.getElementById('restore-label').value = label;
+    document.getElementById('restore-label-display').textContent = label;
+    document.getElementById('restore-dialog').showModal();
+  }
+  function closeRestore() {
+    document.getElementById('restore-dialog').close();
+  }
+</script>
+{% endblock %}

@@ -45,7 +45,163 @@ services:
     networks:
       - odoo_net
 
+  homepage:
+    image: ghcr.io/gethomepage/homepage:latest
+    restart: unless-stopped
+    user: "0:0"
+    environment:
+      HOMEPAGE_ALLOWED_HOSTS: ${HOMEPAGE_ALLOWED_HOSTS:-localhost:8081,127.0.0.1:8081}
+      TZ: ${TZ:-Etc/UTC}
+    ports:
+      - "8081:3000"
+    volumes:
+      - ./homepage/config:/app/config
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+    networks:
+      - odoo_net
+
+  control-plane:
+    image: odoo19-control-plane:local
+    build:
+      context: ./control-plane
+    restart: unless-stopped
+    user: "0:0"
+    environment:
+      STACK_ENV: ${STACK_ENV:-dev}
+      PGBACKREST_STANZA: ${PGBACKREST_STANZA:-odoo}
+      PGBACKREST_CONTAINER: ${PGBACKREST_CONTAINER:-odoo19-pgbackrest-1}
+      ODOO_CONTAINER: ${ODOO_CONTAINER:-odoo19-odoo-1}
+      DB_CONTAINER: ${DB_CONTAINER:-odoo19-db-1}
+      GITHUB_TOKEN: ${GITHUB_TOKEN:-}
+      GITHUB_REPO: ${GITHUB_REPO:-Jairogelpi/odoo19_sh_imitation}
+      DOCS_ROOT: /app/docs
+      OPENCLAW_ADDONS_CUSTOM_ROOT: /workspace/addons_custom
+      OPENCLAW_WORKSPACE_ROOT: /workspace
+      OPENCLAW_SHELL_ENABLED: "0"
+      OPENROUTER_API_KEY: ${OPENROUTER_API_KEY:-}
+      OPENROUTER_API_BASE: ${OPENROUTER_API_BASE:-https://openrouter.ai/api/v1}
+      OPENROUTER_MODEL: ${OPENROUTER_MODEL:-z-ai/glm-4.5-air:free}
+      OPENROUTER_FALLBACK_MODEL: ${OPENROUTER_FALLBACK_MODEL:-openrouter/elephant-alpha}
+      OPENROUTER_REASONING_ENABLED: ${OPENROUTER_REASONING_ENABLED:-1}
+      OPENROUTER_TIMEOUT_SECONDS: ${OPENROUTER_TIMEOUT_SECONDS:-90}
+      OPENROUTER_TITLE: ${OPENROUTER_TITLE:-OpenClaw Control Plane}
+      OPENROUTER_REFERER: ${OPENROUTER_REFERER:-http://localhost:8082}
+      ALLOWED_ENVS: dev,staging,prod
+      TZ: ${TZ:-Etc/UTC}
+    ports:
+      - "8082:8082"
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+      - ./docs:/app/docs
+      - ./addons_custom:/workspace/addons_custom
+    networks:
+      - odoo_net
+
+  dozzle:
+    image: amir20/dozzle:latest
+    restart: unless-stopped
+    environment:
+      TZ: ${TZ:-Etc/UTC}
+    ports:
+      - "8084:8080"
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+    networks:
+      - odoo_net
+
+  code-server:
+    image: lscr.io/linuxserver/code-server:latest
+    restart: unless-stopped
+    environment:
+      PUID: ${PUID:-1000}
+      PGID: ${PGID:-1000}
+      TZ: ${TZ:-Etc/UTC}
+      PASSWORD: ${CODE_SERVER_PASSWORD:-change_me}
+      DEFAULT_WORKSPACE: /workspace
+    ports:
+      - "8083:8443"
+    volumes:
+      - code-server-config:/config
+      - ./addons:/workspace/addons
+      - ./config:/workspace/config
+      - ./docs:/workspace/docs
+      - ./control-plane:/workspace/control-plane
+      - ./homepage:/workspace/homepage
+    networks:
+      - odoo_net
+
+  web-terminal:
+    image: odoo19-web-terminal:local
+    build:
+      context: ./web-terminal
+    restart: unless-stopped
+    user: "0:0"
+    ports:
+      - "8085:7681"
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+    networks:
+      - odoo_net
+
+  cadvisor:
+    image: gcr.io/cadvisor/cadvisor:v0.51.0
+    restart: unless-stopped
+    privileged: true
+    volumes:
+      - /:/rootfs:ro
+      - /var/run:/var/run:ro
+      - /sys:/sys:ro
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+    networks:
+      - odoo_net
+
+  node-exporter:
+    image: prom/node-exporter:latest
+    restart: unless-stopped
+    pid: host
+    volumes:
+      - /:/host:ro
+    command:
+      - "--path.rootfs=/host"
+    networks:
+      - odoo_net
+
+  prometheus:
+    image: prom/prometheus:latest
+    restart: unless-stopped
+    user: "0:0"
+    volumes:
+      - ./prometheus/prometheus.yml:/etc/prometheus/prometheus.yml:ro
+      - prometheus-data:/prometheus
+    command:
+      - "--config.file=/etc/prometheus/prometheus.yml"
+      - "--storage.tsdb.retention.time=30d"
+    networks:
+      - odoo_net
+
+  grafana:
+    image: grafana/grafana:latest
+    restart: unless-stopped
+    environment:
+      GF_SECURITY_ADMIN_USER: ${GRAFANA_ADMIN_USER:-admin}
+      GF_SECURITY_ADMIN_PASSWORD: ${GRAFANA_ADMIN_PASSWORD:-change_me}
+      GF_USERS_ALLOW_SIGN_UP: "false"
+      GF_DASHBOARDS_DEFAULT_HOME_DASHBOARD_PATH: /var/lib/grafana/dashboards/docker-containers.json
+    ports:
+      - "3002:3000"
+    volumes:
+      - grafana-data:/var/lib/grafana
+      - ./grafana/provisioning:/etc/grafana/provisioning:ro
+      - ./grafana/dashboards:/var/lib/grafana/dashboards:ro
+    depends_on:
+      - prometheus
+    networks:
+      - odoo_net
+
 volumes:
   portainer-data:
   pgadmin-data:
   obsidian-config:
+  code-server-config:
+  prometheus-data:
+  grafana-data:

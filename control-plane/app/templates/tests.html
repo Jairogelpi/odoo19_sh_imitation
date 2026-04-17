@@ -1,0 +1,67 @@
+{% extends "base.html" %}
+{% block content %}
+<section class="hero">
+  <div>
+    <h1>Tests</h1>
+    <p class="muted">
+      Resultados de CI por commit en
+      <a href="https://github.com/{{ repo }}/actions" target="_blank" rel="noopener"><code>{{ repo }}</code></a>.
+      Equivalente al runbot privado de Odoo SH.
+    </p>
+  </div>
+  <div class="kpis">
+    <div class="kpi">
+      <span class="kpi-label">Runs</span>
+      <span class="kpi-value">{{ results|length }}</span>
+    </div>
+    <div class="kpi">
+      <span class="kpi-label">Exitosos</span>
+      <span class="kpi-value">{{ results|selectattr('badge','eq','success')|list|length }}</span>
+    </div>
+    <div class="kpi">
+      <span class="kpi-label">Fallidos</span>
+      <span class="kpi-value">{{ results|selectattr('badge','eq','failure')|list|length }}</span>
+    </div>
+  </div>
+</section>
+
+{% for err in errors %}
+  <div class="alert alert-err">{{ err }}</div>
+{% endfor %}
+
+{% if results %}
+{% for r in results %}
+<section class="panel" style="margin-bottom: 1rem">
+  <div class="panel-head">
+    <h2>
+      <span class="badge badge-{{ r.badge }}">{{ r.badge }}</span>
+      <span class="chip chip-branch">{{ r.branch }}</span>
+      <code class="mono small">{{ r.commit }}</code>
+      <span class="muted small">· {{ r.created_at.strftime("%Y-%m-%d %H:%M") }}</span>
+    </h2>
+    <a href="{{ r.html_url }}" target="_blank" rel="noopener" class="btn-ghost">Ver run ↗</a>
+  </div>
+  {% for job in r.jobs %}
+  <div style="padding: 0 1.25rem .75rem">
+    <div style="display:flex;align-items:center;gap:.5rem;margin-bottom:.25rem">
+      <span class="badge badge-{{ 'success' if job.conclusion == 'success' else ('failure' if job.conclusion in ('failure','timed_out') else 'running') }}" style="font-size:.7rem">
+        {{ job.conclusion or job.name }}
+      </span>
+      <a href="{{ job.html_url }}" target="_blank" rel="noopener"><strong>{{ job.name }}</strong></a>
+      <span class="muted small">{{ job.passed }}/{{ job.total_steps }} pasos OK</span>
+      {% if job.failed > 0 %}
+        <span class="badge badge-failure" style="font-size:.65rem">{{ job.failed }} fallidos</span>
+      {% endif %}
+    </div>
+  </div>
+  {% endfor %}
+</section>
+{% endfor %}
+{% else %}
+  {% if not errors %}
+  <div class="empty">
+    <p class="muted">Sin resultados de tests.</p>
+  </div>
+  {% endif %}
+{% endif %}
+{% endblock %}

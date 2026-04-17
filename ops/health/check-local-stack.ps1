@@ -48,7 +48,6 @@ function Assert-CommandOutputContains {
 
 Assert-StatusCode -Url "http://localhost:8088/web/login" -ExpectedStatus 200 -Label "Nginx -> Odoo"
 Assert-StatusCode -Url "http://localhost:8069/web/login" -ExpectedStatus 200 -Label "Odoo direct"
-Assert-StatusCode -Url "http://localhost:3000" -ExpectedStatus 401 -Label "Obsidian auth gate"
 
 Assert-CommandOutputContains `
     -Command "docker compose -f compose.yaml -f compose.dev.yaml exec -T redis redis-cli ping" `

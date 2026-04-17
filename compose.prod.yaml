@@ -5,7 +5,10 @@ services:
       - ./config/odoo.prod.conf:/etc/odoo/odoo.conf:ro
 
   nginx:
+    environment:
+      NGINX_TLS_MODE: required
     ports:
       - "80:80"
       - "443:443"
-
+    volumes:
+      - ${NGINX_TLS_CERTS_DIR:-/etc/odoo/tls}:/etc/nginx/certs:ro

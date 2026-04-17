@@ -9,6 +9,7 @@ It is the delivery layer of the platform, the piece that turns this stack into a
 ## Main references
 
 - [Environments and promotions](../runbooks/environments-and-promotions.md)
+- [Environment State Model](environment_state_model.md)
 - [Secrets and configuration](../runbooks/secrets-and-config.md)
 - [CI/CD scaffold](../runbooks/ci-cd-scaffold.md)
 - [Deployment over SSH](../runbooks/deployment-over-ssh.md)
@@ -58,6 +59,7 @@ It is the delivery layer of the platform, the piece that turns this stack into a
 
 ## Related notes
 - [Platform](platform.md)
+- [Environment State Model](environment_state_model.md)
 - [Platform Bootstrap Status](platform_bootstrap_status.md)
 - [Stack Topology](stack_topology.md)
 - [Service Map](../architecture/service-map.md)
