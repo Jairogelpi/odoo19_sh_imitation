@@ -39,6 +39,7 @@ This is the stable shape of the stack today.
 - Deployment over SSH: [docs/runbooks/deployment-over-ssh.md](docs/runbooks/deployment-over-ssh.md)
 - Lobby (Homepage): [docs/runbooks/lobby-homepage.md](docs/runbooks/lobby-homepage.md)
 - Obsidian brain: [docs/00_Odoo_Brain.md](docs/00_Odoo_Brain.md)
+- OpenClaw brain: [docs/brain/openclaw.md](docs/brain/openclaw.md)
 
 ## Main entrypoints
 
@@ -47,6 +48,7 @@ This is the stable shape of the stack today.
 - Platform bootstrap doc: [docs/architecture/platform-bootstrap.md](docs/architecture/platform-bootstrap.md)
 - Runtime validation: [docs/runbooks/runtime-validation.md](docs/runbooks/runtime-validation.md)
 - Obsidian brain: [docs/00_Odoo_Brain.md](docs/00_Odoo_Brain.md)
+- OpenClaw brain: [docs/brain/openclaw.md](docs/brain/openclaw.md)
 
 ## Local commands
 

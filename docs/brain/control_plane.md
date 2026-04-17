@@ -50,6 +50,7 @@ This is a pragmatic, current-stack service. The multi-tenant control plane desig
 
 ## Related notes
 
+- [OpenClaw](openclaw.md)
 - [Odoo Brain](../00_Odoo_Brain.md)
 - [Lobby](lobby.md)
 - [Services](services.md)

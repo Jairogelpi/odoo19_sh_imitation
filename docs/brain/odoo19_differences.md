@@ -47,6 +47,14 @@ Example:
 - The page structure is built with `app`, `block`, and `setting` elements.
 - Failure signature: `Element '<xpath expr="//div[hasclass('settings')]">' cannot be located in parent view`.
 
+### `res.config.settings` fields with `config_parameter`
+- In Odoo 19, `res.config.settings` classifies these fields during `default_get()`.
+- A `config_parameter` field declared as `fields.Text` fails in that path.
+- Validated accepted types in this workspace: `boolean`, `integer`, `float`, `char`, `selection`, `many2one`, and `datetime`.
+- If the value must be edited as multiline text, keep the backend field as `fields.Char` and use `widget="text"` in the view.
+- Failure signature: `Field res.config.settings.<field_name> must have type 'boolean', 'integer', 'float', 'char', 'selection', 'many2one' or 'datetime'`.
+- Deep note: [Odoo 19 `res.config.settings`](odoo19_res_config_settings.md).
+
 ### View modifiers
 - `states` and `attrs` are not used in Odoo 19 view XML.
 - Replace them with inline boolean expressions.
@@ -80,6 +88,8 @@ Example:
 - Search for `<tree>` and `view_mode="tree,form"`.
 - Search for `states=` and `attrs=`.
 - Search for `//div[hasclass('settings')]`.
+- Search for `config_parameter=` fields declared as `fields.Text` under `res.config.settings`.
+- Search for settings fields that should stay multiline in the UI and render them with `widget="text"` when the backend type must stay `char`.
 - Search for `category_id` on `res.groups`.
 - Search for `_sql_constraints`.
 - Reinstall the addon and fix the first parse error before moving on.
@@ -89,5 +99,6 @@ Example:
 - [CRM](crm.md)
 - [Schema Atlas](schema.md)
 - [Control Plane](control_plane.md)
+- [Odoo 19 `res.config.settings`](odoo19_res_config_settings.md)
 - [Odoo 19 inventory README](../odoo19_schema/README.md)
 - [Odoo schema overview](../odoo19_schema/erd.md)

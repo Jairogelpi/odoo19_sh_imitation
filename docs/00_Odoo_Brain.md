@@ -3,18 +3,22 @@
 This vault organizes the Odoo 19 documentation as an Obsidian-style knowledge graph.
 
 ## Start here
+- [OpenClaw](brain/openclaw.md)
 - [Architecture Overview](brain/architecture_overview.md)
 - [Platform](brain/platform.md)
 - [Odoo 19 Compatibility Notes](brain/odoo19_differences.md)
+- [Odoo 19 `res.config.settings`](brain/odoo19_res_config_settings.md)
 - [Environment State Model](brain/environment_state_model.md)
 - [Delivery](brain/delivery.md)
 - [Stack Topology](brain/stack_topology.md)
 - [Future Control Plane](brain/future_control_plane.md)
 
 ## Entry points
+- [OpenClaw](brain/openclaw.md)
 - [Architecture Overview](brain/architecture_overview.md)
 - [Platform](brain/platform.md)
 - [Odoo 19 Compatibility Notes](brain/odoo19_differences.md)
+- [Odoo 19 `res.config.settings`](brain/odoo19_res_config_settings.md)
 - [Environment State Model](brain/environment_state_model.md)
 - [Platform Bootstrap Status](brain/platform_bootstrap_status.md)
 - [Delivery](brain/delivery.md)
@@ -36,6 +40,7 @@ This vault organizes the Odoo 19 documentation as an Obsidian-style knowledge gr
 graph TD
   Home[Odoo Brain] --> Platform[Platform]
   Home --> Odoo19Compat[Odoo 19 Compatibility Notes]
+  Home --> ResConfig[Odoo 19 res.config.settings]
   Home --> EnvModel[Environment State Model]
   Home --> Bootstrap[Platform Bootstrap Status]
   Home --> Checklist[Daily Checklist]
@@ -59,6 +64,7 @@ graph TD
   Platform --> PortainerWorkflow
   Platform --> ArchitectureOverview
   Platform --> Topology
+  Odoo19Compat --> ResConfig
   Bootstrap --> Delivery
   Bootstrap --> Ops
   Base --> BaseDoc[base_module.md]
@@ -74,6 +80,7 @@ graph TD
 
 ## How to use this brain
 - Open the vault from the `docs/` directory in Obsidian.
+- Treat [brain/openclaw.md](brain/openclaw.md) as the central index for permissioned agent work.
 - Start with the platform note if you want the stack overview.
 - Open the Odoo 19 compatibility note before editing XML, views, or model constraints.
 - Use the base and CRM notes when changing models, relations, or constraints.
@@ -81,7 +88,9 @@ graph TD
 
 ## Quick links
 - [Odoo schema README](odoo19_schema/README.md)
+- [OpenClaw](brain/openclaw.md)
 - [Odoo 19 compatibility notes](brain/odoo19_differences.md)
+- [Odoo 19 `res.config.settings`](brain/odoo19_res_config_settings.md)
 - [Platform bootstrap doc](architecture/platform-bootstrap.md)
 - [Service map](architecture/service-map.md)
 - [Local development runbook](runbooks/local-development.md)
