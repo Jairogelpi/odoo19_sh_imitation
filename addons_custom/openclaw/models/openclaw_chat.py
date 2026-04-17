@@ -20,6 +20,11 @@ class OpenClawChatSession(models.Model):
     last_message_preview = fields.Char(readonly=True)
     message_count = fields.Integer(compute='_compute_message_count')
     message_ids = fields.One2many('openclaw.chat.message', 'session_id', string='Messages')
+    request_ids = fields.One2many(
+        'openclaw.request',
+        'session_id',
+        string='Chat Actions',
+    )
 
     @api.depends('message_ids')
     def _compute_message_count(self):
@@ -35,6 +40,7 @@ class OpenClawChatSession(models.Model):
 
     @staticmethod
     def _message_payload(message) -> dict[str, Any]:
+        ordered_requests = message.request_ids.sorted(key=lambda r: (r.create_date or fields.Datetime.now(), r.id))
         return {
             'id': message.id,
             'session_id': message.session_id.id,
@@ -43,6 +49,7 @@ class OpenClawChatSession(models.Model):
             'user_id': message.user_id.id if message.user_id else False,
             'author_name': message.user_id.display_name if message.role == 'user' and message.user_id else 'OpenClaw',
             'create_date': message.create_date.isoformat() if message.create_date else False,
+            'requests': [request._chat_card_payload() for request in ordered_requests],
         }
 
     def _session_payload(self, include_messages: bool = True) -> dict[str, Any]:
@@ -194,3 +201,8 @@ class OpenClawChatMessage(models.Model):
     )
     user_id = fields.Many2one('res.users', string='User', default=lambda self: self.env.user)
     content = fields.Text(required=True)
+    request_ids = fields.One2many(
+        'openclaw.request',
+        'message_id',
+        string='Suggested Actions',
+    )
