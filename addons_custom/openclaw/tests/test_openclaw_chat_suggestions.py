@@ -1,3 +1,6 @@
+from unittest.mock import patch
+
+from odoo.addons.openclaw.models.gateway_client import OpenClawGatewayClient
 from odoo.tests import tagged
 from odoo.tests.common import TransactionCase
 
@@ -43,3 +46,34 @@ class TestOpenClawChatOne2Many(TransactionCase):
         self.assertIn("requests", payload)
         self.assertEqual(len(payload["requests"]), 1)
         self.assertEqual(payload["requests"][0]["id"], request.id)
+
+
+@tagged("post_install", "-at_install")
+class TestGatewayClientChatReply(TransactionCase):
+    def test_chat_reply_returns_reply_and_actions(self):
+        client = OpenClawGatewayClient(base_url="http://fake")
+        fake_result = {
+            "content": [{
+                "type": "text",
+                "text": '{"kind": "completed", "reply": "hola", "suggested_actions": [{"title": "X"}], "provider": "openrouter"}',
+            }],
+        }
+        with patch.object(client, "_rpc", return_value=fake_result):
+            out = client.chat_reply([{"role": "user", "content": "hi"}])
+        self.assertIsInstance(out, dict)
+        self.assertEqual(out["reply"], "hola")
+        self.assertEqual(out["suggested_actions"], [{"title": "X"}])
+        self.assertEqual(out["provider"], "openrouter")
+
+    def test_chat_reply_empty_actions_default(self):
+        client = OpenClawGatewayClient(base_url="http://fake")
+        fake_result = {
+            "content": [{
+                "type": "text",
+                "text": '{"kind": "completed", "reply": "hola"}',
+            }],
+        }
+        with patch.object(client, "_rpc", return_value=fake_result):
+            out = client.chat_reply([{"role": "user", "content": "hi"}])
+        self.assertEqual(out["reply"], "hola")
+        self.assertEqual(out["suggested_actions"], [])

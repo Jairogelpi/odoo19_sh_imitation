@@ -56,25 +56,40 @@ class OpenClawGatewayClient:
         model: str | None = None,
         temperature: float = 0.5,
         max_tokens: int = 800,
-    ) -> str:
+        policy_context: dict[str, Any] | None = None,
+    ) -> dict[str, Any]:
+        arguments: dict[str, Any] = {
+            "messages": messages,
+            "temperature": temperature,
+            "max_tokens": max_tokens,
+        }
+        if model:
+            arguments["model"] = model
+        if policy_context:
+            arguments["policy_context"] = policy_context
         result = self._rpc(
             "tools/call",
-            {
-                "name": "chat.reply",
-                "arguments": {
-                    "messages": messages,
-                    **({"model": model} if model else {}),
-                    "temperature": temperature,
-                    "max_tokens": max_tokens,
-                },
-            },
+            {"name": "chat.reply", "arguments": arguments},
         )
         decoded = self._decode_result(result)
         if isinstance(decoded, dict):
-            reply = decoded.get("reply") or decoded.get("summary")
-            if reply:
-                return str(reply)
-        return str(decoded)
+            reply = decoded.get("reply") or decoded.get("summary") or ""
+            raw_actions = decoded.get("suggested_actions")
+            actions = raw_actions if isinstance(raw_actions, list) else []
+            return {
+                "reply": str(reply),
+                "suggested_actions": actions,
+                "provider": decoded.get("provider") or "",
+                "model": decoded.get("model"),
+                "kind": decoded.get("kind") or "completed",
+            }
+        return {
+            "reply": str(decoded) if decoded is not None else "",
+            "suggested_actions": [],
+            "provider": "",
+            "model": None,
+            "kind": "completed",
+        }
 
     def _rpc(self, method: str, params: dict[str, Any] | None = None) -> Any:
         if not self.base_url:
