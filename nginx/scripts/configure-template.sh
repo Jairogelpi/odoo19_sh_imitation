@@ -1,5 +1,4 @@
 #!/bin/sh
-set -eu
 
 mode="${NGINX_TLS_MODE:-disabled}"
 template_root="/opt/odoo-nginx-templates"
