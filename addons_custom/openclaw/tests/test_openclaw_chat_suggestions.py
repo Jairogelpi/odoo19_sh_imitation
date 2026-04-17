@@ -212,3 +212,49 @@ class TestMaterializeSuggestions(TransactionCase):
             self.message, suggestions,
         )
         self.assertEqual(len(created), 5)
+
+
+@tagged("post_install", "-at_install")
+class TestRpcSendMessageWithSuggestions(TransactionCase):
+    def setUp(self):
+        super().setUp()
+        self.user_group = self.env.ref("openclaw.group_openclaw_user")
+        self.base_user_group = self.env.ref("base.group_user")
+        self.policy = self.env["openclaw.policy"].create({
+            "name": "Policy",
+            "key": "p",
+            "sequence": 10,
+            "allow_read_db": True,
+            "group_ids": [(6, 0, [self.user_group.id])],
+        })
+        self.user = self.env["res.users"].create({
+            "name": "U",
+            "login": "u@example.com",
+            "group_ids": [(6, 0, [self.user_group.id, self.base_user_group.id])],
+        })
+        self.env["ir.config_parameter"].sudo().set_param(
+            "openclaw.gateway_url", "http://fake",
+        )
+        self.session = self.env["openclaw.chat.session"].with_user(self.user).create({
+            "name": "s",
+            "user_id": self.user.id,
+        })
+
+    def test_send_message_persists_and_returns_requests(self):
+        fake_envelope = {
+            "reply": "Te propongo leer la DB",
+            "suggested_actions": [{
+                "title": "Leer",
+                "rationale": "el user preguntó",
+                "action_type": "db_read",
+                "policy_key": "p",
+                "payload": {"sql": "select 1"},
+            }],
+        }
+        Session = self.env["openclaw.chat.session"].with_user(self.user)
+        with patch.object(Session.__class__, "_generate_reply", return_value=fake_envelope):
+            result = Session.rpc_send_message(self.session.id, "hola")
+        assistant = result["assistant_message"]
+        self.assertEqual(len(assistant["requests"]), 1)
+        self.assertEqual(assistant["requests"][0]["policy_key"], "p")
+        self.assertEqual(assistant["requests"][0]["state"], "draft")

@@ -289,15 +289,19 @@ class OpenClawChatSession(models.Model):
             session_values['name'] = self._shorten_text(message_content, limit=60) or 'New conversation'
         session.write(session_values)
 
-        assistant_envelope = session._generate_reply(message_content)
-        assistant_reply = assistant_envelope.get('reply', '')
-        self.env['openclaw.chat.message'].create(
+        envelope = session._generate_reply(message_content)
+        assistant_reply = envelope.get('reply') or _('OpenClaw did not receive a usable reply.')
+        suggested_actions = envelope.get('suggested_actions') or []
+
+        assistant_message = self.env['openclaw.chat.message'].create(
             {
                 'session_id': session.id,
                 'role': 'assistant',
                 'content': assistant_reply,
             }
         )
+        session._materialize_suggestions(assistant_message, suggested_actions)
+
         session.write(
             {
                 'last_message_at': fields.Datetime.now(),
@@ -305,12 +309,10 @@ class OpenClawChatSession(models.Model):
             }
         )
 
-        ordered_messages = session.message_ids.sorted(key=lambda message: (message.create_date or fields.Datetime.now(), message.id))
-        assistant_message = ordered_messages[-1] if ordered_messages else False
         return {
             'session': session._session_payload(include_messages=True),
             'user_message': self._message_payload(user_message),
-            'assistant_message': self._message_payload(assistant_message) if assistant_message else False,
+            'assistant_message': self._message_payload(assistant_message),
         }
 
 
