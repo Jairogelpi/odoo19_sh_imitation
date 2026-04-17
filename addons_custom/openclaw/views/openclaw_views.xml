@@ -169,7 +169,7 @@
                 <field name="name"/>
                 <field name="instruction" placeholder="Fill this contact with the latest company data and create a follow-up opportunity."/>
                 <field name="requested_by"/>
-                <field name="policy_id"/>
+                <field name="policy_id" required="1"/>
                 <field name="action_type"/>
                 <field name="custom_tool_name" placeholder="workspace.write_file"/>
                 <field name="target_model"/>

@@ -15,7 +15,7 @@ class OpenClawRequest(models.Model):
     name = fields.Char(required=True, default='New')
     instruction = fields.Text(string='Instruction', required=True)
     requested_by = fields.Many2one('res.users', string='Requested By', default=lambda self: self.env.user)
-    policy_id = fields.Many2one('openclaw.policy', string='Policy', required=True, ondelete='restrict')
+    policy_id = fields.Many2one('openclaw.policy', string='Policy', ondelete='restrict')
     custom_tool_name = fields.Char(string='Custom Tool Name')
     action_type = fields.Selection(
         [
@@ -46,6 +46,24 @@ class OpenClawRequest(models.Model):
         default='draft',
     )
     approval_required = fields.Boolean(readonly=True)
+    session_id = fields.Many2one(
+        'openclaw.chat.session',
+        string='Chat Session',
+        ondelete='set null',
+        index=True,
+    )
+    message_id = fields.Many2one(
+        'openclaw.chat.message',
+        string='Originating Message',
+        ondelete='set null',
+        index=True,
+    )
+    origin = fields.Selection(
+        [('manual', 'Manual'), ('chat_suggestion', 'Chat Suggestion')],
+        required=True,
+        default='manual',
+    )
+    rationale = fields.Text(string='Agent Rationale', readonly=True)
     tool_allowlist = fields.Text(readonly=True)
     policy_snapshot_json = fields.Text(readonly=True)
     target_model = fields.Char()
@@ -78,6 +96,34 @@ class OpenClawRequest(models.Model):
                 request.approval_required = False
                 request.tool_allowlist = False
                 request.policy_snapshot_json = False
+
+    @api.constrains('state', 'policy_id')
+    def _check_policy_required_for_submit(self):
+        for request in self:
+            if request.state != 'draft' and not request.policy_id:
+                raise ValidationError(_('Cannot transition out of draft without a policy.'))
+
+    def _chat_card_payload(self) -> dict[str, Any]:
+        self.ensure_one()
+        return {
+            'id': self.id,
+            'state': self.state,
+            'action_type': self.action_type,
+            'custom_tool_name': self.custom_tool_name or '',
+            'policy_name': self.policy_id.name if self.policy_id else '',
+            'policy_key': self.policy_id.key if self.policy_id else '',
+            'target_model': self.target_model or '',
+            'target_ref': self.target_ref or '',
+            'rationale': self.rationale or '',
+            'result_summary': self.result_summary or '',
+            'error_message': self.error_message or '',
+            'decision_note': self.decision_note or '',
+            'blocked': (
+                self.state == 'draft'
+                and bool(self.decision_note)
+                and not self.policy_id
+            ),
+        }
 
     @api.model_create_multi
     def create(self, vals_list):
@@ -117,6 +163,8 @@ class OpenClawRequest(models.Model):
         for request in self:
             if request.state != 'draft':
                 raise ValidationError(_('Only draft requests can be submitted.'))
+            if not request.policy_id:
+                raise ValidationError(_('This request has no policy assigned and cannot be submitted.'))
             values = {'submitted_at': fields.Datetime.now()}
             if request.approval_required:
                 values['state'] = 'pending'
