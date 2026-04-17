@@ -404,6 +404,32 @@ class OpenClawMCPGateway:
                 },
             ),
             ToolSpec(
+                name="chat.reply",
+                description="Generate a conversational reply for the OpenClaw chat UI using the configured OpenRouter model.",
+                input_schema={
+                    "type": "object",
+                    "properties": {
+                        "messages": {
+                            "type": "array",
+                            "items": {
+                                "type": "object",
+                                "properties": {
+                                    "role": {"type": "string", "enum": ["system", "user", "assistant"]},
+                                    "content": {"type": "string"},
+                                },
+                                "required": ["role", "content"],
+                                "additionalProperties": True,
+                            },
+                        },
+                        "model": {"type": "string"},
+                        "temperature": {"type": "number", "minimum": 0, "maximum": 2},
+                        "max_tokens": {"type": "integer", "minimum": 1, "maximum": 4000},
+                    },
+                    "required": ["messages"],
+                    "additionalProperties": False,
+                },
+            ),
+            ToolSpec(
                 name="shell.execute",
                 description="Execute a shell command only when explicitly enabled by environment policy.",
                 input_schema={
@@ -455,6 +481,7 @@ class OpenClawMCPGateway:
             "github.list_workflows": self.tool_github_list_workflows,
             "github.dispatch_workflow": self.tool_github_dispatch_workflow,
             "code.generate": self.tool_code_generate,
+            "chat.reply": self.tool_chat_reply,
             "shell.execute": self.tool_shell_execute,
         }
         if name not in handlers:
@@ -882,6 +909,71 @@ class OpenClawMCPGateway:
             "draft": draft,
             "provider": "local-fallback",
             "model": settings.openrouter_model,
+        }
+
+    async def tool_chat_reply(self, arguments: dict[str, Any]) -> dict[str, Any]:
+        raw_messages = arguments.get("messages") or []
+        if not isinstance(raw_messages, list) or not raw_messages:
+            return {"kind": "rejected", "summary": "chat.reply requires messages."}
+
+        messages: list[dict[str, str]] = []
+        for item in raw_messages:
+            if not isinstance(item, dict):
+                continue
+            role = item.get("role") or "user"
+            if role not in {"system", "user", "assistant"}:
+                role = "user"
+            content = str(item.get("content") or "").strip()
+            if not content:
+                continue
+            messages.append({"role": role, "content": content})
+
+        if not messages:
+            return {"kind": "rejected", "summary": "chat.reply requires non-empty messages."}
+
+        chosen_model = (arguments.get("model") or settings.openrouter_model).strip()
+        temperature = float(arguments.get("temperature", 0.5))
+        max_tokens = int(arguments.get("max_tokens", 800))
+
+        if self.openrouter.configured:
+            models_to_try = [chosen_model]
+            if settings.openrouter_fallback_model and settings.openrouter_fallback_model not in models_to_try:
+                models_to_try.append(settings.openrouter_fallback_model)
+
+            last_error: str | None = None
+            for model_name in models_to_try:
+                try:
+                    reply = await self.openrouter.chat_reply(
+                        messages,
+                        model=model_name,
+                        temperature=temperature,
+                        max_tokens=max_tokens,
+                    )
+                    return {
+                        "kind": "completed",
+                        "summary": "Generated a chat reply.",
+                        "reply": reply,
+                        "model": model_name,
+                        "provider": "openrouter",
+                    }
+                except (OpenRouterError, httpx.HTTPError, ValueError) as exc:
+                    last_error = str(exc)
+                    log.warning("OpenRouter chat reply failed for %s: %s", model_name, exc)
+
+            if last_error:
+                log.warning("OpenRouter chat reply fell back to local output: %s", last_error)
+
+        last_user_message = next((message["content"] for message in reversed(messages) if message["role"] == "user"), "")
+        fallback_reply = (
+            "OpenClaw chat is running in local fallback mode. "
+            f"I received: {last_user_message or 'an empty message'}."
+        )
+        return {
+            "kind": "completed",
+            "summary": "Generated a local fallback chat reply.",
+            "reply": fallback_reply,
+            "provider": "local",
+            "model": None,
         }
 
     async def tool_shell_execute(self, arguments: dict[str, Any]) -> dict[str, Any]:

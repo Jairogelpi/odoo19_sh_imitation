@@ -151,3 +151,41 @@ class OpenRouterClient:
         draft["provider"] = "openrouter"
         draft["model"] = chosen_model
         return draft
+
+    async def chat_reply(
+        self,
+        messages: list[dict[str, Any]],
+        *,
+        model: str | None = None,
+        temperature: float = 0.5,
+        max_tokens: int = 800,
+    ) -> str:
+        chosen_model = (model or self.default_model).strip()
+        payload: dict[str, Any] = {
+            "model": chosen_model,
+            "messages": messages,
+            "temperature": temperature,
+            "max_tokens": max_tokens,
+        }
+        if self.reasoning_enabled and self._supports_reasoning(chosen_model):
+            payload["reasoning"] = {"enabled": True}
+
+        endpoint = f"{self.api_base.rstrip('/')}/chat/completions"
+        async with httpx.AsyncClient(timeout=self.timeout_seconds, follow_redirects=True) as client:
+            response = await client.post(endpoint, headers=self._headers(), json=payload)
+            response.raise_for_status()
+            data = response.json()
+
+        choices = data.get("choices") or []
+        if not choices:
+            raise OpenRouterError("OpenRouter response did not include any choices")
+
+        message = choices[0].get("message") or {}
+        content = message.get("content") or ""
+        if isinstance(content, list):
+            content = "".join(
+                item.get("text", "") if isinstance(item, dict) else str(item)
+                for item in content
+            )
+
+        return _strip_code_fences(str(content))
