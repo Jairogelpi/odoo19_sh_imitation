@@ -52,6 +52,29 @@ def _jsonrpc_error(request_id: Any, code: int, message: str, data: Any | None = 
     return {"jsonrpc": "2.0", "id": request_id, "error": error}
 
 
+def _parse_llm_envelope(raw_text: str) -> tuple[str, list[dict[str, Any]]]:
+    """Parse an LLM response expected to be a JSON object with keys
+    `reply` (string) and `suggested_actions` (list).
+
+    Falls back to using the raw text as `reply` when JSON parsing fails
+    or when the payload does not match the expected shape.
+    """
+    stripped = (raw_text or "").strip()
+    if not stripped:
+        return "", []
+    try:
+        decoded = json.loads(stripped)
+    except (json.JSONDecodeError, ValueError):
+        return stripped, []
+    if not isinstance(decoded, dict):
+        return stripped, []
+    reply = decoded.get("reply", "")
+    reply_str = "" if reply is None else str(reply)
+    raw_actions = decoded.get("suggested_actions")
+    actions = raw_actions if isinstance(raw_actions, list) else []
+    return reply_str, actions
+
+
 @dataclass(frozen=True)
 class ToolSpec:
     name: str
