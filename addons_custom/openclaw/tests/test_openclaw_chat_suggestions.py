@@ -77,3 +77,51 @@ class TestGatewayClientChatReply(TransactionCase):
             out = client.chat_reply([{"role": "user", "content": "hi"}])
         self.assertEqual(out["reply"], "hola")
         self.assertEqual(out["suggested_actions"], [])
+
+
+@tagged("post_install", "-at_install")
+class TestBuildPolicyContext(TransactionCase):
+    def setUp(self):
+        super().setUp()
+        self.user_group = self.env.ref("openclaw.group_openclaw_user")
+        self.admin_group = self.env.ref("openclaw.group_openclaw_admin")
+        self.base_user_group = self.env.ref("base.group_user")
+        self.user = self.env["res.users"].create({
+            "name": "Chat User",
+            "login": "chatuser@example.com",
+            "group_ids": [(6, 0, [self.user_group.id, self.base_user_group.id])],
+        })
+        self.policy_user_accessible = self.env["openclaw.policy"].create({
+            "name": "User Policy",
+            "key": "user_policy",
+            "sequence": 10,
+            "allow_read_db": True,
+            "group_ids": [(6, 0, [self.user_group.id])],
+        })
+        self.policy_admin_only = self.env["openclaw.policy"].create({
+            "name": "Admin Policy",
+            "key": "admin_policy",
+            "sequence": 20,
+            "allow_write_db": True,
+            "group_ids": [(6, 0, [self.admin_group.id])],
+        })
+
+    def test_policy_context_filters_to_accessible_policies(self):
+        session = self.env["openclaw.chat.session"].with_user(self.user).create({
+            "name": "s",
+            "user_id": self.user.id,
+        })
+        context = session._build_policy_context()
+        keys = [p["key"] for p in context["available_policies"]]
+        self.assertIn("user_policy", keys)
+        self.assertNotIn("admin_policy", keys)
+
+    def test_policy_context_allowed_actions_derived_from_policy_flags(self):
+        session = self.env["openclaw.chat.session"].with_user(self.user).create({
+            "name": "s",
+            "user_id": self.user.id,
+        })
+        context = session._build_policy_context()
+        entry = next(p for p in context["available_policies"] if p["key"] == "user_policy")
+        self.assertIn("db_read", entry["allowed_actions"])
+        self.assertNotIn("db_write", entry["allowed_actions"])

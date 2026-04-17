@@ -26,6 +26,43 @@ class OpenClawChatSession(models.Model):
         string='Chat Actions',
     )
 
+    _POLICY_FLAG_TO_ACTION = {
+        'allow_read_db': 'db_read',
+        'allow_write_db': 'db_write',
+        'allow_read_odoo': 'odoo_read',
+        'allow_write_odoo': 'odoo_write',
+        'allow_read_docs': 'docs_read',
+        'allow_write_docs': 'docs_write',
+        'allow_web_search': 'web_search',
+        'allow_code_generation': 'code_generation',
+        'allow_shell_actions': 'shell_action',
+    }
+
+    def _build_policy_context(self) -> dict[str, Any]:
+        self.ensure_one()
+        user = self.user_id or self.env.user
+        policies = self.env['openclaw.policy'].sudo().search([('active', '=', True)])
+        user_group_ids = set(user.group_ids.ids)
+        entries: list[dict[str, Any]] = []
+        for policy in policies:
+            policy_groups = set(policy.group_ids.ids)
+            if policy_groups and not (policy_groups & user_group_ids):
+                continue
+            allowed_actions = [
+                action_name
+                for flag, action_name in self._POLICY_FLAG_TO_ACTION.items()
+                if getattr(policy, flag, False)
+            ]
+            entries.append({
+                'key': policy.key,
+                'name': policy.name,
+                'allowed_actions': allowed_actions,
+            })
+        return {
+            'available_policies': entries,
+            'user_locale': user.lang or 'en_US',
+        }
+
     @api.depends('message_ids')
     def _compute_message_count(self):
         for session in self:
@@ -92,24 +129,27 @@ class OpenClawChatSession(models.Model):
             messages.append({'role': message.role, 'content': message.content})
         return messages
 
-    def _generate_reply(self, user_content: str) -> str:
+    def _generate_reply(self, user_content: str) -> dict[str, Any]:
         self.ensure_one()
         try:
-            response = self._gateway_client().call_tool(
-                'chat.reply',
-                {
-                    'messages': self._chat_messages_for_gateway() + [{'role': 'user', 'content': user_content}],
-                },
+            response = self._gateway_client().chat_reply(
+                self._chat_messages_for_gateway() + [{'role': 'user', 'content': user_content}],
+                policy_context=self._build_policy_context(),
             )
         except OpenClawGatewayError as exc:
-            return _('OpenClaw could not contact the gateway: %s') % exc
+            return {
+                'reply': _('OpenClaw could not contact the gateway: %s') % exc,
+                'suggested_actions': [],
+            }
 
-        if isinstance(response, dict):
-            reply = response.get('reply') or response.get('summary')
-            if reply:
-                return str(reply)
-
-        return _('OpenClaw did not receive a usable reply.')
+        if not isinstance(response, dict):
+            return {
+                'reply': _('OpenClaw did not receive a usable reply.'),
+                'suggested_actions': [],
+            }
+        reply_text = response.get('reply') or _('OpenClaw did not receive a usable reply.')
+        actions = response.get('suggested_actions') or []
+        return {'reply': str(reply_text), 'suggested_actions': actions}
 
     @api.model
     def rpc_list_sessions(self):
@@ -160,7 +200,8 @@ class OpenClawChatSession(models.Model):
             session_values['name'] = self._shorten_text(message_content, limit=60) or 'New conversation'
         session.write(session_values)
 
-        assistant_reply = session._generate_reply(message_content)
+        assistant_envelope = session._generate_reply(message_content)
+        assistant_reply = assistant_envelope.get('reply', '')
         self.env['openclaw.chat.message'].create(
             {
                 'session_id': session.id,
