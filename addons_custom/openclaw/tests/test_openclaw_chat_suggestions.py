@@ -125,3 +125,90 @@ class TestBuildPolicyContext(TransactionCase):
         entry = next(p for p in context["available_policies"] if p["key"] == "user_policy")
         self.assertIn("db_read", entry["allowed_actions"])
         self.assertNotIn("db_write", entry["allowed_actions"])
+
+
+@tagged("post_install", "-at_install")
+class TestMaterializeSuggestions(TransactionCase):
+    def setUp(self):
+        super().setUp()
+        self.user_group = self.env.ref("openclaw.group_openclaw_user")
+        self.base_user_group = self.env.ref("base.group_user")
+        self.policy = self.env["openclaw.policy"].create({
+            "name": "User Policy",
+            "key": "user_policy",
+            "sequence": 10,
+            "allow_read_db": True,
+            "allow_write_db": True,
+            "require_human_approval": False,
+            "group_ids": [(6, 0, [self.user_group.id])],
+        })
+        self.user = self.env["res.users"].create({
+            "name": "Chat User",
+            "login": "m@example.com",
+            "group_ids": [(6, 0, [self.user_group.id, self.base_user_group.id])],
+        })
+        self.session = self.env["openclaw.chat.session"].with_user(self.user).create({
+            "name": "s",
+            "user_id": self.user.id,
+        })
+        self.message = self.env["openclaw.chat.message"].with_user(self.user).create({
+            "session_id": self.session.id,
+            "role": "assistant",
+            "content": "ok",
+        })
+
+    def _suggestion(self, **overrides):
+        base = {
+            "title": "A",
+            "rationale": "r",
+            "action_type": "db_read",
+            "policy_key": "user_policy",
+            "payload": {"sql": "select 1"},
+        }
+        base.update(overrides)
+        return base
+
+    def test_valid_suggestion_creates_draft_with_forced_approval(self):
+        created = self.session.with_user(self.user)._materialize_suggestions(
+            self.message, [self._suggestion()],
+        )
+        self.assertEqual(len(created), 1)
+        request = created[0]
+        self.assertEqual(request.origin, "chat_suggestion")
+        self.assertEqual(request.state, "draft")
+        self.assertTrue(request.approval_required)
+        self.assertEqual(request.session_id, self.session)
+        self.assertEqual(request.message_id, self.message)
+        self.assertEqual(request.policy_id, self.policy)
+        self.assertEqual(request.rationale, "r")
+
+    def test_unknown_policy_key_creates_blocked_draft(self):
+        created = self.session.with_user(self.user)._materialize_suggestions(
+            self.message, [self._suggestion(policy_key="nope")],
+        )
+        self.assertEqual(len(created), 1)
+        self.assertFalse(created[0].policy_id)
+        self.assertIn("nope", created[0].decision_note)
+
+    def test_non_dict_payload_is_blocked(self):
+        created = self.session.with_user(self.user)._materialize_suggestions(
+            self.message, [self._suggestion(payload=["not", "a", "dict"])],
+        )
+        self.assertEqual(len(created), 1)
+        self.assertFalse(created[0].policy_id)
+        self.assertIn("payload", created[0].decision_note.lower())
+
+    def test_invalid_action_type_is_blocked(self):
+        created = self.session.with_user(self.user)._materialize_suggestions(
+            self.message, [self._suggestion(action_type="not_a_real_action")],
+        )
+        self.assertEqual(len(created), 1)
+        self.assertFalse(created[0].policy_id)
+        self.assertIn("action_type", created[0].decision_note.lower())
+
+    def test_truncation_to_five(self):
+        suggestions = [self._suggestion(title=f"A{i}") for i in range(7)]
+        created = self.session.with_user(self.user)._materialize_suggestions(
+            self.message, suggestions,
+        )
+        self.assertEqual(len(created), 5)

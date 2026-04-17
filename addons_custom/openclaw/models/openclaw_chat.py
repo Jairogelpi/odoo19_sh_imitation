@@ -1,11 +1,15 @@
 from __future__ import annotations
 
+import json
+import logging
 from typing import Any
 
 from odoo import _, api, fields, models
-from odoo.exceptions import ValidationError
+from odoo.exceptions import AccessError, ValidationError
 
 from .gateway_client import OpenClawGatewayClient, OpenClawGatewayError
+
+_logger = logging.getLogger(__name__)
 
 
 class OpenClawChatSession(models.Model):
@@ -62,6 +66,91 @@ class OpenClawChatSession(models.Model):
             'available_policies': entries,
             'user_locale': user.lang or 'en_US',
         }
+
+    _CHAT_SUGGESTION_LIMIT = 5
+    _VALID_ACTION_TYPES = {
+        'db_read', 'db_write', 'odoo_read', 'odoo_write',
+        'docs_read', 'docs_write', 'web_search',
+        'code_generation', 'shell_action', 'custom',
+    }
+
+    def _materialize_suggestions(
+        self,
+        message,
+        suggestions: list[dict[str, Any]],
+    ):
+        self.ensure_one()
+        Request = self.env['openclaw.request']
+        if not suggestions:
+            return Request
+        try:
+            Request.check_access_rights('create')
+        except AccessError:
+            _logger.info(
+                "Skipped %s chat suggestions for non-openclaw user %s",
+                len(suggestions), self.env.user.login,
+            )
+            return Request
+        policy_context = self._build_policy_context()
+        allowed_keys = {p['key']: p for p in policy_context['available_policies']}
+        policies_by_key = {
+            p.key: p for p in self.env['openclaw.policy'].sudo().search([
+                ('key', 'in', list(allowed_keys.keys())),
+                ('active', '=', True),
+            ])
+        }
+        if len(suggestions) > self._CHAT_SUGGESTION_LIMIT:
+            _logger.warning(
+                "Chat session %s received %s suggestions; truncating to %s",
+                self.id, len(suggestions), self._CHAT_SUGGESTION_LIMIT,
+            )
+            suggestions = suggestions[: self._CHAT_SUGGESTION_LIMIT]
+
+        created = Request.browse()
+        for item in suggestions:
+            if not isinstance(item, dict):
+                continue
+            title = str(item.get('title') or 'Chat suggestion').strip() or 'Chat suggestion'
+            rationale = str(item.get('rationale') or '').strip()
+            action_type = item.get('action_type')
+            payload = item.get('payload')
+            policy_key = item.get('policy_key')
+            target_model = (item.get('target_model') or '').strip() or False
+            target_ref = (item.get('target_ref') or '').strip() or False
+            custom_tool_name = (item.get('custom_tool_name') or '').strip() or False
+
+            decision_notes: list[str] = []
+            if action_type not in self._VALID_ACTION_TYPES:
+                decision_notes.append(f"Invalid action_type: {action_type!r}")
+            if not isinstance(payload, dict):
+                decision_notes.append("payload must be a JSON object")
+            policy = policies_by_key.get(policy_key) if policy_key else None
+            if policy is None:
+                decision_notes.append(f"policy_key {policy_key!r} not found")
+
+            vals: dict[str, Any] = {
+                'name': title[:255],
+                'instruction': rationale or title,
+                'requested_by': self.env.user.id,
+                'session_id': self.id,
+                'message_id': message.id,
+                'origin': 'chat_suggestion',
+                'rationale': rationale,
+                'target_model': target_model,
+                'target_ref': target_ref,
+                'custom_tool_name': custom_tool_name,
+                'approval_required': True,
+            }
+            if not decision_notes:
+                vals['action_type'] = action_type
+                vals['policy_id'] = policy.id
+                vals['payload_json'] = json.dumps(payload, ensure_ascii=False, indent=2)
+            else:
+                vals['decision_note'] = '; '.join(decision_notes)
+                vals['action_type'] = 'custom'
+
+            created |= Request.create(vals)
+        return created
 
     @api.depends('message_ids')
     def _compute_message_count(self):
