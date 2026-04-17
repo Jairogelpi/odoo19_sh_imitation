@@ -315,6 +315,69 @@ class OpenClawChatSession(models.Model):
             'assistant_message': self._message_payload(assistant_message),
         }
 
+    @api.model
+    def rpc_approve_request(self, request_id: int):
+        request = self.env['openclaw.request'].browse(request_id).exists()
+        if not request:
+            raise ValidationError(_('Request not found.'))
+        if not request.policy_id:
+            raise ValidationError(_('This request is blocked and cannot be approved.'))
+
+        if request.state == 'draft':
+            request.action_submit()
+        if request.state == 'pending':
+            request.action_approve()
+        if request.state != 'approved':
+            raise ValidationError(_('Request could not reach approved state.'))
+
+        try:
+            request.action_execute()
+        except Exception as exc:
+            request.write({
+                'state': 'failed',
+                'failed_at': fields.Datetime.now(),
+                'error_message': str(exc),
+            })
+            _logger.warning(
+                "Chat approval execution failed for request %s: %s",
+                request.id, exc,
+            )
+
+        return request._chat_card_payload()
+
+    @api.model
+    def rpc_reject_request(self, request_id: int):
+        request = self.env['openclaw.request'].browse(request_id).exists()
+        if not request:
+            raise ValidationError(_('Request not found.'))
+        if request.state == 'draft':
+            request.write({'state': 'rejected'})
+        elif request.state in ('pending', 'approved'):
+            request.action_reject()
+        else:
+            raise ValidationError(_('Request is not in a rejectable state.'))
+        return request._chat_card_payload()
+
+    @api.model
+    def rpc_get_request_detail(self, request_id: int):
+        request = self.env['openclaw.request'].browse(request_id).exists()
+        if not request:
+            raise ValidationError(_('Request not found.'))
+        payload = request._chat_card_payload()
+        payload.update({
+            'instruction': request.instruction or '',
+            'payload_json': request.payload_json or '',
+            'policy_snapshot_json': request.policy_snapshot_json or '',
+            'gateway_response_json': request.gateway_response_json or '',
+            'requested_at': request.requested_at.isoformat() if request.requested_at else False,
+            'submitted_at': request.submitted_at.isoformat() if request.submitted_at else False,
+            'approved_at': request.approved_at.isoformat() if request.approved_at else False,
+            'executed_at': request.executed_at.isoformat() if request.executed_at else False,
+            'failed_at': request.failed_at.isoformat() if request.failed_at else False,
+            'approved_by': request.approved_by.display_name if request.approved_by else '',
+        })
+        return payload
+
 
 class OpenClawChatMessage(models.Model):
     _name = 'openclaw.chat.message'

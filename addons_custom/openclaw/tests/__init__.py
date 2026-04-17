@@ -1,3 +1,4 @@
 from . import test_res_config_settings
 from . import test_openclaw_request_origin
 from . import test_openclaw_chat_suggestions
+from . import test_openclaw_chat_approval
