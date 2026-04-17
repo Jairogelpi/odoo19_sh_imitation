@@ -64,5 +64,49 @@
       <field name="perm_create" eval="True"/>
       <field name="perm_unlink" eval="False"/>
     </record>
+
+    <record id="rule_openclaw_chat_session_user_own" model="ir.rule">
+      <field name="name">OpenClaw chat sessions: own records</field>
+      <field name="model_id" ref="model_openclaw_chat_session"/>
+      <field name="domain_force">[('user_id', '=', user.id)]</field>
+      <field name="groups" eval="[(4, ref('base.group_user'))]"/>
+      <field name="perm_read" eval="True"/>
+      <field name="perm_write" eval="True"/>
+      <field name="perm_create" eval="True"/>
+      <field name="perm_unlink" eval="False"/>
+    </record>
+
+    <record id="rule_openclaw_chat_session_admin_all" model="ir.rule">
+      <field name="name">OpenClaw chat sessions: admin all records</field>
+      <field name="model_id" ref="model_openclaw_chat_session"/>
+      <field name="domain_force">[(1, '=', 1)]</field>
+      <field name="groups" eval="[(4, ref('openclaw.group_openclaw_admin'))]"/>
+      <field name="perm_read" eval="True"/>
+      <field name="perm_write" eval="True"/>
+      <field name="perm_create" eval="True"/>
+      <field name="perm_unlink" eval="False"/>
+    </record>
+
+    <record id="rule_openclaw_chat_message_user_own" model="ir.rule">
+      <field name="name">OpenClaw chat messages: own session records</field>
+      <field name="model_id" ref="model_openclaw_chat_message"/>
+      <field name="domain_force">[('session_id.user_id', '=', user.id)]</field>
+      <field name="groups" eval="[(4, ref('base.group_user'))]"/>
+      <field name="perm_read" eval="True"/>
+      <field name="perm_write" eval="True"/>
+      <field name="perm_create" eval="True"/>
+      <field name="perm_unlink" eval="False"/>
+    </record>
+
+    <record id="rule_openclaw_chat_message_admin_all" model="ir.rule">
+      <field name="name">OpenClaw chat messages: admin all records</field>
+      <field name="model_id" ref="model_openclaw_chat_message"/>
+      <field name="domain_force">[(1, '=', 1)]</field>
+      <field name="groups" eval="[(4, ref('openclaw.group_openclaw_admin'))]"/>
+      <field name="perm_read" eval="True"/>
+      <field name="perm_write" eval="True"/>
+      <field name="perm_create" eval="True"/>
+      <field name="perm_unlink" eval="False"/>
+    </record>
   </data>
 </odoo>

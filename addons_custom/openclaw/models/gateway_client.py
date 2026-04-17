@@ -49,6 +49,33 @@ class OpenClawGatewayClient:
         )
         return self._decode_result(result)
 
+    def chat_reply(
+        self,
+        messages: list[dict[str, Any]],
+        *,
+        model: str | None = None,
+        temperature: float = 0.5,
+        max_tokens: int = 800,
+    ) -> str:
+        result = self._rpc(
+            "tools/call",
+            {
+                "name": "chat.reply",
+                "arguments": {
+                    "messages": messages,
+                    **({"model": model} if model else {}),
+                    "temperature": temperature,
+                    "max_tokens": max_tokens,
+                },
+            },
+        )
+        decoded = self._decode_result(result)
+        if isinstance(decoded, dict):
+            reply = decoded.get("reply") or decoded.get("summary")
+            if reply:
+                return str(reply)
+        return str(decoded)
+
     def _rpc(self, method: str, params: dict[str, Any] | None = None) -> Any:
         if not self.base_url:
             raise OpenClawGatewayError("MCP gateway URL is not configured")

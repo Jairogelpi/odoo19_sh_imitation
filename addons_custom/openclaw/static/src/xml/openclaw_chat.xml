@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates xml:space="preserve">
+    <t t-name="openclaw.OpenClawChatAction">
+        <div class="o_openclaw_chat">
+            <aside class="o_openclaw_chat_sidebar">
+                <div class="o_openclaw_chat_sidebar_header">
+                    <div>
+                        <div class="o_openclaw_chat_kicker">OpenClaw</div>
+                        <h1>Sessions</h1>
+                    </div>
+                    <button type="button" class="btn btn-primary o_openclaw_chat_new" t-on-click="createSession">
+                        New chat
+                    </button>
+                </div>
+                <div class="o_openclaw_chat_session_list">
+                    <t t-foreach="state.sessions" t-as="session" t-key="session.id">
+                        <button
+                            type="button"
+                            class="o_openclaw_chat_session_item"
+                            t-att-class="state.activeSession and state.activeSession.id === session.id ? 'is-active' : ''"
+                            t-on-click="() => selectSession(session.id)"
+                        >
+                            <div class="o_openclaw_chat_session_name">
+                                <t t-esc="session.name"/>
+                            </div>
+                            <div class="o_openclaw_chat_session_preview">
+                                <t t-esc="session.last_message_preview or 'Start a new conversation'"/>
+                            </div>
+                        </button>
+                    </t>
+                </div>
+            </aside>
+
+            <main class="o_openclaw_chat_main">
+                <div class="o_openclaw_chat_main_header">
+                    <div>
+                        <div class="o_openclaw_chat_kicker">Conversation</div>
+                        <h2>
+                            <t t-esc="state.activeSession and state.activeSession.name or 'Untitled session'"/>
+                        </h2>
+                    </div>
+                    <div class="o_openclaw_chat_status">
+                        <span class="o_openclaw_chat_dot"/>
+                        <span>Admin permissions are handled in the background</span>
+                    </div>
+                </div>
+
+                <div class="o_openclaw_chat_messages" t-att-class="state.loading ? 'is-loading' : ''">
+                    <t t-if="state.loading">
+                        <div class="o_openclaw_chat_empty_state">
+                            Loading chat history...
+                        </div>
+                    </t>
+                    <t t-elif="!state.messages.length">
+                        <div class="o_openclaw_chat_empty_state">
+                            Start the first conversation and OpenClaw will keep the session history here.
+                        </div>
+                    </t>
+                    <t t-else="">
+                        <t t-foreach="state.messages" t-as="message" t-key="message.id">
+                            <article t-att-class="'o_openclaw_chat_message is-' + message.role">
+                                <div class="o_openclaw_chat_bubble">
+                                    <div class="o_openclaw_chat_message_meta">
+                                        <span class="o_openclaw_chat_message_author">
+                                            <t t-esc="message.author_name"/>
+                                        </span>
+                                    </div>
+                                    <div class="o_openclaw_chat_message_content">
+                                        <t t-esc="message.content"/>
+                                    </div>
+                                </div>
+                            </article>
+                        </t>
+                    </t>
+                </div>
+
+                <div class="o_openclaw_chat_composer">
+                    <textarea
+                        class="o_openclaw_chat_input"
+                        placeholder="Type a message and press Enter to send"
+                        t-model="state.draft"
+                        t-on-keydown="onDraftKeydown"
+                        rows="3"
+                    />
+                    <div class="o_openclaw_chat_actions">
+                        <button type="button" class="btn btn-primary" t-on-click="sendMessage" t-att-disabled="state.sending">
+                            <t t-if="state.sending">Sending...</t>
+                            <t t-else="">Send</t>
+                        </button>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </t>
+</templates>

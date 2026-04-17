@@ -1,4 +1,7 @@
 id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_openclaw_chat_session_internal,openclaw.chat.session internal,model_openclaw_chat_session,base.group_user,1,1,1,0
+access_openclaw_chat_message_internal,openclaw.chat.message internal,model_openclaw_chat_message,base.group_user,1,1,1,0
+access_openclaw_request_internal,openclaw.request internal,model_openclaw_request,base.group_user,1,0,0,0
 access_openclaw_policy_user,openclaw.policy user,model_openclaw_policy,openclaw.group_openclaw_user,1,0,0,0
 access_openclaw_policy_operator,openclaw.policy operator,model_openclaw_policy,openclaw.group_openclaw_operator,1,0,0,0
 access_openclaw_policy_admin,openclaw.policy admin,model_openclaw_policy,openclaw.group_openclaw_admin,1,1,1,1

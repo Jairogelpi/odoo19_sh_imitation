@@ -70,6 +70,61 @@
       <field name="view_mode">list,form</field>
     </record>
 
+    <record id="action_openclaw_chat" model="ir.actions.client">
+      <field name="name">OpenClaw Chat</field>
+      <field name="tag">openclaw_chat_action</field>
+    </record>
+
+    <record id="view_openclaw_chat_session_tree" model="ir.ui.view">
+      <field name="name">openclaw.chat.session.tree</field>
+      <field name="model">openclaw.chat.session</field>
+      <field name="arch" type="xml">
+        <list>
+          <field name="name"/>
+          <field name="message_count"/>
+          <field name="last_message_at"/>
+          <field name="last_message_preview"/>
+          <field name="active"/>
+        </list>
+      </field>
+    </record>
+
+    <record id="view_openclaw_chat_session_form" model="ir.ui.view">
+      <field name="name">openclaw.chat.session.form</field>
+      <field name="model">openclaw.chat.session</field>
+      <field name="arch" type="xml">
+        <form>
+          <sheet>
+            <group>
+              <field name="name"/>
+              <field name="user_id"/>
+              <field name="active"/>
+              <field name="last_message_at" readonly="1"/>
+              <field name="last_message_preview" readonly="1"/>
+            </group>
+            <notebook>
+              <page string="Messages">
+                <field name="message_ids" readonly="1">
+                  <list>
+                    <field name="role"/>
+                    <field name="user_id"/>
+                    <field name="content"/>
+                    <field name="create_date"/>
+                  </list>
+                </field>
+              </page>
+            </notebook>
+          </sheet>
+        </form>
+      </field>
+    </record>
+
+    <record id="action_openclaw_chat_session" model="ir.actions.act_window">
+      <field name="name">OpenClaw Chat Sessions</field>
+      <field name="res_model">openclaw.chat.session</field>
+      <field name="view_mode">list,form</field>
+    </record>
+
     <record id="view_openclaw_request_tree" model="ir.ui.view">
       <field name="name">openclaw.request.tree</field>
       <field name="model">openclaw.request</field>
@@ -156,8 +211,9 @@
       <field name="context">{'default_name': 'New'}</field>
     </record>
 
-    <menuitem id="menu_openclaw_root" name="OpenClaw" sequence="15" groups="openclaw.group_openclaw_user"/>
-    <menuitem id="menu_openclaw_requests" name="Requests" parent="menu_openclaw_root" action="action_openclaw_request" sequence="10"/>
-    <menuitem id="menu_openclaw_policies" name="Policies" parent="menu_openclaw_root" action="action_openclaw_policy" sequence="20" groups="openclaw.group_openclaw_admin"/>
+    <menuitem id="menu_openclaw_root" name="OpenClaw" sequence="15" action="action_openclaw_chat" web_icon="openclaw,static/description/icon.svg"/>
+    <menuitem id="menu_openclaw_chat_sessions" name="Sessions" parent="menu_openclaw_root" action="action_openclaw_chat_session" sequence="10" groups="openclaw.group_openclaw_admin"/>
+    <menuitem id="menu_openclaw_requests" name="Requests" parent="menu_openclaw_root" action="action_openclaw_request" sequence="20" groups="openclaw.group_openclaw_admin"/>
+    <menuitem id="menu_openclaw_policies" name="Policies" parent="menu_openclaw_root" action="action_openclaw_policy" sequence="30" groups="openclaw.group_openclaw_admin"/>
   </data>
 </odoo>

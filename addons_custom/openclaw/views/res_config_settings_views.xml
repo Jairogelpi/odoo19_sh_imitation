@@ -51,7 +51,7 @@
                 <div class="o_setting_left_pane"/>
                 <div class="o_setting_right_pane">
                   <label for="openclaw_allowed_tools"/>
-                  <field name="openclaw_allowed_tools" placeholder="db.read"/>
+                  <field name="openclaw_allowed_tools" widget="text" class="w-100" placeholder="db.read&#10;db.write"/>
                   <div class="text-muted">One tool name per line. The MCP gateway should enforce this allowlist.</div>
                 </div>
               </div>

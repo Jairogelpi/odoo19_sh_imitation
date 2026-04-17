@@ -6,6 +6,7 @@
     'author': 'Smart System for Information Technology',
     'website': 'https://smartsystem.sa',
     'license': 'LGPL-3',
+    'icon': '/openclaw/static/description/icon.svg',
     'depends': ['base', 'base_setup', 'web'],
     'data': [
         'security/openclaw_security.xml',
@@ -14,6 +15,12 @@
         'views/openclaw_views.xml',
         'views/res_config_settings_views.xml',
     ],
+    'assets': {
+        'web.assets_backend': [
+            'openclaw/static/src/js/openclaw_chat.js',
+            'openclaw/static/src/xml/openclaw_chat.xml',
+        ],
+    },
     'application': True,
     'installable': True,
     'auto_install': False,

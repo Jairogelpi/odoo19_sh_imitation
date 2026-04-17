@@ -23,7 +23,7 @@ class ResConfigSettings(models.TransientModel):
         default=True,
         config_parameter='openclaw.require_human_approval',
     )
-    openclaw_allowed_tools = fields.Text(
+    openclaw_allowed_tools = fields.Char(
         string='Allowed Tools',
         default='db.read\ndb.write\nodoo.read\nodoo.write\ncrm.write\ncalendar.write\ndocs.read\ndocs.write\ndocs.read_markdown\ndocs.write_markdown\nworkspace.read_file\nworkspace.write_file\nworkspace.list_tree\nworkspace.search\nweb.search\ncode.generate\nshell.execute',
         config_parameter='openclaw.allowed_tools',
