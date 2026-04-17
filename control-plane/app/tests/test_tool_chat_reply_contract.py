@@ -1,6 +1,7 @@
+import asyncio
 import unittest
 
-from app.mcp_gateway import _parse_llm_envelope
+from app.mcp_gateway import OpenClawMCPGateway, _parse_llm_envelope
 
 
 class TestParseLlmEnvelope(unittest.TestCase):
@@ -44,3 +45,53 @@ class TestParseLlmEnvelope(unittest.TestCase):
         reply, actions = _parse_llm_envelope(raw)
         self.assertEqual(reply, "123")
         self.assertEqual(actions, [])
+
+
+class TestToolChatReplyOutput(unittest.TestCase):
+    def _run(self, coro):
+        return asyncio.new_event_loop().run_until_complete(coro)
+
+    def test_openrouter_reply_parsed_into_envelope(self):
+        gateway = OpenClawMCPGateway.__new__(OpenClawMCPGateway)
+        gateway.openrouter = type("O", (), {"configured": True})()
+
+        async def fake_chat_reply(messages, model, temperature, max_tokens):
+            return '{"reply": "hola", "suggested_actions": [{"title": "X", "action_type": "odoo_read", "policy_key": "p", "payload": {}}]}'
+
+        gateway.openrouter.chat_reply = fake_chat_reply
+
+        result = self._run(gateway.tool_chat_reply({
+            "messages": [{"role": "user", "content": "hi"}],
+        }))
+
+        self.assertEqual(result["kind"], "completed")
+        self.assertEqual(result["reply"], "hola")
+        self.assertEqual(len(result["suggested_actions"]), 1)
+        self.assertEqual(result["suggested_actions"][0]["title"], "X")
+
+    def test_openrouter_plain_text_reply_emits_empty_actions(self):
+        gateway = OpenClawMCPGateway.__new__(OpenClawMCPGateway)
+        gateway.openrouter = type("O", (), {"configured": True})()
+
+        async def fake_chat_reply(messages, model, temperature, max_tokens):
+            return "just a text reply"
+
+        gateway.openrouter.chat_reply = fake_chat_reply
+
+        result = self._run(gateway.tool_chat_reply({
+            "messages": [{"role": "user", "content": "hi"}],
+        }))
+
+        self.assertEqual(result["reply"], "just a text reply")
+        self.assertEqual(result["suggested_actions"], [])
+
+    def test_fallback_mode_emits_empty_actions(self):
+        gateway = OpenClawMCPGateway.__new__(OpenClawMCPGateway)
+        gateway.openrouter = type("O", (), {"configured": False})()
+
+        result = self._run(gateway.tool_chat_reply({
+            "messages": [{"role": "user", "content": "hello"}],
+        }))
+
+        self.assertEqual(result["suggested_actions"], [])
+        self.assertIn("hello", result["reply"])

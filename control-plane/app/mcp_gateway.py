@@ -934,6 +934,27 @@ class OpenClawMCPGateway:
             "model": settings.openrouter_model,
         }
 
+    def _inject_policy_system_prompt(
+        self,
+        messages: list[dict[str, str]],
+        policy_context: dict[str, Any],
+    ) -> list[dict[str, str]]:
+        available = policy_context.get("available_policies") or []
+        if not available:
+            return messages
+        policies_json = json.dumps(available, ensure_ascii=False)
+        instruction = (
+            "Respond as a single JSON object with keys `reply` (string) and "
+            "`suggested_actions` (array). `reply` is the user-facing text. "
+            "Each suggested action must have `title`, `rationale`, `action_type`, "
+            "`policy_key`, and `payload` (object). Only use `policy_key` values "
+            f"from this list: {policies_json}. When unsure, return an empty "
+            "`suggested_actions` array. Never include text outside the JSON."
+        )
+        extended = list(messages)
+        extended.insert(0, {"role": "system", "content": instruction})
+        return extended
+
     async def tool_chat_reply(self, arguments: dict[str, Any]) -> dict[str, Any]:
         raw_messages = arguments.get("messages") or []
         if not isinstance(raw_messages, list) or not raw_messages:
@@ -954,6 +975,9 @@ class OpenClawMCPGateway:
         if not messages:
             return {"kind": "rejected", "summary": "chat.reply requires non-empty messages."}
 
+        policy_context = arguments.get("policy_context") or {}
+        messages = self._inject_policy_system_prompt(messages, policy_context)
+
         chosen_model = (arguments.get("model") or settings.openrouter_model).strip()
         temperature = float(arguments.get("temperature", 0.5))
         max_tokens = int(arguments.get("max_tokens", 800))
@@ -966,16 +990,18 @@ class OpenClawMCPGateway:
             last_error: str | None = None
             for model_name in models_to_try:
                 try:
-                    reply = await self.openrouter.chat_reply(
+                    raw_reply = await self.openrouter.chat_reply(
                         messages,
                         model=model_name,
                         temperature=temperature,
                         max_tokens=max_tokens,
                     )
+                    reply, actions = _parse_llm_envelope(raw_reply)
                     return {
                         "kind": "completed",
                         "summary": "Generated a chat reply.",
                         "reply": reply,
+                        "suggested_actions": actions,
                         "model": model_name,
                         "provider": "openrouter",
                     }
@@ -995,6 +1021,7 @@ class OpenClawMCPGateway:
             "kind": "completed",
             "summary": "Generated a local fallback chat reply.",
             "reply": fallback_reply,
+            "suggested_actions": [],
             "provider": "local",
             "model": None,
         }
