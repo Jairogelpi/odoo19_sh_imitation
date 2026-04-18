@@ -45,12 +45,13 @@ class OpenClawChatSession(models.Model):
     def _build_policy_context(self) -> dict[str, Any]:
         self.ensure_one()
         user = self.user_id or self.env.user
+        is_system_admin = user.has_group('base.group_system')
         policies = self.env['openclaw.policy'].sudo().search([('active', '=', True)])
         user_group_ids = set(user.group_ids.ids)
         entries: list[dict[str, Any]] = []
         for policy in policies:
             policy_groups = set(policy.group_ids.ids)
-            if policy_groups and not (policy_groups & user_group_ids):
+            if not is_system_admin and policy_groups and not (policy_groups & user_group_ids):
                 continue
             allowed_actions = [
                 action_name
@@ -65,6 +66,22 @@ class OpenClawChatSession(models.Model):
         return {
             'available_policies': entries,
             'user_locale': user.lang or 'en_US',
+            'skill_taxonomy': {
+                'core': 'openclaw-core',
+                'router': 'openclaw-router',
+                'domains': [
+                    'openclaw-crm-contacts',
+                    'openclaw-crm-opportunities',
+                    'openclaw-sales',
+                    'openclaw-inventory',
+                    'openclaw-invoicing',
+                    'openclaw-purchase',
+                    'openclaw-hr',
+                    'openclaw-reporting',
+                    'openclaw-dashboard-chat',
+                    'openclaw-odoo',
+                ],
+            },
         }
 
     _CHAT_SUGGESTION_LIMIT = 5
@@ -73,6 +90,18 @@ class OpenClawChatSession(models.Model):
         'docs_read', 'docs_write', 'web_search',
         'code_generation', 'shell_action', 'custom',
     }
+
+    def _has_request_message_column(self) -> bool:
+        self.env.cr.execute(
+            """
+            SELECT 1
+              FROM information_schema.columns
+             WHERE table_name = 'openclaw_request'
+               AND column_name = 'message_id'
+             LIMIT 1
+            """
+        )
+        return bool(self.env.cr.fetchone())
 
     def _materialize_suggestions(
         self,
@@ -84,7 +113,7 @@ class OpenClawChatSession(models.Model):
         if not suggestions:
             return Request
         try:
-            Request.check_access_rights('create')
+            Request.check_access('create')
         except AccessError:
             _logger.info(
                 "Skipped %s chat suggestions for non-openclaw user %s",
@@ -133,7 +162,6 @@ class OpenClawChatSession(models.Model):
                 'instruction': rationale or title,
                 'requested_by': self.env.user.id,
                 'session_id': self.id,
-                'message_id': message.id,
                 'origin': 'chat_suggestion',
                 'rationale': rationale,
                 'target_model': target_model,
@@ -141,6 +169,8 @@ class OpenClawChatSession(models.Model):
                 'custom_tool_name': custom_tool_name,
                 'approval_required': True,
             }
+            if self._has_request_message_column():
+                vals['message_id'] = message.id
             if not decision_notes:
                 vals['action_type'] = action_type
                 vals['policy_id'] = policy.id
@@ -164,9 +194,10 @@ class OpenClawChatSession(models.Model):
             return compact
         return compact[: limit - 1].rstrip() + '…'
 
-    @staticmethod
-    def _message_payload(message) -> dict[str, Any]:
-        ordered_requests = message.request_ids.sorted(key=lambda r: (r.create_date or fields.Datetime.now(), r.id))
+    def _message_payload(self, message) -> dict[str, Any]:
+        ordered_requests = self.env['openclaw.request']
+        if self._has_request_message_column():
+            ordered_requests = message.request_ids.sorted(key=lambda r: (r.create_date or fields.Datetime.now(), r.id))
         return {
             'id': message.id,
             'session_id': message.session_id.id,
@@ -322,6 +353,8 @@ class OpenClawChatSession(models.Model):
             raise ValidationError(_('Request not found.'))
         if not request.policy_id:
             raise ValidationError(_('This request is blocked and cannot be approved.'))
+        if request.state in ('executed', 'failed', 'rejected'):
+            return request._chat_card_payload()
 
         if request.state == 'draft':
             request.action_submit()
@@ -331,7 +364,8 @@ class OpenClawChatSession(models.Model):
             raise ValidationError(_('Request could not reach approved state.'))
 
         try:
-            request.action_execute()
+            with self.env.cr.savepoint():
+                request.action_execute()
         except Exception as exc:
             request.write({
                 'state': 'failed',
@@ -343,7 +377,33 @@ class OpenClawChatSession(models.Model):
                 request.id, exc,
             )
 
+        if request.session_id:
+            content = self._build_execution_feedback(request)
+            if content:
+                self.env['openclaw.chat.message'].create({
+                    'session_id': request.session_id.id,
+                    'role': 'assistant',
+                    'content': content,
+                })
+                request.session_id.write({
+                    'last_message_at': fields.Datetime.now(),
+                    'last_message_preview': self._shorten_text(content),
+                })
+
         return request._chat_card_payload()
+
+    def _build_execution_feedback(self, request) -> str:
+        request.ensure_one()
+        if request.state == 'executed':
+            reference = request._result_reference()
+            if reference.get('url'):
+                return _(
+                    'Accion completada: %s. Referencia: %s'
+                ) % (request.result_summary or _('Execution completed'), reference['url'])
+            return _('Accion completada: %s') % (request.result_summary or _('Execution completed'))
+        if request.state == 'failed':
+            return _('Accion fallida: %s') % (request.error_message or _('Unknown error'))
+        return ''
 
     @api.model
     def rpc_reject_request(self, request_id: int):
@@ -377,6 +437,41 @@ class OpenClawChatSession(models.Model):
             'approved_by': request.approved_by.display_name if request.approved_by else '',
         })
         return payload
+
+    @api.model
+    def rpc_export_training_session(self, session_id: int):
+        session = self.browse(session_id).exists()
+        if not session:
+            raise ValidationError(_('Chat session not found.'))
+        from ..training.bridge import OpenClawTrainingBridge
+
+        payload = session._session_payload(include_messages=True)
+        payload['policy_context'] = session._build_policy_context()
+        return OpenClawTrainingBridge().build_episode(payload).to_dict()
+
+    @api.model
+    def rpc_export_training_dataset(self, limit: int = 200):
+        domain = []
+        if not self.env.user.has_group('base.group_system'):
+            domain.append(('user_id', '=', self.env.user.id))
+        sessions = self.search(domain, order='last_message_at desc, id desc', limit=limit)
+        from ..training.bridge import OpenClawTrainingBridge
+
+        bridge = OpenClawTrainingBridge()
+        episodes = []
+        for session in sessions:
+            payload = session._session_payload(include_messages=True)
+            payload['policy_context'] = session._build_policy_context()
+            episodes.append(bridge.build_episode(payload).to_dict())
+        return {
+            'count': len(episodes),
+            'episodes': episodes,
+            'summary': {
+                'session_ids': [episode['session_id'] for episode in episodes],
+                'turn_count': sum(len(episode['turns']) for episode in episodes),
+                'reward_total': sum(episode.get('reward', 0.0) for episode in episodes),
+            },
+        }
 
 
 class OpenClawChatMessage(models.Model):
