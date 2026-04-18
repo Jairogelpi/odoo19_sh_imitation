@@ -186,7 +186,7 @@
                 placeholder="Type a message and press Enter to send"
                 t-att-value="props.draft"
                 t-on-input="(ev) => props.onDraftChange(ev.target.value)"
-                t-on-keydown="(ev) => { if (ev.key === 'Enter' &amp;&amp; !ev.shiftKey) { ev.preventDefault(); props.onSend(); } }"
+                t-on-keydown="onKeydown"
                 rows="1"
             />
             <button type="button" class="o_openclaw_chat_send"

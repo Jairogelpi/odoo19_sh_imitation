@@ -45,7 +45,14 @@ ChatMessages.props = {
     onViewDetail: Function,
 };
 
-class ChatComposer extends Component {}
+class ChatComposer extends Component {
+    onKeydown(ev) {
+        if (ev.key === "Enter" && !ev.shiftKey) {
+            ev.preventDefault();
+            this.props.onSend();
+        }
+    }
+}
 ChatComposer.template = "openclaw.ChatComposer";
 ChatComposer.props = {
     draft: String,
