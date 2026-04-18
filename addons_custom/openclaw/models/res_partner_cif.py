@@ -27,6 +27,7 @@ _EMAIL_REJECT_PREFIXES = ("no-reply", "noreply", "postmaster@", "webmaster@", "a
 _EMAIL_REJECT_SUFFIXES = (".png", ".jpg", ".jpeg", ".svg", ".webp", ".gif")
 
 from odoo import _, api, fields, models
+from odoo.exceptions import UserError
 
 _logger = logging.getLogger(__name__)
 
@@ -384,41 +385,81 @@ class ResPartnerCifAutofill(models.Model):
 
         return applied
 
-    @api.onchange("vat")
-    def _onchange_vat_openclaw_autofill(self):
-        for partner in self:
-            raw_vat = (partner.vat or "").strip()
-            if not raw_vat:
-                continue
-            doc = _normalize_vat(raw_vat)
-            if not _is_spanish_doc(doc):
-                continue
-            data = partner._openclaw_fetch_cif_data(doc)
-            if not data:
-                return {
-                    "warning": {
-                        "title": _("OpenClaw CIF lookup"),
-                        "message": _("No se pudo contactar con el servicio de búsqueda. Verifica conectividad."),
-                    }
-                }
-            if data.get("error"):
-                return {
-                    "warning": {
-                        "title": _("OpenClaw CIF lookup"),
-                        "message": data.get("mensaje") or _("No se encontraron datos."),
-                    }
-                }
-            applied = partner._openclaw_apply_cif_onchange(partner, data)
-            _logger.info("[openclaw-cif] applied fields for %s: %s", doc, applied)
-            if applied:
-                return {
-                    "warning": {
-                        "title": _("OpenClaw"),
-                        "message": _("Rellenados: %s (fuente: %s)")
-                        % (", ".join(applied), data.get("fuente") or "-"),
-                    }
-                }
-        return None
+    def action_openclaw_cif_lookup(self):
+        self.ensure_one()
+        raw_vat = (self.vat or "").strip()
+        if not raw_vat:
+            raise UserError(_("Introduce un CIF/NIF/NIE en el campo NIF antes de buscar."))
+        doc = _normalize_vat(raw_vat)
+        if not _is_spanish_doc(doc):
+            raise UserError(_("El documento no tiene formato válido de CIF/NIF/NIE español."))
+        data = self._openclaw_fetch_cif_data(doc)
+        if not data:
+            raise UserError(_("No se pudo contactar con el servicio de búsqueda. Verifica conectividad."))
+        if data.get("error"):
+            raise UserError(data.get("mensaje") or _("No se encontraron datos para el documento."))
+
+        mapping = (data.get("_res_partner") or {}).get("values") or {}
+        vals: dict[str, Any] = {}
+        applied: list[str] = []
+
+        def _maybe(field_name: str, value: Any) -> None:
+            if not value or field_name not in self._fields:
+                return
+            if self[field_name] not in (False, None, "", 0):
+                return
+            vals[field_name] = value
+            applied.append(field_name)
+
+        _maybe("name", mapping.get("name") or data.get("razon_social"))
+        _maybe("street", mapping.get("street") or data.get("direccion"))
+        _maybe("zip", mapping.get("zip") or data.get("codigo_postal"))
+        _maybe("city", mapping.get("city") or data.get("municipio"))
+        _maybe("phone", mapping.get("phone") or data.get("telefono"))
+        _maybe("website", mapping.get("website") or data.get("website"))
+        _maybe("email", mapping.get("email") or data.get("email"))
+
+        if not self.is_company:
+            vals["is_company"] = True
+            applied.append("is_company")
+        if not self.company_type or self.company_type == "person":
+            vals["company_type"] = "company"
+            applied.append("company_type")
+
+        country_state = self._openclaw_resolve_country_state(data)
+        if country_state.get("country_id") and not self.country_id:
+            vals["country_id"] = country_state["country_id"]
+            applied.append("country_id")
+        if country_state.get("state_id") and not self.state_id:
+            vals["state_id"] = country_state["state_id"]
+            applied.append("state_id")
+
+        if vals:
+            vals["openclaw_cif_enriched"] = True
+            self.write(vals)
+
+        try:
+            self._openclaw_maybe_fetch_logo()
+        except Exception:
+            _logger.exception("[openclaw-cif] logo/email fetch failed for %s", doc)
+
+        _logger.info("[openclaw-cif] button lookup for %s applied: %s", doc, applied)
+
+        message = (
+            _("Datos actualizados desde %s: %s") % (data.get("fuente") or "-", ", ".join(applied))
+            if applied
+            else _("No había campos vacíos por rellenar.")
+        )
+        return {
+            "type": "ir.actions.client",
+            "tag": "display_notification",
+            "params": {
+                "title": _("OpenClaw"),
+                "message": message,
+                "type": "success" if applied else "info",
+                "sticky": False,
+            },
+        }
 
     def _openclaw_maybe_fetch_logo(self) -> None:
         for partner in self:

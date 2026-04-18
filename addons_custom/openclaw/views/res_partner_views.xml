@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+    <record id="view_partner_form_openclaw_cif" model="ir.ui.view">
+        <field name="name">res.partner.form.openclaw.cif</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.view_partner_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='vat']" position="after">
+                <button name="action_openclaw_cif_lookup"
+                        type="object"
+                        string="Buscar CIF"
+                        icon="fa-search"
+                        class="btn btn-link oe_inline"
+                        invisible="not vat"
+                        help="Rellenar datos (nombre, dirección, teléfono, web, email y logo) desde el registro mercantil"/>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>

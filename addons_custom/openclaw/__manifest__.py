@@ -14,10 +14,17 @@
         'data/openclaw_policy_data.xml',
         'views/openclaw_views.xml',
         'views/res_config_settings_views.xml',
+        'views/res_partner_views.xml',
     ],
     'assets': {
         'web.assets_backend': [
             'openclaw/static/src/js/openclaw_chat.js',
+            'openclaw/static/src/scss/openclaw_chat.scss',
+            'openclaw/static/src/xml/openclaw_chat.xml',
+        ],
+        'web.assets_web': [
+            'openclaw/static/src/js/openclaw_chat.js',
+            'openclaw/static/src/scss/openclaw_chat.scss',
             'openclaw/static/src/xml/openclaw_chat.xml',
         ],
     },
