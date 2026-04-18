@@ -1,95 +1,239 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <templates xml:space="preserve">
+
     <t t-name="openclaw.OpenClawChatAction">
-        <div class="o_openclaw_chat">
-            <aside class="o_openclaw_chat_sidebar">
-                <div class="o_openclaw_chat_sidebar_header">
-                    <div>
-                        <div class="o_openclaw_chat_kicker">OpenClaw</div>
-                        <h1>Sessions</h1>
-                    </div>
-                    <button type="button" class="btn btn-primary o_openclaw_chat_new" t-on-click="createSession">
-                        New chat
-                    </button>
-                </div>
-                <div class="o_openclaw_chat_session_list">
-                    <t t-foreach="state.sessions" t-as="session" t-key="session.id">
-                        <button
-                            type="button"
-                            class="o_openclaw_chat_session_item"
-                            t-att-class="state.activeSession and state.activeSession.id === session.id ? 'is-active' : ''"
-                            t-on-click="() => selectSession(session.id)"
-                        >
-                            <div class="o_openclaw_chat_session_name">
-                                <t t-esc="session.name"/>
-                            </div>
-                            <div class="o_openclaw_chat_session_preview">
-                                <t t-esc="session.last_message_preview or 'Start a new conversation'"/>
-                            </div>
-                        </button>
-                    </t>
-                </div>
-            </aside>
-
+        <div class="o_openclaw_chat" t-att-class="state.sidebarOpen ? 'is-sidebar-open' : ''">
+            <ChatSidebar
+                sessions="state.sessions"
+                activeSessionId="state.activeSession and state.activeSession.id"
+                onSelect.bind="selectSession"
+                onCreate.bind="createSession"
+            />
             <main class="o_openclaw_chat_main">
-                <div class="o_openclaw_chat_main_header">
-                    <div>
-                        <div class="o_openclaw_chat_kicker">Conversation</div>
-                        <h2>
-                            <t t-esc="state.activeSession and state.activeSession.name or 'Untitled session'"/>
-                        </h2>
-                    </div>
-                    <div class="o_openclaw_chat_status">
-                        <span class="o_openclaw_chat_dot"/>
-                        <span>Admin permissions are handled in the background</span>
-                    </div>
-                </div>
-
-                <div class="o_openclaw_chat_messages" t-att-class="state.loading ? 'is-loading' : ''">
-                    <t t-if="state.loading">
-                        <div class="o_openclaw_chat_empty_state">
-                            Loading chat history...
-                        </div>
-                    </t>
-                    <t t-elif="!state.messages.length">
-                        <div class="o_openclaw_chat_empty_state">
-                            Start the first conversation and OpenClaw will keep the session history here.
-                        </div>
-                    </t>
-                    <t t-else="">
-                        <t t-foreach="state.messages" t-as="message" t-key="message.id">
-                            <article t-att-class="'o_openclaw_chat_message is-' + message.role">
-                                <div class="o_openclaw_chat_bubble">
-                                    <div class="o_openclaw_chat_message_meta">
-                                        <span class="o_openclaw_chat_message_author">
-                                            <t t-esc="message.author_name"/>
-                                        </span>
-                                    </div>
-                                    <div class="o_openclaw_chat_message_content">
-                                        <t t-esc="message.content"/>
-                                    </div>
-                                </div>
-                            </article>
-                        </t>
-                    </t>
-                </div>
-
-                <div class="o_openclaw_chat_composer">
-                    <textarea
-                        class="o_openclaw_chat_input"
-                        placeholder="Type a message and press Enter to send"
-                        t-model="state.draft"
-                        t-on-keydown="onDraftKeydown"
-                        rows="3"
-                    />
-                    <div class="o_openclaw_chat_actions">
-                        <button type="button" class="btn btn-primary" t-on-click="sendMessage" t-att-disabled="state.sending">
-                            <t t-if="state.sending">Sending...</t>
-                            <t t-else="">Send</t>
-                        </button>
-                    </div>
-                </div>
+                <ChatHeader session="state.activeSession"/>
+                <ChatMessages
+                    messages="state.messages"
+                    loading="state.loading"
+                    sending="state.sending"
+                    approvingRequestId="state.approvingRequestId"
+                    sessionHasApproving="state.approvingRequestId !== null"
+                    onApprove.bind="approveRequest"
+                    onReject.bind="rejectRequest"
+                    onViewDetail.bind="openRequestDetail"
+                />
+                <ChatComposer
+                    draft="state.draft"
+                    sending="state.sending"
+                    onDraftChange.bind="setDraft"
+                    onSend.bind="sendMessage"
+                />
             </main>
+            <RequestDrawer
+                t-if="state.drawerRequestId !== null"
+                request="state.drawerRequest"
+                loading="state.drawerLoading"
+                onClose.bind="closeDrawer"
+            />
         </div>
     </t>
+
+    <t t-name="openclaw.ChatSidebar">
+        <aside class="o_openclaw_chat_sidebar">
+            <div class="o_openclaw_chat_sidebar_header">
+                <div>
+                    <div class="o_openclaw_chat_kicker">OpenClaw</div>
+                    <h1>Sessions</h1>
+                </div>
+                <button type="button" class="o_openclaw_chat_new" t-on-click="() => props.onCreate()">+ New</button>
+            </div>
+            <div class="o_openclaw_chat_session_list">
+                <t t-foreach="props.sessions" t-as="session" t-key="session.id">
+                    <button
+                        type="button"
+                        class="o_openclaw_chat_session_item"
+                        t-att-class="props.activeSessionId === session.id ? 'is-active' : ''"
+                        t-on-click="() => props.onSelect(session.id)"
+                    >
+                        <div class="o_openclaw_chat_session_name"><t t-esc="session.name"/></div>
+                        <div class="o_openclaw_chat_session_preview">
+                            <t t-esc="session.last_message_preview or 'Start a new conversation'"/>
+                        </div>
+                    </button>
+                </t>
+            </div>
+        </aside>
+    </t>
+
+    <t t-name="openclaw.ChatHeader">
+        <header class="o_openclaw_chat_main_header">
+            <div>
+                <div class="o_openclaw_chat_kicker">Conversation</div>
+                <h2><t t-esc="props.session and props.session.name or 'Untitled session'"/></h2>
+            </div>
+            <div class="o_openclaw_chat_status">
+                <span class="o_openclaw_chat_dot"/>
+                <span>Connected</span>
+            </div>
+        </header>
+    </t>
+
+    <t t-name="openclaw.ChatMessages">
+        <div class="o_openclaw_chat_messages">
+            <t t-if="props.loading">
+                <div class="o_openclaw_chat_empty_state">Loading chat history…</div>
+            </t>
+            <t t-elif="!props.messages.length and !props.sending">
+                <div class="o_openclaw_chat_empty_state">
+                    Start the conversation and OpenClaw will keep the session history here.
+                </div>
+            </t>
+            <t t-else="">
+                <t t-foreach="props.messages" t-as="message" t-key="message.id">
+                    <article t-att-class="'o_openclaw_chat_message is-' + message.role">
+                        <div class="o_openclaw_chat_message_meta"><t t-esc="message.author_name"/></div>
+                        <div class="o_openclaw_chat_bubble">
+                            <div class="o_openclaw_chat_message_content"><t t-esc="message.content"/></div>
+                        </div>
+                        <t t-if="message.requests and message.requests.length">
+                            <div class="o_openclaw_chat_cards">
+                                <t t-foreach="message.requests" t-as="request" t-key="request.id">
+                                    <ActionCard
+                                        request="request"
+                                        disableApprove="props.sessionHasApproving and props.approvingRequestId !== request.id"
+                                        isApproving="props.approvingRequestId === request.id"
+                                        onApprove.bind="props.onApprove"
+                                        onReject.bind="props.onReject"
+                                        onViewDetail.bind="props.onViewDetail"
+                                    />
+                                </t>
+                            </div>
+                        </t>
+                    </article>
+                </t>
+                <t t-if="props.sending">
+                    <article class="o_openclaw_chat_message is-assistant">
+                        <div class="o_openclaw_chat_message_meta">OpenClaw</div>
+                        <div class="o_openclaw_chat_bubble">
+                            <div class="o_openclaw_chat_message_content">OpenClaw está pensando…</div>
+                        </div>
+                    </article>
+                </t>
+            </t>
+        </div>
+    </t>
+
+    <t t-name="openclaw.ActionCard">
+        <div
+            class="o_openclaw_action_card"
+            role="group"
+            t-att-aria-label="'Acción propuesta: ' + props.request.policy_key"
+        >
+            <div class="o_openclaw_action_card_head">
+                <span class="o_openclaw_action_card_icon">
+                    <t t-if="props.isApproving">⟳</t>
+                    <t t-elif="props.request.state === 'executed'">✓</t>
+                    <t t-elif="props.request.state === 'failed'">✕</t>
+                    <t t-elif="props.request.state === 'rejected'">–</t>
+                    <t t-elif="props.request.blocked">⚠</t>
+                    <t t-else="">○</t>
+                </span>
+                <span class="o_openclaw_action_card_title">
+                    <t t-esc="props.request.action_type"/>
+                    <t t-if="props.request.target_model"> · <t t-esc="props.request.target_model"/></t>
+                    <t t-if="props.request.target_ref">/<t t-esc="props.request.target_ref"/></t>
+                </span>
+                <span t-att-class="'o_openclaw_action_card_chip is-' + (props.request.blocked ? 'blocked' : props.request.state)">
+                    <t t-if="props.request.blocked">Bloqueada</t>
+                    <t t-elif="props.isApproving">Ejecutando…</t>
+                    <t t-elif="props.request.state === 'draft'">Propuesta</t>
+                    <t t-elif="props.request.state === 'pending'">Pendiente</t>
+                    <t t-elif="props.request.state === 'approved'">Ejecutando…</t>
+                    <t t-elif="props.request.state === 'executed'">Ejecutada</t>
+                    <t t-elif="props.request.state === 'failed'">Fallida</t>
+                    <t t-elif="props.request.state === 'rejected'">Rechazada</t>
+                </span>
+            </div>
+            <div class="o_openclaw_action_card_meta" t-if="props.request.policy_name">
+                Policy <code><t t-esc="props.request.policy_name"/></code>
+            </div>
+            <div class="o_openclaw_action_card_rationale" t-if="props.request.rationale">
+                <t t-esc="props.request.rationale"/>
+            </div>
+            <div class="o_openclaw_action_card_rationale" t-if="props.request.blocked and props.request.decision_note">
+                <t t-esc="props.request.decision_note"/>
+            </div>
+            <div class="o_openclaw_action_card_actions">
+                <t t-if="!props.request.blocked and ['draft','pending'].includes(props.request.state) and !props.isApproving">
+                    <button type="button" class="is-approve"
+                            t-att-disabled="props.disableApprove"
+                            t-on-click="() => props.onApprove(props.request.id)">Approve</button>
+                    <button type="button" class="is-reject"
+                            t-on-click="() => props.onReject(props.request.id)">Reject</button>
+                </t>
+                <t t-if="props.isApproving">
+                    <span class="o_openclaw_action_card_spinner"/>
+                </t>
+                <button type="button" class="is-detail"
+                        t-on-click="() => props.onViewDetail(props.request.id)">Details</button>
+            </div>
+        </div>
+    </t>
+
+    <t t-name="openclaw.ChatComposer">
+        <div class="o_openclaw_chat_composer">
+            <textarea
+                class="o_openclaw_chat_input"
+                placeholder="Type a message and press Enter to send"
+                t-att-value="props.draft"
+                t-on-input="(ev) => props.onDraftChange(ev.target.value)"
+                t-on-keydown="(ev) => { if (ev.key === 'Enter' &amp;&amp; !ev.shiftKey) { ev.preventDefault(); props.onSend(); } }"
+                rows="1"
+            />
+            <button type="button" class="o_openclaw_chat_send"
+                    t-att-disabled="props.sending or !props.draft.trim()"
+                    t-on-click="() => props.onSend()">↑</button>
+        </div>
+    </t>
+
+    <t t-name="openclaw.RequestDrawer">
+        <div class="o_openclaw_drawer_backdrop is-open" t-on-click="() => props.onClose()"/>
+        <aside class="o_openclaw_drawer is-open" role="dialog" aria-label="Request details">
+            <div class="o_openclaw_drawer_header">
+                <h3>Request details</h3>
+                <button type="button" class="o_openclaw_drawer_close" t-on-click="() => props.onClose()">×</button>
+            </div>
+            <div class="o_openclaw_drawer_body">
+                <t t-if="props.loading">
+                    <div>Loading…</div>
+                </t>
+                <t t-elif="props.request">
+                    <div class="o_openclaw_drawer_section">
+                        <h4>State</h4>
+                        <div><t t-esc="props.request.state"/></div>
+                    </div>
+                    <div class="o_openclaw_drawer_section" t-if="props.request.rationale">
+                        <h4>Rationale</h4>
+                        <div><t t-esc="props.request.rationale"/></div>
+                    </div>
+                    <div class="o_openclaw_drawer_section" t-if="props.request.payload_json">
+                        <h4>Payload</h4>
+                        <pre><t t-esc="props.request.payload_json"/></pre>
+                    </div>
+                    <div class="o_openclaw_drawer_section" t-if="props.request.policy_snapshot_json">
+                        <h4>Policy snapshot</h4>
+                        <pre><t t-esc="props.request.policy_snapshot_json"/></pre>
+                    </div>
+                    <div class="o_openclaw_drawer_section" t-if="props.request.gateway_response_json">
+                        <h4>Gateway response</h4>
+                        <pre><t t-esc="props.request.gateway_response_json"/></pre>
+                    </div>
+                    <div class="o_openclaw_drawer_section" t-if="props.request.error_message">
+                        <h4>Error</h4>
+                        <div><t t-esc="props.request.error_message"/></div>
+                    </div>
+                </t>
+            </div>
+        </aside>
+    </t>
+
 </templates>
