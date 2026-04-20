@@ -1,0 +1,19 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "openclaw/local_odoo_action.v1",
+  "type": "object",
+  "required": ["model", "operation"],
+  "properties": {
+    "model": {"type": "string"},
+    "operation": {"type": "string"},
+    "values": {"type": "object"},
+    "domain": {
+      "type": "array",
+      "items": {}
+    },
+    "ids": {
+      "type": "array",
+      "items": {"type": "integer", "minimum": 1}
+    }
+  }
+}

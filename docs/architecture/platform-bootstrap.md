@@ -10,6 +10,7 @@ This repository is the versioned starting point for the Odoo 19 self-hosted plat
 - `compose.admin.yaml` for optional admin and knowledge tooling
 - custom Odoo image scaffold
 - custom PostgreSQL image scaffold with `pgBackRest` archive support
+- automatic local `pgBackRest` stanza bootstrapping from the PostgreSQL archive flow
 - Nginx reverse proxy template scaffold
 - staging and production compose overrides
 - Redis service
@@ -70,7 +71,7 @@ docker compose -f compose.yaml -f compose.dev.yaml -f compose.admin.yaml up -d
 Legacy compatibility stack:
 
 ```bash
-docker compose up -d
+docker compose -f compose.legacy.yaml up -d
 ```
 
 Health verification:

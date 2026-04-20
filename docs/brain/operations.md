@@ -18,7 +18,7 @@
 - [compose.admin.yaml](../../compose.admin.yaml)
 - [compose.staging.yaml](../../compose.staging.yaml)
 - [compose.prod.yaml](../../compose.prod.yaml)
-- [docker-compose.yml](../../docker-compose.yml)
+- [compose.legacy.yaml](../../compose.legacy.yaml)
 - [.env.example](../../.env.example)
 - [Local development runbook](../runbooks/local-development.md)
 - [Environments and promotions](../runbooks/environments-and-promotions.md)
@@ -72,7 +72,8 @@
 - `docker compose -f compose.yaml -f compose.dev.yaml -f compose.admin.yaml logs -f obsidian portainer pgadmin`
 - `docker compose -f compose.yaml -f compose.dev.yaml -f compose.admin.yaml logs -f portainer`
 - `docker compose -f compose.yaml -f compose.dev.yaml exec redis redis-cli ping`
-- `docker compose -f compose.yaml -f compose.dev.yaml exec pgbackrest /scripts/stanza-create.sh`
+- local startup auto-bootstraps the stanza during the first archive push
+- `docker compose -f compose.yaml -f compose.dev.yaml exec pgbackrest /scripts/stanza-create.sh` remains available as a repair command
 - `docker compose -f compose.yaml -f compose.dev.yaml exec pgbackrest /scripts/check-db.sh`
 - `docker compose -f compose.yaml -f compose.dev.yaml exec pgbackrest /scripts/backup-db.sh`
 - `powershell -ExecutionPolicy Bypass -File .\ops\health\check-local-stack.ps1`
@@ -82,7 +83,7 @@
 - `OFFSITE_ENV_FILE=/srv/odoo/env/prod.env bash backup/scripts/run-offsite-backup.sh`
 
 ## Notes
-- `docker-compose.yml` remains a legacy local compatibility entrypoint.
+- `compose.legacy.yaml` remains a legacy local compatibility entrypoint.
 - `compose.yaml` plus overrides is the forward-looking platform path.
 - Obsidian uses a browser-accessible desktop session.
 - The vault is the `docs/` directory, so the knowledge graph and the source notes stay in one place.

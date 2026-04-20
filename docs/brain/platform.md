@@ -51,7 +51,7 @@ Delivery is the formal base of deployment here: Git, CI/CD, GHCR, environment fi
 - [compose.admin.yaml](../../compose.admin.yaml)
 - [compose.staging.yaml](../../compose.staging.yaml)
 - [compose.prod.yaml](../../compose.prod.yaml)
-- [docker-compose.yml](../../docker-compose.yml)
+- [compose.legacy.yaml](../../compose.legacy.yaml)
 - [.env.example](../../.env.example)
 - [Daily checklist](daily_checklist.md)
 - [Portainer](portainer.md)

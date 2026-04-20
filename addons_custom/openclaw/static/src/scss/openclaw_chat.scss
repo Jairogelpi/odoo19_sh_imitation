@@ -115,6 +115,9 @@
 
 .o_openclaw_chat_session_item {
     width: 100%;
+    display: flex;
+    align-items: center;
+    gap: 6px;
     text-align: left;
     padding: 8px 10px;
     border: none;
@@ -124,6 +127,36 @@
     font-family: inherit;
     cursor: pointer;
     transition: background 0.12s ease, color 0.12s ease;
+}
+
+.o_openclaw_chat_session_item_body {
+    flex: 1 1 auto;
+    min-width: 0;
+}
+
+.o_openclaw_chat_session_delete {
+    flex: 0 0 auto;
+    border: none;
+    background: transparent;
+    color: inherit;
+    opacity: 0;
+    font-size: 1.1rem;
+    line-height: 1;
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: opacity 0.12s ease, background 0.12s ease;
+}
+
+.o_openclaw_chat_session_item:hover .o_openclaw_chat_session_delete,
+.o_openclaw_chat_session_item.is-active .o_openclaw_chat_session_delete {
+    opacity: 0.8;
+}
+
+.o_openclaw_chat_session_delete:hover {
+    opacity: 1 !important;
+    background: rgba(0, 0, 0, 0.08);
 }
 
 .o_openclaw_chat_session_item:hover {
@@ -208,7 +241,7 @@
 .o_openclaw_chat_message {
     display: flex;
     flex-direction: column;
-    max-width: min(72ch, 100%);
+    max-width: #{"min(72ch, 100%)"};
 }
 
 .o_openclaw_chat_message.is-user {

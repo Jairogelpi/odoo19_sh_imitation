@@ -1,0 +1,25 @@
+<odoo>
+  <data noupdate="1">
+    <record id="openclaw_ai_tool_odoo_search_read" model="openclaw.ai.tool">
+      <field name="name">Odoo Search Read</field>
+      <field name="key">odoo.search_read</field>
+      <field name="gateway_name">odoo.search_read</field>
+      <field name="execution_kind">read</field>
+      <field name="required_policy_action">odoo_read</field>
+      <field name="risk_level">low</field>
+      <field name="schema_key">local_odoo_action</field>
+      <field name="schema_version">1</field>
+    </record>
+
+    <record id="openclaw_ai_tool_odoo_create_request" model="openclaw.ai.tool">
+      <field name="name">Odoo Create Request</field>
+      <field name="key">odoo.create_request</field>
+      <field name="gateway_name">odoo.create_request</field>
+      <field name="execution_kind">write</field>
+      <field name="required_policy_action">odoo_write</field>
+      <field name="risk_level">medium</field>
+      <field name="schema_key">suggested_action</field>
+      <field name="schema_version">1</field>
+    </record>
+  </data>
+</odoo>

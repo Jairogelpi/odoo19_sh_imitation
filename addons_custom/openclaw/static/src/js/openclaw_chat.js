@@ -12,6 +12,7 @@ ChatSidebar.props = {
     activeSessionId: { type: [Number, Boolean], optional: true },
     onSelect: Function,
     onCreate: Function,
+    onDelete: Function,
 };
 
 class ChatHeader extends Component {}
@@ -120,6 +121,31 @@ export class OpenClawChatAction extends Component {
                 throw error;
             } finally {
                 this.state.loading = false;
+            }
+        };
+
+        this.deleteSession = async (sessionId) => {
+            if (!window.confirm(_t("¿Borrar esta conversación? Esta acción no se puede deshacer."))) {
+                return;
+            }
+            try {
+                await this.orm.call(
+                    "openclaw.chat.session", "rpc_delete_session", [sessionId],
+                );
+            } catch (error) {
+                this.notification.add(_t("No se pudo borrar la sesión."), { type: "danger" });
+                return;
+            }
+            const wasActive = this.state.activeSession && this.state.activeSession.id === sessionId;
+            await this.refreshSessions();
+            if (wasActive) {
+                this.state.activeSession = null;
+                this.state.messages = [];
+                if (this.state.sessions.length) {
+                    await this.selectSession(this.state.sessions[0].id);
+                } else {
+                    await this.createSession();
+                }
             }
         };
 

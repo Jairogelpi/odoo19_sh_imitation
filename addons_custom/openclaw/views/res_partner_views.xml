@@ -11,8 +11,7 @@
                         type="object"
                         string="Buscar CIF"
                         icon="fa-search"
-                        class="btn btn-link oe_inline"
-                        invisible="not vat"
+                        class="btn btn-secondary oe_inline ms-2"
                         help="Rellenar datos (nombre, dirección, teléfono, web, email y logo) desde el registro mercantil"/>
             </xpath>
         </field>

@@ -9,12 +9,17 @@ services:
       POSTGRES_DB: ${POSTGRES_DB:-postgres}
       POSTGRES_USER: ${POSTGRES_USER:-odoo}
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-change_me}
+      PGBACKREST_STANZA: ${PGBACKREST_STANZA:-odoo}
+      PGHOST: /var/run/postgresql
+      PGPORT: 5432
+      PGUSER: ${POSTGRES_USER:-odoo}
+      PGPASSWORD: ${POSTGRES_PASSWORD:-change_me}
     command:
       - postgres
       - -c
       - archive_mode=on
       - -c
-      - archive_command=pgbackrest --stanza=odoo archive-push %p
+      - archive_command=/usr/local/bin/pgbackrest-archive.sh %p
       - -c
       - archive_timeout=60
       - -c
@@ -80,6 +85,9 @@ services:
       HOST: db
       USER: ${POSTGRES_USER:-odoo}
       PASSWORD: ${POSTGRES_PASSWORD:-change_me}
+    ports:
+      - "8070:8069"
+      - "8073:8072"
     volumes:
       - odoo-web-data:/var/lib/odoo
       - ./config:/etc/odoo:ro

@@ -1,6 +1,8 @@
 id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
 access_openclaw_chat_session_internal,openclaw.chat.session internal,model_openclaw_chat_session,base.group_user,1,1,1,0
 access_openclaw_chat_message_internal,openclaw.chat.message internal,model_openclaw_chat_message,base.group_user,1,1,1,0
+access_openclaw_chat_session_admin,openclaw.chat.session admin,model_openclaw_chat_session,openclaw.group_openclaw_admin,1,1,1,1
+access_openclaw_chat_message_admin,openclaw.chat.message admin,model_openclaw_chat_message,openclaw.group_openclaw_admin,1,1,1,1
 access_openclaw_request_internal,openclaw.request internal,model_openclaw_request,base.group_user,1,0,0,0
 access_openclaw_policy_user,openclaw.policy user,model_openclaw_policy,openclaw.group_openclaw_user,1,0,0,0
 access_openclaw_policy_operator,openclaw.policy operator,model_openclaw_policy,openclaw.group_openclaw_operator,1,0,0,0
@@ -8,3 +10,21 @@ access_openclaw_policy_admin,openclaw.policy admin,model_openclaw_policy,opencla
 access_openclaw_request_user,openclaw.request user,model_openclaw_request,openclaw.group_openclaw_user,1,1,1,0
 access_openclaw_request_operator,openclaw.request operator,model_openclaw_request,openclaw.group_openclaw_operator,1,1,1,0
 access_openclaw_request_admin,openclaw.request admin,model_openclaw_request,openclaw.group_openclaw_admin,1,1,1,1
+access_openclaw_ai_agent_internal,openclaw.ai.agent internal,model_openclaw_ai_agent,base.group_user,1,0,0,0
+access_openclaw_ai_agent_admin,openclaw.ai.agent admin,model_openclaw_ai_agent,openclaw.group_openclaw_admin,1,1,1,1
+access_openclaw_ai_topic_internal,openclaw.ai.topic internal,model_openclaw_ai_topic,base.group_user,1,0,0,0
+access_openclaw_ai_topic_admin,openclaw.ai.topic admin,model_openclaw_ai_topic,openclaw.group_openclaw_admin,1,1,1,1
+access_openclaw_ai_tool_internal,openclaw.ai.tool internal,model_openclaw_ai_tool,base.group_user,1,0,0,0
+access_openclaw_ai_tool_admin,openclaw.ai.tool admin,model_openclaw_ai_tool,openclaw.group_openclaw_admin,1,1,1,1
+access_openclaw_ai_topic_tool_internal,openclaw.ai.topic.tool internal,model_openclaw_ai_topic_tool,base.group_user,1,0,0,0
+access_openclaw_ai_topic_tool_admin,openclaw.ai.topic.tool admin,model_openclaw_ai_topic_tool,openclaw.group_openclaw_admin,1,1,1,1
+access_openclaw_ai_source_internal,openclaw.ai.source internal,model_openclaw_ai_source,base.group_user,1,0,0,0
+access_openclaw_ai_source_admin,openclaw.ai.source admin,model_openclaw_ai_source,openclaw.group_openclaw_admin,1,1,1,1
+access_openclaw_ai_default_prompt_internal,openclaw.ai.default_prompt internal,model_openclaw_ai_default_prompt,base.group_user,1,0,0,0
+access_openclaw_ai_default_prompt_admin,openclaw.ai.default_prompt admin,model_openclaw_ai_default_prompt,openclaw.group_openclaw_admin,1,1,1,1
+access_openclaw_ai_default_prompt_button_internal,openclaw.ai.default_prompt.button internal,model_openclaw_ai_default_prompt_button,base.group_user,1,0,0,0
+access_openclaw_ai_default_prompt_button_admin,openclaw.ai.default_prompt.button admin,model_openclaw_ai_default_prompt_button,openclaw.group_openclaw_admin,1,1,1,1
+access_openclaw_ai_llm_profile_internal,openclaw.ai.llm_profile internal,model_openclaw_ai_llm_profile,base.group_user,1,0,0,0
+access_openclaw_ai_llm_profile_admin,openclaw.ai.llm_profile admin,model_openclaw_ai_llm_profile,openclaw.group_openclaw_admin,1,1,1,1
+access_openclaw_cif_preview_user,openclaw.cif.preview user,model_openclaw_cif_preview,base.group_user,1,1,1,1
+access_openclaw_cif_preview_all,openclaw.cif.preview all,model_openclaw_cif_preview,,1,1,1,1

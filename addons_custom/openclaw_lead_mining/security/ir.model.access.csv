@@ -1,0 +1,3 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_openclaw_lead_mining_wizard_user,openclaw.lead.mining.wizard user,model_openclaw_lead_mining_wizard,base.group_user,1,1,1,1
+access_openclaw_lead_mining_result_user,openclaw.lead.mining.result user,model_openclaw_lead_mining_result,base.group_user,1,1,1,1

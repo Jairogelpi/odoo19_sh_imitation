@@ -1,4 +1,6 @@
 import json
+import re
+from urllib.parse import quote
 from typing import Any
 
 from odoo import _, api, fields, models
@@ -81,6 +83,8 @@ class OpenClawRequest(models.Model):
     executed_at = fields.Datetime(readonly=True)
     failed_at = fields.Datetime(readonly=True)
 
+    _LEGACY_DASHBOARD_ALIAS_NOTE = "Invalid action_type: 'create_dashboard'"
+
     @api.onchange('policy_id')
     def _onchange_policy_id(self):
         for request in self:
@@ -105,6 +109,7 @@ class OpenClawRequest(models.Model):
 
     def _chat_card_payload(self) -> dict[str, Any]:
         self.ensure_one()
+        reference = self._result_reference()
         return {
             'id': self.id,
             'state': self.state,
@@ -118,12 +123,210 @@ class OpenClawRequest(models.Model):
             'result_summary': self.result_summary or '',
             'error_message': self.error_message or '',
             'decision_note': self.decision_note or '',
+            'result_ref_label': reference.get('label') or '',
+            'result_ref_url': reference.get('url') or '',
             'blocked': (
                 self.state == 'draft'
                 and bool(self.decision_note)
                 and not self.policy_id
             ),
         }
+
+    def _result_reference(self) -> dict[str, str]:
+        self.ensure_one()
+        if not self.gateway_response_json:
+            return {}
+        try:
+            response = json.loads(self.gateway_response_json)
+        except json.JSONDecodeError:
+            return {}
+        if not isinstance(response, dict):
+            return {}
+        local_result = response.get('local_result') or {}
+        if not isinstance(local_result, dict):
+            return {}
+
+        model_name = str(local_result.get('model') or self.target_model or '').strip()
+        if not model_name:
+            return {}
+
+        operation = str(local_result.get('operation') or '').strip()
+        if operation == 'create':
+            record_id = local_result.get('id')
+            if not record_id:
+                return {}
+            return {
+                'label': f"{model_name} #{record_id}",
+                'url': f"/odoo#id={record_id}&model={quote(model_name)}&view_type=form",
+            }
+
+        if operation == 'write':
+            ids = local_result.get('ids') or []
+            if isinstance(ids, list) and ids:
+                record_id = ids[0]
+                return {
+                    'label': f"{model_name} #{record_id}",
+                    'url': f"/odoo#id={record_id}&model={quote(model_name)}&view_type=form",
+                }
+
+        if operation == 'write_by_domain':
+            ids = local_result.get('ids') or []
+            if isinstance(ids, list) and ids:
+                record_id = ids[0]
+                return {
+                    'label': f"{model_name} #{record_id}",
+                    'url': f"/odoo#id={record_id}&model={quote(model_name)}&view_type=form",
+                }
+
+        return {}
+
+    def _is_legacy_dashboard_alias_block(self) -> bool:
+        self.ensure_one()
+        note = (self.decision_note or '').strip()
+        return (
+            self.origin == 'chat_suggestion'
+            and self.state == 'draft'
+            and not self.policy_id
+            and self.action_type == 'custom'
+            and self._LEGACY_DASHBOARD_ALIAS_NOTE in note
+        )
+
+    def _legacy_dashboard_source_text(self) -> str:
+        self.ensure_one()
+        parts = [
+            str(self.rationale or '').strip(),
+            str(self.instruction or '').strip(),
+        ]
+        return ' '.join(part for part in parts if part)
+
+    def _legacy_dashboard_name(self, text: str) -> str:
+        patterns = [
+            r"dashboard\s+llamado\s+[\"'“”]?([^\"'“”\n.,;]+)",
+            r"dashboard\s+[\"'“”]([^\"'“”]+)[\"'“”]",
+        ]
+        for pattern in patterns:
+            match = re.search(pattern, text, flags=re.IGNORECASE)
+            if match:
+                candidate = str(match.group(1) or '').strip(" ,.;:-")
+                if candidate:
+                    return candidate
+        if re.search(r"\bventas\b", text, flags=re.IGNORECASE):
+            return _('Ventas - Registros')
+        return _('OpenClaw Dashboard')
+
+    @staticmethod
+    def _legacy_dashboard_chart_type(text: str) -> str | None:
+        lowered = (text or '').lower()
+        if 'bar chart' in lowered or 'gráfico de barras' in lowered or 'grafico de barras' in lowered:
+            return 'bar_chart'
+        if 'barra' in lowered or 'barras' in lowered:
+            return 'bar_chart'
+        return None
+
+    @staticmethod
+    def _legacy_dashboard_model(text: str) -> str | None:
+        explicit = re.search(r"\b([a-z_]+\.[a-z_]+)\b", text or '')
+        if explicit:
+            return explicit.group(1)
+        lowered = (text or '').lower()
+        if 'módulo de ventas' in lowered or 'modulo de ventas' in lowered or 'sales module' in lowered:
+            return 'sale.order'
+        return None
+
+    @staticmethod
+    def _legacy_dashboard_measurement_request(text: str) -> bool:
+        lowered = (text or '').lower()
+        return (
+            'número de registros' in lowered
+            or 'numero de registros' in lowered
+            or 'number of records' in lowered
+            or 'count of records' in lowered
+        )
+
+    def _legacy_dashboard_blueprint(self) -> dict[str, Any] | None:
+        self.ensure_one()
+        text = self._legacy_dashboard_source_text()
+        chart_type = self._legacy_dashboard_chart_type(text)
+        source_model = self._legacy_dashboard_model(text)
+        count_request = self._legacy_dashboard_measurement_request(text)
+        if chart_type != 'bar_chart' or source_model != 'sale.order' or not count_request:
+            return None
+        return {
+            'chart_type': 'bar_chart',
+            'model': 'sale.order',
+            # Count-by-state is an explicit, reviewable default for an otherwise
+            # underspecified sales bar chart request.
+            'fields': ['state'],
+            'representation': _('Número de registros de ventas por estado'),
+        }
+
+    def _legacy_dashboard_repair_policy(self):
+        self.ensure_one()
+        session = self.session_id
+        if not session:
+            return self.env['openclaw.policy']
+        session_for_user = session.with_user(session.user_id or self.requested_by or self.env.user)
+        policy_context = session_for_user._build_policy_context()
+        available_keys = [
+            str(entry.get('key') or '')
+            for entry in (policy_context.get('available_policies') or [])
+            if isinstance(entry, dict) and 'odoo_write' in (entry.get('allowed_actions') or [])
+        ]
+        for key in available_keys:
+            policy = self.env['openclaw.policy'].sudo().search([
+                ('key', '=', key),
+                ('active', '=', True),
+            ], limit=1)
+            if policy:
+                return policy
+        return self.env['openclaw.policy']
+
+    def _legacy_dashboard_repair_values(self) -> dict[str, Any] | None:
+        self.ensure_one()
+        if not self._is_legacy_dashboard_alias_block():
+            return None
+        blueprint = self._legacy_dashboard_blueprint()
+        if not blueprint:
+            return None
+        policy = self._legacy_dashboard_repair_policy()
+        if not policy:
+            return None
+
+        text = self._legacy_dashboard_source_text()
+        assumptions = _(
+            'Supuestos de reparación legacy: modelo=sale.order por "módulo de ventas"; '
+            'agrupación=state para contar registros en un gráfico de barras.'
+        )
+        merged_rationale = '\n'.join(part for part in [str(self.rationale or '').strip(), assumptions] if part)
+        payload = {
+            'model': 'dashboard.dashboard',
+            'operation': 'create',
+            'values': {
+                'name': self._legacy_dashboard_name(text),
+            },
+            'blueprint': blueprint,
+        }
+        return {
+            'action_type': 'odoo_write',
+            'policy_id': policy.id,
+            'tool_allowlist': policy.tool_allowlist or '',
+            'policy_snapshot_json': json.dumps(self._policy_snapshot_data(policy), ensure_ascii=False, indent=2),
+            'target_model': 'dashboard.dashboard',
+            'payload_json': json.dumps(payload, ensure_ascii=False, indent=2),
+            'decision_note': False,
+            'rationale': merged_rationale,
+            'approval_required': True,
+        }
+
+    def repair_legacy_dashboard_alias_blocks(self):
+        repaired = self.browse()
+        for request in self:
+            values = request._legacy_dashboard_repair_values()
+            if not values:
+                continue
+            request.write(values)
+            repaired |= request
+        return repaired
 
     @api.model_create_multi
     def create(self, vals_list):
@@ -272,7 +475,149 @@ class OpenClawRequest(models.Model):
             raise ValidationError(_('Local Odoo actions require a model.'))
 
         model = self.env[model_name].sudo()
-        operation = local_action.get('operation') or ('search_read' if self.action_type == 'odoo_read' else 'create')
+        operation = local_action.get('operation') or local_action.get('action')
+        if not operation:
+            # Avoid silent fallback to 'create': a malformed payload must fail loud
+            # instead of inserting empty records (e.g. crm.lead without name).
+            raise ValidationError(_('Local Odoo actions require an "operation" field (got: %s).') % sorted(local_action.keys()))
+
+        def _normalize_partner_values(values: dict[str, Any]) -> dict[str, Any]:
+            if model_name != 'res.partner' or not isinstance(values, dict):
+                return values
+            normalized = dict(values)
+            country_value = normalized.pop('country_name', None)
+            if country_value and not normalized.get('country_id'):
+                normalized['country_id'] = country_value
+            country_id = normalized.get('country_id')
+            if isinstance(country_id, str):
+                country_name = country_id.strip()
+                if country_name:
+                    country = self.env['res.country'].sudo().search([
+                        '|',
+                        ('code', '=ilike', country_name),
+                        ('name', 'ilike', country_name),
+                    ], limit=1)
+                    if country:
+                        normalized['country_id'] = country.id
+                    else:
+                        normalized.pop('country_id', None)
+            return normalized
+
+        def _resolve_partner_by_name(client_name: str):
+            partner = self.env['res.partner'].sudo().search([('name', '=ilike', client_name)], limit=1)
+            if not partner:
+                raise ValidationError(_('No se encontró el contacto "%s" en la base de datos.') % client_name)
+            return partner
+
+        def _extract_partner_name_from_domain(domain: list[Any]) -> str | None:
+            for token in domain:
+                if not isinstance(token, list) or len(token) < 3:
+                    continue
+                field_name, operator, value = token[0], token[1], token[2]
+                if field_name == 'partner_name' and operator in ('=', 'ilike', '=ilike') and isinstance(value, str):
+                    name = value.strip()
+                    if name:
+                        return name
+            return None
+
+        def _create_dashboard_chart_from_blueprint(dashboard_record, blueprint: Any) -> dict[str, Any]:
+            if not isinstance(blueprint, dict):
+                return {'status': 'skipped', 'reason': 'missing_blueprint'}
+
+            source_model_name = str(blueprint.get('model') or '').strip()
+            requested_chart_type = str(blueprint.get('chart_type') or '').strip()
+            representation = str(blueprint.get('representation') or '').strip()
+            requested_fields = blueprint.get('fields') or []
+            requested_field_names = [
+                str(field_name).strip()
+                for field_name in requested_fields
+                if isinstance(field_name, str) and str(field_name).strip()
+            ]
+
+            if not source_model_name:
+                return {'status': 'skipped', 'reason': 'missing_source_model'}
+
+            supported_types = {
+                'kpi', 'tile', 'bar_chart', 'column_chart', 'doughnut_chart',
+                'area_chart', 'funnel_chart', 'pyramid_chart', 'line_chart',
+                'pie_chart', 'radar_chart', 'stackedcolumn_chart', 'radial_chart',
+                'scatter_chart', 'map_chart', 'meter_chart', 'to_do', 'list',
+            }
+            fallback_to_bar_types = {'map_chart', 'meter_chart', 'to_do', 'list'}
+            chart_type = requested_chart_type if requested_chart_type in supported_types else 'bar_chart'
+            note = ''
+            if chart_type in fallback_to_bar_types:
+                note = f"chart_type_fallback:{chart_type}->bar_chart"
+                chart_type = 'bar_chart'
+            elif chart_type != requested_chart_type and requested_chart_type:
+                note = f"unknown_chart_type:{requested_chart_type}->bar_chart"
+
+            source_model = self.env['ir.model'].sudo().search([
+                ('model', '=', source_model_name),
+            ], limit=1)
+            if not source_model:
+                return {'status': 'skipped', 'reason': f'model_not_found:{source_model_name}'}
+
+            available_fields = self.env['ir.model.fields'].sudo().search([
+                ('model_id', '=', source_model.id),
+            ])
+            by_name = {field.name: field for field in available_fields}
+            requested_field_records = [
+                by_name[field_name]
+                for field_name in requested_field_names
+                if by_name.get(field_name)
+            ]
+
+            numeric_types = {'integer', 'float', 'monetary'}
+            groupable_types = {'many2one', 'selection', 'char', 'date', 'datetime'}
+            preferred_group_fields = [
+                field
+                for field in requested_field_records
+                if field.ttype in groupable_types
+            ]
+            fallback_group_fields = [
+                field
+                for field in available_fields
+                if field.ttype in groupable_types and field.name not in {'id'}
+            ]
+            group_by_field = preferred_group_fields[0] if preferred_group_fields else (fallback_group_fields[0] if fallback_group_fields else False)
+
+            measurement_fields = [
+                field
+                for field in requested_field_records
+                if field.ttype in numeric_types
+            ]
+
+            chart_name_suffix = representation or requested_chart_type or 'chart'
+            chart_values: dict[str, Any] = {
+                'name': f"{dashboard_record.name} - {chart_name_suffix}",
+                'dashboard_id': dashboard_record.id,
+                'chart_type': chart_type,
+                'model_id': source_model.id,
+                'group_by_id': group_by_field.id if group_by_field else False,
+                'data_type': 'sum' if measurement_fields else 'count',
+                'limit_record': 20,
+            }
+            if measurement_fields:
+                chart_values['measurement_field_ids'] = [(6, 0, [field.id for field in measurement_fields])]
+
+            if chart_type in {'kpi', 'tile'}:
+                chart_values['kpi_model_id'] = source_model.id
+                chart_values['kpi_data_type'] = 'sum' if measurement_fields else 'count'
+                if measurement_fields:
+                    chart_values['kpi_measurement_field_id'] = measurement_fields[0].id
+
+            chart_record = self.env['dashboard.chart'].sudo().create(chart_values)
+            return {
+                'status': 'created',
+                'id': chart_record.id,
+                'name': chart_record.display_name,
+                'chart_type': chart_type,
+                'model': source_model_name,
+                'group_by': group_by_field.name if group_by_field else '',
+                'measurements': [field.name for field in measurement_fields],
+                'note': note,
+            }
 
         if operation == 'search_read':
             domain = local_action.get('domain') or []
@@ -302,12 +647,67 @@ class OpenClawRequest(models.Model):
             values = local_action.get('values') or {}
             if not isinstance(values, dict):
                 raise ValidationError(_('Create operations require a values object.'))
+            values = _normalize_partner_values(values)
+            if model_name == 'crm.lead' and values.get('type') == 'opportunity' and not values.get('partner_id'):
+                client_name = str(values.get('partner_name') or '').strip()
+                if client_name:
+                    partner = _resolve_partner_by_name(client_name)
+                    values['partner_id'] = partner.id
+                    values['partner_name'] = partner.name
+            if model_name == 'dashboard.dashboard':
+                raw_name = values.get('name')
+                if raw_name is None or not str(raw_name).strip():
+                    blueprint = local_action.get('blueprint') or {}
+                    fallback_name = ''
+                    if isinstance(blueprint, dict):
+                        fallback_name = str(
+                            blueprint.get('title')
+                            or blueprint.get('name')
+                            or blueprint.get('representation')
+                            or ''
+                        ).strip()
+                    if not fallback_name:
+                        fallback_name = _('OpenClaw Dashboard %s') % fields.Datetime.now().strftime('%Y-%m-%d %H:%M')
+                    values['name'] = fallback_name
+            if model_name == 'dashboard.chart':
+                if not values.get('dashboard_id'):
+                    blueprint = local_action.get('blueprint') or {}
+                    target_dashboard_id = None
+                    if isinstance(blueprint, dict):
+                        target_dashboard_id = (
+                            blueprint.get('dashboard_id')
+                            or blueprint.get('dashboard')
+                        )
+                    if not target_dashboard_id:
+                        latest_dashboard = self.env['dashboard.dashboard'].sudo().search(
+                            [], order='id desc', limit=1,
+                        )
+                        if latest_dashboard:
+                            target_dashboard_id = latest_dashboard.id
+                    if not target_dashboard_id:
+                        raise ValidationError(_(
+                            'Cannot create a dashboard.chart without a dashboard_id. '
+                            'Create or select a dashboard first.'
+                        ))
+                    values['dashboard_id'] = int(target_dashboard_id)
+                if not values.get('name') or not str(values.get('name')).strip():
+                    chart_type = str(values.get('chart_type') or 'chart').strip() or 'chart'
+                    values['name'] = _('OpenClaw %s %s') % (
+                        chart_type,
+                        fields.Datetime.now().strftime('%H:%M'),
+                    )
             record = model.create(values)
+            created_chart: dict[str, Any] | None = None
+            if model_name == 'dashboard.dashboard' and hasattr(record, 'create_update_menu'):
+                # The dashboard module exposes the record in UI only after menu/action creation.
+                record.create_update_menu()
+                created_chart = _create_dashboard_chart_from_blueprint(record, local_action.get('blueprint'))
             return {
                 'operation': operation,
                 'model': model_name,
                 'id': record.id,
                 'name': record.display_name,
+                'chart': created_chart,
             }
 
         if operation == 'write':
@@ -317,6 +717,7 @@ class OpenClawRequest(models.Model):
                 raise ValidationError(_('Write operations require ids.'))
             if not isinstance(values, dict):
                 raise ValidationError(_('Write operations require a values object.'))
+            values = _normalize_partner_values(values)
             records = model.browse(ids)
             records.write(values)
             return {
@@ -324,6 +725,39 @@ class OpenClawRequest(models.Model):
                 'model': model_name,
                 'ids': records.ids,
                 'count': len(records),
+            }
+
+        if operation == 'write_by_domain':
+            domain = local_action.get('domain') or []
+            values = local_action.get('values') or {}
+            if not isinstance(domain, list) or not domain:
+                raise ValidationError(_('write_by_domain operations require a non-empty domain.'))
+            if not isinstance(values, dict) or not values:
+                raise ValidationError(_('write_by_domain operations require a values object.'))
+            values = _normalize_partner_values(values)
+            if model_name == 'crm.lead':
+                client_name = _extract_partner_name_from_domain(domain)
+                if client_name:
+                    partner = _resolve_partner_by_name(client_name)
+                    normalized_domain: list[Any] = []
+                    for token in domain:
+                        if isinstance(token, list) and len(token) >= 3 and token[0] == 'partner_name':
+                            continue
+                        normalized_domain.append(token)
+                    normalized_domain.append(['partner_id', '=', partner.id])
+                    domain = normalized_domain
+            limit = local_action.get('limit')
+            records = model.search(domain, limit=limit)
+            if not records:
+                raise ValidationError(_('No records found for write_by_domain operation.'))
+            records.write(values)
+            return {
+                'operation': operation,
+                'model': model_name,
+                'domain': domain,
+                'ids': records.ids,
+                'count': len(records),
+                'values': values,
             }
 
         if operation == 'unlink':
@@ -336,6 +770,34 @@ class OpenClawRequest(models.Model):
             return {
                 'operation': operation,
                 'model': model_name,
+                'ids': ids,
+                'count': count,
+            }
+
+        if operation == 'unlink_by_domain':
+            domain = local_action.get('domain') or []
+            if not isinstance(domain, list) or not domain:
+                raise ValidationError(_('unlink_by_domain operations require a non-empty domain.'))
+            if model_name == 'crm.lead':
+                client_name = _extract_partner_name_from_domain(domain)
+                if client_name:
+                    partner = _resolve_partner_by_name(client_name)
+                    normalized_domain: list[Any] = []
+                    for token in domain:
+                        if isinstance(token, list) and len(token) >= 3 and token[0] == 'partner_name':
+                            continue
+                        normalized_domain.append(token)
+                    normalized_domain.append(['partner_id', '=', partner.id])
+                    domain = normalized_domain
+            limit = local_action.get('limit')
+            records = model.search(domain, limit=limit)
+            ids = records.ids
+            count = len(records)
+            records.unlink()
+            return {
+                'operation': operation,
+                'model': model_name,
+                'domain': domain,
                 'ids': ids,
                 'count': count,
             }
@@ -363,13 +825,21 @@ class OpenClawRequest(models.Model):
             operation = local_result.get('operation') or 'executed'
             model_name = local_result.get('model') or self.target_model or 'record'
             if operation == 'create':
+                if model_name == 'dashboard.dashboard':
+                    chart_info = local_result.get('chart') or {}
+                    if isinstance(chart_info, dict) and chart_info.get('status') == 'created' and chart_info.get('id'):
+                        return f"Created {model_name} #{local_result.get('id')} with chart #{chart_info.get('id')}"
                 return f"Created {model_name} #{local_result.get('id')}"
             if operation == 'write':
                 return f"Updated {model_name} records {local_result.get('ids', [])}"
+            if operation == 'write_by_domain':
+                return f"Updated {local_result.get('count', 0)} {model_name} record(s) by domain"
             if operation == 'search_read':
                 return f"Read {local_result.get('count', 0)} {model_name} record(s)"
             if operation == 'search':
                 return f"Searched {model_name} and found {local_result.get('count', 0)} record(s)"
+            if operation == 'unlink_by_domain':
+                return f"Deleted {local_result.get('count', 0)} {model_name} record(s) by domain"
         if response.get('summary'):
             return str(response['summary'])
         return 'Execution completed'

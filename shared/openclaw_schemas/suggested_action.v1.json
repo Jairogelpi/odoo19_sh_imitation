@@ -1,0 +1,15 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "openclaw/suggested_action.v1",
+  "type": "object",
+  "required": ["title", "rationale", "action_type", "policy_key", "payload"],
+  "properties": {
+    "title": {"type": "string"},
+    "rationale": {"type": "string"},
+    "action_type": {"type": "string"},
+    "policy_key": {"type": "string"},
+    "target_model": {"type": "string"},
+    "payload": {"type": "object"},
+    "custom_tool_name": {"type": "string"}
+  }
+}

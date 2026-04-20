@@ -1,0 +1,45 @@
+= : El t‚rmino '=' no se reconoce como nombre de un cmdlet, funci¢n, archivo de script o programa ejecutable. 
+Compruebe si escribi¢ correctamente el nombre o, si incluy¢ una ruta de acceso, compruebe que dicha ruta es correcta e 
+int‚ntelo de nuevo.
+En l¡nea: 1 Car cter: 1
++ = 'C:\Users\jairo.gelpi\Desktop\odoo19_sh_imitation\.superpowers\brai ...
++ ~
+    + CategoryInfo          : ObjectNotFound: (=:String) [], CommandNotFoundException
+    + FullyQualifiedErrorId : CommandNotFoundException
+ 
+= : El t‚rmino '=' no se reconoce como nombre de un cmdlet, funci¢n, archivo de script o programa ejecutable. 
+Compruebe si escribi¢ correctamente el nombre o, si incluy¢ una ruta de acceso, compruebe que dicha ruta es correcta e 
+int‚ntelo de nuevo.
+En l¡nea: 1 Car cter: 96
++ ... o19_sh_imitation\.superpowers\brainstorm\20164-1776557747'; = '127.0. ...
++                                                                 ~
+    + CategoryInfo          : ObjectNotFound: (=:String) [], CommandNotFoundException
+    + FullyQualifiedErrorId : CommandNotFoundException
+ 
+= : El t‚rmino '=' no se reconoce como nombre de un cmdlet, funci¢n, archivo de script o programa ejecutable. 
+Compruebe si escribi¢ correctamente el nombre o, si incluy¢ una ruta de acceso, compruebe que dicha ruta es correcta e 
+int‚ntelo de nuevo.
+En l¡nea: 1 Car cter: 111
++ ... n\.superpowers\brainstorm\20164-1776557747'; = '127.0.0.1'; = 'localh ...
++                                                                 ~
+    + CategoryInfo          : ObjectNotFound: (=:String) [], CommandNotFoundException
+    + FullyQualifiedErrorId : CommandNotFoundException
+ 
+node:fs:2426
+    return binding.writeFileUtf8(
+                   ^
+
+Error: EPERM: operation not permitted, open 'C:\tmp\brainstorm\.server-info'
+    at Object.writeFileSync (node:fs:2426:20)
+    at Server.<anonymous> (C:\Users\jairo.gelpi\.codex\superpowers\skills\brainstorming\scripts\server.cjs:330:8)
+    at Object.onceWrapper (node:events:632:28)
+    at Server.emit (node:events:530:35)
+    at emitListeningNT (node:net:1980:10)
+    at process.processTicksAndRejections (node:internal/process/task_queues:89:21) {
+  errno: -4048,
+  code: 'EPERM',
+  syscall: 'open',
+  path: 'C:\\tmp\\brainstorm\\.server-info'
+}
+
+Node.js v22.14.0

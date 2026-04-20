@@ -1,0 +1,186 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "openclaw/runtime_bundle.v1",
+  "type": "object",
+  "required": [
+    "bundle_version",
+    "session_origin",
+    "agent",
+    "default_prompt",
+    "llm_profile",
+    "topics",
+    "sources",
+    "allowed_tools",
+    "prompt_sections",
+    "record_context",
+    "ui_buttons",
+    "policy_projection",
+    "schema_versions"
+  ],
+  "properties": {
+    "bundle_version": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "session_origin": {
+      "type": "object",
+      "required": ["kind", "model", "res_id"],
+      "properties": {
+        "kind": {"type": "string"},
+        "model": {"type": "string"},
+        "res_id": {
+          "type": ["integer", "boolean"],
+          "minimum": 1
+        }
+      }
+    },
+    "agent": {
+      "type": "object",
+      "required": ["id", "key", "name"],
+      "properties": {
+        "id": {"type": ["integer", "boolean"], "minimum": 1},
+        "key": {"type": "string"},
+        "name": {"type": "string"}
+      }
+    },
+    "default_prompt": {
+      "type": "object",
+      "required": ["id", "name", "instructions"],
+      "properties": {
+        "id": {"type": ["integer", "boolean"], "minimum": 1},
+        "name": {"type": "string"},
+        "instructions": {"type": "string"}
+      }
+    },
+    "llm_profile": {
+      "type": "object",
+      "required": ["id", "name", "backend", "model_name", "fallback_model_name"],
+      "properties": {
+        "id": {"type": ["integer", "boolean"], "minimum": 1},
+        "name": {"type": "string"},
+        "backend": {"type": "string"},
+        "model_name": {"type": "string"},
+        "fallback_model_name": {"type": "string"},
+        "temperature": {"type": "number"},
+        "max_tokens": {"type": "integer", "minimum": 1}
+      }
+    },
+    "topics": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["id", "key", "name", "mode", "instructions", "tools"],
+        "properties": {
+          "id": {"type": "integer", "minimum": 1},
+          "key": {"type": "string"},
+          "name": {"type": "string"},
+          "mode": {"type": "string"},
+          "instructions": {"type": "string"},
+          "tools": {
+            "type": "array",
+            "items": {"$ref": "#/$defs/runtimeTool"}
+          }
+        }
+      }
+    },
+    "sources": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["id", "key", "name", "source_type", "uri", "status"],
+        "properties": {
+          "id": {"type": "integer", "minimum": 1},
+          "key": {"type": "string"},
+          "name": {"type": "string"},
+          "source_type": {"type": "string"},
+          "uri": {"type": "string"},
+          "status": {"type": "string"}
+        }
+      }
+    },
+    "allowed_tools": {
+      "type": "array",
+      "items": {"$ref": "#/$defs/runtimeTool"}
+    },
+    "prompt_sections": {
+      "type": "object",
+      "required": [
+        "system_contract",
+        "agent_prompt",
+        "default_prompt_instructions",
+        "topic_instructions"
+      ],
+      "properties": {
+        "system_contract": {"type": "string"},
+        "agent_prompt": {"type": "string"},
+        "default_prompt_instructions": {"type": "string"},
+        "topic_instructions": {"type": "string"}
+      }
+    },
+    "record_context": {
+      "type": "object",
+      "required": ["model", "id"],
+      "properties": {
+        "model": {"type": "string"},
+        "id": {"type": ["integer", "boolean"], "minimum": 1}
+      }
+    },
+    "ui_buttons": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["id", "label", "prompt_text", "icon"],
+        "properties": {
+          "id": {"type": "integer", "minimum": 1},
+          "label": {"type": "string"},
+          "prompt_text": {"type": "string"},
+          "icon": {"type": "string"}
+        }
+      }
+    },
+    "policy_projection": {
+      "type": "object",
+      "required": ["allowed_actions"],
+      "properties": {
+        "allowed_actions": {
+          "type": "array",
+          "items": {"type": "string"}
+        }
+      }
+    },
+    "schema_versions": {
+      "type": "object",
+      "required": ["runtime_bundle"],
+      "properties": {
+        "runtime_bundle": {"type": "string"}
+      }
+    }
+  },
+  "$defs": {
+    "runtimeTool": {
+      "type": "object",
+      "required": [
+        "id",
+        "key",
+        "name",
+        "gateway_name",
+        "required_policy_action",
+        "execution_kind",
+        "risk_level",
+        "required",
+        "tool_instructions"
+      ],
+      "properties": {
+        "id": {"type": "integer", "minimum": 1},
+        "key": {"type": "string"},
+        "name": {"type": "string"},
+        "gateway_name": {"type": "string"},
+        "required_policy_action": {"type": "string"},
+        "execution_kind": {"type": "string"},
+        "risk_level": {"type": "string"},
+        "required": {"type": "boolean"},
+        "tool_instructions": {"type": "string"}
+      }
+    }
+  }
+}

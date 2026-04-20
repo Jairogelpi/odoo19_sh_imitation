@@ -12,9 +12,13 @@
         'security/openclaw_security.xml',
         'security/ir.model.access.csv',
         'data/openclaw_policy_data.xml',
+        'data/openclaw_ai_tool_data.xml',
+        'data/openclaw_ai_pilot_crm_contacts.xml',
         'views/openclaw_views.xml',
+        'views/openclaw_ai_views.xml',
         'views/res_config_settings_views.xml',
         'views/res_partner_views.xml',
+        'wizards/openclaw_cif_preview_views.xml',
     ],
     'assets': {
         'web.assets_backend': [

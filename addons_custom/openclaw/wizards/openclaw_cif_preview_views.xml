@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+    <record id="view_openclaw_cif_preview_form" model="ir.ui.view">
+        <field name="name">openclaw.cif.preview.form</field>
+        <field name="model">openclaw.cif.preview</field>
+        <field name="arch" type="xml">
+            <form string="Datos de la empresa">
+                <sheet class="o_openclaw_cif_preview">
+                    <div class="oe_title mb-3">
+                        <h1 class="mb-0">
+                            <field name="name" placeholder="Razón social" readonly="1"/>
+                        </h1>
+                        <div class="text-muted small">
+                            CIF <field name="vat_display" class="oe_inline" readonly="1"/>
+                            ·
+                            Fuente: <field name="source" class="oe_inline" readonly="1"/>
+                        </div>
+                    </div>
+                    <group>
+                        <group string="Dirección">
+                            <field name="street" readonly="1"/>
+                            <label for="zip" string="CP / Municipio"/>
+                            <div class="o_address_format">
+                                <field name="zip" class="o_address_zip" placeholder="CP" readonly="1"/>
+                                <field name="city" class="o_address_city" placeholder="Ciudad" readonly="1"/>
+                            </div>
+                            <field name="state_id" options="{'no_create': True, 'no_open': True}" readonly="1"/>
+                            <field name="country_id" options="{'no_create': True, 'no_open': True}" readonly="1"/>
+                        </group>
+                        <group string="Contacto">
+                            <field name="phone" readonly="1"/>
+                            <field name="email" readonly="1"/>
+                            <field name="website" widget="url" readonly="1"/>
+                        </group>
+                    </group>
+                    <group string="Logo" invisible="not logo_preview">
+                        <div class="d-flex align-items-center gap-3">
+                            <field name="logo_preview" widget="image" options="{'size': [128, 128]}" readonly="1"/>
+                            <div class="text-muted small">
+                                <div>Origen:</div>
+                                <field name="logo_source_url" class="oe_inline" readonly="1"/>
+                            </div>
+                        </div>
+                    </group>
+                </sheet>
+                <footer>
+                    <button string="Aplicar y recargar" name="action_apply" type="object" class="btn-primary" data-hotkey="q"/>
+                    <button string="Cancelar" special="cancel" class="btn-secondary" data-hotkey="x"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+</odoo>

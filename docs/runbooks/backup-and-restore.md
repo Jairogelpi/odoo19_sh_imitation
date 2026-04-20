@@ -8,13 +8,19 @@ This runbook documents the bootstrap backup and restore flow until `pgBackRest` 
 
 The platform now includes a `pgbackrest` utility container and repository volume in the base compose.
 
-Bootstrap commands:
+No manual `stanza-create` step is required for the first local startup anymore.
+
+The `db` container now bootstraps the stanza automatically the first time PostgreSQL needs to archive a WAL file.
+
+Bootstrap and repair commands:
 
 ```bash
 docker compose -f compose.yaml -f compose.dev.yaml exec pgbackrest /scripts/stanza-create.sh
 docker compose -f compose.yaml -f compose.dev.yaml exec pgbackrest /scripts/check-db.sh
 docker compose -f compose.yaml -f compose.dev.yaml exec pgbackrest /scripts/backup-db.sh
 ```
+
+If you ever replace the `pgbackrest-repo` volume manually, the explicit `stanza-create` command remains the fastest repair step.
 
 Current local status:
 

@@ -1,0 +1,39 @@
+version: '3.8'
+
+# Add this section to your main compose.yaml or create compose.vault.yaml
+
+services:
+  vault:
+    image: vault:latest
+    container_name: openclaw-vault
+    restart: unless-stopped
+    networks:
+      - odoo_net
+    ports:
+      - "8200:8200"  # Vault UI and API
+    environment:
+      VAULT_ADDR: "http://0.0.0.0:8200"
+      VAULT_API_ADDR: "http://vault:8200"
+    volumes:
+      - ./vault/config.hcl:/vault/config/config.hcl:ro
+      - vault-data:/vault/data
+      - vault-logs:/vault/logs
+    command: vault server -config=/vault/config/config.hcl
+    cap_add:
+      - IPC_LOCK
+    healthcheck:
+      test: [ "CMD", "vault", "status" ]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+      start_period: 10s
+
+volumes:
+  vault-data:
+    driver: local
+  vault-logs:
+    driver: local
+
+networks:
+  odoo_net:
+    driver: bridge

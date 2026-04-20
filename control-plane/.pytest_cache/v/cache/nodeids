@@ -1,0 +1,17 @@
+[
+  "app/tests/test_tool_chat_reply_contract.py::TestParseLlmEnvelope::test_empty_text_returns_empty_reply",
+  "app/tests/test_tool_chat_reply_contract.py::TestParseLlmEnvelope::test_json_with_surrounding_whitespace",
+  "app/tests/test_tool_chat_reply_contract.py::TestParseLlmEnvelope::test_malformed_json_falls_back_to_text_reply",
+  "app/tests/test_tool_chat_reply_contract.py::TestParseLlmEnvelope::test_missing_suggested_actions_defaults_empty",
+  "app/tests/test_tool_chat_reply_contract.py::TestParseLlmEnvelope::test_non_string_reply_is_coerced",
+  "app/tests/test_tool_chat_reply_contract.py::TestParseLlmEnvelope::test_parses_well_formed_json",
+  "app/tests/test_tool_chat_reply_contract.py::TestParseLlmEnvelope::test_suggested_actions_not_list_is_normalized_to_empty",
+  "app/tests/test_tool_chat_reply_contract.py::TestToolChatReplyOutput::test_fallback_mode_emits_empty_actions",
+  "app/tests/test_tool_chat_reply_contract.py::TestToolChatReplyOutput::test_openrouter_plain_text_reply_emits_empty_actions",
+  "app/tests/test_tool_chat_reply_contract.py::TestToolChatReplyOutput::test_openrouter_reply_parsed_into_envelope",
+  "app/tests/test_tool_chat_reply_contract.py::TestToolChatReplyOutput::test_router_dashboard_creation_requires_full_spec_without_llm",
+  "app/tests/test_tool_chat_reply_contract.py::TestToolChatReplyOutput::test_router_dashboard_creation_with_full_spec_generates_action",
+  "app/tests/test_tool_chat_reply_contract.py::TestToolChatReplyOutput::test_router_routes_contact_creation_without_llm",
+  "app/tests/test_tool_chat_reply_contract.py::TestToolChatReplyOutput::test_router_routes_dashboard_creation_without_llm",
+  "app/tests/test_tool_chat_reply_contract.py::TestToolChatReplyOutput::test_router_routes_invoicing_handoff_without_llm"
+]

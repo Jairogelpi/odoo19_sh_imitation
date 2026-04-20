@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_openclaw_lead_mining_wizard_form" model="ir.ui.view">
+        <field name="name">openclaw.lead.mining.wizard.form</field>
+        <field name="model">openclaw.lead.mining.wizard</field>
+        <field name="arch" type="xml">
+            <form string="OpenClaw Lead Mining">
+                <field name="state" invisible="1"/>
+                <sheet>
+                    <group invisible="state != 'filters'">
+                        <group string="Búsqueda">
+                            <field name="category"/>
+                            <field name="country_id" options="{'no_create': True, 'no_open': True}"/>
+                            <field name="state_id" options="{'no_create': True, 'no_open': True}"
+                                   placeholder="Elige provincia..."/>
+                            <field name="city" placeholder="Ciudad / municipio (opcional)"/>
+                            <field name="area_name" placeholder="Se calcula desde ciudad o provincia"/>
+                            <field name="limit"/>
+                        </group>
+                        <group string="Filtros">
+                            <field name="require_website"/>
+                            <field name="require_phone"/>
+                            <field name="enrich_email"/>
+                            <field name="create_partner"/>
+                        </group>
+                        <group string="Asignación" colspan="2">
+                            <field name="sales_team_id"/>
+                            <field name="user_id"/>
+                            <field name="tag_ids" widget="many2many_tags"/>
+                        </group>
+                    </group>
+
+                    <group invisible="state != 'preview'">
+                        <p colspan="2">
+                            Revisa los resultados y desmarca los que no quieras crear como lead.
+                        </p>
+                        <field name="result_line_ids" nolabel="1" colspan="2">
+                            <list editable="bottom" create="false">
+                                <field name="selected"/>
+                                <field name="name"/>
+                                <field name="phone"/>
+                                <field name="website"/>
+                                <field name="email"/>
+                                <field name="street"/>
+                                <field name="zip"/>
+                                <field name="city"/>
+                                <field name="country_code"/>
+                                <field name="category_hint" optional="hide"/>
+                                <field name="osm_id" optional="hide"/>
+                            </list>
+                        </field>
+                    </group>
+
+                    <group invisible="state != 'done'">
+                        <p colspan="2">
+                            Se han creado <field name="created_count" readonly="1" nolabel="1" class="oe_inline"/> leads.
+                        </p>
+                    </group>
+                </sheet>
+                <footer>
+                    <button name="action_search" string="Buscar" type="object"
+                            class="btn-primary" invisible="state != 'filters'"/>
+                    <button name="action_create_leads" string="Crear leads" type="object"
+                            class="btn-primary" invisible="state != 'preview'"/>
+                    <button name="action_search" string="Nueva búsqueda" type="object"
+                            invisible="state != 'preview'"/>
+                    <button name="action_open_leads" string="Ver leads creados" type="object"
+                            class="btn-primary" invisible="state != 'done'"/>
+                    <button string="Cerrar" class="btn-secondary" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_openclaw_lead_mining_wizard" model="ir.actions.act_window">
+        <field name="name">Buscar leads (OpenClaw / OSM)</field>
+        <field name="res_model">openclaw.lead.mining.wizard</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+    </record>
+</odoo>

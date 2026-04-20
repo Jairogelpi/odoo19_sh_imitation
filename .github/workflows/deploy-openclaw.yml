@@ -1,0 +1,151 @@
+name: Deploy OpenClaw with Hardened MCP Tokens
+
+on:
+  push:
+    branches:
+      - main
+      - production
+  workflow_dispatch:  # Manual trigger
+
+env:
+  REGISTRY: ghcr.io
+  IMAGE_NAME: ${{ github.repository }}
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    
+    strategy:
+      matrix:
+        environment: [ staging, production ]
+    
+    environment:
+      name: ${{ matrix.environment }}
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Retrieve MCP tokens from Vault
+        id: vault
+        run: |
+          # Install Vault CLI
+          curl -fsSL https://apt.releases.hashicorp.com/gpg | sudo apt-key add -
+          echo "deb [arch=amd64] https://apt.releases.hashicorp.com $(lsb_release -cs) main" | sudo tee /etc/apt/sources.list.d/hashicorp.list
+          sudo apt-get update && sudo apt-get install -y vault
+          
+          # Authenticate to Vault using JWT token
+          VAULT_TOKEN=$(vault write -field=token auth/jwt/login \
+            role=github \
+            jwt=${{ secrets.VAULT_JWT_TOKEN }})
+          
+          # Retrieve tokens
+          TOKENS=$(vault kv get -format=json secret/openclaw/mcp-tokens-${{ matrix.environment }})
+          
+          echo "::add-mask::$(echo $TOKENS | jq -r .data.data.obsidian)"
+          echo "::add-mask::$(echo $TOKENS | jq -r .data.data.memory)"
+          echo "::add-mask::$(echo $TOKENS | jq -r .data.data.context7)"
+          
+          echo "OBSIDIAN_TOKEN=$(echo $TOKENS | jq -r .data.data.obsidian)" >> $GITHUB_OUTPUT
+          echo "MEMORY_TOKEN=$(echo $TOKENS | jq -r .data.data.memory)" >> $GITHUB_OUTPUT
+          echo "CONTEXT7_TOKEN=$(echo $TOKENS | jq -r .data.data.context7)" >> $GITHUB_OUTPUT
+
+      - name: Setup Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Log in to Container Registry
+        uses: docker/login-action@v3
+        with:
+          registry: ${{ env.REGISTRY }}
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Build and push Docker images
+        run: |
+          docker compose -f compose.yaml -f compose.admin.yaml build --no-cache
+          docker compose push
+
+      - name: Deploy to ${{ matrix.environment }}
+        env:
+          DEPLOY_HOST: ${{ secrets[format('DEPLOY_HOST_{0}', matrix.environment)] }}
+          DEPLOY_USER: ${{ secrets.DEPLOY_USER }}
+          DEPLOY_KEY: ${{ secrets.DEPLOY_KEY }}
+          OPENCLAW_OBSIDIAN_MCP_TOKEN: ${{ steps.vault.outputs.OBSIDIAN_TOKEN }}
+          OPENCLAW_MEMORY_MCP_TOKEN: ${{ steps.vault.outputs.MEMORY_TOKEN }}
+          OPENCLAW_CONTEXT7_MCP_TOKEN: ${{ steps.vault.outputs.CONTEXT7_TOKEN }}
+        run: |
+          # Install SSH key
+          mkdir -p ~/.ssh
+          echo "${{ env.DEPLOY_KEY }}" > ~/.ssh/deploy_key
+          chmod 600 ~/.ssh/deploy_key
+          ssh-keyscan -H ${{ env.DEPLOY_HOST }} >> ~/.ssh/known_hosts
+          
+          # Deploy
+          ssh -i ~/.ssh/deploy_key ${{ env.DEPLOY_USER }}@${{ env.DEPLOY_HOST }} <<'EOF'
+            set -e
+            cd /opt/openclaw
+            
+            # Export tokens
+            export OPENCLAW_OBSIDIAN_MCP_TOKEN="${{ env.OPENCLAW_OBSIDIAN_MCP_TOKEN }}"
+            export OPENCLAW_MEMORY_MCP_TOKEN="${{ env.OPENCLAW_MEMORY_MCP_TOKEN }}"
+            export OPENCLAW_CONTEXT7_MCP_TOKEN="${{ env.OPENCLAW_CONTEXT7_MCP_TOKEN }}"
+            
+            # Pull latest images
+            docker compose pull
+            
+            # Deploy with new tokens
+            docker compose -f compose.yaml -f compose.${{ matrix.environment }}.yaml up -d --build
+            
+            # Wait for services to stabilize
+            sleep 15
+          EOF
+
+      - name: Run health check post-deployment
+        env:
+          DEPLOY_HOST: ${{ secrets[format('DEPLOY_HOST_{0}', matrix.environment)] }}
+          DEPLOY_USER: ${{ secrets.DEPLOY_USER }}
+          DEPLOY_KEY: ${{ secrets.DEPLOY_KEY }}
+          OPENCLAW_OBSIDIAN_MCP_TOKEN: ${{ steps.vault.outputs.OBSIDIAN_TOKEN }}
+          OPENCLAW_MEMORY_MCP_TOKEN: ${{ steps.vault.outputs.MEMORY_TOKEN }}
+          OPENCLAW_CONTEXT7_MCP_TOKEN: ${{ steps.vault.outputs.CONTEXT7_TOKEN }}
+        run: |
+          ssh -i ~/.ssh/deploy_key ${{ env.DEPLOY_USER }}@${{ env.DEPLOY_HOST }} <<'EOF'
+            set -e
+            cd /opt/openclaw
+            
+            # Export tokens for health check
+            export OPENCLAW_OBSIDIAN_MCP_TOKEN="${{ env.OPENCLAW_OBSIDIAN_MCP_TOKEN }}"
+            export OPENCLAW_MEMORY_MCP_TOKEN="${{ env.OPENCLAW_MEMORY_MCP_TOKEN }}"
+            export OPENCLAW_CONTEXT7_MCP_TOKEN="${{ env.OPENCLAW_CONTEXT7_MCP_TOKEN }}"
+            
+            # Run health check
+            powershell -ExecutionPolicy Bypass -File ./ops/health/check-openclaw-connectors.ps1
+            
+            # Verify exit code
+            if [ $? -eq 0 ]; then
+              echo "✅ Health check PASSED - Deployment successful!"
+            else
+              echo "❌ Health check FAILED - Rolling back..."
+              docker compose -f compose.yaml -f compose.${{ matrix.environment }}.yaml down
+              exit 1
+            fi
+          EOF
+
+      - name: Record deployment
+        if: success()
+        run: |
+          echo "✅ Deployment to ${{ matrix.environment }} completed successfully"
+          echo "Tokens updated from Vault"
+          echo "Health check passed"
+          
+      - name: Notify on failure
+        if: failure()
+        uses: actions/github-script@v7
+        with:
+          script: |
+            github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: '❌ Deployment to ${{ matrix.environment }} **FAILED**. Check workflow logs.'
+            })

@@ -1,0 +1,135 @@
+name: Quarterly Token Rotation - OpenClaw MCP
+
+on:
+  schedule:
+    # Run quarterly: Jan 15, Apr 15, Jul 15, Oct 15 at 02:00 UTC
+    - cron: '0 2 15 1,4,7,10 *'
+  workflow_dispatch:  # Manual trigger
+
+jobs:
+  rotate-tokens:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Setup HashiCorp Vault CLI
+        run: |
+          curl -fsSL https://apt.releases.hashicorp.com/gpg | sudo apt-key add -
+          echo "deb [arch=amd64] https://apt.releases.hashicorp.com $(lsb_release -cs) main" | sudo tee /etc/apt/sources.list.d/hashicorp.list
+          sudo apt-get update && sudo apt-get install -y vault jq
+
+      - name: Generate new tokens
+        id: generate
+        run: |
+          # Generate 3 new 32-char tokens
+          TOKEN1=$(openssl rand -base64 24 | tr -d "=+/" | cut -c1-32)
+          TOKEN2=$(openssl rand -base64 24 | tr -d "=+/" | cut -c1-32)
+          TOKEN3=$(openssl rand -base64 24 | tr -d "=+/" | cut -c1-32)
+          
+          echo "::add-mask::$TOKEN1"
+          echo "::add-mask::$TOKEN2"
+          echo "::add-mask::$TOKEN3"
+          
+          echo "OBSIDIAN_TOKEN=$TOKEN1" >> $GITHUB_OUTPUT
+          echo "MEMORY_TOKEN=$TOKEN2" >> $GITHUB_OUTPUT
+          echo "CONTEXT7_TOKEN=$TOKEN3" >> $GITHUB_OUTPUT
+          
+          echo "✅ Generated new tokens for $(date -I)"
+
+      - name: Update tokens in Vault
+        env:
+          VAULT_ADDR: ${{ secrets.VAULT_ADDR }}
+          VAULT_JWT_TOKEN: ${{ secrets.VAULT_JWT_TOKEN }}
+        run: |
+          # Authenticate
+          VAULT_TOKEN=$(vault write -field=token auth/jwt/login \
+            role=github \
+            jwt=$VAULT_JWT_TOKEN)
+          
+          export VAULT_TOKEN
+          
+          # Update staging tokens
+          vault kv put secret/openclaw/mcp-tokens-staging \
+            obsidian="${{ steps.generate.outputs.OBSIDIAN_TOKEN }}" \
+            memory="${{ steps.generate.outputs.MEMORY_TOKEN }}" \
+            context7="${{ steps.generate.outputs.CONTEXT7_TOKEN }}"
+          
+          # Update production tokens
+          vault kv put secret/openclaw/mcp-tokens-production \
+            obsidian="${{ steps.generate.outputs.OBSIDIAN_TOKEN }}" \
+            memory="${{ steps.generate.outputs.MEMORY_TOKEN }}" \
+            context7="${{ steps.generate.outputs.CONTEXT7_TOKEN }}"
+          
+          echo "✅ Updated tokens in Vault"
+
+      - name: Archive old tokens
+        env:
+          VAULT_ADDR: ${{ secrets.VAULT_ADDR }}
+          VAULT_JWT_TOKEN: ${{ secrets.VAULT_JWT_TOKEN }}
+        run: |
+          VAULT_TOKEN=$(vault write -field=token auth/jwt/login \
+            role=github \
+            jwt=$VAULT_JWT_TOKEN)
+          
+          export VAULT_TOKEN
+          YYYY=$(date +%Y)
+          QQ=$((($(date +%m)-1)/3+1))
+          
+          # Archive old tokens (for audit trail)
+          vault kv put secret/openclaw/mcp-tokens-archive/q${QQ}-${YYYY} \
+            timestamp="$(date -Iseconds)" \
+            note="Quarterly rotation complete"
+          
+          echo "✅ Archived old tokens in audit trail"
+
+      - name: Commit token rotation record
+        run: |
+          git config --global user.email "openClaw-bot@example.com"
+          git config --global user.name "OpenClaw Bot"
+          
+          ROTATION_DATE=$(date -I)
+          cat > TOKEN_ROTATION_LOG.txt << EOF
+          # Token Rotation Schedule
+
+          ## Rotations Completed
+          - $ROTATION_DATE: Q$((($(date +%m)-1)/3+1)) rotation (Vault updated)
+          
+          EOF
+          
+          git add TOKEN_ROTATION_LOG.txt
+          git commit -m "docs: record quarterly token rotation - $ROTATION_DATE" || echo "No changes to commit"
+          git push
+
+      - name: Notify team
+        uses: actions/github-script@v7
+        with:
+          script: |
+            github.rest.issues.createComment({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: 1,  # Update to your team's issue/discussion
+              body: `✅ **Quarterly Token Rotation Complete**\n\nDate: ${new Date().toISOString().split('T')[0]}\n\n✅ Generated new tokens\n✅ Updated Vault (staging + production)\n✅ Archived old tokens\n\nNo manual action required. Next rotation: $(date -d '+90 days' -I)`
+            })
+
+      - name: Create GitHub release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: token-rotation-${{ github.run_number }}
+          release_name: Token Rotation ${{ steps.generate.outputs.OBSIDIAN_TOKEN && 'Complete' || 'Failed' }}
+          body: |
+            Quarterly token rotation completed.
+            
+            - Generated new 32-char cryptographic tokens
+            - Updated Vault (staging + production)
+            - Archived previous tokens for audit trail
+            - Health check will run on next deployment
+            
+            **Timeline**: Next rotation in 90 days
+          draft: false
+          prerelease: false

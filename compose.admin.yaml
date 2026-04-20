@@ -1,4 +1,75 @@
 services:
+  context7-mcp:
+    image: odoo19-context7-mcp:local
+    build:
+      context: ./services/context7-mcp
+    restart: unless-stopped
+    environment:
+      MCP_PORT: 8092
+      CONTEXT7_DOCS_ROOT: /docs
+      MCP_AUTH_TOKEN: ${OPENCLAW_CONTEXT7_MCP_TOKEN:?OPENCLAW_CONTEXT7_MCP_TOKEN is required}
+      TZ: ${TZ:-Etc/UTC}
+    volumes:
+      - ./docs:/docs
+    networks:
+      - odoo_net
+
+  obsidian-mcp:
+    image: odoo19-obsidian-mcp:local
+    build:
+      context: ./services/obsidian-mcp
+    restart: unless-stopped
+    environment:
+      MCP_PORT: 8090
+      OBSIDIAN_VAULT_ROOT: /vault
+      MCP_AUTH_TOKEN: ${OPENCLAW_OBSIDIAN_MCP_TOKEN:?OPENCLAW_OBSIDIAN_MCP_TOKEN is required}
+      TZ: ${TZ:-Etc/UTC}
+    volumes:
+      - ./docs:/vault
+    networks:
+      - odoo_net
+
+  memory-mcp:
+    image: odoo19-memory-mcp:local
+    build:
+      context: ./services/memory-mcp
+    restart: unless-stopped
+    environment:
+      MCP_PORT: 8091
+      MEMORY_STORE_FILE: /data/memory_store.json
+      MCP_AUTH_TOKEN: ${OPENCLAW_MEMORY_MCP_TOKEN:?OPENCLAW_MEMORY_MCP_TOKEN is required}
+      TZ: ${TZ:-Etc/UTC}
+    volumes:
+      - memory-mcp-data:/data
+    networks:
+      - odoo_net
+
+  cif-lookup-mcp:
+    image: odoo19-cif-lookup-mcp:local
+    build:
+      context: ./services/cif-lookup-mcp
+    restart: unless-stopped
+    environment:
+      MCP_PORT: 8093
+      MCP_AUTH_TOKEN: ${OPENCLAW_CIF_LOOKUP_MCP_TOKEN:?OPENCLAW_CIF_LOOKUP_MCP_TOKEN is required}
+      GOOGLE_MAPS_API_KEY: ${GOOGLE_MAPS_API_KEY:-}
+      TZ: ${TZ:-Etc/UTC}
+    networks:
+      - odoo_net
+
+  lead-mining-mcp:
+    image: odoo19-lead-mining-mcp:local
+    build:
+      context: ./services/lead-mining-mcp
+    restart: unless-stopped
+    environment:
+      MCP_PORT: 8094
+      MCP_AUTH_TOKEN: ${OPENCLAW_LEAD_MINING_MCP_TOKEN:-}
+      OVERPASS_ENDPOINTS: ${OVERPASS_ENDPOINTS:-}
+      TZ: ${TZ:-Etc/UTC}
+    networks:
+      - odoo_net
+
   portainer:
     image: portainer/portainer-ce:latest
     restart: unless-stopped
@@ -86,6 +157,23 @@ services:
       OPENROUTER_TIMEOUT_SECONDS: ${OPENROUTER_TIMEOUT_SECONDS:-90}
       OPENROUTER_TITLE: ${OPENROUTER_TITLE:-OpenClaw Control Plane}
       OPENROUTER_REFERER: ${OPENROUTER_REFERER:-http://localhost:8082}
+      OPENCLAW_OBSIDIAN_MCP_URL: ${OPENCLAW_OBSIDIAN_MCP_URL:-http://obsidian-mcp:8090/mcp}
+      OPENCLAW_OBSIDIAN_MCP_TOKEN: ${OPENCLAW_OBSIDIAN_MCP_TOKEN:?OPENCLAW_OBSIDIAN_MCP_TOKEN is required}
+      OPENCLAW_OBSIDIAN_MCP_TIMEOUT_SECONDS: ${OPENCLAW_OBSIDIAN_MCP_TIMEOUT_SECONDS:-30}
+      OPENCLAW_MEMORY_MCP_URL: ${OPENCLAW_MEMORY_MCP_URL:-http://memory-mcp:8091/mcp}
+      OPENCLAW_MEMORY_MCP_TOKEN: ${OPENCLAW_MEMORY_MCP_TOKEN:?OPENCLAW_MEMORY_MCP_TOKEN is required}
+      OPENCLAW_MEMORY_MCP_TIMEOUT_SECONDS: ${OPENCLAW_MEMORY_MCP_TIMEOUT_SECONDS:-30}
+      OPENCLAW_CONTEXT7_MCP_URL: ${OPENCLAW_CONTEXT7_MCP_URL:-http://context7-mcp:8092/mcp}
+      OPENCLAW_CONTEXT7_MCP_TOKEN: ${OPENCLAW_CONTEXT7_MCP_TOKEN:?OPENCLAW_CONTEXT7_MCP_TOKEN is required}
+      OPENCLAW_CONTEXT7_MCP_TIMEOUT_SECONDS: ${OPENCLAW_CONTEXT7_MCP_TIMEOUT_SECONDS:-30}
+      OPENCLAW_CONTEXT7_RESOLVE_TOOL_NAME: ${OPENCLAW_CONTEXT7_RESOLVE_TOOL_NAME:-resolve-library-id}
+      OPENCLAW_CONTEXT7_QUERY_TOOL_NAME: ${OPENCLAW_CONTEXT7_QUERY_TOOL_NAME:-query-docs}
+      OPENCLAW_CIF_LOOKUP_MCP_URL: ${OPENCLAW_CIF_LOOKUP_MCP_URL:-http://cif-lookup-mcp:8093/mcp}
+      OPENCLAW_CIF_LOOKUP_MCP_TOKEN: ${OPENCLAW_CIF_LOOKUP_MCP_TOKEN:?OPENCLAW_CIF_LOOKUP_MCP_TOKEN is required}
+      OPENCLAW_CIF_LOOKUP_MCP_TIMEOUT_SECONDS: ${OPENCLAW_CIF_LOOKUP_MCP_TIMEOUT_SECONDS:-30}
+      OPENCLAW_LEAD_MINING_MCP_URL: ${OPENCLAW_LEAD_MINING_MCP_URL:-http://lead-mining-mcp:8094/mcp}
+      OPENCLAW_LEAD_MINING_MCP_TOKEN: ${OPENCLAW_LEAD_MINING_MCP_TOKEN:-}
+      OPENCLAW_LEAD_MINING_MCP_TIMEOUT_SECONDS: ${OPENCLAW_LEAD_MINING_MCP_TIMEOUT_SECONDS:-120}
       ALLOWED_ENVS: dev,staging,prod
       TZ: ${TZ:-Etc/UTC}
     ports:
@@ -94,6 +182,12 @@ services:
       - /var/run/docker.sock:/var/run/docker.sock:ro
       - ./docs:/app/docs
       - ./addons_custom:/workspace/addons_custom
+    depends_on:
+      - context7-mcp
+      - obsidian-mcp
+      - memory-mcp
+      - cif-lookup-mcp
+      - lead-mining-mcp
     networks:
       - odoo_net
 
@@ -202,6 +296,7 @@ volumes:
   portainer-data:
   pgadmin-data:
   obsidian-config:
+  memory-mcp-data:
   code-server-config:
   prometheus-data:
   grafana-data:

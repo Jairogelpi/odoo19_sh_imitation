@@ -56,6 +56,7 @@ class OpenClawGatewayClient:
         model: str | None = None,
         temperature: float = 0.5,
         max_tokens: int = 800,
+        runtime_bundle: dict[str, Any] | None = None,
         policy_context: dict[str, Any] | None = None,
     ) -> dict[str, Any]:
         arguments: dict[str, Any] = {
@@ -65,6 +66,8 @@ class OpenClawGatewayClient:
         }
         if model:
             arguments["model"] = model
+        if runtime_bundle:
+            arguments["runtime_bundle"] = runtime_bundle
         if policy_context:
             arguments["policy_context"] = policy_context
         result = self._rpc(

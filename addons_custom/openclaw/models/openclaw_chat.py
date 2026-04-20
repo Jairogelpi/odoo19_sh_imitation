@@ -20,6 +20,30 @@ class OpenClawChatSession(models.Model):
     name = fields.Char(required=True, default='New conversation')
     user_id = fields.Many2one('res.users', string='User', required=True, default=lambda self: self.env.user, index=True)
     active = fields.Boolean(default=True)
+    origin_kind = fields.Selection(
+        [
+            ('global', 'Global'),
+            ('model', 'Model'),
+            ('record', 'Record'),
+        ],
+        default='global',
+        required=True,
+    )
+    origin_model = fields.Char()
+    origin_res_id = fields.Integer()
+    resolved_agent_id = fields.Many2one('openclaw.ai.agent', string='Resolved Agent', readonly=True)
+    resolved_default_prompt_id = fields.Many2one(
+        'openclaw.ai.default_prompt',
+        string='Resolved Default Prompt',
+        readonly=True,
+    )
+    resolved_llm_profile_id = fields.Many2one(
+        'openclaw.ai.llm_profile',
+        string='Resolved LLM Profile',
+        readonly=True,
+    )
+    runtime_bundle_version = fields.Integer(readonly=True)
+    runtime_bundle_json = fields.Text(readonly=True)
     last_message_at = fields.Datetime(readonly=True)
     last_message_preview = fields.Char(readonly=True)
     message_count = fields.Integer(compute='_compute_message_count')
@@ -198,6 +222,7 @@ class OpenClawChatSession(models.Model):
         ordered_requests = self.env['openclaw.request']
         if self._has_request_message_column():
             ordered_requests = message.request_ids.sorted(key=lambda r: (r.create_date or fields.Datetime.now(), r.id))
+            ordered_requests.repair_legacy_dashboard_alias_blocks()
         return {
             'id': message.id,
             'session_id': message.session_id.id,
@@ -251,9 +276,16 @@ class OpenClawChatSession(models.Model):
 
     def _generate_reply(self, user_content: str) -> dict[str, Any]:
         self.ensure_one()
+        runtime_bundle = self._resolve_chat_runtime(
+            origin_kind=self.origin_kind,
+            origin_model=self.origin_model,
+            origin_res_id=self.origin_res_id,
+            persist=True,
+        )
         try:
             response = self._gateway_client().chat_reply(
                 self._chat_messages_for_gateway() + [{'role': 'user', 'content': user_content}],
+                runtime_bundle=runtime_bundle,
                 policy_context=self._build_policy_context(),
             )
         except OpenClawGatewayError as exc:
@@ -292,6 +324,16 @@ class OpenClawChatSession(models.Model):
         if not session:
             raise ValidationError(_('Chat session not found.'))
         return session._session_payload(include_messages=True)
+
+    @api.model
+    def rpc_delete_session(self, session_id: int):
+        session = self.browse(session_id).exists()
+        if not session:
+            raise ValidationError(_('Chat session not found.'))
+        if session.user_id and session.user_id.id != self.env.user.id and not self.env.user.has_group('base.group_system'):
+            raise ValidationError(_('You can only delete your own sessions.'))
+        session.unlink()
+        return {'deleted_id': session_id}
 
     @api.model
     def rpc_send_message(self, session_id: int, content: str):
@@ -351,6 +393,7 @@ class OpenClawChatSession(models.Model):
         request = self.env['openclaw.request'].browse(request_id).exists()
         if not request:
             raise ValidationError(_('Request not found.'))
+        request.repair_legacy_dashboard_alias_blocks()
         if not request.policy_id:
             raise ValidationError(_('This request is blocked and cannot be approved.'))
         if request.state in ('executed', 'failed', 'rejected'):

@@ -8,6 +8,7 @@
                 activeSessionId="state.activeSession and state.activeSession.id"
                 onSelect.bind="selectSession"
                 onCreate.bind="createSession"
+                onDelete.bind="deleteSession"
             />
             <main class="o_openclaw_chat_main">
                 <ChatHeader session="state.activeSession"/>
@@ -48,17 +49,25 @@
             </div>
             <div class="o_openclaw_chat_session_list">
                 <t t-foreach="props.sessions" t-as="session" t-key="session.id">
-                    <button
-                        type="button"
+                    <div
                         class="o_openclaw_chat_session_item"
                         t-att-class="props.activeSessionId === session.id ? 'is-active' : ''"
                         t-on-click="() => props.onSelect(session.id)"
                     >
-                        <div class="o_openclaw_chat_session_name"><t t-esc="session.name"/></div>
-                        <div class="o_openclaw_chat_session_preview">
-                            <t t-esc="session.last_message_preview or 'Start a new conversation'"/>
+                        <div class="o_openclaw_chat_session_item_body">
+                            <div class="o_openclaw_chat_session_name"><t t-esc="session.name"/></div>
+                            <div class="o_openclaw_chat_session_preview">
+                                <t t-esc="session.last_message_preview or 'Start a new conversation'"/>
+                            </div>
                         </div>
-                    </button>
+                        <button
+                            type="button"
+                            class="o_openclaw_chat_session_delete"
+                            title="Borrar sesión"
+                            aria-label="Borrar sesión"
+                            t-on-click.stop="() => props.onDelete(session.id)"
+                        >×</button>
+                    </div>
                 </t>
             </div>
         </aside>

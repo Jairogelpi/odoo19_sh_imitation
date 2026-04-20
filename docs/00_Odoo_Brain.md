@@ -4,6 +4,10 @@ This vault organizes the Odoo 19 documentation as an Obsidian-style knowledge gr
 
 ## Start here
 - [OpenClaw](brain/openclaw.md)
+- [HF Training Status (2026-04-18)](brain/hf_training_status_2026-04-18.md)
+- [Training Status](training/TRAINING_READY.md)
+- [Training Script Inventory](training/03-training-script-inventory.md)
+- [Vault token operations](runbooks/vault-token-operations.md)
 - [Architecture Overview](brain/architecture_overview.md)
 - [Platform](brain/platform.md)
 - [Odoo 19 Compatibility Notes](brain/odoo19_differences.md)
@@ -15,6 +19,10 @@ This vault organizes the Odoo 19 documentation as an Obsidian-style knowledge gr
 
 ## Entry points
 - [OpenClaw](brain/openclaw.md)
+- [HF Training Status (2026-04-18)](brain/hf_training_status_2026-04-18.md)
+- [Training Status](training/TRAINING_READY.md)
+- [Training Script Inventory](training/03-training-script-inventory.md)
+- [Vault token operations](runbooks/vault-token-operations.md)
 - [Architecture Overview](brain/architecture_overview.md)
 - [Platform](brain/platform.md)
 - [Odoo 19 Compatibility Notes](brain/odoo19_differences.md)
@@ -39,6 +47,7 @@ This vault organizes the Odoo 19 documentation as an Obsidian-style knowledge gr
 ```mermaid
 graph TD
   Home[Odoo Brain] --> Platform[Platform]
+  Home --> HFTrainingStatus[HF Training Status]
   Home --> Odoo19Compat[Odoo 19 Compatibility Notes]
   Home --> ResConfig[Odoo 19 res.config.settings]
   Home --> EnvModel[Environment State Model]
@@ -105,6 +114,9 @@ graph TD
 - [Offsite backups](runbooks/offsite-backups.md)
 - [Lobby (homepage) runbook](runbooks/lobby-homepage.md)
 - [Control plane runbook](runbooks/control-plane.md)
+- [Vault token operations](runbooks/vault-token-operations.md)
+- [Training status](training/TRAINING_READY.md)
+- [Training script inventory](training/03-training-script-inventory.md)
 - [Base module doc](odoo19_schema/base_module.md)
 - [CRM module doc](odoo19_schema/crm_module.md)
 - [Base vs CRM comparison](odoo19_schema/base_vs_crm.md)

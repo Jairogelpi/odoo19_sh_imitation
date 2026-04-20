@@ -6,6 +6,7 @@ description: "Use when a task should be routed through the OpenClaw addon, the M
 # OpenClaw
 
 Use this skill as the umbrella for OpenClaw-driven work in this repository. Pick the specialized skill that matches the task: `openclaw-odoo`, `openclaw-docs`, `openclaw-workspace`, `openclaw-db`, or `openclaw-code`.
+For auxiliary process work around imported skills, use `skill-vetter` before installing third-party skills, `self-improvement` when you want to log durable learnings or errors, `ontology` when you need an optional local knowledge graph that is explicitly separate from authoritative platform state, `postgresql-advisor` when you need PostgreSQL judgment without bypassing `openclaw-db`, and `grafana-advisor` when you need observability/dashboard guidance without turning Grafana into a second automation surface.
 
 ## Scope
 
@@ -33,6 +34,11 @@ OpenClaw in this repo is the local Odoo addon plus the control-plane MCP gateway
 - Workspace actions: use `openclaw-workspace`.
 - Database actions: use `openclaw-db`.
 - Code drafting: use `openclaw-code`.
+- Vet third-party skills before import: use `skill-vetter`.
+- Log recurring learnings and errors: use `self-improvement`.
+- Model optional local knowledge graphs: use `ontology`.
+- Review PostgreSQL queries, indexes, plans, and timeouts: use `postgresql-advisor`.
+- Review Grafana dashboards, variables, alerts, and provisioning choices: use `grafana-advisor`.
 
 ## Preferred tool routing
 

@@ -22,7 +22,7 @@ from urllib.request import Request, urlopen
 from urllib.error import URLError, HTTPError
 
 _EMAIL_RE = re.compile(r"[A-Za-z0-9._%+\-]+@[A-Za-z0-9.\-]+\.[A-Za-z]{2,}")
-_LOGO_MIN_BYTES = 400
+_LOGO_MIN_BYTES = 200
 _EMAIL_REJECT_PREFIXES = ("no-reply", "noreply", "postmaster@", "webmaster@", "abuse@")
 _EMAIL_REJECT_SUFFIXES = (".png", ".jpg", ".jpeg", ".svg", ".webp", ".gif")
 
@@ -261,30 +261,33 @@ class ResPartnerCifAutofill(models.Model):
         short = base[:20]
         return [f"{short}.es", f"{short}.com", f"{short}.net"]
 
-    def _openclaw_fetch_logo_for_domain(self, domain: str) -> bytes | None:
+    def _openclaw_fetch_logo_for_domain(self, domain: str) -> tuple[bytes | None, str]:
         if not domain:
-            return None
+            return None, ""
+        best: tuple[bytes, str] | None = None
         for candidate in (
             f"https://{domain}/favicon.ico",
             f"https://icons.duckduckgo.com/ip3/{domain}.ico",
+            f"https://www.google.com/s2/favicons?sz=256&domain={domain}",
             f"https://www.google.com/s2/favicons?sz=128&domain={domain}",
         ):
             blob = _http_get_bytes(candidate, timeout=5.0)
             if blob and len(blob) > _LOGO_MIN_BYTES:
-                return blob
-        return None
+                if best is None or len(blob) > len(best[0]):
+                    best = (blob, candidate)
+        return (best[0], best[1]) if best else (None, "")
 
-    def _openclaw_try_fetch_logo(self, website: str) -> tuple[bytes | None, str]:
-        """Devuelve (logo_bytes, dominio_usado)."""
+    def _openclaw_try_fetch_logo(self, website: str) -> tuple[bytes | None, str, str]:
+        """Devuelve (logo_bytes, dominio_usado, url_fuente)."""
         if not website:
-            return None, ""
+            return None, "", ""
         parsed = urlparse(website if "://" in website else f"https://{website}")
         domain = parsed.netloc or parsed.path
         domain = domain.split("/")[0].strip()
         if not domain:
-            return None, ""
-        blob = self._openclaw_fetch_logo_for_domain(domain)
-        return (blob, domain) if blob else (None, "")
+            return None, "", ""
+        blob, source_url = self._openclaw_fetch_logo_for_domain(domain)
+        return (blob, domain, source_url) if blob else (None, "", "")
 
     def _openclaw_fetch_homepage(self, website: str) -> tuple[str, str]:
         """Descarga la home; devuelve (html, url_final). Cadenas vacías si falla."""
@@ -385,6 +388,34 @@ class ResPartnerCifAutofill(models.Model):
 
         return applied
 
+    def _openclaw_enrich_website_email_logo(self, website: str, email: str) -> dict:
+        """Dada una web, intenta sacar email (si falta) y mejor logo. Devuelve dict."""
+        out: dict[str, Any] = {"website": website, "email": email, "logo_bytes": None, "logo_source": ""}
+        if not website:
+            return out
+        html, final_url = self._openclaw_fetch_homepage(website)
+        base_url = final_url or website
+        if not out["email"] and html:
+            found_email = self._openclaw_find_email_in_html(html)
+            if found_email:
+                out["email"] = found_email
+        logo_bytes: bytes | None = None
+        logo_source = ""
+        if html:
+            logo_url = self._openclaw_find_logo_url_in_html(html, base_url)
+            if logo_url:
+                blob = _http_get_bytes(logo_url, timeout=6.0)
+                if blob and len(blob) > _LOGO_MIN_BYTES:
+                    logo_bytes = blob
+                    logo_source = logo_url
+        fallback_bytes, _dom, fallback_src = self._openclaw_try_fetch_logo(website)
+        if fallback_bytes and (logo_bytes is None or len(fallback_bytes) > len(logo_bytes)):
+            logo_bytes = fallback_bytes
+            logo_source = fallback_src
+        out["logo_bytes"] = logo_bytes
+        out["logo_source"] = logo_source
+        return out
+
     def action_openclaw_cif_lookup(self):
         self.ensure_one()
         raw_vat = (self.vat or "").strip()
@@ -400,65 +431,38 @@ class ResPartnerCifAutofill(models.Model):
             raise UserError(data.get("mensaje") or _("No se encontraron datos para el documento."))
 
         mapping = (data.get("_res_partner") or {}).get("values") or {}
-        vals: dict[str, Any] = {}
-        applied: list[str] = []
-
-        def _maybe(field_name: str, value: Any) -> None:
-            if not value or field_name not in self._fields:
-                return
-            if self[field_name] not in (False, None, "", 0):
-                return
-            vals[field_name] = value
-            applied.append(field_name)
-
-        _maybe("name", mapping.get("name") or data.get("razon_social"))
-        _maybe("street", mapping.get("street") or data.get("direccion"))
-        _maybe("zip", mapping.get("zip") or data.get("codigo_postal"))
-        _maybe("city", mapping.get("city") or data.get("municipio"))
-        _maybe("phone", mapping.get("phone") or data.get("telefono"))
-        _maybe("website", mapping.get("website") or data.get("website"))
-        _maybe("email", mapping.get("email") or data.get("email"))
-
-        if not self.is_company:
-            vals["is_company"] = True
-            applied.append("is_company")
-        if not self.company_type or self.company_type == "person":
-            vals["company_type"] = "company"
-            applied.append("company_type")
-
         country_state = self._openclaw_resolve_country_state(data)
-        if country_state.get("country_id") and not self.country_id:
-            vals["country_id"] = country_state["country_id"]
-            applied.append("country_id")
-        if country_state.get("state_id") and not self.state_id:
-            vals["state_id"] = country_state["state_id"]
-            applied.append("state_id")
 
-        if vals:
-            vals["openclaw_cif_enriched"] = True
-            self.write(vals)
+        website = mapping.get("website") or data.get("website") or ""
+        email = mapping.get("email") or data.get("email") or ""
+        enriched = self._openclaw_enrich_website_email_logo(website, email)
 
-        try:
-            self._openclaw_maybe_fetch_logo()
-        except Exception:
-            _logger.exception("[openclaw-cif] logo/email fetch failed for %s", doc)
+        preview_vals = {
+            "partner_id": self.id,
+            "source": data.get("fuente") or "",
+            "vat_display": doc,
+            "name": mapping.get("name") or data.get("razon_social") or "",
+            "street": mapping.get("street") or data.get("direccion") or "",
+            "zip": mapping.get("zip") or data.get("codigo_postal") or "",
+            "city": mapping.get("city") or data.get("municipio") or "",
+            "phone": mapping.get("phone") or data.get("telefono") or "",
+            "website": enriched.get("website") or "",
+            "email": enriched.get("email") or "",
+            "country_id": country_state.get("country_id") or False,
+            "state_id": country_state.get("state_id") or False,
+        }
+        if enriched.get("logo_bytes"):
+            preview_vals["logo_preview"] = base64.b64encode(enriched["logo_bytes"])
+            preview_vals["logo_source_url"] = enriched.get("logo_source") or ""
 
-        _logger.info("[openclaw-cif] button lookup for %s applied: %s", doc, applied)
-
-        message = (
-            _("Datos actualizados desde %s: %s") % (data.get("fuente") or "-", ", ".join(applied))
-            if applied
-            else _("No había campos vacíos por rellenar.")
-        )
+        preview = self.env["openclaw.cif.preview"].create(preview_vals)
         return {
-            "type": "ir.actions.client",
-            "tag": "display_notification",
-            "params": {
-                "title": _("OpenClaw"),
-                "message": message,
-                "type": "success" if applied else "info",
-                "sticky": False,
-            },
+            "type": "ir.actions.act_window",
+            "name": _("Datos de la empresa"),
+            "res_model": "openclaw.cif.preview",
+            "view_mode": "form",
+            "res_id": preview.id,
+            "target": "new",
         }
 
     def _openclaw_maybe_fetch_logo(self) -> None:
@@ -495,7 +499,7 @@ class ResPartnerCifAutofill(models.Model):
                     if logo_url:
                         logo_bytes = _http_get_bytes(logo_url, timeout=6.0)
                 if not logo_bytes and website:
-                    logo_bytes, dom = self._openclaw_try_fetch_logo(website)
+                    logo_bytes, dom, _src = self._openclaw_try_fetch_logo(website)
                     resolved_domain = resolved_domain or dom
                 if logo_bytes and len(logo_bytes) > _LOGO_MIN_BYTES:
                     partner.image_1920 = base64.b64encode(logo_bytes)

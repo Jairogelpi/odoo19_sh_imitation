@@ -8,7 +8,7 @@ Track the current state of the Odoo self-hosted platform while keeping the techn
 - Dev override: `compose.dev.yaml`
 - Admin and knowledge override: `compose.admin.yaml`
 - Production-like overrides: `compose.staging.yaml`, `compose.prod.yaml`
-- Legacy local compatibility stack: `docker-compose.yml`
+- Legacy local compatibility stack: `compose.legacy.yaml`
 
 ## Implemented so far
 - Repository sanitized for GitHub push.

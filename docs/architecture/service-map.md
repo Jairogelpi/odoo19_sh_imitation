@@ -17,6 +17,10 @@ Exposure model:
 - `db`: no public port; private only
 - `redis`: no public port; private only
 - `pgbackrest`: no public port; private only
+- `obsidian-mcp`: no public port; private only
+- `memory-mcp`: no public port; private only
+- `context7-mcp`: no public port; private only
+- `cif-lookup-mcp`: no public port; private only
 - `odoo`: private inside the Docker network, with direct host access only in dev through `8069`
 - `nginx`: edge entrypoint, published in dev through `8088` and in staging or prod through `80/443`
 - `pgadmin`: optional admin UI, published on `8080` only for local/admin access, not intended for public exposure
@@ -24,6 +28,13 @@ Exposure model:
 - `portainer`: optional container manager, published on `9443` only for local/admin access
 - `homepage`: optional lobby dashboard, published on `8081` only for local/admin access
 - `control-plane`: optional operator console (backups restore, GitHub deploys, docs browser), published on `8082` only for local/admin access
+- `code-server`: optional browser IDE, published on `8083` only for local/admin access
+- `dozzle`: optional live log viewer, published on `8084` only for local/admin access
+- `web-terminal`: optional browser shell, published on `8085` only for local/admin access
+- `cadvisor`: no public port; private only
+- `node-exporter`: no public port; private only
+- `prometheus`: no public port; private only
+- `grafana`: optional dashboard UI, published on `3002` only for local/admin access
 - `mailpit`: staging-only sink, published only on host loopback at `127.0.0.1:${STAGING_MAILPIT_UI_PORT:-8025}`
 
 Practical rule:
@@ -65,7 +76,11 @@ Current named volumes:
 - `odoo-web-data`: Odoo filestore and runtime data
 - `pgadmin-data`: pgAdmin settings and state
 - `obsidian-config`: Obsidian desktop state and vault selection persistence
+- `memory-mcp-data`: memory MCP JSON store
 - `portainer-data`: Portainer admin account and settings persistence
+- `code-server-config`: code-server user profile and extensions
+- `prometheus-data`: Prometheus TSDB
+- `grafana-data`: Grafana users, preferences, and dashboard state
 
 Rule of thumb:
 
@@ -117,7 +132,7 @@ Important details:
 - built from `pgbackrest/Dockerfile`
 - can run from a local build or a GHCR-published image override
 - uses shared PostgreSQL data and socket volumes
-- currently validated for local `stanza-create`, `check`, and `full backup`
+- now auto-bootstraps the local stanza during the first archive push and is still validated for manual `stanza-create`, `check`, and `full backup`
 - offsite replication is still pending
 - attaches to `odoo_net` so it can speak to `db` and use the shared socket and data volumes
 
@@ -155,6 +170,54 @@ Important details:
 ## Admin and knowledge layer services
 
 These belong in `compose.admin.yaml`, not the production-safe base stack.
+
+### `obsidian-mcp`
+
+Purpose:
+
+- exposes docs-vault tools over MCP JSON-RPC for OpenClaw and the control-plane gateway
+
+Important details:
+
+- mounts `./docs` into `/vault`
+- uses mandatory token auth through `OPENCLAW_OBSIDIAN_MCP_TOKEN`
+- stays internal to `odoo_net`; no host port is published
+
+### `memory-mcp`
+
+Purpose:
+
+- lightweight persistent memory service for OpenClaw workflows
+
+Important details:
+
+- persists state in the `memory-mcp-data` named volume
+- uses mandatory token auth through `OPENCLAW_MEMORY_MCP_TOKEN`
+- stays internal to `odoo_net`; no host port is published
+
+### `context7-mcp`
+
+Purpose:
+
+- repository-backed documentation query service used by the OpenClaw bridge
+
+Important details:
+
+- mounts `./docs` into `/docs`
+- uses mandatory token auth through `OPENCLAW_CONTEXT7_MCP_TOKEN`
+- stays internal to `odoo_net`; no host port is published
+
+### `cif-lookup-mcp`
+
+Purpose:
+
+- CIF/company enrichment service for OpenClaw CRM workflows
+
+Important details:
+
+- uses mandatory token auth through `OPENCLAW_CIF_LOOKUP_MCP_TOKEN`
+- can optionally enrich with `GOOGLE_MAPS_API_KEY`
+- stays internal to `odoo_net`; no host port is published
 
 ### `pgadmin`
 
@@ -217,6 +280,107 @@ Important details:
 - has no built-in authentication; never expose publicly without a reverse proxy and auth in front
 - attaches to `odoo_net` for consistency with the rest of the admin tools
 
+### `control-plane`
+
+Purpose:
+
+- operator console for backups, deploy visibility, docs browsing, and OpenClaw gateway features
+
+Important details:
+
+- built from `control-plane/Dockerfile`
+- published on `8082` for local/admin access
+- mounts the Docker socket read-only plus `./docs` and `./addons_custom`
+- depends on the internal MCP bridge services when the admin layer is up
+
+### `dozzle`
+
+Purpose:
+
+- browser log viewer for Docker containers
+
+Important details:
+
+- published on `8084`
+- reads the Docker socket in read-only mode
+- has no built-in auth in this stack and must stay local/admin-only
+
+### `code-server`
+
+Purpose:
+
+- browser IDE for selected workspace folders
+
+Important details:
+
+- published on `8083`
+- protected only by `CODE_SERVER_PASSWORD`
+- persists user/editor state in `code-server-config`
+- mounts selected repo folders rather than the entire checkout
+
+### `web-terminal`
+
+Purpose:
+
+- browser shell for Docker and container operations
+
+Important details:
+
+- built from `web-terminal/Dockerfile`
+- published on `8085`
+- ships `docker-ce-cli` plus `ttyd`
+- mounts the Docker socket read-only but does not mount the repo workspace itself
+- should be treated as an operationally sensitive admin surface
+
+### `cadvisor`
+
+Purpose:
+
+- container metrics exporter for Prometheus
+
+Important details:
+
+- stays internal on `odoo_net`
+- reads host/container runtime paths
+- is consumed by Prometheus, not by browsers directly
+
+### `node-exporter`
+
+Purpose:
+
+- host metrics exporter for Prometheus
+
+Important details:
+
+- stays internal on `odoo_net`
+- exposes host metrics to Prometheus without publishing a host port
+
+### `prometheus`
+
+Purpose:
+
+- metrics storage and scrape engine for the optional observability stack
+
+Important details:
+
+- uses `prometheus/prometheus.yml`
+- scrapes `cadvisor:8080` and `node-exporter:9100`
+- persists data in the `prometheus-data` volume
+- stays internal to `odoo_net`; no host port is published
+
+### `grafana`
+
+Purpose:
+
+- browser dashboards over Prometheus metrics
+
+Important details:
+
+- published on `3002`
+- uses `GRAFANA_ADMIN_USER` and `GRAFANA_ADMIN_PASSWORD`
+- persists state in the `grafana-data` volume
+- provisions its Prometheus datasource from `grafana/provisioning/datasources/prometheus.yml`
+
 ## Staging-only support service
 
 ### `mailpit`
@@ -241,19 +405,24 @@ Important details:
 - `compose.admin.yaml`: optional admin and knowledge services
 - `compose.staging.yaml`: production-like staging behavior
 - `compose.prod.yaml`: production-like edge exposure and config
-- `docker-compose.yml`: legacy compatibility entrypoint
+- `compose.legacy.yaml`: legacy compatibility entrypoint kept on a non-default filename
 
 ## How services are used together
 
 - `db` stores the live PostgreSQL data and is reached by `odoo`, `pgbackrest`, and `pgadmin`
 - `redis` is the internal cache/queue support service for Odoo
 - `pgbackrest` validates backups, creates backups, and reads the shared PostgreSQL volumes
+- `obsidian-mcp`, `memory-mcp`, `context7-mcp`, and `cif-lookup-mcp` are the internal bridge services behind the control-plane/OpenClaw integration
 - `odoo` is the main ERP runtime and consumes the database and cache services
 - `nginx` is the edge gateway for Odoo, especially in staging and production-like layouts
 - `pgadmin` is for database inspection and emergency administration
 - `obsidian` is for local documentation and operational notes in the `docs/` vault
 - `portainer` is for container lifecycle management, inspection, and log access
 - `homepage` is the lobby dashboard that links to every admin UI and shows live container status
+- `control-plane` is the operator console and MCP gateway surface
+- `code-server`, `dozzle`, and `web-terminal` are optional operator convenience tools
+- `cadvisor` and `node-exporter` feed metrics to `prometheus`
+- `grafana` is the browser entrypoint for those metrics dashboards
 - `mailpit` is for safe staging email handling after restore neutralization
 
 Rule of thumb:
@@ -274,3 +443,4 @@ Rule of thumb:
 - [Portainer](../brain/portainer.md)
 - [Lobby](../brain/lobby.md)
 - [Operations](../brain/operations.md)
+- [Admin and observability tooling](../runbooks/admin-observability-tooling.md)

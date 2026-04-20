@@ -1,0 +1,88 @@
+# Legacy compatibility stack kept on a non-default filename
+# to avoid Docker's multiple-default-config warning with compose.yaml.
+# Preferred entrypoints:
+#   docker compose -f compose.yaml -f compose.dev.yaml up -d
+#   docker compose -f compose.yaml -f compose.dev.yaml -f compose.admin.yaml up -d
+services:
+  db:
+    image: postgres:16
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB:-postgres}
+      POSTGRES_USER: ${POSTGRES_USER:-odoo}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-change_me}
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-odoo} -d ${POSTGRES_DB:-postgres}"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+    networks:
+      - odoo_net
+
+  odoo:
+    build:
+      context: .
+      dockerfile: odoo/Dockerfile
+    restart: unless-stopped
+    depends_on:
+      db:
+        condition: service_healthy
+    ports:
+      - "8069:8069"
+    environment:
+      HOST: db
+      USER: ${POSTGRES_USER:-odoo}
+      PASSWORD: ${POSTGRES_PASSWORD:-change_me}
+    volumes:
+      - odoo-web-data:/var/lib/odoo
+      - ./config:/etc/odoo:ro
+      - ./addons:/mnt/extra-addons
+    networks:
+      - odoo_net
+
+  pgadmin:
+    image: dpage/pgadmin4:9.14
+    restart: unless-stopped
+    environment:
+      PGADMIN_DEFAULT_EMAIL: ${PGADMIN_DEFAULT_EMAIL:-admin@example.com}
+      PGADMIN_DEFAULT_PASSWORD: ${PGADMIN_DEFAULT_PASSWORD:-change_me}
+      PGADMIN_LISTEN_PORT: 80
+    ports:
+      - "8080:80"
+    volumes:
+      - pgadmin-data:/var/lib/pgadmin
+    depends_on:
+      - db
+    networks:
+      - odoo_net
+
+  obsidian:
+    image: lscr.io/linuxserver/obsidian:latest
+    restart: unless-stopped
+    environment:
+      PUID: ${PUID:-1000}
+      PGID: ${PGID:-1000}
+      TZ: ${TZ:-Etc/UTC}
+      CUSTOM_USER: ${OBSIDIAN_CUSTOM_USER:-obsidian}
+      PASSWORD: ${OBSIDIAN_PASSWORD:-change_me}
+    ports:
+      - "3000:3000"
+      - "3001:3001"
+    volumes:
+      - obsidian-config:/config
+      - ./docs:/config/ObsidianVault
+    shm_size: "1gb"
+    networks:
+      - odoo_net
+
+volumes:
+  postgres-data:
+  odoo-web-data:
+  pgadmin-data:
+  obsidian-config:
+
+networks:
+  odoo_net:
+    driver: bridge

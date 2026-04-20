@@ -2,3 +2,10 @@ from . import test_res_config_settings
 from . import test_openclaw_request_origin
 from . import test_openclaw_chat_suggestions
 from . import test_openclaw_chat_approval
+from . import test_openclaw_ai_admin_views
+from . import test_openclaw_ai_crm_contacts_pilot
+from . import test_openclaw_ai_gateway_bundle
+from . import test_openclaw_ai_runtime
+from . import test_openclaw_legacy_repairs
+from . import test_training_bridge
+from . import test_openclaw_ai_registry

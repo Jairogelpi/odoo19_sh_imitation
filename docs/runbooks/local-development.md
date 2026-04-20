@@ -29,14 +29,19 @@ docker compose -f compose.yaml -f compose.dev.yaml -f compose.admin.yaml up -d
 Legacy compatibility path:
 
 ```powershell
-docker compose up -d
+docker compose -f compose.legacy.yaml up -d
 ```
 
 ## Useful local endpoints
 
 - Lobby (start here): `http://localhost:8081`
+- Control plane: `http://localhost:8082`
+- Code Server: `http://localhost:8083`
+- Dozzle: `http://localhost:8084`
+- Web terminal: `http://localhost:8085`
 - Odoo direct: `http://localhost:8069/web/login`
 - Odoo via Nginx: `http://localhost:8088/web/login`
+- Grafana: `http://localhost:3002`
 - pgAdmin: `http://localhost:8080`
 - Portainer: `https://localhost:9443`
 - Obsidian: `http://localhost:3000`
@@ -59,6 +64,7 @@ Reference state and exact evidence:
 
 - [Runtime validation](runtime-validation.md)
 - [Lobby (Homepage) runbook](lobby-homepage.md)
+- [Admin and observability tooling](admin-observability-tooling.md)
 
 Manual spot checks:
 
@@ -67,6 +73,8 @@ docker compose -f compose.yaml -f compose.dev.yaml exec -T redis redis-cli ping
 docker compose -f compose.yaml -f compose.dev.yaml exec -T pgbackrest /scripts/check-db.sh
 docker compose -f compose.yaml -f compose.dev.yaml exec -T pgbackrest /scripts/backup-db.sh
 ```
+
+Manual `stanza-create` is now only a repair command if you deliberately wipe or replace the `pgbackrest-repo` volume after the stack has already been bootstrapped once.
 
 ## Addon layout
 
@@ -100,7 +108,7 @@ docker compose -f compose.yaml -f compose.dev.yaml logs -f odoo nginx db redis p
 Admin and knowledge layer:
 
 ```powershell
-docker compose -f compose.yaml -f compose.dev.yaml -f compose.admin.yaml logs -f pgadmin obsidian
+docker compose -f compose.yaml -f compose.dev.yaml -f compose.admin.yaml logs -f pgadmin obsidian control-plane grafana dozzle code-server web-terminal
 ```
 
 ## Stop commands
@@ -119,9 +127,10 @@ docker compose -f compose.yaml -f compose.dev.yaml -f compose.admin.yaml down
 
 ## Notes
 
-- `compose.yaml` is the canonical base. Prefer it over `docker-compose.yml`.
+- `compose.yaml` is the canonical base. Prefer it over `compose.legacy.yaml`.
 - `compose.admin.yaml` is intentionally optional.
 - `check-local-stack.ps1` verifies only the base dev stack.
 - `check-admin-stack.ps1` adds pgAdmin, Obsidian, and Homepage checks for the optional admin layer.
+- `check-admin-stack.ps1` does not cover every optional operator surface; use [Admin and observability tooling](admin-observability-tooling.md) for `control-plane`, `code-server`, `dozzle`, `web-terminal`, Grafana, and the internal MCP/metrics services.
 - The `docs/` directory is both repository documentation and the Obsidian vault.
 - Extra Odoo addons are split between `./addons` and `./addons_custom`.

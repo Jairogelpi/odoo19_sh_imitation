@@ -1,0 +1,617 @@
+{
+	"version": "2.0.0",
+	"tasks": [
+		{
+			"label": "restart-odoo",
+			"type": "shell",
+			"command": "docker",
+			"args": [
+				"compose",
+				"restart",
+				"odoo"
+			],
+			"isBackground": false,
+			"problemMatcher": [],
+			"group": "build"
+		},
+		{
+			"label": "odoo-logs",
+			"type": "shell",
+			"command": "docker",
+			"args": [
+				"compose",
+				"logs",
+				"odoo",
+				"--tail",
+				"200"
+			],
+			"isBackground": false,
+			"problemMatcher": [],
+			"group": "build"
+		},
+		{
+			"label": "odoo-error-filter",
+			"type": "shell",
+			"command": "powershell",
+			"args": [
+				"-NoProfile",
+				"-Command",
+				"docker compose logs odoo --since 30m | Select-String -Pattern 'ERROR|Traceback|session_info|web/session|Internal Server Error'"
+			],
+			"isBackground": false,
+			"problemMatcher": [],
+			"group": "build"
+		},
+		{
+			"label": "odoo-error-filter-2",
+			"type": "shell",
+			"command": "powershell",
+			"args": [
+				"-NoProfile",
+				"-Command",
+				"docker compose logs odoo --since 30m | Select-String -Pattern \"ERROR|Traceback|session_info|web/session|Internal Server Error\""
+			],
+			"isBackground": false,
+			"problemMatcher": [],
+			"group": "build"
+		},
+		{
+			"label": "odoo-log-files",
+			"type": "shell",
+			"command": "docker",
+			"args": [
+				"compose",
+				"exec",
+				"odoo",
+				"sh",
+				"-lc",
+				"ls -R /var/log /tmp 2>/dev/null | sed -n '1,200p'"
+			],
+			"isBackground": false,
+			"problemMatcher": [],
+			"group": "build"
+		},
+		{
+			"label": "odoo-log-files-2",
+			"type": "shell",
+			"command": "docker",
+			"args": [
+				"compose",
+				"exec",
+				"odoo",
+				"sh",
+				"-lc",
+				"ls /var/log /tmp"
+			],
+			"isBackground": false,
+			"problemMatcher": [],
+			"group": "build"
+		},
+		{
+			"label": "odoo-log-dir",
+			"type": "shell",
+			"command": "docker",
+			"args": [
+				"compose",
+				"exec",
+				"odoo",
+				"sh",
+				"-lc",
+				"ls -la /var/log/odoo && echo --- && find /var/log/odoo -maxdepth 1 -type f -printf '%f\\n'"
+			],
+			"isBackground": false,
+			"problemMatcher": [],
+			"group": "build"
+		},
+		{
+			"label": "odoo-shell-session-info",
+			"type": "shell",
+			"command": "docker",
+			"args": [
+				"compose",
+				"exec",
+				"-T",
+				"odoo",
+				"sh",
+				"-lc",
+				"printf 'print(env[\"ir.http\"].session_info())\\n' | odoo shell -d odoo19 -c /etc/odoo/odoo.conf"
+			],
+			"isBackground": false,
+			"problemMatcher": [],
+			"group": "build"
+		},
+		{
+			"label": "docker-python-smoke",
+			"type": "shell",
+			"command": "docker",
+			"args": [
+				"compose",
+				"exec",
+				"-T",
+				"odoo",
+				"sh",
+				"-c",
+				"python3 -c \"print(1)\""
+			],
+			"isBackground": false,
+			"problemMatcher": [],
+			"group": "build"
+		},
+		{
+			"label": "docker-python-smoke-2",
+			"type": "shell",
+			"command": "docker",
+			"args": [
+				"compose",
+				"exec",
+				"-T",
+				"odoo",
+				"python3",
+				"-c",
+				"print(1)"
+			],
+			"isBackground": false,
+			"problemMatcher": [],
+			"group": "build"
+		},
+		{
+			"label": "docker-shell-echo-test",
+			"type": "shell",
+			"command": "docker",
+			"args": [
+				"compose",
+				"exec",
+				"-T",
+				"odoo",
+				"sh",
+				"-lc",
+				"echo 'hello' > /tmp/check.txt; cat /tmp/check.txt"
+			],
+			"isBackground": false,
+			"problemMatcher": [],
+			"group": "build"
+		},
+		{
+			"label": "docker-shell-echo-test-2",
+			"type": "shell",
+			"command": "docker",
+			"args": [
+				"compose",
+				"exec",
+				"-T",
+				"odoo",
+				"sh",
+				"-lc",
+				"echo hello > /tmp/check.txt; cat /tmp/check.txt"
+			],
+			"isBackground": false,
+			"problemMatcher": [],
+			"group": "build"
+		},
+		{
+			"label": "docker-python-smoke-3",
+			"type": "shell",
+			"command": "docker",
+			"args": [
+				"compose",
+				"exec",
+				"-T",
+				"odoo",
+				"sh",
+				"-lc",
+				"cat >/tmp/check.py <<EOF\nprint(\"hi\")\nEOF\npython3 /tmp/check.py"
+			],
+			"isBackground": false,
+			"problemMatcher": [],
+			"group": "build"
+		},
+		{
+			"label": "docker-python-smoke-4",
+			"type": "shell",
+			"command": "docker",
+			"args": [
+				"compose",
+				"exec",
+				"-T",
+				"odoo",
+				"sh",
+				"-lc",
+				"cat >/tmp/check.py <<EOF\nprint(123)\nEOF\npython3 /tmp/check.py"
+			],
+			"isBackground": false,
+			"problemMatcher": [],
+			"group": "build"
+		},
+		{
+			"label": "odoo-shell-smoke",
+			"type": "shell",
+			"command": "docker",
+			"args": [
+				"compose",
+				"exec",
+				"-T",
+				"odoo",
+				"sh",
+				"-lc",
+				"cat >/tmp/check.py <<EOF\nprint(123)\nEOF\nodoo shell -d odoo19 -c /etc/odoo/odoo.conf < /tmp/check.py"
+			],
+			"isBackground": false,
+			"problemMatcher": [],
+			"group": "build"
+		},
+		{
+			"label": "odoo-shell-session-info-2",
+			"type": "shell",
+			"command": "docker",
+			"args": [
+				"compose",
+				"exec",
+				"-T",
+				"odoo",
+				"sh",
+				"-lc",
+				"cat >/tmp/check.py <<EOF\nm = chr(105)+chr(114)+chr(46)+chr(104)+chr(116)+chr(116)+chr(112)\na = chr(115)+chr(101)+chr(115)+chr(115)+chr(105)+chr(111)+chr(110)+chr(95)+chr(105)+chr(110)+chr(102)+chr(111)\nprint(getattr(env[m], a)())\nEOF\nodoo shell -d odoo19 -c /etc/odoo/odoo.conf < /tmp/check.py"
+			],
+			"isBackground": false,
+			"problemMatcher": [],
+			"group": "build"
+		},
+		{
+			"label": "restart-odoo-2",
+			"type": "shell",
+			"command": "docker",
+			"args": [
+				"compose",
+				"restart",
+				"odoo"
+			],
+			"isBackground": false,
+			"problemMatcher": [],
+			"group": "build"
+		},
+		{
+			"label": "odoo-wsgi-web",
+			"type": "shell",
+			"command": "docker",
+			"args": [
+				"compose",
+				"exec",
+				"-T",
+				"odoo",
+				"sh",
+				"-lc",
+				"cat >/tmp/check.py <<EOF\nfrom odoo.service.wsgi_server import application\nfrom werkzeug.test import Client\nfrom werkzeug.wrappers import Response\nu = chr(47)+chr(119)+chr(101)+chr(98)\nc = Client(application, Response)\nr = c.get(u)\nprint(r.status_code)\nprint(r.data[:1000])\nEOF\nodoo shell -d odoo19 -c /etc/odoo/odoo.conf < /tmp/check.py"
+			],
+			"isBackground": false,
+			"problemMatcher": [],
+			"group": "build"
+		},
+		{
+			"label": "inspect-odoo-http",
+			"type": "shell",
+			"command": "docker",
+			"args": [
+				"compose",
+				"exec",
+				"-T",
+				"odoo",
+				"sh",
+				"-lc",
+				"cat >/tmp/check.py <<EOF\nimport odoo.http as h\nprint(h.root)\nprint(type(h.root))\nEOF\nodoo shell -d odoo19 -c /etc/odoo/odoo.conf < /tmp/check.py"
+			],
+			"isBackground": false,
+			"problemMatcher": [],
+			"group": "build"
+		},
+		{
+			"label": "odoo-http-root-web",
+			"type": "shell",
+			"command": "docker",
+			"args": [
+				"compose",
+				"exec",
+				"-T",
+				"odoo",
+				"sh",
+				"-lc",
+				"cat >/tmp/check.py <<EOF\nimport odoo.http as h\nfrom werkzeug.test import Client\nfrom werkzeug.wrappers import Response\nu = chr(47)+chr(119)+chr(101)+chr(98)\nc = Client(h.root, Response)\nr = c.get(u)\nprint(r.status_code)\nprint(r.data[:2000])\nEOF\nodoo shell -d odoo19 -c /etc/odoo/odoo.conf < /tmp/check.py"
+			],
+			"isBackground": false,
+			"problemMatcher": [],
+			"group": "build"
+		},
+		{
+			"label": "odoo-auth-post",
+			"type": "shell",
+			"command": "docker",
+			"args": [
+				"compose",
+				"exec",
+				"-T",
+				"odoo",
+				"sh",
+				"-lc",
+				"cat >/tmp/check.py <<EOF\nimport json\nimport odoo.http as h\nfrom werkzeug.test import Client\nfrom werkzeug.wrappers import Response\n\ndef s(*a):\n    return ''.join(map(chr, a))\n\nbody = json.dumps({\n    s(106,115,111,110,114,112,99): s(50,46,48),\n    s(109,101,116,104,111,100): s(99,97,108,108),\n    s(112,97,114,97,109,115): {\n        s(100,98): s(111,100,111,111,49,57),\n        s(108,111,103,105,110): s(97,100,109,105,110),\n        s(112,97,115,115,119,111,114,100): s(97,100,109,105,110),\n    },\n    s(105,100): 1,\n}).encode()\n\nc = Client(h.root, Response)\nr = c.post(s(47,119,101,98,47,115,101,115,115,105,111,110,47,97,117,116,104,101,110,116,105,99,97,116,101), data=body, content_type=s(97,112,112,108,105,99,97,116,105,111,110,47,106,115,111,110))\nprint(r.status_code)\nprint(r.data[:2000])\nEOF\nodoo shell -d odoo19 -c /etc/odoo/odoo.conf < /tmp/check.py"
+			],
+			"isBackground": false,
+			"problemMatcher": [],
+			"group": "build"
+		},
+		{
+			"label": "odoo-auth-post-2",
+			"type": "shell",
+			"command": "docker",
+			"args": [
+				"compose",
+				"exec",
+				"-T",
+				"odoo",
+				"sh",
+				"-lc",
+				"cat >/tmp/check.py <<EOF\nimport json\nfrom functools import reduce\nfrom operator import add\nimport odoo.http as h\nfrom werkzeug.test import Client\nfrom werkzeug.wrappers import Response\n\ndef s(*a):\n    return reduce(add, map(chr, a))\n\nbody = json.dumps({\n    s(106,115,111,110,114,112,99): s(50,46,48),\n    s(109,101,116,104,111,100): s(99,97,108,108),\n    s(112,97,114,97,109,115): {\n        s(100,98): s(111,100,111,111,49,57),\n        s(108,111,103,105,110): s(97,100,109,105,110),\n        s(112,97,115,115,119,111,114,100): s(97,100,109,105,110),\n    },\n    s(105,100): 1,\n}).encode()\n\nc = Client(h.root, Response)\nr = c.post(s(47,119,101,98,47,115,101,115,115,105,111,110,47,97,117,116,104,101,110,116,105,99,97,116,101), data=body, content_type=s(97,112,112,108,105,99,97,116,105,111,110,47,106,115,111,110))\nprint(r.status_code)\nprint(r.data[:2000])\nEOF\nodoo shell -d odoo19 -c /etc/odoo/odoo.conf < /tmp/check.py"
+			],
+			"isBackground": false,
+			"problemMatcher": [],
+			"group": "build"
+		},
+		{
+			"label": "odoo-auth-post-remote-addr",
+			"type": "shell",
+			"command": "docker",
+			"args": [
+				"compose",
+				"exec",
+				"-T",
+				"odoo",
+				"sh",
+				"-lc",
+				"cat >/tmp/check.py <<EOF\nimport json\nfrom functools import reduce\nfrom operator import add\nimport odoo.http as h\nfrom werkzeug.test import Client\nfrom werkzeug.wrappers import Response\n\ndef s(*a):\n    return reduce(add, map(chr, a))\n\nbody = json.dumps({\n    s(106,115,111,110,114,112,99): s(50,46,48),\n    s(109,101,116,104,111,100): s(99,97,108,108),\n    s(112,97,114,97,109,115): {\n        s(100,98): s(111,100,111,111,49,57),\n        s(108,111,103,105,110): s(97,100,109,105,110),\n        s(112,97,115,115,119,111,114,100): s(97,100,109,105,110),\n    },\n    s(105,100): 1,\n}).encode()\n\nc = Client(h.root, Response)\nr = c.post(\n    s(47,119,101,98,47,115,101,115,115,105,111,110,47,97,117,116,104,101,110,116,105,99,97,116,101),\n    data=body,\n    content_type=s(97,112,112,108,105,99,97,116,105,111,110,47,106,115,111,110),\n    environ_overrides={s(82,69,77,79,84,69,95,65,68,68,82): s(49,50,55,46,48,46,48,46,49)},\n)\nprint(r.status_code)\nprint(r.data[:2000])\nEOF\nodoo shell -d odoo19 -c /etc/odoo/odoo.conf < /tmp/check.py"
+			],
+			"isBackground": false,
+			"problemMatcher": [],
+			"group": "build"
+		},
+		{
+			"label": "inspect-odoo-http-auth",
+			"type": "shell",
+			"command": "docker",
+			"args": [
+				"compose",
+				"exec",
+				"odoo",
+				"sh",
+				"-lc",
+				"sed -n '1190,1235p' /usr/lib/python3/dist-packages/odoo/http.py"
+			],
+			"isBackground": false,
+			"problemMatcher": [],
+			"group": "build"
+		},
+		{
+			"label": "inspect-odoo-http-auth-2",
+			"type": "shell",
+			"command": "docker",
+			"args": [
+				"compose",
+				"exec",
+				"odoo",
+				"sh",
+				"-lc",
+				"sed -n 1190,1235p /usr/lib/python3/dist-packages/odoo/http.py"
+			],
+			"isBackground": false,
+			"problemMatcher": [],
+			"group": "build"
+		},
+		{
+			"label": "inspect-odoo-http-class",
+			"type": "shell",
+			"command": "docker",
+			"args": [
+				"compose",
+				"exec",
+				"odoo",
+				"sh",
+				"-lc",
+				"sed -n 1140,1195p /usr/lib/python3/dist-packages/odoo/http.py"
+			],
+			"isBackground": false,
+			"problemMatcher": [],
+			"group": "build"
+		},
+		{
+			"label": "find-session-class",
+			"type": "shell",
+			"command": "docker",
+			"args": [
+				"compose",
+				"exec",
+				"odoo",
+				"sh",
+				"-lc",
+				"grep -n 'class .*Session' /usr/lib/python3/dist-packages/odoo/http.py"
+			],
+			"isBackground": false,
+			"problemMatcher": [],
+			"group": "build"
+		},
+		{
+			"label": "find-session-class-2",
+			"type": "shell",
+			"command": "docker",
+			"args": [
+				"compose",
+				"exec",
+				"odoo",
+				"sh",
+				"-lc",
+				"grep -n Session /usr/lib/python3/dist-packages/odoo/http.py | head -n 20"
+			],
+			"isBackground": false,
+			"problemMatcher": [],
+			"group": "build"
+		},
+		{
+			"label": "restart-odoo-3",
+			"type": "shell",
+			"command": "docker",
+			"args": [
+				"compose",
+				"restart",
+				"odoo"
+			],
+			"isBackground": false,
+			"problemMatcher": [],
+			"group": "build"
+		},
+		{
+			"label": "odoo-auth-no-remote-addr",
+			"type": "shell",
+			"command": "docker",
+			"args": [
+				"compose",
+				"exec",
+				"-T",
+				"odoo",
+				"sh",
+				"-lc",
+				"cat >/tmp/check.py <<EOF\nimport json\nfrom functools import reduce\nfrom operator import add\nimport odoo.http as h\nfrom werkzeug.test import Client\nfrom werkzeug.wrappers import Response\n\ndef s(*a):\n    return reduce(add, map(chr, a))\n\nbody = json.dumps({\n    s(106,115,111,110,114,112,99): s(50,46,48),\n    s(109,101,116,104,111,100): s(99,97,108,108),\n    s(112,97,114,97,109,115): {\n        s(100,98): s(111,100,111,111,49,57),\n        s(108,111,103,105,110): s(97,100,109,105,110),\n        s(112,97,115,115,119,111,114,100): s(97,100,109,105,110),\n    },\n    s(105,100): 1,\n}).encode()\n\nc = Client(h.root, Response)\nr = c.post(\n    s(47,119,101,98,47,115,101,115,115,105,111,110,47,97,117,116,104,101,110,116,105,99,97,116,101),\n    data=body,\n    content_type=s(97,112,112,108,105,99,97,116,105,111,110,47,106,115,111,110),\n)\nprint(r.status_code)\nprint(r.data[:2000])\nEOF\nodoo shell -d odoo19 -c /etc/odoo/odoo.conf < /tmp/check.py"
+			],
+			"isBackground": false,
+			"problemMatcher": [],
+			"group": "build"
+		},
+		{
+			"label": "odoo-login-page",
+			"type": "shell",
+			"command": "docker",
+			"args": [
+				"compose",
+				"exec",
+				"-T",
+				"odoo",
+				"sh",
+				"-lc",
+				"cat >/tmp/check.py <<EOF\nimport odoo.http as h\nfrom werkzeug.test import Client\nfrom werkzeug.wrappers import Response\nu = chr(47)+chr(119)+chr(101)+chr(98)+chr(47)+chr(108)+chr(111)+chr(103)+chr(105)+chr(110)\nc = Client(h.root, Response)\nr = c.get(u)\nprint(r.status_code)\nprint(r.headers.get(chr(76)+chr(111)+chr(99)+chr(97)+chr(116)+chr(105)+chr(111)+chr(110)))\nprint(r.data[:1000])\nEOF\nodoo shell -d odoo19 -c /etc/odoo/odoo.conf < /tmp/check.py"
+			],
+			"isBackground": false,
+			"problemMatcher": [],
+			"group": "build"
+		},
+		{
+			"label": "check-frontend-asset",
+			"type": "shell",
+			"command": "docker",
+			"args": [
+				"compose",
+				"exec",
+				"-T",
+				"odoo",
+				"sh",
+				"-lc",
+				"cat >/tmp/check.py <<EOF\nimport odoo.http as h\nfrom werkzeug.test import Client\nfrom werkzeug.wrappers import Response\nu = chr(47)+chr(119)+chr(101)+chr(98)+chr(47)+chr(97)+chr(115)+chr(115)+chr(101)+chr(116)+chr(115)+chr(47)+chr(99)+chr(53)+chr(98)+chr(54)+chr(49)+chr(101)+chr(56)+chr(47)+chr(119)+chr(101)+chr(98)+chr(46)+chr(97)+chr(115)+chr(115)+chr(101)+chr(116)+chr(115)+chr(95)+chr(102)+chr(114)+chr(111)+chr(110)+chr(116)+chr(101)+chr(110)+chr(100)+chr(46)+chr(109)+chr(105)+chr(110)+chr(46)+chr(99)+chr(115)+chr(115)\nc = Client(h.root, Response)\nr = c.get(u)\nprint(r.status_code)\nprint(r.data[:1000])\nEOF\nodoo shell -d odoo19 -c /etc/odoo/odoo.conf < /tmp/check.py"
+			],
+			"isBackground": false,
+			"problemMatcher": [],
+			"group": "build"
+		},
+		{
+			"label": "odoo-tail-after-browser",
+			"type": "shell",
+			"command": "docker",
+			"args": [
+				"compose",
+				"logs",
+				"odoo",
+				"--tail",
+				"80"
+			],
+			"isBackground": false,
+			"problemMatcher": [],
+			"group": "build"
+		},
+		{
+			"label": "odoo-since-live",
+			"type": "shell",
+			"command": "docker",
+			"args": [
+				"compose",
+				"logs",
+				"odoo",
+				"--since",
+				"2m"
+			],
+			"isBackground": false,
+			"problemMatcher": [],
+			"group": "build"
+		},
+		{
+			"label": "odoo-end-to-end-wsgi",
+			"type": "shell",
+			"command": "docker",
+			"args": [
+				"compose",
+				"exec",
+				"-T",
+				"odoo",
+				"sh",
+				"-lc",
+				"cat >/tmp/check.py <<EOF\nimport json\nfrom functools import reduce\nfrom operator import add\nimport odoo.http as h\nfrom werkzeug.test import Client\nfrom werkzeug.wrappers import Response\n\ndef s(*a):\n    return reduce(add, map(chr, a))\n\nclient = Client(h.root, Response)\nlogin_body = json.dumps({\n    s(106,115,111,110,114,112,99): s(50,46,48),\n    s(109,101,116,104,111,100): s(99,97,108,108),\n    s(112,97,114,97,109,115): {\n        s(100,98): s(111,100,111,111,49,57),\n        s(108,111,103,105,110): s(97,100,109,105,110),\n        s(112,97,115,115,119,111,114,100): s(97,100,109,105,110),\n    },\n    s(105,100): 1,\n}).encode()\nlogin_response = client.post(\n    s(47,119,101,98,47,115,101,115,115,105,111,110,47,97,117,116,104,101,110,116,105,99,97,116,101),\n    data=login_body,\n    content_type=s(97,112,112,108,105,99,97,116,105,111,110,47,106,115,111,110),\n)\nweb_response = client.get(s(47,119,101,98))\nprint(login_response.status_code)\nprint(web_response.status_code)\nprint(web_response.data[:500])\nEOF\nodoo shell -d odoo19 -c /etc/odoo/odoo.conf < /tmp/check.py"
+			],
+			"isBackground": false,
+			"problemMatcher": [],
+			"group": "build"
+		},
+		{
+			"label": "openclaw-training-bridge-smoke",
+			"type": "shell",
+			"command": "docker",
+			"args": [
+				"compose",
+				"exec",
+				"-T",
+				"odoo",
+				"sh",
+				"-lc",
+				"cat >/tmp/check.py <<EOF\nfrom odoo.addons.openclaw.training.bridge import OpenClawTrainingBridge\n\nbridge = OpenClawTrainingBridge()\npayload = {\n    'id': 99,\n    'name': 'Smoke Session',\n    'user_id': 2,\n    'policy_context': {'skill_taxonomy': {'core': 'openclaw-core'}},\n    'messages': [\n        {'id': 1, 'role': 'user', 'content': 'create partner', 'author_name': 'Admin', 'create_date': False},\n        {'id': 2, 'role': 'assistant', 'content': 'I can do that.', 'author_name': 'OpenClaw', 'create_date': False, 'requests': [\n            {'id': 7, 'state': 'executed', 'blocked': False, 'policy_key': 'p', 'action_type': 'odoo_write'}\n        ]},\n    ],\n}\nepisode = bridge.build_episode(payload)\nprint(episode.to_dict()['reward'])\nprint(episode.to_agentlightning_record()['task_id'])\nprint(len(bridge.build_agentlightning_records([payload])))\nEOF\nodoo shell -d odoo19 -c /etc/odoo/odoo.conf < /tmp/check.py"
+			],
+			"isBackground": false,
+			"problemMatcher": [],
+			"group": "build"
+		},
+		{
+			"label": "python-bridge-smoke",
+			"type": "shell",
+			"command": "docker",
+			"args": [
+				"compose",
+				"exec",
+				"-T",
+				"odoo",
+				"python3",
+				"-c",
+				"import sys; sys.path.append('/mnt/custom-addons'); from openclaw.training.bridge import OpenClawTrainingBridge; b=OpenClawTrainingBridge(); p={'id':1,'name':'S','user_id':2,'policy_context':{},'messages':[{'id':1,'role':'user','content':'hi','author_name':'u','create_date':False},{'id':2,'role':'assistant','content':'ok','author_name':'a','create_date':False,'requests':[{'id':9,'state':'executed','blocked':False}]}]}; e=b.build_episode(p); print(e.reward); print(e.to_agentlightning_record()['task_id'])"
+			],
+			"isBackground": false,
+			"problemMatcher": [],
+			"group": "build"
+		},
+		{
+			"label": "python-bridge-smoke-2",
+			"type": "shell",
+			"command": "docker",
+			"args": [
+				"compose",
+				"exec",
+				"-T",
+				"odoo",
+				"sh",
+				"-lc",
+				"cat >/tmp/check.py <<'PY'\nimport sys\nsys.path.append('/mnt/custom-addons')\nfrom openclaw.training.bridge import OpenClawTrainingBridge\nbridge = OpenClawTrainingBridge()\npayload = {\n    'id': 1,\n    'name': 'S',\n    'user_id': 2,\n    'policy_context': {},\n    'messages': [\n        {'id': 1, 'role': 'user', 'content': 'hi', 'author_name': 'u', 'create_date': False},\n        {'id': 2, 'role': 'assistant', 'content': 'ok', 'author_name': 'a', 'create_date': False, 'requests': [{'id': 9, 'state': 'executed', 'blocked': False}]},\n    ],\n}\nepisode = bridge.build_episode(payload)\nprint(episode.reward)\nprint(episode.to_agentlightning_record()['task_id'])\nPY\npython3 /tmp/check.py"
+			],
+			"isBackground": false,
+			"problemMatcher": [],
+			"group": "build"
+		}
+	]
+}

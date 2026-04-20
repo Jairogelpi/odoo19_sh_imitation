@@ -1,0 +1,85 @@
+<odoo>
+  <data noupdate="1">
+    <record id="openclaw_ai_source_crm_contacts_knowledge" model="openclaw.ai.source">
+      <field name="name">CRM Contacts Knowledge</field>
+      <field name="key">crm_contacts_knowledge</field>
+      <field name="source_type">knowledge</field>
+      <field name="uri">odoo://res.partner</field>
+      <field name="status">ready</field>
+      <field name="metadata_json"><![CDATA[
+{"model": "res.partner", "domain": "crm_contacts"}
+      ]]></field>
+    </record>
+
+    <record id="openclaw_ai_llm_profile_crm_contacts" model="openclaw.ai.llm_profile">
+      <field name="name">CRM Contacts Profile</field>
+      <field name="backend">openrouter</field>
+      <field name="model_name">z-ai/glm-4.5-air:free</field>
+      <field name="fallback_model_name">openrouter/elephant-alpha</field>
+      <field name="temperature">0.3</field>
+      <field name="max_tokens">700</field>
+      <field name="reasoning_enabled" eval="True"/>
+      <field name="supports_tools" eval="False"/>
+      <field name="supports_structured_output" eval="True"/>
+    </record>
+
+    <record id="openclaw_ai_topic_crm_contacts" model="openclaw.ai.topic">
+      <field name="name">CRM Contacts</field>
+      <field name="key">crm_contacts</field>
+      <field name="sequence">10</field>
+      <field name="mode">actionable</field>
+      <field name="instructions">Search existing contacts first, summarize what you find, and route any mutable intent through approval-ready OpenClaw requests.</field>
+    </record>
+
+    <record id="openclaw_ai_topic_tool_crm_contacts_read" model="openclaw.ai.topic.tool">
+      <field name="topic_id" ref="openclaw_ai_topic_crm_contacts"/>
+      <field name="tool_id" ref="openclaw_ai_tool_odoo_search_read"/>
+      <field name="sequence">10</field>
+      <field name="required" eval="True"/>
+      <field name="tool_instructions">Use this tool to inspect `res.partner`, detect duplicates, and gather factual contact context before answering.</field>
+    </record>
+
+    <record id="openclaw_ai_topic_tool_crm_contacts_request" model="openclaw.ai.topic.tool">
+      <field name="topic_id" ref="openclaw_ai_topic_crm_contacts"/>
+      <field name="tool_id" ref="openclaw_ai_tool_odoo_create_request"/>
+      <field name="sequence">20</field>
+      <field name="tool_instructions">Use this tool to prepare approval cards for create, update, or delete contact actions instead of mutating Odoo directly.</field>
+    </record>
+
+    <record id="openclaw_ai_agent_crm_contacts" model="openclaw.ai.agent">
+      <field name="name">CRM Contacts Agent</field>
+      <field name="key">crm_contacts_agent</field>
+      <field name="description">Contextual Ask AI agent for `res.partner` contact workflows.</field>
+      <field name="system_prompt">You are OpenClaw for CRM contacts. Stay grounded in Odoo data, avoid inventing partner details, and convert mutable contact work into approval-ready actions.</field>
+      <field name="response_style">balanced</field>
+      <field name="restrict_to_sources" eval="True"/>
+      <field name="llm_profile_id" ref="openclaw_ai_llm_profile_crm_contacts"/>
+      <field name="topic_ids" eval="[(6, 0, [ref('openclaw_ai_topic_crm_contacts')])]"/>
+      <field name="source_ids" eval="[(6, 0, [ref('openclaw_ai_source_crm_contacts_knowledge')])]"/>
+    </record>
+
+    <record id="openclaw_ai_default_prompt_crm_contacts" model="openclaw.ai.default_prompt">
+      <field name="name">CRM Contacts</field>
+      <field name="sequence">10</field>
+      <field name="agent_id" ref="openclaw_ai_agent_crm_contacts"/>
+      <field name="model_ids" eval="[(6, 0, [ref('base.model_res_partner')])]"/>
+      <field name="instructions">Use the CRM Contacts agent for partner lookups, contact enrichment, and approval-safe changes on `res.partner`.</field>
+    </record>
+
+    <record id="openclaw_ai_default_prompt_button_crm_contacts_search" model="openclaw.ai.default_prompt.button">
+      <field name="default_prompt_id" ref="openclaw_ai_default_prompt_crm_contacts"/>
+      <field name="label">Buscar Contacto</field>
+      <field name="prompt_text">Busca este contacto en Odoo y resume sus datos clave sin inventar nada.</field>
+      <field name="sequence">10</field>
+      <field name="icon">fa-search</field>
+    </record>
+
+    <record id="openclaw_ai_default_prompt_button_crm_contacts_request" model="openclaw.ai.default_prompt.button">
+      <field name="default_prompt_id" ref="openclaw_ai_default_prompt_crm_contacts"/>
+      <field name="label">Preparar Alta</field>
+      <field name="prompt_text">Quiero dar de alta un nuevo contacto y necesito una solicitud aprobable en OpenClaw.</field>
+      <field name="sequence">20</field>
+      <field name="icon">fa-user-plus</field>
+    </record>
+  </data>
+</odoo>

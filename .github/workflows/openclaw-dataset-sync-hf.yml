@@ -1,0 +1,36 @@
+name: OpenClaw Dataset Sync To HF
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "15 3 * * *"
+
+jobs:
+  sync-dataset:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install datasets huggingface_hub
+
+      - name: Export synthetic episodes (replace later with real Odoo export)
+        run: |
+          python scripts/setup-hf-training.py --export-episodes --episodes-file training_episodes.jsonl
+
+      - name: Push dataset to HF Hub
+        env:
+          HF_TOKEN: ${{ secrets.HF_TOKEN }}
+          HF_DATASET_REPO: ${{ secrets.HF_DATASET_REPO }}
+        run: |
+          python scripts/push_openclaw_dataset_to_hf.py \
+            --jsonl training_episodes.jsonl \
+            --repo-id "$HF_DATASET_REPO"

@@ -55,6 +55,7 @@ jobs:
           bash -n backup/scripts/export-pgbackrest-repo.sh
           bash -n backup/scripts/offsite-sync-rclone.sh
           bash -n backup/scripts/run-offsite-backup.sh
+          bash -n postgres_image/scripts/pgbackrest-archive.sh
           bash -n pgbackrest/scripts/backup-db.sh
           bash -n pgbackrest/scripts/check-db.sh
           bash -n pgbackrest/scripts/stanza-create.sh

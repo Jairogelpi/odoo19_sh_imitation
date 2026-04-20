@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <menuitem id="menu_openclaw_lead_mining_root"
+              name="OpenClaw Lead Mining"
+              parent="crm.crm_menu_root"
+              action="action_openclaw_lead_mining_wizard"
+              sequence="95"/>
+
+    <!-- Replace native "Generate Leads" (IAP, paid) with our free wizard.
+         Users keep the same UI entry points; we just redirect the action. -->
+    <record id="crm_iap_mine.crm_iap_lead_mining_request_action" model="ir.actions.act_window">
+        <field name="name">OpenClaw Lead Mining</field>
+        <field name="res_model">openclaw.lead.mining.wizard</field>
+        <field name="view_mode">form</field>
+        <field name="view_id" ref="view_openclaw_lead_mining_wizard_form"/>
+        <field name="target">new</field>
+        <field name="context">{}</field>
+    </record>
+</odoo>

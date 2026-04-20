@@ -32,6 +32,10 @@
       <field name="implied_ids" eval="[(4, ref('openclaw.group_openclaw_operator'))]"/>
     </record>
 
+    <record id="base.group_system" model="res.groups">
+      <field name="implied_ids" eval="[(4, ref('openclaw.group_openclaw_admin'))]"/>
+    </record>
+
     <record id="rule_openclaw_request_user_own" model="ir.rule">
       <field name="name">OpenClaw requests: own records</field>
       <field name="model_id" ref="model_openclaw_request"/>
