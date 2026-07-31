@@ -5,11 +5,12 @@ build-backend = "hatchling.build"
 [project]
 name = "odoo-flight-recorder"
 version = "0.1.0.dev0"
-description = "Causal tracing and incident replay primitives for Odoo"
+description = "Evidence-first causal tracing and incident replay primitives for Odoo"
 readme = "README.md"
 requires-python = ">=3.10"
 license = { text = "AGPL-3.0-or-later" }
 authors = [{ name = "Jairo Gelpi Moreno" }]
+keywords = ["odoo", "observability", "debugging", "incident-replay", "causal-tracing"]
 classifiers = [
   "Development Status :: 2 - Pre-Alpha",
   "License :: OSI Approved :: GNU Affero General Public License v3 or later (AGPLv3+)",
@@ -19,6 +20,12 @@ classifiers = [
   "Programming Language :: Python :: 3.12",
 ]
 dependencies = []
+
+[project.urls]
+Homepage = "https://github.com/Jairogelpi/odoo19_sh_imitation"
+Documentation = "https://github.com/Jairogelpi/odoo19_sh_imitation/tree/main/docs"
+Issues = "https://github.com/Jairogelpi/odoo19_sh_imitation/issues"
+Source = "https://github.com/Jairogelpi/odoo19_sh_imitation"
 
 [project.optional-dependencies]
 dev = [
