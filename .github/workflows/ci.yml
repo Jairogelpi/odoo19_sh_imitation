@@ -22,3 +22,29 @@ jobs:
       - run: pytest
       - run: python tools/check_repository_hygiene.py
 
+  odoo-install:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - name: Validate Compose contract
+        run: docker compose config -q
+      - name: Start PostgreSQL
+        run: docker compose up -d --wait db
+      - name: Install addon in a clean Odoo 19 database
+        run: >
+          docker compose run --rm
+          odoo
+          odoo
+          --database flight_recorder_test
+          --init flight_recorder
+          --stop-after-init
+          --no-http
+          --without-demo all
+          --log-level test
+      - name: Show container logs on failure
+        if: failure()
+        run: docker compose logs --no-color
+      - name: Remove test stack
+        if: always()
+        run: docker compose down --volumes --remove-orphans

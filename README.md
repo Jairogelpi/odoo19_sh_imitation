@@ -41,6 +41,7 @@ Implemented:
 - a framework-independent event envelope with deterministic hashing;
 - privacy-first recursive redaction;
 - a minimal local Odoo/PostgreSQL development stack;
+- CI installation of the addon in a clean Odoo 19 database;
 - repository-hygiene tests that reject caches, virtual environments, model
   weights, archives, and oversized files.
 
@@ -105,4 +106,3 @@ must not be reused for production.
 
 The project is licensed under the GNU Affero General Public License v3.0 or
 later. See [LICENSE](LICENSE).
-
