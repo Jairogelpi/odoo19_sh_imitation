@@ -26,16 +26,16 @@ This guide covers the supported development installation and the expected layout
 Linux/macOS:
 
 ```bash
-git clone https://github.com/Jairogelpi/odoo19_sh_imitation.git
-cd odoo19_sh_imitation
+git clone https://github.com/Jairogelpi/odoo_flight_recorder.git
+cd odoo_flight_recorder
 cp .env.example .env
 ```
 
 Windows PowerShell:
 
 ```powershell
-git clone https://github.com/Jairogelpi/odoo19_sh_imitation.git
-Set-Location odoo19_sh_imitation
+git clone https://github.com/Jairogelpi/odoo_flight_recorder.git
+Set-Location odoo_flight_recorder
 Copy-Item .env.example .env
 ```
 

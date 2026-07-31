@@ -34,10 +34,15 @@ reject unknown models, fields, and secret-like field names.
 
 ## R3 — Safe replay
 
-- Disposable Odoo environment.
-- Denied email, payment, cron, and external HTTP effects.
-- Bundle import and deterministic replay.
-- Original-versus-replay event comparison.
+- [x] Disposable Odoo environment.
+- [x] Denied email, payment, cron, and external HTTP effects.
+- [x] Bundle import and deterministic replay.
+- [x] Original-versus-replay event comparison.
+
+R3 runs each replay in a new Compose project and database. The Docker network is
+internal, cron workers are disabled, and all volumes are destroyed afterward.
+The first replay adapter creates synthetic sale data, confirms the order, and
+compares causal signatures while ignoring database IDs, timestamps, and hashes.
 
 ## R4 — Regression generation
 

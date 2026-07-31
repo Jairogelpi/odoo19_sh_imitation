@@ -61,3 +61,23 @@ jobs:
       - name: Remove test stack
         if: always()
         run: docker compose down --volumes --remove-orphans
+
+  isolated-replay:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+      - name: Build and verify the demo incident
+        run: |
+          python examples/create_demo_incident.py /tmp/demo.odoo-incident
+          python tools/verify_incident.py /tmp/demo.odoo-incident
+      - name: Replay in a disposable Odoo 19 environment
+        run: >
+          python tools/replay_incident.py
+          /tmp/demo.odoo-incident
+          --output /tmp/replay-report.json
+      - name: Assert replay safety and equivalence
+        run: |
+          jq -e '.matched == true' /tmp/replay-report.json
+          jq -e '.safety.network_egress == "denied"' /tmp/replay-report.json
+          jq -e '.safety.cron == "disabled"' /tmp/replay-report.json

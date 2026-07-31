@@ -1,7 +1,7 @@
 import base64
 import json
 
-from odoo.exceptions import AccessError, ValidationError
+from odoo.exceptions import AccessError, UserError, ValidationError
 from odoo.tests import TransactionCase, tagged
 from odoo.tests.common import new_test_user
 
@@ -129,3 +129,7 @@ class TestSaleConfirmationTrace(TransactionCase):
                     "field_names": ["state", "access_token"],
                 }
             )
+
+    def test_replay_refuses_to_run_in_an_ordinary_database(self):
+        with self.assertRaisesRegex(UserError, "isolated replay worker"):
+            self.env["flight.recorder.replay.service"].replay_bundle(b"not-an-incident")

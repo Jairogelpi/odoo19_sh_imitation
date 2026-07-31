@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import io
+import itertools
 import json
 import zipfile
 from dataclasses import dataclass
@@ -297,3 +298,54 @@ def verify_bundle(data: bytes) -> VerificationResult:
         fixture_count=len(fixtures),
         schema_version=manifest["schema_version"],
     )
+
+
+def read_bundle(data: bytes) -> dict[str, Any]:
+    """Return verified incident documents; never expose unverified JSON."""
+    verify_bundle(data)
+    with zipfile.ZipFile(io.BytesIO(data), "r") as archive:
+        return {
+            "manifest": json.loads(archive.read("manifest.json")),
+            "events": json.loads(archive.read("events.json")),
+            "fixtures": json.loads(archive.read("fixtures.json")),
+        }
+
+
+def event_signature(event: dict[str, Any]) -> dict[str, Any]:
+    """Normalize original or observed evidence for behavior comparison."""
+    return {
+        "sequence": int(event["sequence"]),
+        "parent_sequence": event.get("parent_sequence"),
+        "kind": event["kind"],
+        "model": event.get("model") or event.get("model_name"),
+        "operation": event.get("operation"),
+        "field_names": sorted(event.get("field_names") or []),
+    }
+
+
+def compare_event_streams(
+    original: list[dict[str, Any]],
+    observed: list[dict[str, Any]],
+) -> dict[str, Any]:
+    """Compare causal behavior while ignoring IDs, timestamps, and hashes."""
+    expected = [event_signature(event) for event in original]
+    actual = [event_signature(event) for event in observed]
+    differences = []
+    for index, (left, right) in enumerate(
+        itertools.zip_longest(expected, actual),
+        start=1,
+    ):
+        if left != right:
+            differences.append(
+                {
+                    "position": index,
+                    "expected": left,
+                    "observed": right,
+                }
+            )
+    return {
+        "matched": not differences,
+        "expected_event_count": len(expected),
+        "observed_event_count": len(actual),
+        "differences": differences,
+    }

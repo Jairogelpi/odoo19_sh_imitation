@@ -6,7 +6,7 @@
 
 **An evidence-first flight recorder for Odoo incidents: causal traces, privacy-safe incident bundles, deterministic replay, and regression-test generation.**
 
-[![CI](https://github.com/Jairogelpi/odoo19_sh_imitation/actions/workflows/ci.yml/badge.svg)](https://github.com/Jairogelpi/odoo19_sh_imitation/actions/workflows/ci.yml)
+[![CI](https://github.com/Jairogelpi/odoo_flight_recorder/actions/workflows/ci.yml/badge.svg)](https://github.com/Jairogelpi/odoo_flight_recorder/actions/workflows/ci.yml)
 [![Odoo](https://img.shields.io/badge/Odoo-19.0-714B67)](https://www.odoo.com/)
 [![License](https://img.shields.io/badge/license-AGPL--3.0--or--later-blue)](LICENSE)
 [![Status](https://img.shields.io/badge/status-foundation-orange)](#project-status)
@@ -98,16 +98,16 @@ The exported incident can then be replayed against the faulty revision and a pro
 ### 1. Clone and configure
 
 ```bash
-git clone https://github.com/Jairogelpi/odoo19_sh_imitation.git
-cd odoo19_sh_imitation
+git clone https://github.com/Jairogelpi/odoo_flight_recorder.git
+cd odoo_flight_recorder
 cp .env.example .env
 ```
 
 PowerShell:
 
 ```powershell
-git clone https://github.com/Jairogelpi/odoo19_sh_imitation.git
-Set-Location odoo19_sh_imitation
+git clone https://github.com/Jairogelpi/odoo_flight_recorder.git
+Set-Location odoo_flight_recorder
 Copy-Item .env.example .env
 ```
 
@@ -147,6 +147,15 @@ python tools/verify_incident.py path/to/downloaded.odoo-incident
 The verifier runs without Odoo and fails closed if the archive, causal ordering,
 or any sealed event has changed. See the [incident format](docs/incident-format.md).
 
+Replay it inside a disposable, network-isolated Odoo 19 stack:
+
+```bash
+python tools/replay_incident.py path/to/downloaded.odoo-incident \
+  --output replay-report.json
+```
+
+See the [safe replay contract](docs/replay.md).
+
 ## What is available today?
 
 | Capability | Status | Evidence |
@@ -161,7 +170,7 @@ or any sealed event has changed. See the [incident format](docs/incident-format.
 | Versioned `.odoo-incident` bundles | ✅ Ready | R2 |
 | Offline integrity and causality verification | ✅ Ready | R2 |
 | Anonymized minimal fixtures | ✅ Ready | R2 |
-| Side-effect-safe isolated replay | 🧭 Planned | R3 |
+| Side-effect-safe isolated replay | ✅ Ready | R3 sale-confirmation adapter |
 | Odoo regression-test generation | 🧭 Planned | R4 |
 | Cross-version behavior comparison | 🧭 Planned | R5 |
 
@@ -261,7 +270,7 @@ The project advances through vertical slices instead of broad, unverified instru
 - **R0 — Foundation:** addon, event envelope, redaction, CI. ✅
 - **R1 — One proven causal trace:** explicit sale-order flow, correlation, source attribution. ✅
 - **R2 — Incident bundle:** portable schema, hashes, anonymized fixtures, offline verification. ✅
-- **R3 — Safe replay:** disposable Odoo, denied external effects, deterministic comparison.
+- **R3 — Safe replay:** disposable Odoo, denied external effects, deterministic comparison. ✅
 - **R4 — Regression generation:** produce and execute a reviewable `TransactionCase`.
 - **R5 — Golden business flows:** community-owned behavior contracts across revisions.
 
@@ -283,7 +292,7 @@ Read [CONTRIBUTING.md](CONTRIBUTING.md). Security problems should be reported pr
 
 ## Project status
 
-Flight Recorder is currently an **installable technical preview**, not a production observability product. R1 traces sale-order confirmation and R2 exports independently verifiable evidence; the next milestone is side-effect-safe isolated replay.
+Flight Recorder is currently an **installable technical preview**, not a production observability product. R1 traces sale-order confirmation, R2 exports independently verifiable evidence, and R3 replays that evidence in an isolated Odoo environment. The next milestone is generating a reviewable regression test.
 
 If that problem matters to you, star the repository, open a scenario discussion, or contribute a sanitized incident contract.
 

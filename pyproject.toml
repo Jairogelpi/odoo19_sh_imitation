@@ -22,10 +22,10 @@ classifiers = [
 dependencies = []
 
 [project.urls]
-Homepage = "https://github.com/Jairogelpi/odoo19_sh_imitation"
-Documentation = "https://github.com/Jairogelpi/odoo19_sh_imitation/tree/main/docs"
-Issues = "https://github.com/Jairogelpi/odoo19_sh_imitation/issues"
-Source = "https://github.com/Jairogelpi/odoo19_sh_imitation"
+Homepage = "https://github.com/Jairogelpi/odoo_flight_recorder"
+Documentation = "https://github.com/Jairogelpi/odoo_flight_recorder/tree/main/docs"
+Issues = "https://github.com/Jairogelpi/odoo_flight_recorder/issues"
+Source = "https://github.com/Jairogelpi/odoo_flight_recorder"
 
 [project.optional-dependencies]
 dev = [
