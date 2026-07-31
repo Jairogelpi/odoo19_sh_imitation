@@ -21,11 +21,16 @@ events for fields that changed. It does not intercept global ORM methods.
 
 ## R2 — Incident bundle
 
-- Versioned `.odoo-incident` manifest.
-- Canonical hashes and offline verification.
-- Configurable field allowlists.
-- Minimal, anonymized fixtures.
-- GitHub issue attachment workflow.
+- [x] Versioned `.odoo-incident` manifest.
+- [x] Canonical hashes and offline verification.
+- [x] Configurable field allowlists.
+- [x] Minimal, anonymized fixtures.
+- [x] GitHub issue attachment workflow.
+
+R2 exports completed traces from the administrator interface. The deterministic
+archive replaces database IDs with archive-local references, seals every event
+and document, and can be verified without importing Odoo. Capture policies
+reject unknown models, fields, and secret-like field names.
 
 ## R3 — Safe replay
 

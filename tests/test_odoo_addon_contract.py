@@ -21,6 +21,10 @@ def test_trace_models_are_not_writable_or_deletable_through_access_rules():
 
     assert "base.group_system,1,0,1,0" in access
     assert access.count("base.group_system,1,0,1,0") == 2
+    assert (
+        "model_flight_recorder_capture_policy,base.group_system,1,1,1,1"
+        in access
+    )
 
 
 def test_r1_instruments_only_the_explicit_sale_confirmation_boundary():

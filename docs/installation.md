@@ -150,7 +150,15 @@ module = env["ir.module.module"].search(
 assert module.state == "installed", module.state
 ```
 
-The current foundation intentionally has no end-user investigation interface. Installation creates the technical trace/event models and their administrator-only security rules; automatic capture arrives in R1.
+After installation, system administrators can use **Flight Recorder → Traces**
+to inspect sale-confirmation evidence and export completed traces. Capture
+allowlists are managed under **Flight Recorder → Capture Policies**.
+
+Verify a downloaded archive without Odoo:
+
+```bash
+python tools/verify_incident.py path/to/trace.odoo-incident
+```
 
 ## Developer setup
 

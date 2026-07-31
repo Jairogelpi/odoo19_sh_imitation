@@ -1,0 +1,43 @@
+name: Sanitized Odoo incident
+description: Share a verified, privacy-reviewed Flight Recorder incident.
+title: "[Incident]: "
+labels:
+  - incident
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Attach only a sanitized `.odoo-incident` file. Never upload databases,
+        filestores, raw logs, credentials, personal data, or payment data.
+  - type: checkboxes
+    id: safety
+    attributes:
+      label: Safety checks
+      options:
+        - label: I ran `python tools/verify_incident.py <file>.odoo-incident`.
+          required: true
+        - label: I reviewed the archive under my organization's data-sharing policy.
+          required: true
+        - label: This report contains no credentials or personal/payment data.
+          required: true
+  - type: textarea
+    id: outcome
+    attributes:
+      label: Unexpected business outcome
+      description: Describe what Odoo did and what should have happened.
+    validations:
+      required: true
+  - type: textarea
+    id: reproduction
+    attributes:
+      label: Reproduction context
+      description: State Odoo edition, revision, installed custom addons, and relevant setup.
+    validations:
+      required: true
+  - type: textarea
+    id: bundle
+    attributes:
+      label: Verified incident bundle
+      description: Drag the privacy-reviewed `.odoo-incident` file here.
+    validations:
+      required: true

@@ -18,7 +18,7 @@
 ---
 
 > [!IMPORTANT]
-> Flight Recorder is under active development. The installable Odoo 19 foundation, deterministic event envelope, redaction engine, access controls, tests, and CI are real. Automatic instrumentation, incident export, replay, and test generation are roadmap work and are not presented as finished features.
+> Flight Recorder is under active development. The Odoo 19 sale-confirmation trace and verifiable incident export are real and tested. Generalized instrumentation, replay, and test generation remain roadmap work and are not presented as finished features.
 
 ## Why this exists
 
@@ -135,6 +135,18 @@ The stack uses the official `odoo:19.0` image and PostgreSQL 16. It binds Odoo o
 
 For Odoo.sh, an existing source installation, upgrades, troubleshooting, and cleanup, read the complete **[installation guide](docs/installation.md)**.
 
+### Export and verify an incident
+
+Confirm a quotation, then open **Flight Recorder → Traces** as a system
+administrator. Open the completed trace and select **Export Incident**.
+
+```bash
+python tools/verify_incident.py path/to/downloaded.odoo-incident
+```
+
+The verifier runs without Odoo and fails closed if the archive, causal ordering,
+or any sealed event has changed. See the [incident format](docs/incident-format.md).
+
 ## What is available today?
 
 | Capability | Status | Evidence |
@@ -146,7 +158,9 @@ For Odoo.sh, an existing source installation, upgrades, troubleshooting, and cle
 | Repository hygiene guard | ✅ Ready | Rejects caches, environments, archives, weights, and oversized files |
 | Explicit sale-confirmation causal trace | ✅ Ready | R1 |
 | Generalized request/ORM instrumentation | 🧭 Planned | Future vertical slices |
-| Versioned `.odoo-incident` bundles | 🧭 Planned | R2 |
+| Versioned `.odoo-incident` bundles | ✅ Ready | R2 |
+| Offline integrity and causality verification | ✅ Ready | R2 |
+| Anonymized minimal fixtures | ✅ Ready | R2 |
 | Side-effect-safe isolated replay | 🧭 Planned | R3 |
 | Odoo regression-test generation | 🧭 Planned | R4 |
 | Cross-version behavior comparison | 🧭 Planned | R5 |
@@ -246,7 +260,7 @@ The project advances through vertical slices instead of broad, unverified instru
 
 - **R0 — Foundation:** addon, event envelope, redaction, CI. ✅
 - **R1 — One proven causal trace:** explicit sale-order flow, correlation, source attribution. ✅
-- **R2 — Incident bundle:** portable schema, hashes, anonymized fixtures, offline verification.
+- **R2 — Incident bundle:** portable schema, hashes, anonymized fixtures, offline verification. ✅
 - **R3 — Safe replay:** disposable Odoo, denied external effects, deterministic comparison.
 - **R4 — Regression generation:** produce and execute a reviewable `TransactionCase`.
 - **R5 — Golden business flows:** community-owned behavior contracts across revisions.
@@ -269,7 +283,7 @@ Read [CONTRIBUTING.md](CONTRIBUTING.md). Security problems should be reported pr
 
 ## Project status
 
-Flight Recorder is currently an **installable technical preview**, not a production observability product. R1 provides one end-to-end causal trace for sale-order confirmation; the next milestone is the portable, verifiable incident bundle.
+Flight Recorder is currently an **installable technical preview**, not a production observability product. R1 traces sale-order confirmation and R2 exports independently verifiable evidence; the next milestone is side-effect-safe isolated replay.
 
 If that problem matters to you, star the repository, open a scenario discussion, or contribute a sanitized incident contract.
 
