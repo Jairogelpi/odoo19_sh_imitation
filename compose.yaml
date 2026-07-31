@@ -1,125 +1,48 @@
 services:
   db:
-    image: ${POSTGRES_IMAGE:-odoo19-db:local}
-    build:
-      context: .
-      dockerfile: postgres_image/Dockerfile
-    restart: unless-stopped
+    image: postgres:16
     environment:
       POSTGRES_DB: ${POSTGRES_DB:-postgres}
       POSTGRES_USER: ${POSTGRES_USER:-odoo}
-      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-change_me}
-      PGBACKREST_STANZA: ${PGBACKREST_STANZA:-odoo}
-      PGHOST: /var/run/postgresql
-      PGPORT: 5432
-      PGUSER: ${POSTGRES_USER:-odoo}
-      PGPASSWORD: ${POSTGRES_PASSWORD:-change_me}
-    command:
-      - postgres
-      - -c
-      - archive_mode=on
-      - -c
-      - archive_command=/usr/local/bin/pgbackrest-archive.sh %p
-      - -c
-      - archive_timeout=60
-      - -c
-      - wal_level=replica
-    volumes:
-      - postgres-data:/var/lib/postgresql/data
-      - postgres-run:/var/run/postgresql
-      - ./pgbackrest/pgbackrest.conf:/etc/pgbackrest/pgbackrest.conf:ro
-      - pgbackrest-repo:/var/lib/pgbackrest
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-odoo_local_only}
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-odoo} -d ${POSTGRES_DB:-postgres}"]
-      interval: 10s
+      interval: 5s
       timeout: 5s
-      retries: 10
-    networks:
-      - odoo_net
-
-  redis:
-    image: redis:7-alpine
-    restart: unless-stopped
-    command: ["redis-server", "--appendonly", "yes"]
+      retries: 12
     volumes:
-      - redis-data:/data
-    networks:
-      - odoo_net
-
-  pgbackrest:
-    image: ${PGBACKREST_IMAGE:-odoo19-pgbackrest:local}
-    build:
-      context: .
-      dockerfile: pgbackrest/Dockerfile
-    user: "postgres"
-    restart: unless-stopped
-    depends_on:
-      db:
-        condition: service_healthy
-    environment:
-      PGBACKREST_STANZA: ${PGBACKREST_STANZA:-odoo}
-      PGHOST: /var/run/postgresql
-      PGPORT: 5432
-      PGUSER: ${POSTGRES_USER:-odoo}
-      PGPASSWORD: ${POSTGRES_PASSWORD:-change_me}
-    volumes:
-      - ./pgbackrest/pgbackrest.conf:/etc/pgbackrest/pgbackrest.conf:ro
-      - ./pgbackrest/scripts:/scripts:ro
-      - postgres-data:/var/lib/postgresql/data:ro
-      - postgres-run:/var/run/postgresql
-      - pgbackrest-repo:/var/lib/pgbackrest
-    command: ["sleep", "infinity"]
-    networks:
-      - odoo_net
+      - postgres-data:/var/lib/postgresql/data
 
   odoo:
-    image: ${ODOO_IMAGE:-odoo19-odoo:local}
-    build:
-      context: .
-      dockerfile: odoo/Dockerfile
-    restart: unless-stopped
+    image: odoo:19.0
     depends_on:
       db:
         condition: service_healthy
     environment:
       HOST: db
       USER: ${POSTGRES_USER:-odoo}
-      PASSWORD: ${POSTGRES_PASSWORD:-change_me}
-    ports:
-      - "8070:8069"
-      - "8073:8072"
-    volumes:
-      - odoo-web-data:/var/lib/odoo
-      - ./config:/etc/odoo:ro
-      - ./addons:/mnt/extra-addons
-      - ./addons_custom:/mnt/custom-addons
-    networks:
-      - odoo_net
-
-  nginx:
-    image: nginx:1.27-alpine
-    restart: unless-stopped
-    depends_on:
+      PASSWORD: ${POSTGRES_PASSWORD:-odoo_local_only}
+    command:
       - odoo
-    entrypoint: ["/bin/sh", "/opt/odoo-nginx-scripts/start-nginx.sh"]
-    environment:
-      SERVER_NAME: ${SERVER_NAME:-_}
-      ODOO_UPSTREAM: odoo:8069
-      WEBSOCKET_UPSTREAM: odoo:8072
-      NGINX_TLS_MODE: ${NGINX_TLS_MODE:-disabled}
+      - --database
+      - ""
+      - --db_host
+      - db
+      - --db_user
+      - ${POSTGRES_USER:-odoo}
+      - --db_password
+      - ${POSTGRES_PASSWORD:-odoo_local_only}
+      - --admin-passwd
+      - ${ODOO_MASTER_PASSWORD:-odoo_local_only}
+      - --addons-path
+      - /mnt/extra-addons,/usr/lib/python3/dist-packages/odoo/addons
+    ports:
+      - "127.0.0.1:8069:8069"
     volumes:
-      - ./nginx/templates:/opt/odoo-nginx-templates:ro
-      - ./nginx/scripts:/opt/odoo-nginx-scripts:ro
-    networks:
-      - odoo_net
+      - ./addons:/mnt/extra-addons:ro
+      - odoo-data:/var/lib/odoo
 
 volumes:
-  pgbackrest-repo:
   postgres-data:
-  postgres-run:
-  redis-data:
-  odoo-web-data:
+  odoo-data:
 
-networks:
-  odoo_net:
-    driver: bridge
