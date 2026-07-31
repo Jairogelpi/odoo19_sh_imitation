@@ -42,6 +42,19 @@ jobs:
           --no-http
           --without-demo all
           --log-level test
+      - name: Run Flight Recorder Odoo integration tests
+        run: >
+          docker compose run --rm
+          odoo
+          odoo
+          --database flight_recorder_test
+          --update flight_recorder
+          --test-enable
+          --test-tags /flight_recorder
+          --stop-after-init
+          --no-http
+          --without-demo all
+          --log-level test
       - name: Show container logs on failure
         if: failure()
         run: docker compose logs --no-color

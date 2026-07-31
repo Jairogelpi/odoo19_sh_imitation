@@ -144,7 +144,8 @@ For Odoo.sh, an existing source installation, upgrades, troubleshooting, and cle
 | Deterministic event envelope | ✅ Ready | Canonical JSON and SHA-256 content hashing |
 | Recursive privacy redaction | ✅ Ready | Secret denylist plus metadata-first policy |
 | Repository hygiene guard | ✅ Ready | Rejects caches, environments, archives, weights, and oversized files |
-| Automatic request/ORM instrumentation | 🧭 Planned | R1 |
+| Explicit sale-confirmation causal trace | ✅ Ready | R1 |
+| Generalized request/ORM instrumentation | 🧭 Planned | Future vertical slices |
 | Versioned `.odoo-incident` bundles | 🧭 Planned | R2 |
 | Side-effect-safe isolated replay | 🧭 Planned | R3 |
 | Odoo regression-test generation | 🧭 Planned | R4 |
@@ -244,7 +245,7 @@ The CI pipeline runs those checks and installs the addon into a new Odoo 19 data
 The project advances through vertical slices instead of broad, unverified instrumentation:
 
 - **R0 — Foundation:** addon, event envelope, redaction, CI. ✅
-- **R1 — One proven causal trace:** explicit sale-order flow, correlation, source attribution.
+- **R1 — One proven causal trace:** explicit sale-order flow, correlation, source attribution. ✅
 - **R2 — Incident bundle:** portable schema, hashes, anonymized fixtures, offline verification.
 - **R3 — Safe replay:** disposable Odoo, denied external effects, deterministic comparison.
 - **R4 — Regression generation:** produce and execute a reviewable `TransactionCase`.
@@ -268,7 +269,7 @@ Read [CONTRIBUTING.md](CONTRIBUTING.md). Security problems should be reported pr
 
 ## Project status
 
-Flight Recorder is currently a **tested foundation**, not a production observability product. The architectural boundary and safety contract are intentional; the next milestone is one end-to-end causal trace for a real Odoo sales incident.
+Flight Recorder is currently an **installable technical preview**, not a production observability product. R1 provides one end-to-end causal trace for sale-order confirmation; the next milestone is the portable, verifiable incident bundle.
 
 If that problem matters to you, star the repository, open a scenario discussion, or contribute a sanitized incident contract.
 
