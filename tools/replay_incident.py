@@ -28,7 +28,12 @@ def _load_bundle_module():
     return module
 
 
-def _run(command: list[str], *, stdin: str | None = None) -> None:
+def _run(
+    command: list[str],
+    *,
+    stdin: str | None = None,
+    ignore_failure: bool = False,
+) -> None:
     result = subprocess.run(
         command,
         cwd=ROOT,
@@ -37,7 +42,7 @@ def _run(command: list[str], *, stdin: str | None = None) -> None:
         capture_output=True,
         check=False,
     )
-    if result.returncode:
+    if result.returncode and not ignore_failure:
         details = "\n".join(part for part in (result.stdout, result.stderr) if part)
         raise RuntimeError(f"Command failed ({result.returncode}): {' '.join(command)}\n{details}")
 
@@ -56,6 +61,24 @@ def _compose(project: str, override: Path, *arguments: str) -> list[str]:
     ]
 
 
+def _override_content(replay_dir: Path) -> str:
+    volume = json.dumps(f"{replay_dir}:/replay:rw")
+    return "\n".join(
+        [
+            "services:",
+            "  odoo:",
+            "    environment:",
+            "      FLIGHT_RECORDER_REPLAY_ISOLATED: \"1\"",
+            "    volumes:",
+            f"      - {volume}",
+            "networks:",
+            "  default:",
+            "    internal: true",
+            "",
+        ]
+    )
+
+
 def replay(incident: Path, output: Path) -> dict:
     bundle = _load_bundle_module()
     incident_data = incident.read_bytes()
@@ -68,23 +91,7 @@ def replay(incident: Path, output: Path) -> dict:
         replay_dir = Path(directory)
         shutil.copyfile(incident, replay_dir / "incident.odoo-incident")
         override = replay_dir / "compose.replay.yaml"
-        override.write_text(
-            "\n".join(
-                [
-                    "services:",
-                    "  odoo:",
-                    "    environment:",
-                    "      FLIGHT_RECORDER_REPLAY_ISOLATED: \"1\"",
-                    "    volumes:",
-                    f"      - {json.dumps(str(replay_dir))}:/replay:rw",
-                    "networks:",
-                    "  default:",
-                    "    internal: true",
-                    "",
-                ]
-            ),
-            encoding="utf-8",
-        )
+        override.write_text(_override_content(replay_dir), encoding="utf-8")
         shell_script = """
 import json
 from pathlib import Path
@@ -144,7 +151,10 @@ env.cr.commit()
                 encoding="utf-8",
             )
         finally:
-            _run(_compose(project, override, "down", "--volumes", "--remove-orphans"))
+            _run(
+                _compose(project, override, "down", "--volumes", "--remove-orphans"),
+                ignore_failure=True,
+            )
 
     if report["incident_id"] != verification.incident_id:
         raise RuntimeError("Replay report incident ID mismatch")
