@@ -9,11 +9,15 @@
 
 ## R1 — One proven causal trace
 
-- Request correlation context.
-- Instrument one explicit sale-order flow without global monkey-patching.
-- Ordered method and ORM events.
-- Source module and Git revision attribution.
-- Odoo integration tests.
+- [x] Request correlation context.
+- [x] Instrument one explicit sale-order flow without global monkey-patching.
+- [x] Ordered method and ORM events.
+- [x] Source module and Git revision attribution.
+- [x] Odoo integration tests.
+
+R1 records the explicit `sale.order.action_confirm()` boundary. It compares the
+order state and sale-line price in memory, then emits metadata-only mutation
+events for fields that changed. It does not intercept global ORM methods.
 
 ## R2 — Incident bundle
 
@@ -41,4 +45,3 @@
 - Community-maintained flow format.
 - Behavior comparison between Odoo revisions.
 - Performance and compatibility benchmarks.
-
