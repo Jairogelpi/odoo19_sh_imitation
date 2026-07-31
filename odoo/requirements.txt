@@ -1,3 +1,0 @@
-# Project-specific Python dependencies go here.
-imgkit==1.2.3
-jsonschema==4.23.0

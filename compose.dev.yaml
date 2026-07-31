@@ -1,8 +1,0 @@
-services:
-  odoo:
-    ports:
-      - "8069:8069"
-
-  nginx:
-    ports:
-      - "8088:80"
