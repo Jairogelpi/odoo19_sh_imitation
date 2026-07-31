@@ -1,9 +1,11 @@
+import base64
 import json
 
-from odoo.exceptions import AccessError
+from odoo.exceptions import AccessError, ValidationError
 from odoo.tests import TransactionCase, tagged
 from odoo.tests.common import new_test_user
 
+from ..bundle import verify_bundle
 from ..models.recorder import TRACE_CONTEXT_KEY
 
 
@@ -94,3 +96,36 @@ class TestSaleConfirmationTrace(TransactionCase):
 
         with self.assertRaises(AccessError):
             self.env["flight.recorder.trace"].with_user(salesperson).search([])
+
+    def test_completed_trace_exports_a_verified_anonymized_incident(self):
+        order = self._new_order()
+        order.action_confirm()
+        trace = self.env["flight.recorder.trace"].sudo().search(
+            [("root_record_id", "=", order.id)],
+            limit=1,
+        )
+
+        action = trace.action_export_incident()
+
+        attachment = self.env["ir.attachment"].sudo().search(
+            [
+                ("res_model", "=", trace._name),
+                ("res_id", "=", trace.id),
+                ("name", "=", f"{trace.correlation_id}.odoo-incident"),
+            ],
+            limit=1,
+        )
+        self.assertTrue(attachment)
+        result = verify_bundle(base64.b64decode(attachment.datas))
+        self.assertEqual(result.incident_id, trace.correlation_id)
+        self.assertEqual(result.event_count, trace.event_count)
+        self.assertEqual(action["type"], "ir.actions.act_url")
+
+    def test_capture_policy_rejects_secret_fields(self):
+        with self.assertRaisesRegex(ValidationError, "Secret-like fields"):
+            self.env["flight.recorder.capture.policy"].create(
+                {
+                    "model_name": "sale.order",
+                    "field_names": ["state", "access_token"],
+                }
+            )
