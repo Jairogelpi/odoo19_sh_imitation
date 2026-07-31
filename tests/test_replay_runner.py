@@ -17,3 +17,16 @@ def test_compose_override_quotes_the_complete_bind_mount():
     assert '      - "/tmp/replay directory:/replay:rw"' in content
     assert '"/tmp/replay directory":/replay:rw' not in content
     assert "    internal: true" in content
+
+
+def test_runner_prepares_a_world_writable_disposable_exchange_directory(tmp_path):
+    replay_dir = tmp_path / "exchange"
+    replay_dir.mkdir()
+    source = tmp_path / "source.odoo-incident"
+    source.write_bytes(b"evidence")
+
+    incident = runner._prepare_exchange(replay_dir, source)
+
+    assert replay_dir.stat().st_mode & 0o777 == 0o777
+    assert incident.stat().st_mode & 0o777 == 0o644
+    assert incident.read_bytes() == b"evidence"

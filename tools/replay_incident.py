@@ -79,6 +79,15 @@ def _override_content(replay_dir: Path) -> str:
     )
 
 
+def _prepare_exchange(replay_dir: Path, incident: Path) -> Path:
+    """Make only the disposable exchange readable/writable by the container UID."""
+    replay_dir.chmod(0o777)
+    incident_copy = replay_dir / "incident.odoo-incident"
+    shutil.copyfile(incident, incident_copy)
+    incident_copy.chmod(0o644)
+    return incident_copy
+
+
 def replay(incident: Path, output: Path) -> dict:
     bundle = _load_bundle_module()
     incident_data = incident.read_bytes()
@@ -89,7 +98,7 @@ def replay(incident: Path, output: Path) -> dict:
 
     with tempfile.TemporaryDirectory(prefix="flight-recorder-replay-") as directory:
         replay_dir = Path(directory)
-        shutil.copyfile(incident, replay_dir / "incident.odoo-incident")
+        _prepare_exchange(replay_dir, incident)
         override = replay_dir / "compose.replay.yaml"
         override.write_text(_override_content(replay_dir), encoding="utf-8")
         shell_script = """
