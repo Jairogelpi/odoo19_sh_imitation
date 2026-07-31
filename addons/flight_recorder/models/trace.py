@@ -1,5 +1,4 @@
 import base64
-from typing import ClassVar
 from urllib.parse import quote
 from uuid import uuid4
 
@@ -43,13 +42,10 @@ class FlightRecorderTrace(models.Model):
     event_ids = fields.One2many("flight.recorder.event", "trace_id", readonly=True)
     event_count = fields.Integer(compute="_compute_event_count")
 
-    _sql_constraints: ClassVar[list[tuple[str, str, str]]] = [
-        (
-            "correlation_id_unique",
-            "unique(correlation_id)",
-            "A Flight Recorder correlation ID must be unique.",
-        ),
-    ]
+    _correlation_id_unique = models.Constraint(
+        "UNIQUE(correlation_id)",
+        "A Flight Recorder correlation ID must be unique.",
+    )
 
     def _compute_event_count(self):
         grouped = self.env["flight.recorder.event"].read_group(
@@ -159,10 +155,7 @@ class FlightRecorderEvent(models.Model):
     payload_hash = fields.Char(required=True, readonly=True, index=True)
     occurred_at = fields.Datetime(required=True, readonly=True, default=fields.Datetime.now)
 
-    _sql_constraints: ClassVar[list[tuple[str, str, str]]] = [
-        (
-            "trace_sequence_unique",
-            "unique(trace_id, sequence)",
-            "Event sequence numbers must be unique inside a trace.",
-        ),
-    ]
+    _trace_sequence_unique = models.Constraint(
+        "UNIQUE(trace_id, sequence)",
+        "Event sequence numbers must be unique inside a trace.",
+    )

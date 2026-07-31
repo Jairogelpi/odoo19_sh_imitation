@@ -1,10 +1,10 @@
 {
     "name": "Flight Recorder",
     "summary": "Evidence-first causal traces for Odoo incidents",
-    "version": "19.0.2.0.0",
+    "version": "19.0.3.0.0",
     "category": "Technical",
     "author": "Jairo Gelpi Moreno",
-    "website": "https://github.com/Jairogelpi/odoo19_sh_imitation",
+    "website": "https://github.com/Jairogelpi/odoo_flight_recorder",
     "license": "AGPL-3",
     "depends": ["base", "sale"],
     "data": [

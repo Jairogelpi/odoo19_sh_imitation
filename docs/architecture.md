@@ -2,7 +2,8 @@
 
 ## Boundary
 
-The product has four components. Only the first two exist in this scaffold.
+The product has four components. R3 implements the first replay worker for the
+sale-confirmation vertical slice.
 
 ```text
 Odoo addon -> event envelope -> incident bundle -> isolated replay worker
@@ -57,4 +58,3 @@ The recorder will ship disabled. The initial target is:
   signal that evidence is incomplete.
 
 These are targets, not current claims.
-

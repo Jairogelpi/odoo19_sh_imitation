@@ -120,3 +120,34 @@ def test_builder_rejects_secret_keys_even_when_source_evidence_is_forged():
 
     with pytest.raises(bundle.BundleVerificationError, match="Forbidden secret key"):
         bundle.build_bundle(_trace(), events)
+
+
+def test_behavior_comparison_ignores_identity_but_detects_causal_changes():
+    original = [
+        {
+            "sequence": 1,
+            "parent_sequence": None,
+            "kind": "orm",
+            "model": "sale.order",
+            "operation": "write",
+            "field_names": ["state"],
+            "record_ref": "record-0001",
+        }
+    ]
+    equivalent = [
+        {
+            "sequence": 1,
+            "parent_sequence": None,
+            "kind": "orm",
+            "model_name": "sale.order",
+            "operation": "write",
+            "field_names": ["state"],
+            "record_id": 999,
+        }
+    ]
+    changed = [{**equivalent[0], "field_names": ["state", "amount_total"]}]
+
+    assert bundle.compare_event_streams(original, equivalent)["matched"] is True
+    comparison = bundle.compare_event_streams(original, changed)
+    assert comparison["matched"] is False
+    assert comparison["differences"][0]["position"] == 1

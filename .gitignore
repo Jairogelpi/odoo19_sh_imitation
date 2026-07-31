@@ -22,7 +22,7 @@ build/
 *.pth
 *.bin
 *.zip
+replay-report.json
 backups/
 filestore/
 postgres-data/
-
